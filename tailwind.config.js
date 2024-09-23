@@ -11,6 +11,7 @@ module.exports = {
         grey2: "#333",
         grey3: "#dadada",
         grey4: "#d0d0d0",
+        grey5: "#a3a3a3",
       },
       fontFamily: {
         isansblack: ["IranSans-Black", "sans-serif"],

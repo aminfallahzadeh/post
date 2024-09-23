@@ -15,6 +15,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 // COMPONENTS
 import TabBar from "../../components/TabBar";
+import SettingsMenu from "../../components/SettingsMenu";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -79,10 +80,7 @@ const TabsLayout = () => {
           { transform: [{ translateX: animationValue }] },
         ]}
       >
-        <Text style={styles.menuText}>Menu Content Here</Text>
-        <TouchableOpacity onPress={toggleMenu}>
-          <Text style={styles.closeText}>Close Menu</Text>
-        </TouchableOpacity>
+        <SettingsMenu closeHandler={toggleMenu} />
       </Animated.View>
     </>
   );
@@ -99,7 +97,6 @@ const styles = {
     paddingHorizontal: 16,
     paddingVertical: 10,
     backgroundColor: "transparent",
-
     shadowOpacity: 0.1,
     shadowRadius: 10,
     shadowOffset: { height: 2, width: 0 },
@@ -118,15 +115,5 @@ const styles = {
     padding: 20,
     justifyContent: "center",
     alignItems: "center",
-  },
-  menuText: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#333",
-  },
-  closeText: {
-    fontSize: 18,
-    color: "blue",
-    marginTop: 20,
   },
 };
