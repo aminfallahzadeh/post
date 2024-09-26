@@ -29,7 +29,9 @@ const SettingsMenu = ({ closeHandler }) => {
 
         <View className="justify-center items-center flex-row gap-5">
           <View>
-            <Text className="text-black font-isansmedium">نام کاربری</Text>
+            <Text className="text-black font-isansmedium text-right">
+              نام کاربری
+            </Text>
             <Text className="text-black font-isansregular">09123333333</Text>
           </View>
 
@@ -47,7 +49,7 @@ const SettingsMenu = ({ closeHandler }) => {
 
           <View className="flex-row items-center justify-center gap-x-2">
             <View>
-              <Text className="text-black font-isansbold text-[15px]">
+              <Text className="text-black font-isansbold text-[15px] text-right">
                 پست پرو
               </Text>
               <Text className="text-grey5 font-isansmedium text-[12px]">
@@ -66,7 +68,7 @@ const SettingsMenu = ({ closeHandler }) => {
 
           <View className="flex-row items-center justify-center gap-x-2">
             <View>
-              <Text className="text-black font-isansbold text-[15px]">
+              <Text className="text-black font-isansbold text-[15px] text-right">
                 تخقیف ها
               </Text>
               <Text className="text-grey5 font-isansmedium text-[12px]">

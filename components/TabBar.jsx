@@ -1,5 +1,5 @@
 // REACT IMPORTS
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // NATIVE IMPORTS
 import { View, StyleSheet } from "react-native";
@@ -28,7 +28,11 @@ const TabBar = ({ state, descriptors, navigation }) => {
     });
   };
 
-  const tabPositionX = useSharedValue(0);
+  const tabPositionX = useSharedValue(buttonWidth * state.index);
+
+  useEffect(() => {
+    tabPositionX.value = withSpring(buttonWidth * state.index);
+  }, [state.index, buttonWidth, tabPositionX]);
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
@@ -67,9 +71,8 @@ const TabBar = ({ state, descriptors, navigation }) => {
         const isFocused = state.index === index;
 
         const onPress = () => {
-          tabPositionX.value = withSpring(buttonWidth * index, {
-            duration: 1500,
-          });
+          tabPositionX.value = withSpring(buttonWidth * index);
+
           const event = navigation.emit({
             type: "tabPress",
             target: route.key,

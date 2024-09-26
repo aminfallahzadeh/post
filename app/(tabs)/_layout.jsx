@@ -6,6 +6,7 @@ import {
   Animated,
   Dimensions,
   StatusBar,
+  Platform,
 } from "react-native";
 
 // EXPO IMPORTS
@@ -38,7 +39,10 @@ const TabsLayout = () => {
   return (
     <>
       {/* TOP BAR */}
-      <View style={styles.topBar}>
+      <View
+        style={styles.topBar}
+        className={Platform.OS === "ios" ? "mt-10 px-6" : ""}
+      >
         <TouchableOpacity onPress={toggleMenu}>
           <Ionicons name="menu" size={28} color="#333" />
         </TouchableOpacity>
