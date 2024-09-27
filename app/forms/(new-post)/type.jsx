@@ -10,7 +10,6 @@ import CustomButton from "@/components/CustomButton";
 import { router } from "expo-router";
 
 const Type = () => {
-  // Change state to store the complete object
   const [selected, setSelected] = useState(null);
 
   const handleSubmit = () => {
@@ -37,7 +36,7 @@ const Type = () => {
         {options.map((option) => (
           <TouchableOpacity
             key={option.id}
-            onPress={() => !option.disabled && setSelected(option)} //
+            onPress={() => !option.disabled && setSelected(option)}
             style={[
               styles.select,
               selected?.id === option.id && styles.selected,

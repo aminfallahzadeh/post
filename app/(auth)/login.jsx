@@ -12,7 +12,7 @@ import { router } from "expo-router";
 import images from "../../constants/images";
 
 // COMPONETNS
-import FormField from "../../components/FormField";
+import FormField from "@/components/FormField";
 import CustomButton from "@/components/CustomButton";
 
 const Login = () => {

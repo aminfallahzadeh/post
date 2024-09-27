@@ -231,8 +231,37 @@ const Services = () => {
               ))}
             </ScrollView>
           </View>
+          <View style={{ flex: 1, marginTop: 20, paddingHorizontal: 20 }}>
+            <LinearGradient
+              colors={["#4c669f", "#00075a"]}
+              style={styles.carouselContainer}
+            >
+              <Carousel
+                loop
+                width={width * 0.8}
+                height={width / 2}
+                autoPlay={true}
+                data={images}
+                scrollAnimationDuration={1000}
+                renderItem={({ index }) => (
+                  <View
+                    style={{
+                      flex: 1,
+                      borderRadius: 20,
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Image
+                      source={images[index]}
+                      style={{ width, borderRadius: 20 }}
+                    />
+                  </View>
+                )}
+              />
+            </LinearGradient>
+          </View>
 
-          <View className="mt-10">
+          <View className="mt-6">
             <Text className="text-primary font-isansbold text-[15px] text-right px-10">
               خدمات نرخ نامه :
             </Text>
@@ -271,32 +300,6 @@ const Services = () => {
                 </View>
               ))}
             </ScrollView>
-          </View>
-
-          <View style={{ flex: 1, marginTop: 20 }}>
-            <Carousel
-              loop
-              width={width}
-              height={width / 2}
-              autoPlay={true}
-              data={images}
-              scrollAnimationDuration={1000}
-              onSnapToItem={(index) => console.log("current index:", index)}
-              renderItem={({ index }) => (
-                <View
-                  style={{
-                    flex: 1,
-                    borderRadius: 20,
-                    justifyContent: "center",
-                  }}
-                >
-                  <Image
-                    source={images[index]}
-                    style={{ width, borderRadius: 20 }}
-                  />
-                </View>
-              )}
-            />
           </View>
         </ScrollView>
       </Animated.View>
@@ -339,5 +342,12 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: "center",
     alignItems: "center",
+  },
+
+  carouselContainer: {
+    borderRadius: 5,
+    padding: 20,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
