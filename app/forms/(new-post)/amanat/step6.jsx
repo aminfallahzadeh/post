@@ -5,8 +5,6 @@ import { useState } from "react";
 import {
   View,
   Text,
-  TouchableOpacity,
-  StyleSheet,
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
@@ -24,12 +22,11 @@ import FormField from "@/components/FormField";
 // LIBRARIES
 import Dropdown from "react-native-input-select";
 
-const Step5 = () => {
-  const [must, setMust] = useState(null);
-  const [packageCartoon, setPackageCartoon] = useState(null);
-  const [customerType, setCustomerType] = useState(null);
+const Step6 = () => {
+  const [insurance, setInsurance] = useState(null);
+  const [group, setGroup] = useState(null);
 
-  const mustOptions = [
+  const mohtaviyatGroupOptions = [
     { label: "تهران", value: "tehran" },
     { label: "اصفهان", value: "isfahan" },
     { label: "بندر ماهشهر", value: "bandar-mahshahr" },
@@ -37,23 +34,12 @@ const Step5 = () => {
     { label: "خراسان شمالی", value: "khorasan-shomali" },
   ];
 
-  const packageCartoonData = [
+  const insuranceType = [
     { label: "تهران", value: "tehran" },
     { label: "اصفهان", value: "isfahan" },
     { label: "بندر ماهشهر", value: "bandar-mahshahr" },
     { label: "خراسان رضوی", value: "khorasan-razavi" },
     { label: "خراسان شمالی", value: "khorasan-shomali" },
-  ];
-
-  const customerTypeData = [
-    { id: 1, label: "حقیقی (ایرانی)", disabled: false, type: "realIranian" },
-    { id: 2, label: "حقوقی", disabled: false, type: "legal" },
-    {
-      id: 3,
-      label: "حقیقی (اتباع خارجی)",
-      disabled: false,
-      type: "realForeign",
-    },
   ];
 
   return (
@@ -62,10 +48,10 @@ const Step5 = () => {
 
       <View className="pt-10 gap-2">
         <Text className="text-primary font-isansbold text-center text-[20px] mt-4">
-          اقلام مصرفی
+          بیمه
         </Text>
         <View className="flex-row items-center w-[350px] h-[5px] bg-grey5 rounded relative">
-          <View className="absolute top-0 left-0 w-[50%] h-full bg-primary rounded"></View>
+          <View className="absolute top-0 left-0 w-[60%] h-full bg-primary rounded"></View>
         </View>
       </View>
 
@@ -73,71 +59,77 @@ const Step5 = () => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View className="flex-col w-full justify-between mt-5">
           {/* First Row */}
+          <View className="flex-row justify-between">
+            <View className="flex-1">
+              <Dropdown
+                label="نوع بیمه :"
+                placeholder="انتخاب کنید"
+                options={insuranceType}
+                labelStyle={{
+                  fontFamily: "IranSans-DemiBold",
+                  color: "black",
+                  fontSize: 13,
+                  alignSelf: Platform.OS === "ios" ? "flex-start" : "flex-end",
+                  textAlign: "right",
+                  marginBottom: 7,
+                }}
+                selectedValue={insurance}
+                onValueChange={(value) => setInsurance(value)}
+                primaryColor={"blue"}
+                placeholderStyle={{
+                  color: "grey",
+                  fontFamily: "IranSans-DemiBold",
+                }}
+                dropdownContainerStyle={{
+                  direction: "rtl",
+                  borderColor: "#fcd900",
+                  fontFamily: "IranSans-DemiBold",
+                }}
+                dropdownStyle={{
+                  borderColor: "#fcd900",
+                  fontFamily: "IranSans-DemiBold",
+                }}
+                selectedItemStyle={{
+                  color: "black",
+                  fontFamily: "IranSans-Regular",
+                }}
+                modalControls={{
+                  modalOptionsContainerStyle: {
+                    direction: "rtl",
+                  },
+                }}
+              />
+            </View>
+          </View>
 
           {/* Second Row */}
           <View className="flex-row justify-between mb-2">
-            <View className="mr-2 w-1/3">
+            <View className="flex-1">
               <FormField
-                placeholder="تعداد"
+                title="مبلغ اظهار شده :"
                 keyboardType="text"
                 type={"text"}
               />
             </View>
-
-            <View className="flex-1 ml-2">
-              <Dropdown
-                placeholder="ملزومات"
-                options={mustOptions}
-                labelStyle={{
-                  fontFamily: "IranSans-DemiBold",
-                  color: "black",
-                  fontSize: 13,
-                  alignSelf: Platform.OS === "ios" ? "flex-start" : "flex-end",
-                  textAlign: "right",
-                  marginBottom: 7,
-                }}
-                selectedValue={must}
-                onValueChange={(value) => setMust(value)}
-                primaryColor={"blue"}
-                placeholderStyle={{
-                  color: "grey",
-                  fontFamily: "IranSans-DemiBold",
-                }}
-                dropdownContainerStyle={{
-                  direction: "rtl",
-                  borderColor: "#fcd900",
-                  fontFamily: "IranSans-DemiBold",
-                }}
-                dropdownStyle={{
-                  borderColor: "#fcd900",
-                  fontFamily: "IranSans-DemiBold",
-                }}
-                selectedItemStyle={{
-                  color: "black",
-                  fontFamily: "IranSans-Regular",
-                }}
-                modalControls={{
-                  modalOptionsContainerStyle: {
-                    direction: "rtl",
-                  },
-                }}
-              />
-            </View>
           </View>
 
+          {/* Third Row */}
           <View className="flex-row justify-between mb-2">
-            <View className="mr-2 w-1/3">
+            <View className="flex-1">
               <FormField
-                placeholder="تعداد"
+                title="محتویات مرسوله : :"
                 keyboardType="text"
                 type={"text"}
               />
             </View>
+          </View>
 
-            <View className="flex-1 ml-2">
+          <View className="flex-row justify-between">
+            <View className="flex-1">
               <Dropdown
-                placeholder="کارتون / پاکت"
-                options={packageCartoonData}
+                label="گروه محتویات :"
+                placeholder="انتخاب کنید"
+                options={mohtaviyatGroupOptions}
                 labelStyle={{
                   fontFamily: "IranSans-DemiBold",
                   color: "black",
@@ -146,8 +138,8 @@ const Step5 = () => {
                   textAlign: "right",
                   marginBottom: 7,
                 }}
-                selectedValue={packageCartoon}
-                onValueChange={(value) => setPackageCartoon(value)}
+                selectedValue={group}
+                onValueChange={(value) => setGroup(value)}
                 primaryColor={"blue"}
                 placeholderStyle={{
                   color: "grey",
@@ -172,41 +164,13 @@ const Step5 = () => {
                   },
                 }}
               />
-            </View>
-          </View>
-
-          <View>
-            <Text className="text-base font-isansdemibold text-right">
-              نوع مشتری :
-            </Text>
-
-            <View className="flex-row gap-3 w-full justify-end mt-1 flex-wrap">
-              {customerTypeData.map((option) => (
-                <TouchableOpacity
-                  key={option.id}
-                  onPress={() => setCustomerType(option)}
-                  style={[
-                    styles.select,
-                    customerType?.id === option.id && styles.selected,
-                    option.disabled && styles.disabled,
-                  ]}
-                >
-                  <Text
-                    className={`text-center font-isansdemibold text-[12px] ${
-                      option.disabled ? "text-gray-400" : ""
-                    }`}
-                  >
-                    {option.label}
-                  </Text>
-                </TouchableOpacity>
-              ))}
             </View>
           </View>
         </View>
       </TouchableWithoutFeedback>
 
       {/* Buttons Section */}
-      <View className="flex-row justify-between items-center w-full pb-10">
+      <View className="flex-row justify-between items-center w-full pb-10 pt-5">
         <View className="flex-1 mr-2">
           <CustomButton
             title={<Feather name="arrow-left" size={24} color="black" />}
@@ -219,7 +183,7 @@ const Step5 = () => {
             // isLoading={
             //   !weight || !packageType || !packageNumber || !selectedType
             // }
-            handlePress={() => router.push("forms/amanat/step6")}
+            handlePress={() => router.push("forms/amanat/step7")}
           />
         </View>
       </View>
@@ -227,24 +191,4 @@ const Step5 = () => {
   );
 };
 
-export default Step5;
-
-const styles = StyleSheet.create({
-  select: {
-    borderWidth: 1,
-    borderColor: "#fcd900",
-    borderRadius: 10,
-    padding: 10,
-    shadowColor: "#000",
-    width: 150,
-    alignItems: "center",
-  },
-  selected: {
-    backgroundColor: "#fcd900",
-    borderColor: "#000",
-  },
-  disabled: {
-    backgroundColor: "#f0f0f0",
-    borderColor: "#ddd",
-  },
-});
+export default Step6;

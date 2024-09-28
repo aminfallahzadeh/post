@@ -32,6 +32,8 @@ const NewPostFormLayout = () => {
         <Stack.Screen name="amanat/step3" options={{ headerShown: false }} />
         <Stack.Screen name="amanat/step4" options={{ headerShown: false }} />
         <Stack.Screen name="amanat/step5" options={{ headerShown: false }} />
+        <Stack.Screen name="amanat/step6" options={{ headerShown: false }} />
+        <Stack.Screen name="amanat/step7" options={{ headerShown: false }} />
       </Stack>
     </>
   );

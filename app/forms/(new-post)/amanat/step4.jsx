@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -73,14 +75,16 @@ const Step4 = () => {
   ];
 
   return (
-    <SafeAreaView className="bg-grey1 h-full px-3 justify-center items-center gap-y-4">
+    <SafeAreaView className="bg-grey1 h-full px-3 justify-between items-center min-h-full">
       {/* Top Section */}
 
-      <Text className="text-primary font-isansbold text-center text-[20px] mt-4">
-        اطلاعات مقصد
-      </Text>
-      <View className="flex-row items-center w-[350px] h-[5px] bg-grey5 rounded relative">
-        <View className="absolute top-0 left-0 w-[40%] h-full bg-primary rounded"></View>
+      <View className="pt-10 gap-2">
+        <Text className="text-primary font-isansbold text-center text-[20px] mt-4">
+          اطلاعات مقصد
+        </Text>
+        <View className="flex-row items-center w-[350px] h-[5px] bg-grey5 rounded relative">
+          <View className="absolute top-0 left-0 w-[40%] h-full bg-primary rounded"></View>
+        </View>
       </View>
 
       <View>
@@ -112,194 +116,199 @@ const Step4 = () => {
       </View>
 
       {/* Form Fields */}
-      <View className="flex-col w-full justify-between mt-5">
-        {/* First Row */}
-        <View className="flex-row justify-between mb-2">
-          <View className="flex-1 mr-2">
-            <Dropdown
-              placeholder="شهر"
-              options={cityData}
-              labelStyle={{
-                fontFamily: "IranSans-DemiBold",
-                color: "black",
-                fontSize: 13,
-                alignSelf: Platform.OS === "ios" ? "flex-start" : "flex-end",
-                textAlign: "right",
-                marginBottom: 7,
-              }}
-              selectedValue={city}
-              onValueChange={(value) => setCity(value)}
-              primaryColor={"blue"}
-              placeholderStyle={{
-                color: "grey",
-                fontFamily: "IranSans-DemiBold",
-              }}
-              dropdownContainerStyle={{
-                direction: "rtl",
-                borderColor: "#fcd900",
-                fontFamily: "IranSans-DemiBold",
-              }}
-              dropdownStyle={{
-                borderColor: "#fcd900",
-                fontFamily: "IranSans-DemiBold",
-              }}
-              selectedItemStyle={{
-                color: "black",
-                fontFamily: "IranSans-Regular",
-              }}
-              modalControls={{
-                modalOptionsContainerStyle: {
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View className="flex-col w-full justify-between mt-5">
+          {/* First Row */}
+          <View className="flex-row justify-between mb-2">
+            <View className="flex-1 mr-2">
+              <Dropdown
+                placeholder="شهر"
+                options={cityData}
+                labelStyle={{
+                  fontFamily: "IranSans-DemiBold",
+                  color: "black",
+                  fontSize: 13,
+                  alignSelf: Platform.OS === "ios" ? "flex-start" : "flex-end",
+                  textAlign: "right",
+                  marginBottom: 7,
+                }}
+                selectedValue={city}
+                onValueChange={(value) => setCity(value)}
+                primaryColor={"blue"}
+                placeholderStyle={{
+                  color: "grey",
+                  fontFamily: "IranSans-DemiBold",
+                }}
+                dropdownContainerStyle={{
                   direction: "rtl",
-                },
-              }}
-            />
-          </View>
+                  borderColor: "#fcd900",
+                  fontFamily: "IranSans-DemiBold",
+                }}
+                dropdownStyle={{
+                  borderColor: "#fcd900",
+                  fontFamily: "IranSans-DemiBold",
+                }}
+                selectedItemStyle={{
+                  color: "black",
+                  fontFamily: "IranSans-Regular",
+                }}
+                modalControls={{
+                  modalOptionsContainerStyle: {
+                    direction: "rtl",
+                  },
+                }}
+              />
+            </View>
 
-          <View className="flex-1 ml-2">
-            <Dropdown
-              placeholder="استان"
-              options={provinceData}
-              labelStyle={{
-                fontFamily: "IranSans-DemiBold",
-                color: "black",
-                fontSize: 13,
-                alignSelf: Platform.OS === "ios" ? "flex-start" : "flex-end",
-                textAlign: "right",
-                marginBottom: 7,
-              }}
-              selectedValue={province}
-              onValueChange={(value) => setProvince(value)}
-              primaryColor={"blue"}
-              placeholderStyle={{
-                color: "grey",
-                fontFamily: "IranSans-DemiBold",
-              }}
-              dropdownContainerStyle={{
-                direction: "rtl",
-                borderColor: "#fcd900",
-                fontFamily: "IranSans-DemiBold",
-              }}
-              dropdownStyle={{
-                borderColor: "#fcd900",
-                fontFamily: "IranSans-DemiBold",
-              }}
-              selectedItemStyle={{
-                color: "black",
-                fontFamily: "IranSans-Regular",
-              }}
-              modalControls={{
-                modalOptionsContainerStyle: {
+            <View className="flex-1 ml-2">
+              <Dropdown
+                placeholder="استان"
+                options={provinceData}
+                labelStyle={{
+                  fontFamily: "IranSans-DemiBold",
+                  color: "black",
+                  fontSize: 13,
+                  alignSelf: Platform.OS === "ios" ? "flex-start" : "flex-end",
+                  textAlign: "right",
+                  marginBottom: 7,
+                }}
+                selectedValue={province}
+                onValueChange={(value) => setProvince(value)}
+                primaryColor={"blue"}
+                placeholderStyle={{
+                  color: "grey",
+                  fontFamily: "IranSans-DemiBold",
+                }}
+                dropdownContainerStyle={{
                   direction: "rtl",
-                },
-              }}
-            />
+                  borderColor: "#fcd900",
+                  fontFamily: "IranSans-DemiBold",
+                }}
+                dropdownStyle={{
+                  borderColor: "#fcd900",
+                  fontFamily: "IranSans-DemiBold",
+                }}
+                selectedItemStyle={{
+                  color: "black",
+                  fontFamily: "IranSans-Regular",
+                }}
+                modalControls={{
+                  modalOptionsContainerStyle: {
+                    direction: "rtl",
+                  },
+                }}
+              />
+            </View>
           </View>
-        </View>
 
-        {/* Second Row */}
-        <View className="flex-row justify-between mb-2">
-          <View className="flex-1 mr-2">
-            <FormField
-              placeholder="کد مقصد"
-              keyboardType="text"
-              type={"text"}
-              //   height={"h-10"}
-            />
-          </View>
+          {/* Second Row */}
+          <View className="flex-row justify-between mb-2">
+            <View className="flex-1 mr-2">
+              <FormField
+                placeholder="کد مقصد"
+                keyboardType="text"
+                type={"text"}
+                //   height={"h-10"}
+              />
+            </View>
 
-          <View className="flex-1 ml-2">
-            <Dropdown
-              placeholder="نحوه رهسپاری"
-              options={sendTypeData}
-              labelStyle={{
-                fontFamily: "IranSans-DemiBold",
-                color: "black",
-                fontSize: 13,
-                alignSelf: Platform.OS === "ios" ? "flex-start" : "flex-end",
-                textAlign: "right",
-                marginBottom: 7,
-              }}
-              selectedValue={sendType}
-              onValueChange={(value) => setSendType(value)}
-              primaryColor={"blue"}
-              placeholderStyle={{
-                color: "grey",
-                fontFamily: "IranSans-DemiBold",
-              }}
-              dropdownContainerStyle={{
-                direction: "rtl",
-                borderColor: "#fcd900",
-                fontFamily: "IranSans-DemiBold",
-              }}
-              dropdownStyle={{
-                borderColor: "#fcd900",
-                fontFamily: "IranSans-DemiBold",
-              }}
-              selectedItemStyle={{
-                color: "black",
-                fontFamily: "IranSans-Regular",
-              }}
-              modalControls={{
-                modalOptionsContainerStyle: {
+            <View className="flex-1 ml-2">
+              <Dropdown
+                placeholder="نحوه رهسپاری"
+                options={sendTypeData}
+                labelStyle={{
+                  fontFamily: "IranSans-DemiBold",
+                  color: "black",
+                  fontSize: 13,
+                  alignSelf: Platform.OS === "ios" ? "flex-start" : "flex-end",
+                  textAlign: "right",
+                  marginBottom: 7,
+                }}
+                selectedValue={sendType}
+                onValueChange={(value) => setSendType(value)}
+                primaryColor={"blue"}
+                placeholderStyle={{
+                  color: "grey",
+                  fontFamily: "IranSans-DemiBold",
+                }}
+                dropdownContainerStyle={{
                   direction: "rtl",
-                },
-              }}
-            />
+                  borderColor: "#fcd900",
+                  fontFamily: "IranSans-DemiBold",
+                }}
+                dropdownStyle={{
+                  borderColor: "#fcd900",
+                  fontFamily: "IranSans-DemiBold",
+                }}
+                selectedItemStyle={{
+                  color: "black",
+                  fontFamily: "IranSans-Regular",
+                }}
+                modalControls={{
+                  modalOptionsContainerStyle: {
+                    direction: "rtl",
+                  },
+                }}
+              />
+            </View>
           </View>
-        </View>
 
-        <Dropdown
-          placeholder="لیست ممنوعات"
-          options={forbiddenOptions}
-          labelStyle={{
-            fontFamily: "IranSans-DemiBold",
-            color: "black",
-            fontSize: 13,
-            alignSelf: Platform.OS === "ios" ? "flex-start" : "flex-end",
-            textAlign: "right",
-            marginBottom: 7,
-          }}
-          selectedValue={forbiddenType}
-          onValueChange={(value) => setForbiddenType(value)}
-          primaryColor={"blue"}
-          placeholderStyle={{
-            color: "grey",
-            fontFamily: "IranSans-DemiBold",
-          }}
-          dropdownContainerStyle={{
-            direction: "rtl",
-            borderColor: "#fcd900",
-            fontFamily: "IranSans-DemiBold",
-          }}
-          dropdownStyle={{
-            borderColor: "#fcd900",
-            fontFamily: "IranSans-DemiBold",
-          }}
-          selectedItemStyle={{
-            color: "black",
-            fontFamily: "IranSans-Regular",
-          }}
-          modalControls={{
-            modalOptionsContainerStyle: {
+          <Dropdown
+            placeholder="لیست ممنوعات"
+            options={forbiddenOptions}
+            labelStyle={{
+              fontFamily: "IranSans-DemiBold",
+              color: "black",
+              fontSize: 13,
+              alignSelf: Platform.OS === "ios" ? "flex-start" : "flex-end",
+              textAlign: "right",
+              marginBottom: 7,
+            }}
+            selectedValue={forbiddenType}
+            onValueChange={(value) => setForbiddenType(value)}
+            primaryColor={"blue"}
+            placeholderStyle={{
+              color: "grey",
+              fontFamily: "IranSans-DemiBold",
+            }}
+            dropdownContainerStyle={{
               direction: "rtl",
-            },
-          }}
-        />
+              borderColor: "#fcd900",
+              fontFamily: "IranSans-DemiBold",
+            }}
+            dropdownStyle={{
+              borderColor: "#fcd900",
+              fontFamily: "IranSans-DemiBold",
+            }}
+            selectedItemStyle={{
+              color: "black",
+              fontFamily: "IranSans-Regular",
+            }}
+            modalControls={{
+              modalOptionsContainerStyle: {
+                direction: "rtl",
+              },
+            }}
+          />
+        </View>
+      </TouchableWithoutFeedback>
 
-        {/* Buttons Section */}
-        <View className="flex-col gap-y-3 w-full items-center mb-6 mt-2">
-          <View className="w-full">
-            <CustomButton
-              title="ادامه"
-              handlePress={() => router.push("forms/amanat/step5")}
-            />
-          </View>
-          <View className="w-full">
-            <CustomButton
-              title={<Feather name="arrow-left" size={24} color="black" />}
-              handlePress={() => router.back()}
-            />
-          </View>
+      {/* Buttons Section */}
+      <View className="flex-row justify-between items-center w-full pb-10">
+        <View className="flex-1 mr-2">
+          <CustomButton
+            title={<Feather name="arrow-left" size={24} color="black" />}
+            handlePress={() => router.back()}
+          />
+        </View>
+        <View className="flex-1 ml-2">
+          <CustomButton
+            title="ادامه"
+            // isLoading={
+            //   !weight || !packageType || !packageNumber || !selectedType
+            // }
+            handlePress={() => router.push("forms/amanat/step5")}
+          />
         </View>
       </View>
     </SafeAreaView>
