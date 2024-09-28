@@ -13,16 +13,16 @@ import { router } from "expo-router";
 import CustomButton from "@/components/CustomButton";
 import FormField from "@/components/FormField";
 
-const Step2 = () => {
+const Step3 = () => {
   return (
     <SafeAreaView className="bg-grey1 h-full px-3 justify-center items-center gap-y-4">
       {/* Top Section */}
 
       <Text className="text-primary font-isansbold text-center text-[20px] mt-4">
-        اطلاعات فرستنده
+        اطلاعات گیرنده
       </Text>
       <View className="flex-row items-center w-[350px] h-[5px] bg-grey5 rounded relative">
-        <View className="absolute top-0 left-0 w-[20%] h-full bg-primary rounded"></View>
+        <View className="absolute top-0 left-0 w-[30%] h-full bg-primary rounded"></View>
       </View>
 
       {/* Form Fields */}
@@ -102,7 +102,7 @@ const Step2 = () => {
           <View className="w-full">
             <CustomButton
               title="ادامه"
-              handlePress={() => router.push("forms/amanat/step3")}
+              handlePress={() => router.push("forms/amanat/step4")}
             />
           </View>
           <View className="w-full">
@@ -117,4 +117,4 @@ const Step2 = () => {
   );
 };
 
-export default Step2;
+export default Step3;

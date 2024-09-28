@@ -14,6 +14,7 @@ const FormField = ({
   handleChange,
   otherStyles,
   type,
+  height = "h-16",
   max,
   ...props
 }) => {
@@ -39,12 +40,14 @@ const FormField = ({
 
   return (
     <View className={`space-y-2 ${otherStyles}`}>
-      <Text className="text-base text-gray2 font-isansmedium text-right">
-        {title}
-      </Text>
+      {title && (
+        <Text className="text-base text-gray2 font-isansmedium text-right">
+          {title}
+        </Text>
+      )}
 
       <View
-        className={`w-full h-16 px-4 border-2 rounded-md items-center relative ${inputStyle}`}
+        className={`w-full ${height} px-4 border-2 rounded-md items-center relative ${inputStyle}`}
       >
         <TextInput
           className="flex-1 text-grey2 font-isansdemibold text-base w-full text-center"
