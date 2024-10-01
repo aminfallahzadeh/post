@@ -12,8 +12,10 @@ const FormField = ({
   value,
   placeholder,
   handleChange,
-  otherStyles,
+  containerStyle,
+  textStyle,
   type,
+  inputStyle,
   height = "h-16",
   max,
   ...props
@@ -35,19 +37,21 @@ const FormField = ({
     setIsFocused(false);
   };
 
-  const inputStyle =
+  const wrapperStyle =
     isFocused || value ? "border-secondary bg-white" : "border-grey4 bg-grey3";
 
   return (
-    <View className={`space-y-2 ${otherStyles}`}>
+    <View className={`space-y-2 ${containerStyle}`}>
       {title && (
-        <Text className="text-base text-gray2 font-isansmedium text-right">
+        <Text
+          className={`text-base text-gray2 font-isansmedium text-right ${textStyle}`}
+        >
           {title}
         </Text>
       )}
 
       <View
-        className={`w-full ${height} px-4 border-2 rounded-md items-center relative ${inputStyle}`}
+        className={`w-full ${height} px-4 border-2 rounded-md items-center relative ${wrapperStyle}`}
       >
         <TextInput
           className="flex-1 text-grey2 font-isansdemibold text-base w-full text-center"
@@ -57,8 +61,10 @@ const FormField = ({
           onChangeText={handleChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
+          style={inputStyle}
           secureTextEntry={type === "password" && !showPassword}
           maxLength={max}
+          {...props}
         />
         {type === "password" && (
           <TouchableOpacity

@@ -20,6 +20,7 @@ import { router } from "expo-router";
 // COMPONENTS
 import CustomButton from "@/components/CustomButton";
 import FormField from "@/components/FormField";
+import ProgressBar from "@/components/ProgressBar";
 
 // LIBRARIES
 import Dropdown from "react-native-input-select";
@@ -37,18 +38,17 @@ const Step1 = () => {
 
   return (
     <SafeAreaView className="bg-grey1 h-full px-3 justify-between items-center min-h-full">
-      {/* Top Section */}
+      {/* TOP SECTION */}
 
-      <View className="pt-10 gap-2">
+      <View className="flex-col pt-10 w-full">
         <Text className="text-primary font-isansbold text-center text-[20px]">
           اطلاعات مرسوله
         </Text>
-        <View className="flex-row items-center w-[350px] h-[5px] bg-grey5 rounded relative">
-          <View className="absolute top-0 left-0 w-[10%] h-full bg-primary rounded"></View>
-        </View>
+
+        <ProgressBar progress={10} style={"mt-4"} />
       </View>
 
-      {/* Form Fields */}
+      {/* FORM FIELDS */}
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View className="flex-col gap-3 w-full">
           <View className="flex-row justify-between items-center">
@@ -151,6 +151,8 @@ const Step1 = () => {
           </View>
         </View>
       </TouchableWithoutFeedback>
+
+      {/* BOTTOM SECTION */}
 
       <View className="flex-row justify-between items-center w-full pb-10">
         <View className="flex-1 mr-2">

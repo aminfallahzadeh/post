@@ -39,6 +39,10 @@ const RootLayout = () => {
       <Stack.Screen name="(auth)" options={{ headerShown: false }} />
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen name="forms/(new-post)" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="forms/new-complaint"
+        options={{ headerShown: false }}
+      />
     </Stack>
   );
 };

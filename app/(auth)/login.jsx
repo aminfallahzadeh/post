@@ -80,7 +80,7 @@ const Login = () => {
             title="شماره همراه :"
             value={phoneNumber}
             handleChange={handleDataCahnge}
-            otherStyles="mt-20"
+            containerStyle="mt-20"
             keyboardType="email-address"
             type={"text"}
           />

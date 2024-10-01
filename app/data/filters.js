@@ -1,0 +1,57 @@
+export const filtersData = [
+  {
+    id: 1,
+    title: "همه",
+    gradientColors: ["#164194", "#a3a3a3"],
+    iconName: null,
+  },
+  {
+    id: 2,
+    title: "پست",
+    gradientColors: ["#164194", "#fcd900"],
+    iconName: "truck",
+    iconColor: "#000",
+  },
+  {
+    id: 3,
+    title: "نرخ نامه",
+    gradientColors: ["#164194", "#fcd900"],
+    iconName: "credit-card",
+    iconColor: "#000",
+  },
+  {
+    id: 4,
+    title: "غرامت",
+    gradientColors: ["#164194", "#fcd900"],
+    iconName: "thumbs-up",
+    iconColor: "#000",
+  },
+  {
+    id: 5,
+    title: "احراز هویت",
+    gradientColors: ["#164194", "#fcd900"],
+    iconName: "user",
+    iconColor: "#000",
+  },
+  {
+    id: 6,
+    title: "شکایت",
+    gradientColors: ["#164194", "#fcd900"],
+    iconName: "frown",
+    iconColor: "#000",
+  },
+  {
+    id: 7,
+    title: "صندوق پستی",
+    gradientColors: ["#164194", "#fcd900"],
+    iconName: "box",
+    iconColor: "#000",
+  },
+  {
+    id: 8,
+    title: "تخفیف ها",
+    gradientColors: ["#164194", "#fcd900"],
+    iconName: "check-circle",
+    iconColor: "#000",
+  },
+];

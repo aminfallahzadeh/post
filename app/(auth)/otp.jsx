@@ -28,7 +28,7 @@ const otp = () => {
             numberOfDigits={4}
             focusColor="#fcd900"
             onFilled={() => {
-              router.replace("/followup");
+              router.replace("/services");
             }}
             theme={{
               containerStyle: {

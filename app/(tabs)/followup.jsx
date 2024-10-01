@@ -324,4 +324,4 @@ const FollowUp = ({ newsList }) => {
   );
 };
 
-export default FollowUp;
+// export default FollowUp;

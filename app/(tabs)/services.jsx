@@ -23,6 +23,14 @@ import { router } from "expo-router";
 // LIBRARY IMPORTS
 import Carousel from "react-native-reanimated-carousel";
 
+// DATA
+import { filtersData } from "../data/filters";
+import {
+  postServicesData,
+  costLetterData,
+  complaintData,
+} from "../data/services";
+
 const Services = () => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const width = Dimensions.get("window").width;
@@ -40,120 +48,8 @@ const Services = () => {
     require("../../assets/images/header-2.jpg"),
   ];
 
-  const servicesData = [
-    {
-      id: "1",
-      title: "همه",
-      gradientColors: ["#164194", "#a3a3a3"],
-      iconName: null,
-    },
-    {
-      id: "2",
-      title: "پست",
-      gradientColors: ["#164194", "#fcd900"],
-      iconName: "truck",
-      iconColor: "#000",
-    },
-    {
-      id: "3",
-      title: "نرخ نامه",
-      gradientColors: ["#164194", "#fcd900"],
-      iconName: "credit-card",
-      iconColor: "#000",
-    },
-    {
-      id: "4",
-      title: "غرامت",
-      gradientColors: ["#164194", "#fcd900"],
-      iconName: "thumbs-up",
-      iconColor: "#000",
-    },
-    {
-      id: "5",
-      title: "احراز هویت",
-      gradientColors: ["#164194", "#fcd900"],
-      iconName: "user",
-      iconColor: "#000",
-    },
-    {
-      id: "6",
-      title: "شکایت",
-      gradientColors: ["#164194", "#fcd900"],
-      iconName: "frown",
-      iconColor: "#000",
-    },
-    {
-      id: "7",
-      title: "صندوق پستی",
-      gradientColors: ["#164194", "#fcd900"],
-      iconName: "box",
-      iconColor: "#000",
-    },
-    {
-      id: "8",
-      title: "تخفیف ها",
-      gradientColors: ["#164194", "#fcd900"],
-      iconName: "check-circle",
-      iconColor: "#000",
-    },
-  ];
-
-  const postServicesData = [
-    {
-      id: "9",
-      title: "ثبت سفارش",
-      gradientColors: ["#067800", "#74ff66"],
-      iconName: "clipboard",
-    },
-    {
-      id: "10",
-      title: "دریافت آیدی",
-      gradientColors: ["#067800", "#74ff66"],
-      iconName: "hash",
-    },
-    {
-      id: "11",
-      title: "صدور گواهی",
-      gradientColors: ["#067800", "#74ff66"],
-      iconName: "plus",
-    },
-    {
-      id: "12",
-      title: "پست یافته",
-      gradientColors: ["#067800", "#74ff66"],
-      iconName: "truck",
-    },
-  ];
-
-  const costLetterData = [
-    {
-      id: "13",
-      title: "نرخ مرسولات",
-      gradientColors: ["#a5009e", "#f5aaff"],
-      iconName: "pie-chart",
-    },
-    {
-      id: "14",
-      title: "زمان مرسولات",
-      gradientColors: ["#a5009e", "#f5aaff"],
-      iconName: "clock",
-    },
-    {
-      id: "15",
-      title: "تفکیک هزینه",
-      gradientColors: ["#a5009e", "#f5aaff"],
-      iconName: "divide",
-    },
-    {
-      id: "16",
-      title: "هزینه جانبی",
-      gradientColors: ["#a5009e", "#f5aaff"],
-      iconName: "layout",
-    },
-  ];
-
-  const handlePress = () => {
-    router.push("/forms/type");
+  const handlePress = (url) => {
+    router.push(url);
   };
 
   return (
@@ -173,7 +69,7 @@ const Services = () => {
               transform: [{ scaleX: -1 }],
             }}
           >
-            {servicesData.map((service) => (
+            {filtersData.map((service) => (
               <View style={styles.filterItem} key={service.id}>
                 {service.iconName && (
                   <Feather
@@ -188,9 +84,12 @@ const Services = () => {
           </ScrollView>
         </View>
 
-        <ScrollView>
+        <ScrollView
+          contentContainerStyle={{ paddingBottom: 170 }}
+          showsVerticalScrollIndicator={false}
+        >
           <View className="mt-10">
-            <Text className="text-primary font-isansbold text-[15px] text-right px-10">
+            <Text className="text-primary font-isansbold text-[15px] text-right px-5">
               خدمات پستی :
             </Text>
             <ScrollView
@@ -208,7 +107,10 @@ const Services = () => {
               }}
             >
               {postServicesData.map((item) => (
-                <TouchableOpacity key={item.id} onPress={handlePress}>
+                <TouchableOpacity
+                  key={item.id}
+                  onPress={() => handlePress(item.url)}
+                >
                   <View
                     key={item.id}
                     className="items-center justify-center gap-y-2"
@@ -221,7 +123,7 @@ const Services = () => {
                       colors={item.gradientColors}
                       style={styles.postItemStyle}
                     >
-                      <Feather name={item.iconName} size={30} color={"white"} />
+                      <Feather name={item.iconName} size={20} color={"white"} />
                     </LinearGradient>
                     <Text className="text-black font-isansmedium text-[12px]">
                       {item.title}
@@ -231,6 +133,53 @@ const Services = () => {
               ))}
             </ScrollView>
           </View>
+
+          <View className="mt-10">
+            <Text className="text-primary font-isansbold text-[15px] text-right px-5">
+              خدمات پستی :
+            </Text>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{
+                alignItems: "center",
+                justifyContent: "cetner",
+                gap: 20,
+                paddingHorizontal: 20,
+                marginTop: 20,
+              }}
+              style={{
+                transform: [{ scaleX: -1 }],
+              }}
+            >
+              {complaintData.map((item) => (
+                <TouchableOpacity
+                  key={item.id}
+                  onPress={() => handlePress(item.url)}
+                >
+                  <View
+                    key={item.id}
+                    className="items-center justify-center gap-y-2"
+                    style={{
+                      transform: [{ scaleX: -1 }],
+                    }}
+                  >
+                    <LinearGradient
+                      key={item.id}
+                      colors={item.gradientColors}
+                      style={styles.postItemStyle}
+                    >
+                      <Feather name={item.iconName} size={20} color={"white"} />
+                    </LinearGradient>
+                    <Text className="text-black font-isansmedium text-[12px]">
+                      {item.title}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
+
           <View style={{ flex: 1, marginTop: 20, paddingHorizontal: 20 }}>
             <LinearGradient
               colors={["#4c669f", "#00075a"]}
@@ -239,7 +188,7 @@ const Services = () => {
               <Carousel
                 loop
                 width={width * 0.8}
-                height={width / 2}
+                height={width / 3}
                 autoPlay={true}
                 data={images}
                 scrollAnimationDuration={1000}
@@ -262,7 +211,7 @@ const Services = () => {
           </View>
 
           <View className="mt-6">
-            <Text className="text-primary font-isansbold text-[15px] text-right px-10">
+            <Text className="text-primary font-isansbold text-[15px] text-right px-5">
               خدمات نرخ نامه :
             </Text>
             <ScrollView
@@ -292,7 +241,7 @@ const Services = () => {
                     colors={item.gradientColors}
                     style={styles.postItemStyle}
                   >
-                    <Feather name={item.iconName} size={30} color={"white"} />
+                    <Feather name={item.iconName} size={20} color={"white"} />
                   </LinearGradient>
                   <Text className="text-black font-isansmedium text-[12px]">
                     {item.title}
@@ -332,14 +281,14 @@ const styles = StyleSheet.create({
   },
   postItemStyle: {
     borderRadius: 10,
-    padding: 10,
+    padding: 2,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 5 },
     shadowOpacity: 0.5,
     shadowRadius: 6,
     elevation: 8,
-    width: 50,
-    height: 50,
+    width: 35,
+    height: 35,
     justifyContent: "center",
     alignItems: "center",
   },
