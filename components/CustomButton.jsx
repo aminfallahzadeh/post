@@ -1,5 +1,8 @@
+// NATIVE IMPORTS
 import { TouchableOpacity, Text } from "react-native";
-import React from "react";
+
+// LIBRARIES
+import { Flow } from "react-native-animated-spinkit";
 
 const CustomButton = ({
   title,
@@ -19,11 +22,15 @@ const CustomButton = ({
       }`}
       disabled={isLoading}
     >
-      <Text
-        className={`${titleColor} font-isansdemibold text-lg ${testStyles}`}
-      >
-        {title}
-      </Text>
+      {isLoading ? (
+        <Flow size={45} color="#333" />
+      ) : (
+        <Text
+          className={`${titleColor} font-isansdemibold text-lg ${testStyles}`}
+        >
+          {title}
+        </Text>
+      )}
     </TouchableOpacity>
   );
 };

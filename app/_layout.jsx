@@ -7,6 +7,9 @@ import { SplashScreen, Stack } from "expo-router";
 // EXPO IMPORTS
 import { useFonts } from "expo-font";
 
+// LIBRARIES
+import FlashMessage from "react-native-flash-message";
+
 SplashScreen.preventAutoHideAsync();
 
 const RootLayout = () => {
@@ -34,16 +37,22 @@ const RootLayout = () => {
   if (!fontsLoaded && !error) return null;
 
   return (
-    <Stack>
-      <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen name="forms/(new-post)" options={{ headerShown: false }} />
-      <Stack.Screen
-        name="forms/new-complaint"
-        options={{ headerShown: false }}
-      />
-    </Stack>
+    <>
+      <Stack>
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="forms/(new-post)"
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="forms/new-complaint"
+          options={{ headerShown: false }}
+        />
+      </Stack>
+      <FlashMessage position={"top"} />
+    </>
   );
 };
 

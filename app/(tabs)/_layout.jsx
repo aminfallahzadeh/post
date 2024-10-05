@@ -15,8 +15,8 @@ import React, { useState, useRef } from "react";
 import { Ionicons } from "@expo/vector-icons";
 
 // COMPONENTS
-import TabBar from "../../components/TabBar";
-import SettingsMenu from "../../components/SettingsMenu";
+import TabBar from "@/components/TabBar";
+import SettingsMenu from "@/components/SettingsMenu";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -39,6 +39,7 @@ const TabsLayout = () => {
   return (
     <>
       {/* TOP BAR */}
+
       <View
         style={styles.topBar}
         className={Platform.OS === "ios" ? "mt-10 px-6" : ""}

@@ -1,3 +1,6 @@
+// REACT IMPORTS
+import { useEffect, useState } from "react";
+
 // NATIVE IMPORTS
 import { View, ScrollView, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -6,13 +9,86 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import LottieView from "lottie-react-native";
 import { OtpInput } from "react-native-otp-entry";
 
+// AXIOS
+import { validateOTP } from "@/api/customer";
+
+// STORE
+import { useUserStore } from "@/store";
+
 // EXPO IMPORTS
 import { router } from "expo-router";
+import * as SecureStore from "expo-secure-store";
+
+// LIBRARIES
+import { showMessage } from "react-native-flash-message";
 
 // ASSETS
 import OtpLottie from "../../assets/animations/otp-lottie.json";
 
-const otp = () => {
+const Otp = () => {
+  // DATA STATE
+  const [code, setCode] = useState(2222);
+  const mobile = useUserStore((state) => state.mobile);
+
+  // LOADING STATE
+  const [isLoading, setIsLoading] = useState(false);
+
+  // FUNCTION TO STORE TOKEN
+  const saveToken = async function (key, value) {
+    await SecureStore.setItemAsync(key, value);
+    console.log("token saved");
+  };
+
+  const saveRefreshToken = async function (key, value) {
+    await SecureStore.setItemAsync(key, value);
+    console.log("refresh token saved");
+  };
+
+  useEffect(() => {
+    console.log(mobile);
+  }, [mobile]);
+
+  // VALIDATE FUNCTION
+  const validateOTPHanlder = async () => {
+    setIsLoading(true);
+    try {
+      const response = await validateOTP({
+        code,
+        mobile,
+      });
+      const data = response.data?.itemList[0];
+      console.log("this is response:", response.data);
+      saveToken("token", data.token);
+      saveRefreshToken("refreshToken", data.refreshToken);
+      showMessage({
+        message: response.data?.message,
+        type: "success",
+        titleStyle: {
+          fontFamily: "IranSans-DemiBold",
+          fontSize: 16,
+        },
+        style: {
+          height: 100,
+          width: "100%",
+          paddingTop: 50,
+          alignItems: "center",
+        },
+      });
+      router.replace("/services");
+    } catch (error) {
+      console.log("this is error", error);
+      showMessage({
+        message: error.message,
+        type: "danger",
+        style: {
+          color: "blue",
+        },
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <SafeAreaView className="bg-grey1 h-full">
       <ScrollView contentContainerStyle={{ height: "100%" }}>
@@ -27,9 +103,7 @@ const otp = () => {
           <OtpInput
             numberOfDigits={4}
             focusColor="#fcd900"
-            onFilled={() => {
-              router.replace("/services");
-            }}
+            onFilled={validateOTPHanlder}
             theme={{
               containerStyle: {
                 width: "70%",
@@ -49,4 +123,4 @@ const otp = () => {
   );
 };
 
-export default otp;
+export default Otp;

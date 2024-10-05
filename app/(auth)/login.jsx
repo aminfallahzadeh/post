@@ -8,6 +8,15 @@ import { SafeAreaView } from "react-native-safe-area-context";
 // EXPO IMPORTS
 import { router } from "expo-router";
 
+// AXIOS
+import { generateOTP } from "../../api/customer";
+
+// STORE
+import { useUserStore } from "@/store";
+
+// LIBRARIES
+import { showMessage } from "react-native-flash-message";
+
 // ASSETS
 import images from "../../constants/images";
 
@@ -16,17 +25,69 @@ import FormField from "@/components/FormField";
 import CustomButton from "@/components/CustomButton";
 
 const Login = () => {
+  // LOADING STATE
+  const [isLoading, setIsLoading] = useState(false);
+
   // FORM STATES
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState(null);
 
-  // HANDLERS
-  const handleDataCahnge = (e) => {
-    setPhoneNumber(e);
+  // ACCESS STORE STATE
+  const setMobile = useUserStore((state) => state.setMobile);
+
+  // GENERATE OTP FUNCTION
+  const generateOTPHandler = async () => {
+    setIsLoading(true);
+    try {
+      const response = await generateOTP(phoneNumber);
+      setMobile(response.data.itemList[0].mobile);
+      router.push("/otp");
+    } catch (error) {
+      console.log("this is error", error);
+      showMessage({
+        message: error.message,
+        type: "danger",
+        titleStyle: {
+          fontFamily: "IranSans-DemiBold",
+          fontSize: 16,
+        },
+        style: {
+          height: 100,
+          width: "100%",
+          paddingTop: 40,
+          alignItems: "center",
+        },
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleSubmit = () => {
-    router.push("/otp");
+  // SUBMIT HANDLER
+  const handleSubmit = async () => {
+    if (!phoneNumber) {
+      showMessage({
+        message: "\n لطفا شماره موبایل خود را وارد کنید",
+        type: "danger",
+        titleStyle: {
+          fontFamily: "IranSans-DemiBold",
+          fontSize: 16,
+        },
+        style: {
+          height: 100,
+          width: "100%",
+          paddingTop: 40,
+          paddingBottom: 0,
+          alignItems: "center",
+        },
+      });
+    } else {
+      generateOTPHandler(phoneNumber);
+    }
   };
+
+  useEffect(() => {
+    console.log(phoneNumber);
+  }, [phoneNumber]);
 
   // ANIMATIONS
   const imageOpacity = useRef(new Animated.Value(0)).current;
@@ -71,6 +132,7 @@ const Login = () => {
               resizeMode="contain"
               className="absolute w-[80px] h-[15px] bottom-7 left-[100px]"
             />
+
             <Text className="text-primary font-isansdemibold text-[16px] text-center mt-2">
               جمهوری اسلامی ایران
             </Text>
@@ -79,7 +141,7 @@ const Login = () => {
           <FormField
             title="شماره همراه :"
             value={phoneNumber}
-            handleChange={handleDataCahnge}
+            handleChange={setPhoneNumber}
             containerStyle="mt-20"
             keyboardType="email-address"
             type={"text"}
@@ -89,10 +151,9 @@ const Login = () => {
             title={"تایید"}
             containerStyles={"mt-10"}
             handlePress={handleSubmit}
+            isLoading={isLoading}
           />
         </View>
-
-        <View></View>
       </ScrollView>
     </SafeAreaView>
   );

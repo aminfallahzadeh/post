@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   Dimensions,
   Image,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -21,7 +22,7 @@ import { Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
 
 // LIBRARY IMPORTS
-import Carousel from "react-native-reanimated-carousel";
+import Background from "@/components/Background";
 
 // DATA
 import { filtersData } from "../data/filters";
@@ -31,9 +32,11 @@ import {
   complaintData,
 } from "../data/services";
 
+const width = Dimensions.get("window").width;
+const height = Dimensions.get("window").height;
+
 const Services = () => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
-  const width = Dimensions.get("window").width;
 
   useEffect(() => {
     Animated.timing(fadeAnim, {
@@ -46,6 +49,7 @@ const Services = () => {
   const images = [
     require("../../assets/images/header-1.jpg"),
     require("../../assets/images/header-2.jpg"),
+    require("../../assets/images/announce-4.png"),
   ];
 
   const handlePress = (url) => {
@@ -53,133 +57,169 @@ const Services = () => {
   };
 
   return (
-    <SafeAreaView className="bg-grey1 h-full">
-      <Animated.View className="mt-20" style={{ opacity: fadeAnim }}>
-        <View>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{
-              alignItems: "center",
-              justifyContent: "cetner",
-              gap: 10,
-              paddingHorizontal: 20,
-            }}
-            style={{
-              transform: [{ scaleX: -1 }],
-            }}
-          >
-            {filtersData.map((service) => (
-              <View style={styles.filterItem} key={service.id}>
-                {service.iconName && (
-                  <Feather
-                    name={service.iconName}
-                    size={12}
-                    color={service.iconColor}
-                  />
-                )}
-                <Text style={styles.filterText}>{service.title}</Text>
+    <Background>
+      <SafeAreaView className="h-full">
+        <Animated.View className="mt-16" style={{ opacity: fadeAnim }}>
+          <View className="w-full">
+            <View style={{ position: "relative" }}>
+              <Image source={images[2]} style={styles.heroImage} />
+              <LinearGradient
+                colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.8)"]}
+                style={[
+                  styles.heroImage,
+                  {
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                  },
+                ]}
+              />
+              <View style={styles.heroTextContainer}>
+                <TouchableWithoutFeedback onPress={() => alert("hello")}>
+                  <View className="flex-row justify-center items-center gap-x-2">
+                    <Text className="text-tertiary font-isansbold text-2xl text-center">
+                      پیگیری مرسوله
+                    </Text>
+
+                    <Feather
+                      size={25}
+                      name="arrow-right-circle"
+                      color="#164194"
+                    />
+                  </View>
+                </TouchableWithoutFeedback>
               </View>
-            ))}
-          </ScrollView>
-        </View>
-
-        <ScrollView
-          contentContainerStyle={{ paddingBottom: 170 }}
-          showsVerticalScrollIndicator={false}
-        >
-          <View className="mt-10">
-            <Text className="text-primary font-isansbold text-[15px] text-right px-5">
-              خدمات پستی :
-            </Text>
+            </View>
+          </View>
+          <View className="mt-5">
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={{
                 alignItems: "center",
                 justifyContent: "cetner",
-                gap: 20,
+                gap: 10,
                 paddingHorizontal: 20,
-                marginTop: 20,
               }}
               style={{
                 transform: [{ scaleX: -1 }],
               }}
             >
-              {postServicesData.map((item) => (
-                <TouchableOpacity
-                  key={item.id}
-                  onPress={() => handlePress(item.url)}
-                >
-                  <View
-                    key={item.id}
-                    className="items-center justify-center gap-y-2"
-                    style={{
-                      transform: [{ scaleX: -1 }],
-                    }}
-                  >
-                    <LinearGradient
-                      key={item.id}
-                      colors={item.gradientColors}
-                      style={styles.postItemStyle}
-                    >
-                      <Feather name={item.iconName} size={20} color={"white"} />
-                    </LinearGradient>
-                    <Text className="text-black font-isansmedium text-[12px]">
-                      {item.title}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
+              {filtersData.map((service) => (
+                <View style={styles.filterItem} key={service.id}>
+                  {service.iconName && (
+                    <Feather
+                      name={service.iconName}
+                      size={12}
+                      color={service.iconColor}
+                    />
+                  )}
+                  <Text style={styles.filterText}>{service.title}</Text>
+                </View>
               ))}
             </ScrollView>
           </View>
 
-          <View className="mt-10">
-            <Text className="text-primary font-isansbold text-[15px] text-right px-5">
-              خدمات پستی :
-            </Text>
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{
-                alignItems: "center",
-                justifyContent: "cetner",
-                gap: 20,
-                paddingHorizontal: 20,
-                marginTop: 20,
-              }}
-              style={{
-                transform: [{ scaleX: -1 }],
-              }}
-            >
-              {complaintData.map((item) => (
-                <TouchableOpacity
-                  key={item.id}
-                  onPress={() => handlePress(item.url)}
-                >
-                  <View
+          <ScrollView
+            contentContainerStyle={{ paddingBottom: 170 }}
+            showsVerticalScrollIndicator={false}
+          >
+            <View>
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{
+                  alignItems: "center",
+                  justifyContent: "cetner",
+                  gap: 20,
+                  paddingHorizontal: 20,
+                  marginTop: 20,
+                }}
+                style={{
+                  transform: [{ scaleX: -1 }],
+                }}
+              >
+                {postServicesData.map((item) => (
+                  <TouchableOpacity
                     key={item.id}
-                    className="items-center justify-center gap-y-2"
-                    style={{
-                      transform: [{ scaleX: -1 }],
-                    }}
+                    onPress={() => handlePress(item.url)}
                   >
-                    <LinearGradient
+                    <View
                       key={item.id}
-                      colors={item.gradientColors}
-                      style={styles.postItemStyle}
+                      className="items-center justify-center gap-y-2"
+                      style={{
+                        transform: [{ scaleX: -1 }],
+                      }}
                     >
-                      <Feather name={item.iconName} size={20} color={"white"} />
-                    </LinearGradient>
-                    <Text className="text-black font-isansmedium text-[12px]">
-                      {item.title}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
-          </View>
+                      <LinearGradient
+                        key={item.id}
+                        colors={item.gradientColors}
+                        style={styles.postItemStyle}
+                      >
+                        <Feather
+                          name={item.iconName}
+                          size={20}
+                          color={"white"}
+                        />
+                      </LinearGradient>
+                      <Text className="text-black font-isansmedium text-[12px]">
+                        {item.title}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
+            </View>
 
+            <View>
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{
+                  alignItems: "center",
+                  justifyContent: "cetner",
+                  gap: 20,
+                  paddingHorizontal: 20,
+                  marginTop: 20,
+                }}
+                style={{
+                  transform: [{ scaleX: -1 }],
+                }}
+              >
+                {complaintData.map((item) => (
+                  <TouchableOpacity
+                    key={item.id}
+                    onPress={() => handlePress(item.url)}
+                  >
+                    <View
+                      key={item.id}
+                      className="items-center justify-center gap-y-2"
+                      style={{
+                        transform: [{ scaleX: -1 }],
+                      }}
+                    >
+                      <LinearGradient
+                        key={item.id}
+                        colors={item.gradientColors}
+                        style={styles.postItemStyle}
+                      >
+                        <Feather
+                          name={item.iconName}
+                          size={20}
+                          color={"white"}
+                        />
+                      </LinearGradient>
+                      <Text className="text-black font-isansmedium text-[12px]">
+                        {item.title}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
+            </View>
+            {/* 
           <View style={{ flex: 1, marginTop: 20, paddingHorizontal: 20 }}>
             <LinearGradient
               colors={["#4c669f", "#00075a"]}
@@ -208,51 +248,49 @@ const Services = () => {
                 )}
               />
             </LinearGradient>
-          </View>
+          </View> */}
 
-          <View className="mt-6">
-            <Text className="text-primary font-isansbold text-[15px] text-right px-5">
-              خدمات نرخ نامه :
-            </Text>
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{
-                alignItems: "center",
-                justifyContent: "cetner",
-                gap: 20,
-                paddingHorizontal: 20,
-                marginTop: 20,
-              }}
-              style={{
-                transform: [{ scaleX: -1 }],
-              }}
-            >
-              {costLetterData.map((item) => (
-                <View
-                  className="items-center justify-center gap-y-2"
-                  style={{
-                    transform: [{ scaleX: -1 }],
-                  }}
-                  key={item.id}
-                >
-                  <LinearGradient
+            <View>
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{
+                  alignItems: "center",
+                  justifyContent: "cetner",
+                  gap: 20,
+                  paddingHorizontal: 20,
+                  marginTop: 20,
+                }}
+                style={{
+                  transform: [{ scaleX: -1 }],
+                }}
+              >
+                {costLetterData.map((item) => (
+                  <View
+                    className="items-center justify-center gap-y-2"
+                    style={{
+                      transform: [{ scaleX: -1 }],
+                    }}
                     key={item.id}
-                    colors={item.gradientColors}
-                    style={styles.postItemStyle}
                   >
-                    <Feather name={item.iconName} size={20} color={"white"} />
-                  </LinearGradient>
-                  <Text className="text-black font-isansmedium text-[12px]">
-                    {item.title}
-                  </Text>
-                </View>
-              ))}
-            </ScrollView>
-          </View>
-        </ScrollView>
-      </Animated.View>
-    </SafeAreaView>
+                    <LinearGradient
+                      key={item.id}
+                      colors={item.gradientColors}
+                      style={styles.postItemStyle}
+                    >
+                      <Feather name={item.iconName} size={20} color={"white"} />
+                    </LinearGradient>
+                    <Text className="text-black font-isansmedium text-[12px]">
+                      {item.title}
+                    </Text>
+                  </View>
+                ))}
+              </ScrollView>
+            </View>
+          </ScrollView>
+        </Animated.View>
+      </SafeAreaView>
+    </Background>
   );
 };
 
@@ -298,5 +336,26 @@ const styles = StyleSheet.create({
     padding: 20,
     alignItems: "center",
     justifyContent: "center",
+  },
+
+  heroImage: {
+    width,
+    height: height / 5,
+  },
+
+  heroTextContainer: {
+    position: "absolute",
+    bottom: 25,
+    backgroundColor: "#fcd900",
+    paddingHorizontal: 20,
+    paddingVertical: 5,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    // shadowColor: "#fff",
+    // shadowOffset: { width: 0, height: 5 },
+    // shadowOpacity: 0.9,
+    // shadowRadius: 10,
+    // elevation: 20,
   },
 });
