@@ -81,7 +81,7 @@ const Otp = () => {
           textAlign: "center",
         },
       });
-      router.replace("/services");
+      // router.replace("/services");
     } finally {
       setIsLoading(false);
     }

@@ -18,7 +18,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 // EXPO IMPORTS
 import { LinearGradient } from "expo-linear-gradient";
-import { Feather } from "@expo/vector-icons";
+import { Feather, AntDesign, FontAwesome } from "@expo/vector-icons";
 import { router } from "expo-router";
 import * as SecureStore from "expo-secure-store";
 
@@ -159,7 +159,17 @@ const Services = () => {
                     start={{ x: 0.5, y: 1 }}
                     end={{ x: 0.5, y: 0 }}
                   >
-                    <Feather name={item.iconName} size={30} color="white" />
+                    {item.iconName === "exclamationcircle" ? (
+                      <AntDesign name={item.iconName} size={28} color="white" />
+                    ) : item.iconName === "address-card" ? (
+                      <FontAwesome
+                        name={item.iconName}
+                        size={28}
+                        color="white"
+                      />
+                    ) : (
+                      <Feather name={item.iconName} size={30} color="white" />
+                    )}
                   </LinearGradient>
 
                   <Text

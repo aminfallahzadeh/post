@@ -89,7 +89,7 @@ export const allData = [
     id: 19,
     title: "غرامت",
     gradientColors: ["#00075a", "#009cff"],
-    iconName: "help-circle",
+    iconName: "exclamationcircle",
     url: null,
   },
   {
@@ -117,14 +117,14 @@ export const allData = [
     id: 23,
     title: "درخواست کد پستی",
     gradientColors: ["#755d15", "#ffca2b"],
-    iconName: "plus-circle",
+    iconName: "address-card",
     url: null,
   },
   {
     id: 24,
     title: "پیگیری غرامت",
     gradientColors: ["#00075a", "#009cff"],
-    iconName: "help-circle",
+    iconName: "exclamationcircle",
     url: null,
   },
   {

@@ -36,15 +36,9 @@ const Login = () => {
 
   // GENERATE OTP FUNCTION
   const generateOTPHandler = async () => {
-    setIsLoading(true);
-    try {
-      const response = await generateOTP(phoneNumber);
-      setMobile(response.data.itemList[0].mobile);
-      router.push("/otp");
-    } catch (error) {
-      console.log("this is error", error);
+    if (phoneNumber.length !== 11) {
       showMessage({
-        message: error.message,
+        message: "\nشماره موبایل معتبر نیست",
         type: "danger",
         titleStyle: {
           fontFamily: "IranSans-DemiBold",
@@ -52,9 +46,29 @@ const Login = () => {
           textAlign: "center",
         },
       });
-      router.push("/otp");
-    } finally {
-      setIsLoading(false);
+
+      return;
+    } else {
+      setIsLoading(true);
+      try {
+        const response = await generateOTP(phoneNumber);
+        setMobile(response.data.itemList[0].mobile);
+        router.push("/otp");
+      } catch (error) {
+        console.log("this is error", error);
+        showMessage({
+          message: error.message,
+          type: "danger",
+          titleStyle: {
+            fontFamily: "IranSans-DemiBold",
+            fontSize: 16,
+            textAlign: "center",
+          },
+        });
+        // router.push("/otp");
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
