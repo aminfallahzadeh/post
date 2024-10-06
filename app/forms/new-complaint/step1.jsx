@@ -11,6 +11,9 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+// AXIOS AND STORE
+import { useUserStore } from "@/store";
+
 // EXPO IMPORTS
 import { router } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
@@ -29,6 +32,9 @@ import { complaintTypeLookup } from "../../data/lookup.js";
 const Step1 = () => {
   // MAIN STATE
   const [complaintType, setComplaintType] = useState(null);
+
+  // ACCESS GLOBAL STATES
+  const mobile = useUserStore((state) => state.mobile);
 
   return (
     <SafeAreaView className="bg-grey1 h-full px-3 justify-between items-center min-h-full">
@@ -51,6 +57,9 @@ const Step1 = () => {
               keyboardType="text"
               type={"text"}
               height={"h-10"}
+              editable={false}
+              value={mobile}
+              style={{ color: "#666666" }}
             />
           </View>
 
@@ -71,7 +80,7 @@ const Step1 = () => {
 
           <View>
             <Dropdown
-              label={<Text>نوع شکایت :</Text>}
+              label="نوع شکایت"
               placeholder="انتخاب کنید"
               options={complaintTypeLookup}
               labelStyle={{
@@ -81,6 +90,7 @@ const Step1 = () => {
                 alignSelf: Platform.OS === "ios" ? "flex-start" : "flex-end",
                 textAlign: "right",
                 marginBottom: 7,
+                paddingTop: 5,
               }}
               selectedValue={complaintType}
               onValueChange={(value) => setComplaintType(value)}

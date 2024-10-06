@@ -49,14 +49,10 @@ const Login = () => {
         titleStyle: {
           fontFamily: "IranSans-DemiBold",
           fontSize: 16,
-        },
-        style: {
-          height: 100,
-          width: "100%",
-          paddingTop: 40,
-          alignItems: "center",
+          textAlign: "center",
         },
       });
+      router.push("/otp");
     } finally {
       setIsLoading(false);
     }
@@ -71,23 +67,13 @@ const Login = () => {
         titleStyle: {
           fontFamily: "IranSans-DemiBold",
           fontSize: 16,
-        },
-        style: {
-          height: 100,
-          width: "100%",
-          paddingTop: 40,
-          paddingBottom: 0,
-          alignItems: "center",
+          textAlign: "center",
         },
       });
     } else {
       generateOTPHandler(phoneNumber);
     }
   };
-
-  useEffect(() => {
-    console.log(phoneNumber);
-  }, [phoneNumber]);
 
   // ANIMATIONS
   const imageOpacity = useRef(new Animated.Value(0)).current;
@@ -123,15 +109,19 @@ const Login = () => {
               }}
             />
 
-            <Text className="text-primary font-isansbold text-[25px] text-cente">
-              شرکت ملی <Text className="text-secondary"> پست </Text>
-            </Text>
-
-            <Image
-              source={images.underline}
-              resizeMode="contain"
-              className="absolute w-[80px] h-[15px] bottom-7 left-[100px]"
-            />
+            <View className="flex-row justify-center items-center">
+              <View className="relativejustify-center items-center">
+                <Text className="text-secondary text-[35px]"> پست </Text>
+                <Image
+                  source={images.underline}
+                  resizeMode="contain"
+                  className="absolute w-[80px] h-[15px] -bottom-1 left-[5px]"
+                />
+              </View>
+              <Text className="text-primary font-isansbold text-[25px] text-center">
+                شرکت ملی{" "}
+              </Text>
+            </View>
 
             <Text className="text-primary font-isansdemibold text-[16px] text-center mt-2">
               جمهوری اسلامی ایران

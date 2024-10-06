@@ -12,5 +12,7 @@ export const icons = {
   services: (props) => (
     <MaterialCommunityIcons name="hand-coin-outline" size={24} {...props} />
   ),
-  profile: (props) => <FontAwesome5 name="user" size={24} {...props} />,
+  mypost: (props) => (
+    <MaterialCommunityIcons name="package-variant" size={24} {...props} />
+  ),
 };

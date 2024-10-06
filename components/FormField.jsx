@@ -18,6 +18,7 @@ const FormField = ({
   inputStyle,
   height = "h-16",
   max,
+  editable,
   ...props
 }) => {
   // STATES
@@ -38,7 +39,11 @@ const FormField = ({
   };
 
   const wrapperStyle =
-    isFocused || value ? "border-secondary bg-white" : "border-grey4 bg-grey3";
+    isFocused || (value && editable)
+      ? "border-secondary bg-white"
+      : editable === false
+      ? "border-gray-300 bg-gray-100"
+      : "border-grey4 bg-grey3";
 
   return (
     <View className={`space-y-2 ${containerStyle}`}>
@@ -64,6 +69,7 @@ const FormField = ({
           style={inputStyle}
           secureTextEntry={type === "password" && !showPassword}
           maxLength={max}
+          editable={editable}
           {...props}
         />
         {type === "password" && (

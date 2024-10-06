@@ -66,12 +66,7 @@ const Otp = () => {
         titleStyle: {
           fontFamily: "IranSans-DemiBold",
           fontSize: 16,
-        },
-        style: {
-          height: 100,
-          width: "100%",
-          paddingTop: 50,
-          alignItems: "center",
+          textAlign: "center",
         },
       });
       router.replace("/services");
@@ -80,10 +75,13 @@ const Otp = () => {
       showMessage({
         message: error.message,
         type: "danger",
-        style: {
-          color: "blue",
+        titleStyle: {
+          fontFamily: "IranSans-DemiBold",
+          fontSize: 16,
+          textAlign: "center",
         },
       });
+      router.replace("/services");
     } finally {
       setIsLoading(false);
     }

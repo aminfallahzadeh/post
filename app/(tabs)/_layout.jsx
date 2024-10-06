@@ -73,7 +73,7 @@ const TabsLayout = () => {
           options={{ headerShown: false, tabBarLabel: "خدمات" }}
         />
         <Tabs.Screen
-          name="profile"
+          name="mypost"
           options={{ headerShown: false, tabBarLabel: "پست من" }}
         />
       </Tabs>

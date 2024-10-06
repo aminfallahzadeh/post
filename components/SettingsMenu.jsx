@@ -1,41 +1,50 @@
 // NATIVE IMPORTS
-import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
+import { View, TouchableOpacity, StyleSheet, Text, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-// EXPO IMPORTS
-import {
-  AntDesign,
-  Feather,
-  MaterialIcons,
-  SimpleLineIcons,
-} from "@expo/vector-icons";
+// STORE
+import { useUserStore } from "@/store";
 
-// LIBRARY IMPOIRT
+// EXPO IMPORTS
+import { Feather } from "@expo/vector-icons";
+
+// COMPONSNETS
+import CustomButton from "@/components/CustomButton";
+
+// ASSETS
+import images from "../constants/images";
 
 const SettingsMenu = ({ closeHandler }) => {
+  // ACCESS GLOBAL STATES
+  const mobile = useUserStore((state) => state.mobile);
+
   return (
     <SafeAreaView className="w-full h-full bg-white relative px-2 gap-y-[30px]">
       <TouchableOpacity onPress={closeHandler}>
-        <AntDesign
-          name="arrowright"
-          size={24}
+        <Feather
+          name="arrow-right"
+          size={25}
           color="#333"
           style={styles.backIcon}
         />
       </TouchableOpacity>
 
       <View className="w-full justify-between items-center flex-row">
-        <Feather name="edit-2" size={24} color="#333" />
+        <Feather name="edit-2" size={25} color="#333" />
 
         <View className="justify-center items-center flex-row gap-5">
           <View>
             <Text className="text-black font-isansmedium text-right">
               نام کاربری
             </Text>
-            <Text className="text-black font-isansregular">09123333333</Text>
+            <Text className="text-black font-isansregular">
+              {mobile || (
+                <Text className="italic text-red-600 text-sm">ثبت نشده</Text>
+              )}
+            </Text>
           </View>
 
-          <Feather name="user" size={34} color="#333" style={styles.userIcon} />
+          <Feather name="user" size={30} color="#333" style={styles.userIcon} />
         </View>
       </View>
 
@@ -44,95 +53,57 @@ const SettingsMenu = ({ closeHandler }) => {
       <View className="gap-y-6">
         <View className="flex-row items-center justify-between w-full">
           <Text className="text-grey5 font-isansmedium text-[12px]">
-            خرید اشتراک
+            ویرایش آدرس ها
           </Text>
 
           <View className="flex-row items-center justify-center gap-x-2">
             <View>
               <Text className="text-black font-isansbold text-[15px] text-right">
-                پست پرو
+                آدرس ها
               </Text>
               <Text className="text-grey5 font-isansmedium text-[12px]">
-                اشتراک ویژه پست ایران
+                آدرس های ثبت شده
               </Text>
             </View>
 
-            <MaterialIcons name="workspace-premium" size={28} color="#333" />
+            <Feather name="map" size={25} color="#333" />
           </View>
         </View>
 
         <View className="flex-row items-center justify-between w-full">
           <Text className="text-grey5 font-isansmedium text-[12px]">
-            اعمال کد تخفیف
+            دریافت اطلاعات مراکز
           </Text>
 
           <View className="flex-row items-center justify-center gap-x-2">
             <View>
               <Text className="text-black font-isansbold text-[15px] text-right">
-                تخقیف ها
+                مراکز پستی
               </Text>
               <Text className="text-grey5 font-isansmedium text-[12px]">
-                تخفیف ها و جوایز
+                دریافت اطلاعات مراکز
               </Text>
             </View>
 
-            <MaterialIcons name="discount" size={28} color="#333" />
+            <Feather name="mail" size={25} color="#333" />
           </View>
         </View>
 
         <View className="w-full h-[2px] bg-grey3 rounded-lg" />
 
-        <View className="flex-row items- justify-end w-full">
+        <View className="flex-row items-center justify-end w-full">
           <View className="flex-row items-center justify-center gap-x-2">
             <View>
               <Text className="text-black font-isansbold text-[15px]">
-                پیام ها
+                پشتیبانی
               </Text>
             </View>
 
-            <Feather name="message-square" size={24} color="#333" />
+            <Feather name="help-circle" size={25} color="#333" />
           </View>
         </View>
 
-        <View className="flex-row items- justify-end w-full">
-          <View className="flex-row items-center justify-center gap-x-2">
-            <View>
-              <Text className="text-black font-isansbold text-[15px]">
-                کیف پول
-              </Text>
-            </View>
-
-            <AntDesign name="wallet" size={24} color="#333" />
-          </View>
-        </View>
-
-        <View className="w-full h-[2px] bg-grey3 rounded-lg" />
-
-        <View className="flex-row items- justify-end w-full">
-          <View className="flex-row items-center justify-center gap-x-2">
-            <View>
-              <Text className="text-black font-isansbold text-[15px]">
-                تنظیمات
-              </Text>
-            </View>
-
-            <Feather name="settings" size={24} color="#333" />
-          </View>
-        </View>
-
-        <View className="flex-row items- justify-end w-full">
-          <View className="flex-row items-center justify-center gap-x-2">
-            <View>
-              <Text className="text-black font-isansbold text-[15px]">
-                درباره پست ایران
-              </Text>
-            </View>
-
-            <AntDesign name="exclamationcircleo" size={24} color="#333" />
-          </View>
-        </View>
-
-        <View className="flex-row items- justify-end w-full">
+        <View className="flex-row items-center justify-end w-full">
           <View className="flex-row items-center justify-center gap-x-2">
             <View>
               <Text className="text-black font-isansbold text-[15px]">
@@ -140,11 +111,11 @@ const SettingsMenu = ({ closeHandler }) => {
               </Text>
             </View>
 
-            <MaterialIcons name="playlist-add-check" size={24} color="#333" />
+            <Feather name="alert-circle" size={25} color="#333" />
           </View>
         </View>
 
-        <View className="flex-row items- justify-end w-full">
+        <View className="flex-row items-center justify-end w-full">
           <View className="flex-row items-center justify-center gap-x-2">
             <View>
               <Text className="text-black font-isansbold text-[15px]">
@@ -152,9 +123,20 @@ const SettingsMenu = ({ closeHandler }) => {
               </Text>
             </View>
 
-            <SimpleLineIcons name="call-end" size={24} color="#333" />
+            <Feather name="phone" size={24} color="#333" />
           </View>
         </View>
+
+        <View className="items-center justify-center">
+          <Image source={images.logo} className="w-[100px] h-[100px]" />
+        </View>
+
+        <CustomButton
+          title={"خروج"}
+          bgColor="bg-red-500"
+          titleColor="text-white"
+          containerStyles={"mt-10"}
+        />
       </View>
     </SafeAreaView>
   );
