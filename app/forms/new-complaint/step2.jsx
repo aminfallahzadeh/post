@@ -1,3 +1,6 @@
+// REACT IMPORTS
+import { useForm } from "react-hook-form";
+
 // NATIVE IMPORTS
 import { View, Text, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -12,6 +15,9 @@ import { router } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
 
 const Step2 = () => {
+  // ACCESS HOOK FORM METHODS
+  const { control, handleSubmit, watch } = useForm();
+
   return (
     <SafeAreaView className="bg-grey1 h-full px-3 justify-between items-center min-h-full">
       {/* TOP SECTION */}
@@ -28,18 +34,32 @@ const Step2 = () => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View className="flex-col gap-3 w-full">
           <View className="mb-2">
-            <FormField title="نام :" keyboardType="text" type={"text"} />
+            <FormField
+              title="نام :"
+              keyboardType="text"
+              type={"text"}
+              control={control}
+              name="name"
+            />
           </View>
           <View className="mb-2">
             <FormField
               title="نام خانوادگی :"
               keyboardType="text"
               type={"text"}
+              control={control}
+              name="lastName"
             />
           </View>
 
           <View className="mb-2">
-            <FormField title="کد ملی :" keyboardType="text" type={"text"} />
+            <FormField
+              title="کد ملی :"
+              keyboardType="text"
+              type={"text"}
+              control={control}
+              name="nationalCode"
+            />
           </View>
         </View>
       </TouchableWithoutFeedback>

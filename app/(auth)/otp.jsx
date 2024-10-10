@@ -5,13 +5,14 @@ import { useEffect, useState, useCallback } from "react";
 import { View, ScrollView, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-// LIBRARY IMPORTS
+// LIBRARIES
 import LottieView from "lottie-react-native";
 import { OtpInput } from "react-native-otp-entry";
+import { showMessage } from "react-native-flash-message";
 
 // AXIOS
 import { validateOTP } from "@/api/auth";
-import { getCustomerProfile } from "@/api/customer";
+// import { getCustomerProfile } from "@/api/customer";
 
 // STORE
 import { useUserStore } from "@/store";
@@ -20,22 +21,23 @@ import { useUserStore } from "@/store";
 import { router } from "expo-router";
 import * as SecureStore from "expo-secure-store";
 
-// LIBRARIES
-import { showMessage } from "react-native-flash-message";
-
 // ASSETS
-import OtpLottie from "../../assets/animations/otp-lottie.json";
+import OtpLottie from "@/assets/animations/otp-lottie.json";
+
+// HOOKS
+import useGetUserData from "@/hooks/useGetUserData";
 
 const Otp = () => {
   // DATA STATE
   const [code, setCode] = useState(null);
   const mobile = useUserStore((state) => state.mobile);
 
-  // STATE DISPATCHER
-  const setUserData = useUserStore((state) => state.setUserData);
-
   // LOADING STATE
   const [isLoading, setIsLoading] = useState(false);
+
+  // ACCES HOOK FUNCTIONS
+  const { fetchCustomerData, isLoading: userDataLoading } =
+    useGetUserData(mobile);
 
   // FUNCTION TO STORE TOKEN
   const saveToken = async function (key, value) {
@@ -47,26 +49,6 @@ const Otp = () => {
     await SecureStore.setItemAsync(key, value);
     console.log("refresh token saved");
   };
-
-  // GET CUSTOMER DATA HANLDERS
-  const fetchCustomerData = useCallback(async () => {
-    try {
-      const response = await getCustomerProfile(mobile);
-      setUserData(response.data.itemList[0]);
-      console.log("User Data Saved to store");
-    } catch (error) {
-      console.log(error);
-      showMessage({
-        message: error.response.data.message || error.message,
-        type: "danger",
-        titleStyle: {
-          fontFamily: "IranSans-DemiBold",
-          fontSize: 16,
-          textAlign: "center",
-        },
-      });
-    }
-  }, [mobile, setUserData]);
 
   // VALIDATE FUNCTION
   const validateOTPHanlder = useCallback(async () => {
@@ -81,7 +63,7 @@ const Otp = () => {
       saveToken("token", data.token);
       saveRefreshToken("refreshToken", data.refreshToken);
       showMessage({
-        message: response.data?.message,
+        message: `\n ${response?.data?.message}`,
         type: "success",
         titleStyle: {
           fontFamily: "IranSans-DemiBold",
@@ -89,12 +71,12 @@ const Otp = () => {
           textAlign: "center",
         },
       });
-      await fetchCustomerData();
+      await fetchCustomerData(mobile);
       router.replace("/services");
     } catch (error) {
-      console.log("this is error", error.response.data.message);
+      console.log("this is error", error.response.data?.message);
       showMessage({
-        message: error.response.data.message || error.message,
+        message: `\n ${error.response?.data?.message}` || `\n ${error.message}`,
         type: "danger",
         titleStyle: {
           fontFamily: "IranSans-DemiBold",
@@ -102,11 +84,15 @@ const Otp = () => {
           textAlign: "center",
         },
       });
-      // router.replace("/services");
     } finally {
       setIsLoading(false);
     }
   }, [code, mobile, fetchCustomerData]);
+
+  // FOR DEVELOPMENT
+  // const validateOTPHanlder = useCallback(() => {
+  //   router.replace("/services");
+  // }, []);
 
   // VLAIDATE ON FILLED
   useEffect(() => {

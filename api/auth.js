@@ -23,14 +23,14 @@ const removeTokens = async () => {
   await SecureStore.deleteItemAsync("refreshToken");
 };
 
-export async function logout(data) {
+export async function logout() {
   try {
-    const response = await axiosInstance.post("/Customer/Logout", data);
+    const response = await axiosInstance.post("/Customer/Logout");
     console.log("Logout response:", response);
     await removeTokens();
 
     showMessage({
-      message: response.data.message,
+      message: `\n ${response.data.message}`,
       type: "success",
       titleStyle: {
         fontFamily: "IranSans-DemiBold",
@@ -43,8 +43,9 @@ export async function logout(data) {
     // DEBUGGING
     console.log("User successfully logged out and tokens cleared.");
   } catch (error) {
+    console.error("Error during logout:", error.response || error);
     showMessage({
-      message: error.response.data.message || error.message,
+      message: `\n ${error.response.data.message}` || `\n ${error.message}`,
       type: "danger",
       titleStyle: {
         fontFamily: "IranSans-DemiBold",
@@ -52,6 +53,5 @@ export async function logout(data) {
         textAlign: "center",
       },
     });
-    console.error("Error during logout:", error.response || error);
   }
 }

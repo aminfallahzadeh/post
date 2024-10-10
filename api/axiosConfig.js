@@ -45,7 +45,11 @@ axiosInstance.interceptors.request.use(
   async (config) => {
     const { token } = await getTokens();
 
-    const excludedRoutes = ["/Customer/GenerateOTP", "/Customer/ValidateOTP"];
+    const excludedRoutes = [
+      "/Customer/GenerateOTP",
+      "/Customer/ValidateOTP",
+      "/Customer/RefreshToken",
+    ];
 
     const path = config.url.split("?")[0];
 
@@ -107,7 +111,6 @@ axiosInstance.interceptors.response.use(
       isRefreshing = true;
 
       const { refreshToken } = await getTokens();
-      const { token } = await getTokens();
 
       // DEBUGGING: REFRESH TOKEN REQUEST
       console.log("Sending refresh token request:", { refreshToken });
@@ -115,27 +118,17 @@ axiosInstance.interceptors.response.use(
       return new Promise((resolve, reject) => {
         // GET NEW ACCESS TOKEN
         axios
-          .post(
-            `${BASE_URL}/Customer/RefreshToken`,
-            { refreshToken },
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          )
+          .post(`${BASE_URL}/Customer/RefreshToken`, { refreshToken })
           .then(async ({ data }) => {
             // DEBUGGING: REFRESH TOKEN RESPONSE
             console.log("Refresh token response:", data);
-            console.log(
-              "Full refresh token request URL:",
-              `${BASE_URL}/Customer/RefreshToken`
-            );
 
             await saveTokens(
               data.itemList[0].token,
               data.itemList[0].refreshToken
             );
+
+            console.log("NEW TOKENS SAVED");
 
             axiosInstance.defaults.headers[
               "Authorization"
@@ -149,7 +142,7 @@ axiosInstance.interceptors.response.use(
             resolve(axiosInstance(originalRequest));
           })
           .catch((err) => {
-            console.error("Refresh token error:", err.response.data || err);
+            console.error("Refresh token error:", err.response || err);
             processQueue(err, null);
             reject(err);
           })

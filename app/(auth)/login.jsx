@@ -1,5 +1,6 @@
 // REACT IMPORTS
 import { useState, useRef, useEffect } from "react";
+import { useForm } from "react-hook-form";
 
 // NATIVE IMPORTS
 import { View, Image, ScrollView, Text, Animated } from "react-native";
@@ -34,11 +35,23 @@ const Login = () => {
   // ACCESS STORE STATE
   const setMobile = useUserStore((state) => state.setMobile);
 
+  // ACCESS HOOK FORM METHODS
+  const { control, handleSubmit, watch } = useForm();
+
+  // ACCESS HOOK FORM DATA
+  const form_data = watch();
+
   // GENERATE OTP FUNCTION
   const generateOTPHandler = async () => {
-    if (phoneNumber.length !== 11) {
+    setIsLoading(true);
+    try {
+      const response = await generateOTP(form_data.mobile);
+      setMobile(response.data.itemList[0].mobile);
+      router.push("/otp");
+    } catch (error) {
+      console.log("this is error", error);
       showMessage({
-        message: "\nشماره موبایل معتبر نیست",
+        message: `\n ${error.message}`,
         type: "danger",
         titleStyle: {
           fontFamily: "IranSans-DemiBold",
@@ -46,37 +59,21 @@ const Login = () => {
           textAlign: "center",
         },
       });
-
-      return;
-    } else {
-      setIsLoading(true);
-      try {
-        const response = await generateOTP(phoneNumber);
-        setMobile(response.data.itemList[0].mobile);
-        router.push("/otp");
-      } catch (error) {
-        console.log("this is error", error);
-        showMessage({
-          message: error.message,
-          type: "danger",
-          titleStyle: {
-            fontFamily: "IranSans-DemiBold",
-            fontSize: 16,
-            textAlign: "center",
-          },
-        });
-        // router.push("/otp");
-      } finally {
-        setIsLoading(false);
-      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
+  // FOR DEVELOPMENMT
+  // const generateOTPHandler = () => {
+  //   router.push("/otp");
+  // };
+
   // SUBMIT HANDLER
-  const handleSubmit = async () => {
-    if (!phoneNumber) {
+  const onSubmit = async () => {
+    if (!form_data.mobile || form_data.mobile.length !== 11) {
       showMessage({
-        message: "\n لطفا شماره موبایل خود را وارد کنید",
+        message: "\n شماره موبایل معتبر نیست",
         type: "danger",
         titleStyle: {
           fontFamily: "IranSans-DemiBold",
@@ -149,12 +146,14 @@ const Login = () => {
             containerStyle="mt-20"
             keyboardType="email-address"
             type={"text"}
+            control={control}
+            name="mobile"
           />
 
           <CustomButton
             title={"تایید"}
             containerStyles={"mt-10"}
-            handlePress={handleSubmit}
+            handlePress={handleSubmit(onSubmit)}
             isLoading={isLoading}
           />
         </View>

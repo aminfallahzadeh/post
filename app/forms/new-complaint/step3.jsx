@@ -1,5 +1,6 @@
 // REACT IMPORTS
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 // NATIVE IMPROTS
 import {
@@ -30,6 +31,9 @@ const Step3 = () => {
   const [serviceType, setServiceType] = useState(null);
   const [postalReagion, setPostalReagion] = useState(null);
 
+  // ACCESS HOOK FORM METHODS
+  const { control, handleSubmit, watch } = useForm();
+
   return (
     <SafeAreaView className="bg-grey1 h-full px-3 justify-between items-center min-h-full">
       {/* TOP SECTION */}
@@ -48,6 +52,8 @@ const Step3 = () => {
               title="شماره سریال بسته پستی :"
               keyboardType="text"
               type={"text"}
+              control={control}
+              name="serial"
             />
           </View>
           <View>

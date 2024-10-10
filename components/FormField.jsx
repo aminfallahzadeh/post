@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity } from "react-native";
 
 // REACT IMPORTS
 import { useState } from "react";
+import { useController } from "react-hook-form";
 
 // ASSETS
 import Feather from "@expo/vector-icons/Feather";
@@ -19,6 +20,8 @@ const FormField = ({
   height = "h-16",
   max,
   editable,
+  name,
+  control,
   ...props
 }) => {
   // STATES
@@ -45,8 +48,14 @@ const FormField = ({
       ? "border-gray-300 bg-gray-100"
       : "border-grey4 bg-grey3";
 
+  const { field } = useController({
+    control,
+    defaultValue: value,
+    name,
+  });
+
   return (
-    <View className={`space-y-2 ${containerStyle}`}>
+    <View className={`space-y-2 ${containerStyle} `}>
       {title && (
         <Text
           className={`text-base text-gray2 font-isansmedium text-right ${textStyle}`}
@@ -60,10 +69,12 @@ const FormField = ({
       >
         <TextInput
           className="flex-1 text-grey2 font-isansdemibold text-base w-full text-center"
-          value={value}
+          // value={value}
+          value={field.value}
           placeholder={placeholder}
           placeholderTextColor="#7b7b8b"
-          onChangeText={handleChange}
+          // onChangeText={handleChange}
+          onChangeText={field.onChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
           style={inputStyle}

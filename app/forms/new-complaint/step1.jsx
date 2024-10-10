@@ -1,5 +1,6 @@
 // REACT IMPORTS
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 // NATIVE IMPORTS
 import {
@@ -36,6 +37,9 @@ const Step1 = () => {
   // ACCESS GLOBAL STATES
   const mobile = useUserStore((state) => state.mobile);
 
+  // ACCESS HOOK FORM METHODS
+  const { control, handleSubmit, watch } = useForm();
+
   return (
     <SafeAreaView className="bg-grey1 h-full px-3 justify-between items-center min-h-full">
       {/* TOP SECTION */}
@@ -60,6 +64,8 @@ const Step1 = () => {
               editable={false}
               value={mobile}
               style={{ color: "#666666" }}
+              control={control}
+              name="mobile"
             />
           </View>
 
@@ -75,6 +81,8 @@ const Step1 = () => {
                 textAlignVertical: "top",
                 textAlign: "right",
               }}
+              control={control}
+              name="onvan"
             />
           </View>
 

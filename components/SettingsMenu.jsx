@@ -17,7 +17,6 @@ import { useUserStore } from "@/store";
 
 // EXPO IMPORTS
 import { Feather } from "@expo/vector-icons";
-import * as SecureStore from "expo-secure-store";
 import { router } from "expo-router";
 
 // APIs
@@ -40,9 +39,8 @@ const SettingsMenu = ({ closeHandler }) => {
   // HANDLE LOGOUT
   const handleLogout = async () => {
     setIsLogoutLoading(true);
-    const refreshToken = await SecureStore.getItemAsync("refreshToken");
     try {
-      await logout({ refreshToken });
+      await logout();
     } finally {
       setIsLogoutLoading(false);
     }
