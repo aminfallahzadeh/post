@@ -143,7 +143,7 @@ const Services = () => {
             contentContainerStyle={{ paddingBottom: 300 }}
           >
             <View
-              className="flex-row flex-wrap gap-y-5 justify-start items-start mt-5 px-2"
+              className="flex-row flex-wrap gap-y-5 justify-center items-center mt-5 px-2"
               style={{ transform: [{ scaleX: -1 }] }}
             >
               {allData.map((item) => (

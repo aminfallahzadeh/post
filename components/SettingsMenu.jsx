@@ -1,5 +1,15 @@
+// REACT IMPORTS
+import { useState } from "react";
+
 // NATIVE IMPORTS
-import { View, TouchableOpacity, StyleSheet, Text, Image } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  Text,
+  Image,
+  Pressable,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 // STORE
@@ -7,16 +17,36 @@ import { useUserStore } from "@/store";
 
 // EXPO IMPORTS
 import { Feather } from "@expo/vector-icons";
+import * as SecureStore from "expo-secure-store";
+import { router } from "expo-router";
+
+// APIs
+import { logout } from "@/api/auth";
 
 // COMPONSNETS
 import CustomButton from "@/components/CustomButton";
 
 // ASSETS
-import images from "../constants/images";
+import images from "@/constants/images";
 
 const SettingsMenu = ({ closeHandler }) => {
   // ACCESS GLOBAL STATES
   const mobile = useUserStore((state) => state.mobile);
+  const user = useUserStore((state) => state.userData);
+
+  // LOADING STATE
+  const [isLogoutLoading, setIsLogoutLoading] = useState(false);
+
+  // HANDLE LOGOUT
+  const handleLogout = async () => {
+    setIsLogoutLoading(true);
+    const refreshToken = await SecureStore.getItemAsync("refreshToken");
+    try {
+      await logout({ refreshToken });
+    } finally {
+      setIsLogoutLoading(false);
+    }
+  };
 
   return (
     <SafeAreaView className="w-full h-full bg-white relative px-2 gap-y-[30px]">
@@ -30,7 +60,9 @@ const SettingsMenu = ({ closeHandler }) => {
       </TouchableOpacity>
 
       <View className="w-full justify-between items-center flex-row">
-        <Feather name="edit-2" size={25} color="#333" />
+        <Pressable onPress={() => router.push(`profile/${user.id}`)}>
+          <Feather name="edit-2" size={25} color="#333" />
+        </Pressable>
 
         <View className="justify-center items-center flex-row gap-5">
           <View>
@@ -136,6 +168,8 @@ const SettingsMenu = ({ closeHandler }) => {
           bgColor="bg-red-500"
           titleColor="text-white"
           containerStyles={"mt-10"}
+          handlePress={handleLogout}
+          isLoading={isLogoutLoading}
         />
       </View>
     </SafeAreaView>

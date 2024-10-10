@@ -67,36 +67,8 @@ export const allData = [
   {
     id: 18,
     title: "نرخ نامه",
-    gradientColors: ["#00075a", "#009cff"],
-    iconName: "edit",
-    url: null,
-  },
-  {
-    id: 17,
-    title: "ثبت شکایت",
-    gradientColors: ["#00075a", "#009cff"],
-    iconName: "frown",
-    url: "forms/new-complaint/step1",
-  },
-  {
-    id: 26,
-    title: "ثبت سفارش",
-    gradientColors: ["#00075a", "#009cff"],
-    iconName: "clipboard",
-    url: "/forms/type",
-  },
-  {
-    id: 19,
-    title: "غرامت",
-    gradientColors: ["#00075a", "#009cff"],
-    iconName: "exclamationcircle",
-    url: null,
-  },
-  {
-    id: 20,
-    title: "پست یافته",
     gradientColors: ["#755d15", "#ffca2b"],
-    iconName: "help-circle",
+    iconName: "edit",
     url: null,
   },
   {
@@ -121,6 +93,20 @@ export const allData = [
     url: null,
   },
   {
+    id: 20,
+    title: "پست یافته",
+    gradientColors: ["#755d15", "#ffca2b"],
+    iconName: "help-circle",
+    url: null,
+  },
+  {
+    id: 19,
+    title: "غرامت",
+    gradientColors: ["#00075a", "#009cff"],
+    iconName: "exclamationcircle",
+    url: null,
+  },
+  {
     id: 24,
     title: "پیگیری غرامت",
     gradientColors: ["#00075a", "#009cff"],
@@ -128,10 +114,25 @@ export const allData = [
     url: null,
   },
   {
+    id: 17,
+    title: "ثبت شکایت",
+    gradientColors: ["#00075a", "#009cff"],
+    iconName: "frown",
+    url: "forms/new-complaint/step1",
+  },
+
+  {
     id: 25,
     title: "پیگیری شکایت",
     gradientColors: ["#00075a", "#009cff"],
     iconName: "plus-circle",
     url: null,
   },
+  // {
+  //   id: 26,
+  //   title: "ثبت سفارش",
+  //   gradientColors: ["#00075a", "#009cff"],
+  //   iconName: "clipboard",
+  //   url: "/forms/type",
+  // },
 ];

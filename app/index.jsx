@@ -8,6 +8,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 // EXPO IMPORTS
 import { StatusBar } from "expo-status-bar";
 import { router } from "expo-router";
+import * as SecureStore from "expo-secure-store";
 
 // COMPONETNS
 import CustomButton from "../components/CustomButton";
@@ -25,6 +26,17 @@ const Index = () => {
   const handlePress = () => {
     router.push("/login");
   };
+
+  // FOR DEVELOPMENT
+  const removeTokens = async () => {
+    await SecureStore.deleteItemAsync("token");
+    await SecureStore.deleteItemAsync("refreshToken");
+    console.log("tokens removed");
+  };
+
+  useEffect(() => {
+    removeTokens();
+  }, []);
 
   useEffect(() => {
     // ANIMATE IMAGE

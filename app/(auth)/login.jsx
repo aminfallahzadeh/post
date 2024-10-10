@@ -9,7 +9,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 
 // AXIOS
-import { generateOTP } from "../../api/customer";
+import { generateOTP } from "@/api/auth";
 
 // STORE
 import { useUserStore } from "@/store";

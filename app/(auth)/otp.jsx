@@ -1,5 +1,5 @@
 // REACT IMPORTS
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 // NATIVE IMPORTS
 import { View, ScrollView, Text } from "react-native";
@@ -10,7 +10,8 @@ import LottieView from "lottie-react-native";
 import { OtpInput } from "react-native-otp-entry";
 
 // AXIOS
-import { validateOTP } from "@/api/customer";
+import { validateOTP } from "@/api/auth";
+import { getCustomerProfile } from "@/api/customer";
 
 // STORE
 import { useUserStore } from "@/store";
@@ -27,8 +28,11 @@ import OtpLottie from "../../assets/animations/otp-lottie.json";
 
 const Otp = () => {
   // DATA STATE
-  const [code, setCode] = useState(2222);
+  const [code, setCode] = useState(null);
   const mobile = useUserStore((state) => state.mobile);
+
+  // STATE DISPATCHER
+  const setUserData = useUserStore((state) => state.setUserData);
 
   // LOADING STATE
   const [isLoading, setIsLoading] = useState(false);
@@ -44,16 +48,32 @@ const Otp = () => {
     console.log("refresh token saved");
   };
 
-  useEffect(() => {
-    console.log(mobile);
-  }, [mobile]);
+  // GET CUSTOMER DATA HANLDERS
+  const fetchCustomerData = useCallback(async () => {
+    try {
+      const response = await getCustomerProfile(mobile);
+      setUserData(response.data.itemList[0]);
+      console.log("User Data Saved to store");
+    } catch (error) {
+      console.log(error);
+      showMessage({
+        message: error.response.data.message || error.message,
+        type: "danger",
+        titleStyle: {
+          fontFamily: "IranSans-DemiBold",
+          fontSize: 16,
+          textAlign: "center",
+        },
+      });
+    }
+  }, [mobile, setUserData]);
 
   // VALIDATE FUNCTION
-  const validateOTPHanlder = async () => {
+  const validateOTPHanlder = useCallback(async () => {
     setIsLoading(true);
     try {
       const response = await validateOTP({
-        code,
+        code: parseInt(code),
         mobile,
       });
       const data = response.data?.itemList[0];
@@ -69,11 +89,12 @@ const Otp = () => {
           textAlign: "center",
         },
       });
+      await fetchCustomerData();
       router.replace("/services");
     } catch (error) {
-      console.log("this is error", error);
+      console.log("this is error", error.response.data.message);
       showMessage({
-        message: error.message,
+        message: error.response.data.message || error.message,
         type: "danger",
         titleStyle: {
           fontFamily: "IranSans-DemiBold",
@@ -85,7 +106,14 @@ const Otp = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [code, mobile, fetchCustomerData]);
+
+  // VLAIDATE ON FILLED
+  useEffect(() => {
+    if (code?.length === 4) {
+      validateOTPHanlder();
+    }
+  }, [code, validateOTPHanlder]);
 
   return (
     <SafeAreaView className="bg-grey1 h-full">
@@ -101,7 +129,7 @@ const Otp = () => {
           <OtpInput
             numberOfDigits={4}
             focusColor="#fcd900"
-            onFilled={validateOTPHanlder}
+            onTextChange={setCode}
             theme={{
               containerStyle: {
                 width: "70%",
