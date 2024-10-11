@@ -1,9 +1,19 @@
-// REACT IMPROTS
+// REACT IMPORTS
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 // NATIVE
-import { View, Text, TouchableWithoutFeedback, Keyboard } from "react-native";
+import {
+  View,
+  Text,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Pressable,
+  StyleSheet,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 // EXPO
@@ -18,6 +28,10 @@ import { customerProfile } from "@/api/customer";
 
 // LIBRARIES
 import { showMessage } from "react-native-flash-message";
+import LottieView from "lottie-react-native";
+
+// ASSETS
+import userLottie from "@/assets/animations/user-lottie.json";
 
 // COMPONENTS
 import FormField from "@/components/FormField";
@@ -42,15 +56,15 @@ const UserProfile = () => {
   // ACCESS HOOK FORM DATA
   const form_data = watch();
 
-  // ACCES HOOK FUNCTIONS
+  // ACCESS HOOK FUNCTIONS
   const { fetchCustomerData, isLoading: userDataLoading } =
     useGetUserData(mobile);
 
   // FILL FORM BASED ON USER CURRENT DATA
   useEffect(() => {
     console.log(userData);
-    const [year, month, day] = userData.birthDate.split("/");
-    if (userData) {
+    if (userData && userData.birthDate) {
+      const [year, month, day] = userData?.birthDate?.split("/");
       Object.keys(userData).forEach((key) => {
         setValue(key, userData[key]);
         setValue("day", day);
@@ -106,109 +120,112 @@ const UserProfile = () => {
   };
 
   return (
-    <SafeAreaView className="bg-grey1 h-full px-3 justify-between min-h-full gap-y-10">
-      <View className="flex-col w-full bg-secondary mt-5">
-        <Text className="text-primary font-isansbold text-center text-[20px] py-2">
-          پروفایل کاربر
-        </Text>
-      </View>
-
-      {/* FORM FIELDS */}
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View className="flex-col gap-3 w-full mt-5">
-          <View className="flex-row-reverse justify-between items-center">
-            <View className="flex-1 ml-2">
-              <FormField
-                title="نام :"
-                keyboardType="default"
-                type={"text"}
-                height={"h-10"}
-                control={control}
-                name="name"
-              />
-            </View>
-
-            <View className="flex-1 mr-2">
-              <FormField
-                title="نام خانوادگی:"
-                keyboardType="default"
-                type={"text"}
-                height={"h-10"}
-                control={control}
-                name="lastName"
-              />
-            </View>
-          </View>
-
-          <View className="flex-row-reverse justify-between items-center">
-            <View className="flex-1">
-              <FormField
-                title="کد ملی :"
-                keyboardType="default"
-                type={"text"}
-                height={"h-10"}
-                control={control}
-                name="nationalCode"
-              />
-            </View>
-          </View>
-
-          <View>
-            <Text className="text-base text-gray2 font-isansmedium">
-              تاریخ تولد :
+    <SafeAreaView className="bg-grey1 h-full">
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+      >
+        <ScrollView
+          contentContainerStyle={{
+            flexGrow: 1,
+            paddingBottom: 90,
+            minHeight: "100%",
+          }}
+          showsVerticalScrollIndicator={false}
+          stickyHeaderIndices={[0]}
+          keyboardShouldPersistTaps="handled"
+        >
+          {/* HEADER SECTION */}
+          <View
+            className="flex-row w-full top-0 bg-secondary justify-center items-center z-10 px-2"
+            style={styles.headerContainer}
+          >
+            <Pressable onPress={() => router.back()} className="mr-auto ">
+              <Feather name="arrow-left" size={25} color="#333" />
+            </Pressable>
+            <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto">
+              پروفایل کاربر
             </Text>
           </View>
 
-          <View className="flex-row-reverse justify-between items-center">
-            <View className="flex-1 ml-2">
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View className="w-full px-4 pt-5">
+              <LottieView
+                source={userLottie}
+                autoPlay
+                loop
+                className="w-full h-[150px] mt-[50px]"
+              />
+
               <FormField
-                title="روز :"
+                placeholder="نام"
                 keyboardType="default"
                 type={"text"}
-                height={"h-10"}
-                max={2}
                 control={control}
-                name="day"
+                containerStyle="mt-5"
+                name="name"
               />
-            </View>
-
-            <View className="flex-1 mr-2 ml-2">
               <FormField
-                title="ماه :"
+                placeholder="نام خانوادگی"
                 keyboardType="default"
                 type={"text"}
-                height={"h-10"}
-                max={2}
                 control={control}
-                name="month"
+                containerStyle="mt-5"
+                name="lastName"
               />
-            </View>
-
-            <View className="flex-1 mr-2">
               <FormField
-                title="سال :"
+                placeholder="کد ملی"
                 keyboardType="default"
                 type={"text"}
-                height={"h-10"}
-                max={4}
                 control={control}
-                name="year"
+                containerStyle="mt-5"
+                name="nationalCode"
               />
-            </View>
-          </View>
-        </View>
-      </TouchableWithoutFeedback>
 
-      {/* BOTTOM SECTION */}
-      <View className="flex-row justify-between items-center w-full pb-10">
-        <View className="flex-1 mr-2">
-          <CustomButton
-            title={<Feather name="arrow-left" size={24} color="black" />}
-            handlePress={() => router.back()}
-            isLoading={isLoading || userDataLoading}
-          />
-        </View>
-        <View className="flex-1 ml-2">
+              <View className="mt-5">
+                <Text className="text-base text-gray2 font-isansmedium">
+                  تاریخ تولد :
+                </Text>
+              </View>
+
+              <View className="flex-row-reverse justify-between items-center mt-5">
+                <View className="flex-1 ml-2">
+                  <FormField
+                    placeholder="روز"
+                    keyboardType="default"
+                    type={"text"}
+                    max={2}
+                    control={control}
+                    name="day"
+                  />
+                </View>
+
+                <View className="flex-1 mr-2 ml-2">
+                  <FormField
+                    placeholder="ماه"
+                    keyboardType="default"
+                    max={2}
+                    control={control}
+                    name="month"
+                  />
+                </View>
+
+                <View className="flex-1 mr-2">
+                  <FormField
+                    placeholder="سال"
+                    keyboardType="default"
+                    max={4}
+                    control={control}
+                    name="year"
+                  />
+                </View>
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
+        </ScrollView>
+
+        {/* BOTTOM SECTION */}
+
+        <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
           <CustomButton
             title="ذخیره"
             handlePress={handleSubmit(onSubmit)}
@@ -217,9 +234,20 @@ const UserProfile = () => {
             isLoading={isLoading || userDataLoading}
           />
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
 
 export default UserProfile;
+
+const styles = StyleSheet.create({
+  headerContainer: {
+    shadowColor: "black",
+    shadowOpacity: 0.26,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 10,
+    elevation: 3,
+    backgroundColor: "white",
+  },
+});

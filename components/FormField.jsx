@@ -1,8 +1,14 @@
 // NATIVE IMPORTS
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Animated,
+} from "react-native";
 
 // REACT IMPORTS
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useController } from "react-hook-form";
 
 // ASSETS
@@ -17,9 +23,9 @@ const FormField = ({
   textStyle,
   type,
   inputStyle,
-  height = "h-16",
+  height = "h-14",
   max,
-  editable,
+  editable = true,
   name,
   control,
   ...props
@@ -27,6 +33,9 @@ const FormField = ({
   // STATES
   const [showPassword, setShowPassword] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+
+  // ANIMATION
+  const placeholderAnimation = useState(new Animated.Value(0))[0];
 
   // HANDLERS
   const handleShowPassword = () => {
@@ -41,21 +50,39 @@ const FormField = ({
     setIsFocused(false);
   };
 
-  const wrapperStyle =
-    isFocused || (value && editable)
-      ? "border-secondary bg-white"
-      : editable === false
-      ? "border-gray-300 bg-gray-100"
-      : "border-grey4 bg-grey3";
-
   const { field } = useController({
     control,
     defaultValue: value,
     name,
   });
 
+  useEffect(() => {
+    //
+    Animated.timing(placeholderAnimation, {
+      toValue: isFocused || field?.value ? 1 : 0,
+      duration: 200,
+      useNativeDriver: false,
+    }).start();
+  }, [isFocused, field?.value, placeholderAnimation]);
+
+  // PLACEHOLDER CONFIG
+  const placeholderTranslateY = placeholderAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [12, -10],
+  });
+
+  const placeholderBackgroundColor = placeholderTranslateY.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["#fff", "transparent"],
+  });
+
+  const placeholderFontSize = placeholderAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [16, 12],
+  });
+
   return (
-    <View className={`space-y-2 ${containerStyle} `}>
+    <View className={`space-y-2 ${containerStyle}`}>
       {title && (
         <Text
           className={`text-base text-gray2 font-isansmedium text-right ${textStyle}`}
@@ -65,15 +92,33 @@ const FormField = ({
       )}
 
       <View
-        className={`w-full ${height} px-4 border-2 rounded-md items-center relative ${wrapperStyle}`}
+        className={`w-full ${height} px-4 border rounded-md items-center relative ${
+          editable ? "bg-white" : "bg-gray-300"
+        } border-primary`}
       >
+        {/* Animated Placeholder */}
+        <Animated.Text
+          style={{
+            position: "absolute",
+            right: 12,
+            top: placeholderTranslateY,
+            fontSize: placeholderFontSize,
+            fontFamily: "IranSans-DemiBold",
+            zIndex: 1,
+            borderRadius: 50,
+            paddingVertical: 1,
+            paddingHorizontal: 10,
+            backgroundColor: placeholderBackgroundColor,
+            color: "#164194",
+          }}
+        >
+          {placeholder}
+        </Animated.Text>
+
         <TextInput
           className="flex-1 text-grey2 font-isansdemibold text-base w-full text-center"
-          // value={value}
           value={field.value}
-          placeholder={placeholder}
-          placeholderTextColor="#7b7b8b"
-          // onChangeText={handleChange}
+          placeholderTextColor="transparent"
           onChangeText={field.onChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
@@ -83,6 +128,7 @@ const FormField = ({
           editable={editable}
           {...props}
         />
+
         {type === "password" && (
           <TouchableOpacity
             onPress={handleShowPassword}

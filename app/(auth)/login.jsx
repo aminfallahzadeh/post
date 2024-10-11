@@ -140,7 +140,8 @@ const Login = () => {
           </View>
 
           <FormField
-            title="شماره همراه :"
+            // title="شماره همراه :"
+            placeholder={"شماره همراه"}
             value={phoneNumber}
             handleChange={setPhoneNumber}
             containerStyle="mt-20"
@@ -152,7 +153,7 @@ const Login = () => {
 
           <CustomButton
             title={"تایید"}
-            containerStyles={"mt-10"}
+            containerStyles={"mt-5"}
             handlePress={handleSubmit(onSubmit)}
             isLoading={isLoading}
           />
