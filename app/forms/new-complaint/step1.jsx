@@ -28,7 +28,7 @@ import ProgressBar from "@/components/ProgressBar";
 import Dropdown from "react-native-input-select";
 
 // DATA
-import { complaintTypeLookup } from "../../data/lookup.js";
+import { complaintTypeLookup } from "@/data/lookup.js";
 
 const Step1 = () => {
   // MAIN STATE

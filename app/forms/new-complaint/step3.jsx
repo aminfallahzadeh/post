@@ -25,7 +25,7 @@ import { router } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
 
 // DATA
-import { seriveTypeLookup, postalReagionLookup } from "../../data/lookup.js";
+import { seriveTypeLookup, postalReagionLookup } from "@/data/lookup.js";
 
 const Step3 = () => {
   const [serviceType, setServiceType] = useState(null);

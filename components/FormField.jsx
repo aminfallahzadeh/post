@@ -147,7 +147,7 @@ const FormField = ({
               color={"gray"}
             />
           </TouchableOpacity>
-        ) : type === "text" && field.value && clearBtn ? (
+        ) : type === "text" && field.value && clearBtn && editable ? (
           <TouchableOpacity
             onPress={handleRemoveField}
             className="absolute top-[50%] left-4"

@@ -1,5 +1,5 @@
 // REACT IMPORTS
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState, useReducer } from "react";
 
 // NATIVE IMPORTS
 import {
@@ -20,38 +20,37 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import { Feather, AntDesign, FontAwesome } from "@expo/vector-icons";
 import { router } from "expo-router";
-import * as SecureStore from "expo-secure-store";
 
 // COMPONENTS
 import Background from "@/components/Background";
 
 // DATA
-import { filtersData } from "../data/filters";
-import {
-  postServicesData,
-  costLetterData,
-  complaintData,
-  allData,
-} from "../data/services";
+import { filtersData } from "@/data/filters";
+import { followUpData, requestData } from "@/data/services";
+import { allData } from "@/data/services";
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 
+const filterReducer = (state, actions) => {
+  switch (actions.type) {
+    case "ALL":
+      return "all";
+    case "FOLLOW_UP":
+      return "followup";
+    case "REQUEST":
+      return "request";
+
+    default:
+      return state;
+  }
+};
 const Services = () => {
+  // FILTER STATE
+  const [selected, setSelected] = useState(filtersData[0]);
+  const [filteredItems, dispatch] = useReducer(filterReducer, "all");
+
   const fadeAnim = useRef(new Animated.Value(0)).current;
-
-  // DEBUGGING
-  const getTokens = async function () {
-    let token = await SecureStore.getItemAsync("token");
-    let refreshToken = await SecureStore.getItemAsync("refreshToken");
-
-    if (token && refreshToken) {
-      alert("🔐 Here's your token 🔐 \n" + token);
-      alert("🔐 Here's your token 🔐 \n" + refreshToken);
-    } else {
-      alert("No values stored under that key.");
-    }
-  };
 
   useEffect(() => {
     Animated.timing(fadeAnim, {
@@ -71,6 +70,37 @@ const Services = () => {
     if (url) router.push(url);
     return;
   };
+
+  const handleOnFilterPress = (option, type) => {
+    setSelected(option);
+    dispatch({ type });
+  };
+
+  const renderPressableItem = (item) => (
+    <Pressable
+      className="justify-center items-center gap-1"
+      key={item.id}
+      style={{ width: "26%", transform: [{ scaleX: -1 }] }}
+      onPress={() => handlePress(item.url)}
+    >
+      {item.iconName === "exclamationcircle" ? (
+        <AntDesign name={item.iconName} size={28} color="white" />
+      ) : item.iconName === "address-card" ? (
+        <FontAwesome name={item.iconName} size={28} color="white" />
+      ) : !item.iconName ? (
+        <Image source={item.imageUrl} style={styles.itemIcon} />
+      ) : (
+        <Feather name={item.iconName} size={30} color="white" />
+      )}
+      <Text
+        className="text-black font-isansmedium text-[12px]"
+        style={{ minHeight: 35, textAlign: "center" }}
+        numberOfLines={2}
+      >
+        {item.title}
+      </Text>
+    </Pressable>
+  );
 
   return (
     <Background>
@@ -124,7 +154,14 @@ const Services = () => {
               }}
             >
               {filtersData.map((service) => (
-                <View style={styles.filterItem} key={service.id}>
+                <Pressable
+                  style={[
+                    styles.filterItem,
+                    selected?.id === service.id && styles.selected,
+                  ]}
+                  key={service.id}
+                  onPress={() => handleOnFilterPress(service, service.type)}
+                >
                   {service.iconName && (
                     <Feather
                       name={service.iconName}
@@ -132,8 +169,8 @@ const Services = () => {
                       color={service.iconColor}
                     />
                   )}
-                  <Text style={styles.filterText}>{service.title}</Text>
-                </View>
+                  <Text style={styles.filterText}>{service.label}</Text>
+                </Pressable>
               ))}
             </ScrollView>
           </View>
@@ -143,128 +180,18 @@ const Services = () => {
             contentContainerStyle={{ paddingBottom: 300 }}
           >
             <View
-              className="flex-row flex-wrap gap-y-5 justify-center items-center mt-5 px-2"
+              className="flex-row flex-wrap gap-y-4 justify-start mt-5 px-2"
               style={{ transform: [{ scaleX: -1 }] }}
             >
-              {allData.map((item) => (
-                <Pressable
-                  className="items-center gap-2 flex-shrink-0"
-                  key={item.id}
-                  style={{ width: "26%", transform: [{ scaleX: -1 }] }}
-                  onPress={() => handlePress(item.url)}
-                >
-                  <LinearGradient
-                    colors={item.gradientColors}
-                    style={styles.postItemStyle}
-                    start={{ x: 0.5, y: 1 }}
-                    end={{ x: 0.5, y: 0 }}
-                  >
-                    {item.iconName === "exclamationcircle" ? (
-                      <AntDesign name={item.iconName} size={28} color="white" />
-                    ) : item.iconName === "address-card" ? (
-                      <FontAwesome
-                        name={item.iconName}
-                        size={28}
-                        color="white"
-                      />
-                    ) : (
-                      <Feather name={item.iconName} size={30} color="white" />
-                    )}
-                  </LinearGradient>
-
-                  <Text
-                    className="text-black font-isansmedium text-[12px]"
-                    style={{ minHeight: 35, textAlign: "center" }}
-                    numberOfLines={2}
-                  >
-                    {item.title}
-                  </Text>
-                </Pressable>
-              ))}
+              {filteredItems === "all"
+                ? allData.map((item) => renderPressableItem(item))
+                : filteredItems === "followup"
+                ? followUpData.map((item) => renderPressableItem(item))
+                : filteredItems === "request"
+                ? requestData.map((item) => renderPressableItem(item))
+                : null}
             </View>
           </ScrollView>
-
-          {/* <ScrollView
-            contentContainerStyle={{ paddingBottom: 170 }}
-            showsVerticalScrollIndicator={false}
-          >
-            <View>
-              <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{
-                  alignItems: "center",
-                  justifyContent: "cetner",
-                  gap: 20,
-                  paddingHorizontal: 20,
-                  marginTop: 20,
-                }}
-                style={{
-                  transform: [{ scaleX: -1 }],
-                }}
-              >
-                {complaintData.map((item) => (
-                  <TouchableOpacity
-                    key={item.id}
-                    onPress={() => handlePress(item.url)}
-                  >
-                    <View
-                      key={item.id}
-                      className="items-center justify-center gap-y-2"
-                      style={{
-                        transform: [{ scaleX: -1 }],
-                      }}
-                    >
-                      <LinearGradient
-                        key={item.id}
-                        colors={item.gradientColors}
-                        style={styles.postItemStyle}
-                      >
-                        <Feather
-                          name={item.iconName}
-                          size={20}
-                          color={"white"}
-                        />
-                      </LinearGradient>
-                      <Text className="text-black font-isansmedium text-[12px]">
-                        {item.title}
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                ))}
-              </ScrollView>
-            </View>
-          </ScrollView> */}
-          {/* 
-          <View style={{ flex: 1, marginTop: 20, paddingHorizontal: 20 }}>
-            <LinearGradient
-              colors={["#4c669f", "#00075a"]}
-              style={styles.carouselContainer}
-            >
-              <Carousel
-                loop
-                width={width * 0.8}
-                height={width / 3}
-                autoPlay={true}
-                data={images}
-                scrollAnimationDuration={1000}
-                renderItem={({ index }) => (
-                  <View
-                    style={{
-                      flex: 1,
-                      borderRadius: 20,
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Image
-                      source={images[index]}
-                      style={{ width, borderRadius: 20 }}
-                    />
-                  </View>
-                )}
-              />
-            </LinearGradient>
-          </View> */}
         </Animated.View>
       </SafeAreaView>
     </Background>
@@ -287,6 +214,10 @@ const styles = StyleSheet.create({
     borderColor: "#333",
     borderWidth: 0.5,
     transform: [{ scaleX: -1 }],
+  },
+  selected: {
+    borderColor: "transparent",
+    backgroundColor: "#fcdb00",
   },
   filterText: {
     color: "#000",
@@ -329,10 +260,10 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    // shadowColor: "#fff",
-    // shadowOffset: { width: 0, height: 5 },
-    // shadowOpacity: 0.9,
-    // shadowRadius: 10,
-    // elevation: 20,
+  },
+
+  itemIcon: {
+    width: 50,
+    height: 50,
   },
 });
