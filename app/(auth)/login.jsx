@@ -20,10 +20,12 @@ import { showMessage } from "react-native-flash-message";
 
 // ASSETS
 import images from "../../constants/images";
+import { toastStyles } from "@/constants/styles";
 
 // COMPONETNS
 import FormField from "@/components/FormField";
 import CustomButton from "@/components/CustomButton";
+import Background from "@/components/Background";
 
 const Login = () => {
   // LOADING STATE
@@ -51,13 +53,9 @@ const Login = () => {
     } catch (error) {
       console.log("this is error", error);
       showMessage({
-        message: `\n ${error.message}`,
+        message: error.message || error,
         type: "danger",
-        titleStyle: {
-          fontFamily: "IranSans-DemiBold",
-          fontSize: 16,
-          textAlign: "center",
-        },
+        titleStyle: toastStyles,
       });
     } finally {
       setIsLoading(false);
@@ -73,16 +71,12 @@ const Login = () => {
   const onSubmit = async () => {
     if (!form_data.mobile || form_data.mobile.length !== 11) {
       showMessage({
-        message: "\n شماره موبایل معتبر نیست",
+        message: "شماره موبایل معتبر نیست",
         type: "danger",
-        titleStyle: {
-          fontFamily: "IranSans-DemiBold",
-          fontSize: 16,
-          textAlign: "center",
-        },
+        titleStyle: toastStyles,
       });
     } else {
-      generateOTPHandler(phoneNumber);
+      generateOTPHandler();
     }
   };
 
@@ -106,60 +100,61 @@ const Login = () => {
   }, [imageOpacity, imageTranslateY]);
 
   return (
-    <SafeAreaView className="bg-grey1 h-full">
-      <ScrollView contentContainerStyle={{ height: "100%" }}>
-        <View className="w-full h-full justify-center px-4">
-          <View className="releative mt-3 justify-center items-center">
-            <Animated.Image
-              source={images.logo}
-              className="w-[150px] h-[150px]"
-              resizeMode="contain"
-              style={{
-                opacity: imageOpacity,
-                transform: [{ translateY: imageTranslateY }],
-              }}
-            />
+    <Background>
+      <SafeAreaView className="h-full">
+        <ScrollView contentContainerStyle={{ height: "100%" }}>
+          <View className="w-full h-full justify-center px-4">
+            <View className="releative mt-3 justify-center items-center">
+              <Animated.Image
+                source={images.logo}
+                className="w-[150px] h-[150px]"
+                resizeMode="contain"
+                style={{
+                  opacity: imageOpacity,
+                  transform: [{ translateY: imageTranslateY }],
+                }}
+              />
 
-            <View className="flex-row justify-center items-center">
-              <View className="relativejustify-center items-center">
-                <Text className="text-secondary text-[35px]"> پست </Text>
-                <Image
-                  source={images.underline}
-                  resizeMode="contain"
-                  className="absolute w-[80px] h-[15px] -bottom-1 left-[5px]"
-                />
+              <View className="flex-row justify-center items-center">
+                <View className="relativejustify-center items-center">
+                  <Text className="text-secondary text-[35px]"> پست </Text>
+                  <Image
+                    source={images.underline}
+                    resizeMode="contain"
+                    className="absolute w-[80px] h-[15px] -bottom-1 left-[5px]"
+                  />
+                </View>
+                <Text className="text-primary font-isansbold text-[25px] text-center">
+                  شرکت ملی{" "}
+                </Text>
               </View>
-              <Text className="text-primary font-isansbold text-[25px] text-center">
-                شرکت ملی{" "}
+
+              <Text className="text-primary font-isansdemibold text-[16px] text-center mt-2">
+                جمهوری اسلامی ایران
               </Text>
             </View>
 
-            <Text className="text-primary font-isansdemibold text-[16px] text-center mt-2">
-              جمهوری اسلامی ایران
-            </Text>
+            <FormField
+              placeholder={"شماره همراه"}
+              value={phoneNumber}
+              handleChange={setPhoneNumber}
+              containerStyle="mt-20"
+              keyboardType="default"
+              type="text"
+              control={control}
+              name="mobile"
+            />
+
+            <CustomButton
+              title={"تایید"}
+              containerStyles={"mt-5"}
+              handlePress={handleSubmit(onSubmit)}
+              isLoading={isLoading}
+            />
           </View>
-
-          <FormField
-            // title="شماره همراه :"
-            placeholder={"شماره همراه"}
-            value={phoneNumber}
-            handleChange={setPhoneNumber}
-            containerStyle="mt-20"
-            keyboardType="email-address"
-            type={"text"}
-            control={control}
-            name="mobile"
-          />
-
-          <CustomButton
-            title={"تایید"}
-            containerStyles={"mt-5"}
-            handlePress={handleSubmit(onSubmit)}
-            isLoading={isLoading}
-          />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+        </ScrollView>
+      </SafeAreaView>
+    </Background>
   );
 };
 

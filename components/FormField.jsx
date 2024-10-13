@@ -26,6 +26,7 @@ const FormField = ({
   height = "h-14",
   max,
   editable = true,
+  clearBtn = true,
   name,
   control,
   ...props
@@ -36,19 +37,6 @@ const FormField = ({
 
   // ANIMATION
   const placeholderAnimation = useState(new Animated.Value(0))[0];
-
-  // HANDLERS
-  const handleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const handleFocus = () => {
-    setIsFocused(true);
-  };
-
-  const handleBlur = () => {
-    setIsFocused(false);
-  };
 
   const { field } = useController({
     control,
@@ -68,18 +56,34 @@ const FormField = ({
   // PLACEHOLDER CONFIG
   const placeholderTranslateY = placeholderAnimation.interpolate({
     inputRange: [0, 1],
-    outputRange: [12, -10],
+    outputRange: [15, -10],
   });
 
-  const placeholderBackgroundColor = placeholderTranslateY.interpolate({
-    inputRange: [0, 1],
-    outputRange: ["#fff", "transparent"],
-  });
+  // const placeholderBackgroundColor = placeholderTranslateY.interpolate({
+  //   inputRange: [0, 1],
+  //   outputRange: ["#fff", "transparent"],
+  // });
 
   const placeholderFontSize = placeholderAnimation.interpolate({
     inputRange: [0, 1],
-    outputRange: [16, 12],
+    outputRange: [13, 12],
   });
+  // HANDLERS
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
+
+  const handleRemoveField = () => {
+    field.onChange("");
+  };
 
   return (
     <View className={`space-y-2 ${containerStyle}`}>
@@ -94,7 +98,7 @@ const FormField = ({
       <View
         className={`w-full ${height} px-4 border rounded-md items-center relative ${
           editable ? "bg-white" : "bg-gray-300"
-        } border-primary`}
+        } border-gray-300`}
       >
         {/* Animated Placeholder */}
         <Animated.Text
@@ -108,8 +112,8 @@ const FormField = ({
             borderRadius: 50,
             paddingVertical: 1,
             paddingHorizontal: 10,
-            backgroundColor: placeholderBackgroundColor,
-            color: "#164194",
+            backgroundColor: "#fff",
+            color: "#AFB4C0",
           }}
         >
           {placeholder}
@@ -129,7 +133,7 @@ const FormField = ({
           {...props}
         />
 
-        {type === "password" && (
+        {type === "password" ? (
           <TouchableOpacity
             onPress={handleShowPassword}
             className="absolute top-[50%] left-4"
@@ -137,9 +141,23 @@ const FormField = ({
               transform: [{ translateY: -12 }],
             }}
           >
-            <Feather name={showPassword ? "eye-off" : "eye"} size={24} />
+            <Feather
+              name={showPassword ? "eye-off" : "eye"}
+              size={24}
+              color={"gray"}
+            />
           </TouchableOpacity>
-        )}
+        ) : type === "text" && field.value && clearBtn ? (
+          <TouchableOpacity
+            onPress={handleRemoveField}
+            className="absolute top-[50%] left-4"
+            style={{
+              transform: [{ translateY: -12 }],
+            }}
+          >
+            <Feather name="x-circle" size={24} color={"#AFB4C0"} />
+          </TouchableOpacity>
+        ) : null}
       </View>
     </View>
   );

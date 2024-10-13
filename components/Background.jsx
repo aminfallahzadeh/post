@@ -12,9 +12,9 @@ export default function Background({ children }) {
       resizeMode="repeat"
       style={styles.background}
     >
-      <KeyboardAvoidingView style={styles.container} behavior="padding">
-        {children}
-      </KeyboardAvoidingView>
+      {/* <KeyboardAvoidingView style={styles.container} behavior="padding"> */}
+      {children}
+      {/* </KeyboardAvoidingView> */}
     </ImageBackground>
   );
 }
@@ -23,7 +23,6 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     width: "100%",
-    // backgroundColor: "yellow",
   },
   container: {
     flex: 1,
@@ -31,6 +30,7 @@ const styles = StyleSheet.create({
     width: "100%",
     maxWidth: 340,
     alignSelf: "center",
+    backgroundColor: "red",
     alignItems: "center",
     justifyContent: "center",
   },

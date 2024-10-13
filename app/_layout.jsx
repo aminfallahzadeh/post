@@ -1,10 +1,8 @@
 // REACT IMPORTS
 import { useEffect } from "react";
 
-// ROUTER IMPORTS
+// EXPO
 import { SplashScreen, Stack } from "expo-router";
-
-// EXPO IMPORTS
 import { useFonts } from "expo-font";
 
 // LIBRARIES

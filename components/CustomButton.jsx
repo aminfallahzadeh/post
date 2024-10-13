@@ -11,7 +11,7 @@ const CustomButton = ({
   testStyles,
   isLoading,
   bgColor = "bg-secondary",
-  titleColor = "text-black",
+  titleColor = "text-gray-600",
 }) => {
   return (
     <TouchableOpacity

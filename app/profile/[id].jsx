@@ -192,7 +192,8 @@ const UserProfile = () => {
                   <FormField
                     placeholder="روز"
                     keyboardType="default"
-                    type={"text"}
+                    type="text"
+                    clearBtn={false}
                     max={2}
                     control={control}
                     name="day"
@@ -206,6 +207,8 @@ const UserProfile = () => {
                     max={2}
                     control={control}
                     name="month"
+                    type="text"
+                    clearBtn={false}
                   />
                 </View>
 
@@ -216,6 +219,8 @@ const UserProfile = () => {
                     max={4}
                     control={control}
                     name="year"
+                    type="text"
+                    clearBtn={false}
                   />
                 </View>
               </View>

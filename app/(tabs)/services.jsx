@@ -22,7 +22,7 @@ import { Feather, AntDesign, FontAwesome } from "@expo/vector-icons";
 import { router } from "expo-router";
 import * as SecureStore from "expo-secure-store";
 
-// LIBRARY IMPORTS
+// COMPONENTS
 import Background from "@/components/Background";
 
 // DATA
