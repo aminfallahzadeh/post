@@ -59,11 +59,6 @@ const FormField = ({
     outputRange: [15, -10],
   });
 
-  // const placeholderBackgroundColor = placeholderTranslateY.interpolate({
-  //   inputRange: [0, 1],
-  //   outputRange: ["#fff", "transparent"],
-  // });
-
   const placeholderFontSize = placeholderAnimation.interpolate({
     inputRange: [0, 1],
     outputRange: [13, 12],

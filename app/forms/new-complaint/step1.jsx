@@ -1,5 +1,4 @@
 // REACT IMPORTS
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 // NATIVE IMPORTS
@@ -8,7 +7,11 @@ import {
   Text,
   Keyboard,
   TouchableWithoutFeedback,
+  Pressable,
   Platform,
+  KeyboardAvoidingView,
+  ScrollView,
+  StyleSheet,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -23,17 +26,15 @@ import Feather from "@expo/vector-icons/Feather";
 import CustomButton from "@/components/CustomButton";
 import FormField from "@/components/FormField";
 import ProgressBar from "@/components/ProgressBar";
+import Background from "@/components/Background";
 
 // LIBRARIES
-import Dropdown from "react-native-input-select";
+import LottieView from "lottie-react-native";
 
-// DATA
-import { complaintTypeLookup } from "@/data/lookup.js";
+// ASSETS
+import judgeLottie from "@/assets/animations/judge-lottie.json";
 
 const Step1 = () => {
-  // MAIN STATE
-  const [complaintType, setComplaintType] = useState(null);
-
   // ACCESS GLOBAL STATES
   const mobile = useUserStore((state) => state.mobile);
 
@@ -41,113 +42,151 @@ const Step1 = () => {
   const { control, handleSubmit, watch } = useForm();
 
   return (
-    <SafeAreaView className="bg-grey1 h-full px-3 justify-between items-center min-h-full">
-      {/* TOP SECTION */}
+    <Background>
+      <SafeAreaView className="h-full">
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+        >
+          <ScrollView
+            contentContainerStyle={{
+              flexGrow: 1,
+              paddingBottom: 90,
+              minHeight: "100%",
+            }}
+            showsVerticalScrollIndicator={false}
+            stickyHeaderIndices={[0]}
+            keyboardShouldPersistTaps="handled"
+          >
+            {/* HEADER SECTION */}
 
-      <View className="flex-col pt-10 w-full">
-        <Text className="text-primary font-isansbold text-center text-[20px]">
-          ثبت شکایت
-        </Text>
+            <View
+              className="flex-col w-full bg-secondary z-10 justify-center items-center relative"
+              style={styles.headerContainer}
+            >
+              <View className="flex-row w-full justify-between items-center">
+                <Pressable
+                  onPress={() => router.back()}
+                  className="absolute left-4"
+                >
+                  <Feather name="arrow-left" size={25} color="#333" />
+                </Pressable>
+                <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
+                  ثبت شکایت
+                </Text>
+              </View>
 
-        <ProgressBar progress={33} style={"mt-4"} />
-      </View>
+              <View className="flex-col px-10 w-full pb-2">
+                <ProgressBar progress={50} />
+              </View>
+            </View>
 
-      {/* FORM FIELDS */}
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View className="flex-col gap-3 w-full">
-          <View className="mb-2">
-            <FormField
-              title="شماره موبایل :"
-              keyboardType="text"
-              type={"text"}
-              height={"h-10"}
-              editable={false}
-              value={mobile}
-              style={{ color: "#666666" }}
-              control={control}
-              name="mobile"
+            {/* FORM FIELDS */}
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+              <View className="w-full px-4">
+                <LottieView
+                  source={judgeLottie}
+                  autoPlay
+                  loop
+                  className="w-full h-[100px] mt-[50px]"
+                />
+
+                <FormField
+                  placeholder="شماره موبایل :"
+                  keyboardType="default"
+                  type={"text"}
+                  editable={false}
+                  value={mobile || "-"}
+                  style={{ color: "#666666" }}
+                  containerStyle="mt-5"
+                  control={control}
+                  name="mobile"
+                />
+                <FormField
+                  placeholder="عنوان شکایت :"
+                  keyboardType="text"
+                  type={"text"}
+                  height={"h-[100px]"}
+                  containerStyle="mt-5"
+                  max={800}
+                  multiline
+                  inputStyle={{
+                    textAlignVertical: "top",
+                    textAlign: "right",
+                    paddingTop: 10,
+                  }}
+                  control={control}
+                  name="title"
+                />
+
+                <FormField
+                  placeholder="نام :"
+                  keyboardType="default"
+                  containerStyle="mt-5"
+                  type={"text"}
+                  control={control}
+                  name="name"
+                />
+
+                <FormField
+                  placeholder="نام خانوادگی :"
+                  keyboardType="default"
+                  containerStyle="mt-5"
+                  type={"text"}
+                  control={control}
+                  name="lastname"
+                />
+
+                <FormField
+                  placeholder="کد ملی :"
+                  keyboardType="default"
+                  type={"text"}
+                  control={control}
+                  containerStyle="mt-5"
+                  name="nationalCode"
+                />
+                {/* <View className="mt-5">
+                  <Dropdown
+                    placeholder="نوع شکایت"
+                    options={complaintTypeLookup}
+                    selectedValue={complaintType}
+                    onValueChange={(value) => setComplaintType(value)}
+                    primaryColor={"#164194"}
+                    placeholderStyle={selectPlaceholderStyle}
+                    dropdownContainerStyle={selectContainerStyle}
+                    dropdownStyle={selectDropdownStyle}
+                    selectedItemStyle={selectItemStyle}
+                    checkboxControls={checkboxControls}
+                    modalControls={modalControls}
+                  />
+                </View> */}
+              </View>
+            </TouchableWithoutFeedback>
+          </ScrollView>
+          {/* BOTTOM SECTION */}
+
+          <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
+            <CustomButton
+              title="ادامه"
+              handlePress={() => {
+                router.push("forms/new-complaint/step2");
+              }}
             />
           </View>
-
-          <View className="mb-2">
-            <FormField
-              title="عنوان شکایت :"
-              keyboardType="text"
-              type={"text"}
-              height={"h-[150px]"}
-              max={800}
-              multiline
-              inputStyle={{
-                textAlignVertical: "top",
-                textAlign: "right",
-              }}
-              control={control}
-              name="onvan"
-            />
-          </View>
-
-          <View>
-            <Dropdown
-              label="نوع شکایت"
-              placeholder="انتخاب کنید"
-              options={complaintTypeLookup}
-              labelStyle={{
-                fontFamily: "IranSans-DemiBold",
-                color: "black",
-                fontSize: 14,
-                alignSelf: Platform.OS === "ios" ? "flex-start" : "flex-end",
-                textAlign: "right",
-                marginBottom: 7,
-                paddingTop: 5,
-              }}
-              selectedValue={complaintType}
-              onValueChange={(value) => setComplaintType(value)}
-              primaryColor={"blue"}
-              placeholderStyle={{
-                color: "grey",
-                fontFamily: "IranSans-DemiBold",
-              }}
-              dropdownContainerStyle={{
-                direction: "rtl",
-                borderColor: "#fcd900",
-                fontFamily: "IranSans-DemiBold",
-              }}
-              dropdownStyle={{
-                borderColor: "#fcd900",
-                fontFamily: "IranSans-DemiBold",
-              }}
-              selectedItemStyle={{
-                color: "black",
-                fontFamily: "IranSans-Regular",
-              }}
-              modalControls={{
-                modalOptionsContainerStyle: {
-                  direction: "rtl",
-                },
-              }}
-            />
-          </View>
-        </View>
-      </TouchableWithoutFeedback>
-
-      {/* BOTTOM SECTION */}
-
-      <View className="flex-row justify-between items-center w-full pb-10">
-        <View className="flex-1 mr-2">
-          <CustomButton
-            title={<Feather name="arrow-left" size={24} color="black" />}
-            handlePress={() => router.back()}
-          />
-        </View>
-        <View className="flex-1 ml-2">
-          <CustomButton
-            title="ادامه"
-            handlePress={() => router.push("forms/new-complaint/step2")}
-          />
-        </View>
-      </View>
-    </SafeAreaView>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </Background>
   );
 };
 
 export default Step1;
+
+const styles = StyleSheet.create({
+  headerContainer: {
+    shadowColor: "black",
+    shadowOpacity: 0.26,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 10,
+    elevation: 3,
+    backgroundColor: "white",
+  },
+});

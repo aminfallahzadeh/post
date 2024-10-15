@@ -149,15 +149,20 @@ const UserProfile = () => {
           >
             {/* HEADER SECTION */}
             <View
-              className="flex-row w-full top-0 bg-secondary justify-center items-center z-10 px-2"
+              className="flex-col w-full bg-secondary z-10 justify-center items-center relative"
               style={styles.headerContainer}
             >
-              <Pressable onPress={() => router.back()} className="mr-auto ">
-                <Feather name="arrow-left" size={25} color="#333" />
-              </Pressable>
-              <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto">
-                پروفایل کاربر
-              </Text>
+              <View className="flex-row w-full justify-between items-center">
+                <Pressable
+                  onPress={() => router.back()}
+                  className="absolute left-4"
+                >
+                  <Feather name="arrow-left" size={25} color="#333" />
+                </Pressable>
+                <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
+                  پروفایل کاربر
+                </Text>
+              </View>
             </View>
 
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
