@@ -41,3 +41,29 @@ export const userDataValidations = (form_data) => [
     message: "سال معتبر نیست",
   },
 ];
+
+export const stepOneEopValidations = (form_data) => [
+  {
+    check: !form_data.title || !form_data.length === 0,
+    message: "عنوان شکایت را وارد کنید",
+  },
+];
+
+export const stepTwoEopValidation = (form_data) => [
+  {
+    check: !form_data.serialNo || !form_data.serialNo.length === 0,
+    message: "شماره سریال را وارد کنید",
+  },
+  {
+    check: !form_data.complaintType,
+    message: "نوع شکایت را انتخاب کنید",
+  },
+  {
+    check: !form_data.serviceId,
+    message: "نوع سرویس را انتخاب کنید",
+  },
+  {
+    check: !form_data.to_org_id,
+    message: "واحد پستی را انتخاب کنید",
+  },
+];

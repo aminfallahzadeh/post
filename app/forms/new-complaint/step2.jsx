@@ -1,6 +1,6 @@
 // REACT IMPORTS
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 
 // NATIVE IMPROTS
 import {
@@ -22,8 +22,13 @@ import FormField from "@/components/FormField";
 import CustomButton from "@/components/CustomButton";
 import Background from "@/components/Background";
 
+// AXIOS
+import { useUserStore } from "@/store";
+import { newEop } from "@/api/eop";
+
 // LIBRARIES
 import Dropdown from "react-native-input-select";
+import { showMessage } from "react-native-flash-message";
 
 // CONTSTANTS
 import {
@@ -34,10 +39,14 @@ import {
   modalControls,
   checkboxControls,
 } from "@/constants/styles";
+import { stepTwoEopValidation } from "@/constants/validations";
 
 // EXPO IMPORTS
 import { router } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
+
+// ASSETS
+import { toastStyles } from "@/constants/styles";
 
 // DATA
 import {
@@ -47,12 +56,71 @@ import {
 } from "@/data/lookup.js";
 
 const Step2 = () => {
-  const [complaintType, setComplaintType] = useState(null);
-  const [serviceType, setServiceType] = useState(null);
-  const [postalReagion, setPostalReagion] = useState(null);
+  // LOADING STATE
+  const [isLoading, setIsLoading] = useState(false);
+
+  // ACCES GLOBAL STORE
+  const complaintData = useUserStore((state) => state.complaintFormData);
+  const setComplaintFormData = useUserStore(
+    (state) => state.setComplaintFormData
+  );
+  const removeComplaintData = useUserStore(
+    (state) => state.removeComplaintData
+  );
 
   // ACCESS HOOK FORM METHODS
-  const { control, handleSubmit, watch } = useForm();
+  const { control, handleSubmit, watch, reset } = useForm();
+
+  // ACCESS FORM DATA
+  const form_data = watch();
+
+  useEffect(() => {
+    console.log("THIS IS THE COMPLAINT", complaintData);
+  }, [complaintData]);
+
+  const onSubmit = async () => {
+    const validations = stepTwoEopValidation(form_data);
+    for (let validation of validations) {
+      if (validation.check) {
+        showMessage({
+          message: validation.message,
+          type: "danger",
+          titleStyle: toastStyles,
+        });
+        return;
+      }
+    }
+
+    setIsLoading(true);
+    try {
+      setComplaintFormData(form_data);
+
+      const response = await newEop(complaintData);
+      console.log("Customer profile response", response);
+      showMessage({
+        message: response.data.message,
+        type: "success",
+        titleStyle: toastStyles,
+      });
+      reset();
+      router.replace("/services");
+      removeComplaintData();
+    } catch (error) {
+      console.log("Customer profile error: ", error);
+      showMessage({
+        message: error.response.data.message || error.message,
+        type: "danger",
+        titleStyle: toastStyles,
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // DEBUGGING
+  useEffect(() => {
+    console.log(form_data);
+  }, [form_data]);
 
   return (
     <Background>
@@ -104,50 +172,80 @@ const Step2 = () => {
                   name="serialNo"
                 />
                 <View className="mt-5">
-                  <Dropdown
-                    placeholder="نوع شکایت"
-                    options={complaintTypeLookup}
-                    selectedValue={complaintType}
-                    onValueChange={(value) => setComplaintType(value)}
-                    primaryColor={"#164194"}
-                    placeholderStyle={selectPlaceholderStyle}
-                    dropdownContainerStyle={selectContainerStyle}
-                    dropdownStyle={selectDropdownStyle}
-                    selectedItemStyle={selectItemStyle}
-                    checkboxControls={checkboxControls}
-                    modalControls={modalControls}
+                  <Controller
+                    name="complaintType"
+                    control={control}
+                    render={({ field: { onChange } }) => (
+                      <Dropdown
+                        placeholder="نوع شکایت"
+                        options={complaintTypeLookup}
+                        onValueChange={(val) => onChange(val)}
+                        selectedValue={
+                          complaintTypeLookup.find(
+                            (c) => c.value === form_data?.complaintType
+                          )?.value
+                        }
+                        primaryColor={"#164194"}
+                        placeholderStyle={selectPlaceholderStyle}
+                        dropdownContainerStyle={selectContainerStyle}
+                        dropdownStyle={selectDropdownStyle}
+                        selectedItemStyle={selectItemStyle}
+                        checkboxControls={checkboxControls}
+                        modalControls={modalControls}
+                      />
+                    )}
                   />
                 </View>
 
                 <View className="mt-5">
-                  <Dropdown
-                    placeholder="نوع سرویس"
-                    options={seriveTypeLookup}
-                    selectedValue={serviceType}
-                    onValueChange={(value) => setServiceType(value)}
-                    primaryColor={"#164194"}
-                    placeholderStyle={selectPlaceholderStyle}
-                    dropdownContainerStyle={selectContainerStyle}
-                    dropdownStyle={selectDropdownStyle}
-                    selectedItemStyle={selectItemStyle}
-                    checkboxControls={checkboxControls}
-                    modalControls={modalControls}
+                  <Controller
+                    name="serviceId"
+                    control={control}
+                    render={({ field: { onChange } }) => (
+                      <Dropdown
+                        placeholder="نوع سرویس"
+                        options={seriveTypeLookup}
+                        selectedValue={
+                          seriveTypeLookup.find(
+                            (c) => c.value === form_data?.serviceId
+                          )?.value
+                        }
+                        onValueChange={(val) => onChange(val)}
+                        primaryColor={"#164194"}
+                        placeholderStyle={selectPlaceholderStyle}
+                        dropdownContainerStyle={selectContainerStyle}
+                        dropdownStyle={selectDropdownStyle}
+                        selectedItemStyle={selectItemStyle}
+                        checkboxControls={checkboxControls}
+                        modalControls={modalControls}
+                      />
+                    )}
                   />
                 </View>
 
                 <View className="mt-5">
-                  <Dropdown
-                    placeholder="واحد پستی"
-                    options={postalReagionLookup}
-                    selectedValue={postalReagion}
-                    onValueChange={(value) => setPostalReagion(value)}
-                    primaryColor={"#164194"}
-                    placeholderStyle={selectPlaceholderStyle}
-                    dropdownContainerStyle={selectContainerStyle}
-                    dropdownStyle={selectDropdownStyle}
-                    selectedItemStyle={selectItemStyle}
-                    checkboxControls={checkboxControls}
-                    modalControls={modalControls}
+                  <Controller
+                    name="to_org_id"
+                    control={control}
+                    render={({ field: { onChange } }) => (
+                      <Dropdown
+                        placeholder="واحد پستی"
+                        options={postalReagionLookup}
+                        selectedValue={
+                          postalReagionLookup.find(
+                            (c) => c.value === form_data?.to_org_id
+                          )?.value
+                        }
+                        onValueChange={(val) => onChange(val)}
+                        primaryColor={"#164194"}
+                        placeholderStyle={selectPlaceholderStyle}
+                        dropdownContainerStyle={selectContainerStyle}
+                        dropdownStyle={selectDropdownStyle}
+                        selectedItemStyle={selectItemStyle}
+                        checkboxControls={checkboxControls}
+                        modalControls={modalControls}
+                      />
+                    )}
                   />
                 </View>
               </View>
@@ -161,7 +259,8 @@ const Step2 = () => {
               title="ثبت"
               bgColor="bg-green-700"
               titleColor="text-white"
-              handlePress={() => {}}
+              handlePress={handleSubmit(onSubmit)}
+              isLoading={isLoading}
             />
           </View>
         </KeyboardAvoidingView>

@@ -48,7 +48,7 @@ import { userDataValidations } from "@/constants/validations";
 import { toastStyles } from "@/constants/styles";
 
 const UserProfile = () => {
-  const { id } = useLocalSearchParams(id);
+  const { id } = useLocalSearchParams();
 
   // LOADING STATE
   const [isLoading, setIsLoading] = useState(false);

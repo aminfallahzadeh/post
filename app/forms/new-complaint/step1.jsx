@@ -1,4 +1,5 @@
 // REACT IMPORTS
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 // NATIVE IMPORTS
@@ -18,6 +19,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 // AXIOS AND STORE
 import { useUserStore } from "@/store";
 
+// CONSTANTS
+import { stepOneEopValidations } from "@/constants/validations";
+
 // EXPO IMPORTS
 import { router } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
@@ -29,17 +33,54 @@ import ProgressBar from "@/components/ProgressBar";
 import Background from "@/components/Background";
 
 // LIBRARIES
+import { showMessage } from "react-native-flash-message";
 import LottieView from "lottie-react-native";
 
 // ASSETS
+import { toastStyles } from "@/constants/styles";
 import judgeLottie from "@/assets/animations/judge-lottie.json";
+import { useEffect } from "react";
 
 const Step1 = () => {
+  // LOADINT STATE
+  const [isLoading, setIsLoading] = useState(false);
+
   // ACCESS GLOBAL STATES
   const mobile = useUserStore((state) => state.mobile);
+  const userData = useUserStore((state) => state.userData);
+  const setComplaintFormData = useUserStore(
+    (state) => state.setComplaintFormData
+  );
 
   // ACCESS HOOK FORM METHODS
   const { control, handleSubmit, watch } = useForm();
+
+  // ACCESS HOOK FORM DATA
+  const form_data = watch();
+
+  useEffect(() => {
+    console.log(form_data);
+  }, [form_data]);
+
+  // SUBMIT HANDLERS
+  const onSubmit = async () => {
+    const validations = stepOneEopValidations(form_data);
+
+    for (let validation of validations) {
+      if (validation.check) {
+        showMessage({
+          message: validation.message,
+          type: "danger",
+          titleStyle: toastStyles,
+        });
+        return;
+      }
+    }
+    setIsLoading(true);
+    await setComplaintFormData(form_data);
+    setIsLoading(false);
+    router.push("/forms/new-complaint/step2");
+  };
 
   return (
     <Background>
@@ -101,6 +142,43 @@ const Step1 = () => {
                   control={control}
                   name="mobile"
                 />
+
+                <FormField
+                  placeholder="نام :"
+                  keyboardType="default"
+                  containerStyle="mt-5"
+                  type={"text"}
+                  value={userData?.name || "-"}
+                  editable={false}
+                  style={{ color: "#666666" }}
+                  control={control}
+                  name="name"
+                />
+
+                <FormField
+                  placeholder="نام خانوادگی :"
+                  keyboardType="default"
+                  containerStyle="mt-5"
+                  type={"text"}
+                  control={control}
+                  editable={false}
+                  style={{ color: "#666666" }}
+                  value={userData?.lastName || "-"}
+                  name="lastname"
+                />
+
+                <FormField
+                  placeholder="کد ملی :"
+                  keyboardType="default"
+                  type={"text"}
+                  control={control}
+                  containerStyle="mt-5"
+                  editable={false}
+                  style={{ color: "#666666" }}
+                  value={userData?.nationalCode || "-"}
+                  name="nationalCode"
+                />
+
                 <FormField
                   placeholder="عنوان شکایت :"
                   keyboardType="text"
@@ -117,48 +195,6 @@ const Step1 = () => {
                   control={control}
                   name="title"
                 />
-
-                <FormField
-                  placeholder="نام :"
-                  keyboardType="default"
-                  containerStyle="mt-5"
-                  type={"text"}
-                  control={control}
-                  name="name"
-                />
-
-                <FormField
-                  placeholder="نام خانوادگی :"
-                  keyboardType="default"
-                  containerStyle="mt-5"
-                  type={"text"}
-                  control={control}
-                  name="lastname"
-                />
-
-                <FormField
-                  placeholder="کد ملی :"
-                  keyboardType="default"
-                  type={"text"}
-                  control={control}
-                  containerStyle="mt-5"
-                  name="nationalCode"
-                />
-                {/* <View className="mt-5">
-                  <Dropdown
-                    placeholder="نوع شکایت"
-                    options={complaintTypeLookup}
-                    selectedValue={complaintType}
-                    onValueChange={(value) => setComplaintType(value)}
-                    primaryColor={"#164194"}
-                    placeholderStyle={selectPlaceholderStyle}
-                    dropdownContainerStyle={selectContainerStyle}
-                    dropdownStyle={selectDropdownStyle}
-                    selectedItemStyle={selectItemStyle}
-                    checkboxControls={checkboxControls}
-                    modalControls={modalControls}
-                  />
-                </View> */}
               </View>
             </TouchableWithoutFeedback>
           </ScrollView>
@@ -167,9 +203,8 @@ const Step1 = () => {
           <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
             <CustomButton
               title="ادامه"
-              handlePress={() => {
-                router.push("forms/new-complaint/step2");
-              }}
+              handlePress={handleSubmit(onSubmit)}
+              isLoading={isLoading}
             />
           </View>
         </KeyboardAvoidingView>

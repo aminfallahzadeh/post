@@ -16,6 +16,9 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+// STORE
+import { useUserStore } from "@/store";
+
 // EXPO IMPORTS
 import { LinearGradient } from "expo-linear-gradient";
 import { Feather, AntDesign, FontAwesome } from "@expo/vector-icons";
@@ -23,6 +26,8 @@ import { router } from "expo-router";
 
 // COMPONENTS
 import Background from "@/components/Background";
+import CustomModal from "@/components/CustomModal";
+import CustomButton from "../../components/CustomButton";
 
 // DATA
 import { filtersData } from "@/data/filters";
@@ -49,6 +54,10 @@ const Services = () => {
   // FILTER STATE
   const [selected, setSelected] = useState(filtersData[0]);
   const [filteredItems, dispatch] = useReducer(filterReducer, "all");
+  const [visible, setVisible] = useState(false);
+
+  // ACCESS USER DATA
+  const userData = useUserStore((state) => state.userData);
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
@@ -66,7 +75,11 @@ const Services = () => {
     require("../../assets/images/announce-4.png"),
   ];
 
-  const handlePress = (url) => {
+  const handlePressNationalCodeRequired = (url) => {
+    if (!userData.birthDate) {
+      setVisible(true);
+      return;
+    }
     if (url) router.push(url);
     return;
   };
@@ -81,7 +94,7 @@ const Services = () => {
       className="justify-center items-center gap-1"
       key={item.id}
       style={{ width: "26%", transform: [{ scaleX: -1 }] }}
-      onPress={() => handlePress(item.url)}
+      onPress={() => handlePressNationalCodeRequired(item.url)}
     >
       {item.iconName === "exclamationcircle" ? (
         <AntDesign name={item.iconName} size={28} color="white" />
@@ -103,98 +116,106 @@ const Services = () => {
   );
 
   return (
-    <Background>
-      <SafeAreaView className="h-full">
-        <Animated.View className="mt-16" style={{ opacity: fadeAnim }}>
-          <View className="w-full">
-            <View style={{ position: "relative" }}>
-              <Image source={images[2]} style={styles.heroImage} />
-              <LinearGradient
-                colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.8)"]}
-                style={[
-                  styles.heroImage,
-                  {
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                  },
-                ]}
-              />
-              <View style={styles.heroTextContainer}>
-                <TouchableOpacity onPress={() => alert("hello")}>
-                  <View className="flex-row justify-center items-center gap-x-2">
-                    <Text className="text-tertiary font-isansbold text-2xl text-center">
-                      پیگیری مرسوله
-                    </Text>
+    <>
+      <CustomModal
+        visible={visible}
+        closeModal={() => setVisible(false)}
+        title="توجه"
+        description="شماره ملی شما ثبت نشده است. لطفا از پروفایل کاربری اقدام به ثبت شماره ملی نمایید."
+      />
+      <Background>
+        <SafeAreaView className="h-full">
+          <Animated.View className="mt-16" style={{ opacity: fadeAnim }}>
+            <View className="w-full">
+              <View style={{ position: "relative" }}>
+                <Image source={images[2]} style={styles.heroImage} />
+                <LinearGradient
+                  colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.8)"]}
+                  style={[
+                    styles.heroImage,
+                    {
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                    },
+                  ]}
+                />
+                <View style={styles.heroTextContainer}>
+                  <TouchableOpacity onPress={() => alert("hello")}>
+                    <View className="flex-row justify-center items-center gap-x-2">
+                      <Text className="text-tertiary font-isansbold text-2xl text-center">
+                        پیگیری مرسوله
+                      </Text>
 
-                    <Feather
-                      size={25}
-                      name="arrow-right-circle"
-                      color="#164194"
-                    />
-                  </View>
-                </TouchableOpacity>
+                      <Feather
+                        size={25}
+                        name="arrow-right-circle"
+                        color="#164194"
+                      />
+                    </View>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
-          </View>
-          <View className="mt-5">
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{
-                alignItems: "center",
-                justifyContent: "cetner",
-                gap: 10,
-                paddingHorizontal: 20,
-              }}
-              style={{
-                transform: [{ scaleX: -1 }],
-              }}
-            >
-              {filtersData.map((service) => (
-                <Pressable
-                  style={[
-                    styles.filterItem,
-                    selected?.id === service.id && styles.selected,
-                  ]}
-                  key={service.id}
-                  onPress={() => handleOnFilterPress(service, service.type)}
-                >
-                  {service.iconName && (
-                    <Feather
-                      name={service.iconName}
-                      size={12}
-                      color={service.iconColor}
-                    />
-                  )}
-                  <Text style={styles.filterText}>{service.label}</Text>
-                </Pressable>
-              ))}
-            </ScrollView>
-          </View>
-
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingBottom: 300 }}
-          >
-            <View
-              className="flex-row flex-wrap gap-y-4 justify-start mt-5 px-2"
-              style={{ transform: [{ scaleX: -1 }] }}
-            >
-              {filteredItems === "all"
-                ? allData.map((item) => renderPressableItem(item))
-                : filteredItems === "followup"
-                ? followUpData.map((item) => renderPressableItem(item))
-                : filteredItems === "request"
-                ? requestData.map((item) => renderPressableItem(item))
-                : null}
+            <View className="mt-5">
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{
+                  alignItems: "center",
+                  justifyContent: "cetner",
+                  gap: 10,
+                  paddingHorizontal: 20,
+                }}
+                style={{
+                  transform: [{ scaleX: -1 }],
+                }}
+              >
+                {filtersData.map((service) => (
+                  <Pressable
+                    style={[
+                      styles.filterItem,
+                      selected?.id === service.id && styles.selected,
+                    ]}
+                    key={service.id}
+                    onPress={() => handleOnFilterPress(service, service.type)}
+                  >
+                    {service.iconName && (
+                      <Feather
+                        name={service.iconName}
+                        size={12}
+                        color={service.iconColor}
+                      />
+                    )}
+                    <Text style={styles.filterText}>{service.label}</Text>
+                  </Pressable>
+                ))}
+              </ScrollView>
             </View>
-          </ScrollView>
-        </Animated.View>
-      </SafeAreaView>
-    </Background>
+
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{ paddingBottom: 300 }}
+            >
+              <View
+                className="flex-row flex-wrap gap-y-4 justify-start mt-5 px-2"
+                style={{ transform: [{ scaleX: -1 }] }}
+              >
+                {filteredItems === "all"
+                  ? allData.map((item) => renderPressableItem(item))
+                  : filteredItems === "followup"
+                  ? followUpData.map((item) => renderPressableItem(item))
+                  : filteredItems === "request"
+                  ? requestData.map((item) => renderPressableItem(item))
+                  : null}
+              </View>
+            </ScrollView>
+          </Animated.View>
+        </SafeAreaView>
+      </Background>
+    </>
   );
 };
 
