@@ -12,7 +12,6 @@ import {
   Dimensions,
   Image,
   Pressable,
-  TouchableOpacity,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -27,7 +26,6 @@ import { router } from "expo-router";
 // COMPONENTS
 import Background from "@/components/Background";
 import CustomModal from "@/components/CustomModal";
-import CustomButton from "../../components/CustomButton";
 
 // DATA
 import { filtersData } from "@/data/filters";
@@ -143,7 +141,7 @@ const Services = () => {
                   ]}
                 />
                 <View style={styles.heroTextContainer}>
-                  <TouchableOpacity onPress={() => alert("hello")}>
+                  <Pressable onPress={() => router.push("follow")}>
                     <View className="flex-row justify-center items-center gap-x-2">
                       <Text className="text-tertiary font-isansbold text-2xl text-center">
                         پیگیری مرسوله
@@ -155,7 +153,7 @@ const Services = () => {
                         color="#164194"
                       />
                     </View>
-                  </TouchableOpacity>
+                  </Pressable>
                 </View>
               </View>
             </View>

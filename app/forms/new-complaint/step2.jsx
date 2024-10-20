@@ -61,9 +61,6 @@ const Step2 = () => {
 
   // ACCES GLOBAL STORE
   const complaintData = useUserStore((state) => state.complaintFormData);
-  const setComplaintFormData = useUserStore(
-    (state) => state.setComplaintFormData
-  );
   const removeComplaintData = useUserStore(
     (state) => state.removeComplaintData
   );
@@ -77,6 +74,10 @@ const Step2 = () => {
   useEffect(() => {
     console.log("THIS IS THE COMPLAINT", complaintData);
   }, [complaintData]);
+
+  useEffect(() => {
+    console.log(Number(complaintData.serialNo));
+  }, [complaintData.serialNo]);
 
   const onSubmit = async () => {
     const validations = stepTwoEopValidation(form_data);
@@ -93,9 +94,10 @@ const Step2 = () => {
 
     setIsLoading(true);
     try {
-      setComplaintFormData(form_data);
-
-      const response = await newEop(complaintData);
+      const response = await newEop({
+        ...complaintData,
+        ...form_data,
+      });
       console.log("Customer profile response", response);
       showMessage({
         message: response.data.message,
@@ -106,21 +108,19 @@ const Step2 = () => {
       router.replace("/services");
       removeComplaintData();
     } catch (error) {
-      console.log("Customer profile error: ", error);
+      console.log("Complait error: ", error.response);
       showMessage({
-        message: error.response.data.message || error.message,
+        message: error.response?.data?.message || error.message,
         type: "danger",
         titleStyle: toastStyles,
       });
+      reset();
+      router.replace("/services");
+      removeComplaintData();
     } finally {
       setIsLoading(false);
     }
   };
-
-  // DEBUGGING
-  useEffect(() => {
-    console.log(form_data);
-  }, [form_data]);
 
   return (
     <Background>

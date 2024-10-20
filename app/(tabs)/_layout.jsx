@@ -11,12 +11,12 @@ import {
 
 // EXPO IMPORTS
 import { Tabs } from "expo-router";
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { Ionicons } from "@expo/vector-icons";
 
 // COMPONENTS
 import TabBar from "@/components/TabBar";
-import SettingsMenu from "@/components/SettingsMenu";
+import SettingsMenu from "@/views/SettingsMenu";
 
 const { width, height } = Dimensions.get("screen");
 
