@@ -1,7 +1,7 @@
 // AXIOS
 import axiosInstance from "./axiosConfig";
 
-export async function newEop(data) {
+export function newEop(data) {
   // VIEW MODEL
   // {
   // 	"title": "string",
@@ -16,4 +16,12 @@ export async function newEop(data) {
   //   }
 
   return axiosInstance.post("/EOP/NewEOP", data);
+}
+
+export function eopList(mobile) {
+  return axiosInstance.get(`/EOP/ListEOP?Mobile=${mobile}`);
+}
+
+export function queryEop(key) {
+  return axiosInstance.get(`/EOP/QueryEOP?publickey=${key}`);
 }

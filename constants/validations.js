@@ -67,3 +67,14 @@ export const stepTwoEopValidation = (form_data) => [
     message: "واحد پستی را انتخاب کنید",
   },
 ];
+
+export const followComplaintValidation = (form_data) => [
+  {
+    check: !form_data.publickey || !form_data.publickey.length === 0,
+    message: "کد پیگیری را وارد کنید",
+  },
+  {
+    check: form_data.publickey.length !== 13,
+    message: "کد پیگیری معتبر نیست",
+  },
+];

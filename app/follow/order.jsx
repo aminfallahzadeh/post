@@ -19,6 +19,12 @@ import Feather from "@expo/vector-icons/Feather";
 // COMPONENTS
 import Background from "@/components/Background";
 
+// LIBRARIES
+import LottieView from "lottie-react-native";
+
+// ASSETS
+import searchLottie from "@/assets/animations/search-lottie.json";
+
 const FollowOrder = () => {
   return (
     <Background>
@@ -52,13 +58,20 @@ const FollowOrder = () => {
                   پیگیری مرسوله
                 </Text>
               </View>
-
-              <View className="flex-col px-10 w-full"></View>
             </View>
 
             {/* FORM FIELDS */}
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-              <View className="w-full px-4"></View>
+              <View className="w-full px-4">
+                <View className="flex-col px-10 w-full">
+                  <LottieView
+                    source={searchLottie}
+                    autoPlay
+                    loop
+                    className="w-full h-[150px] mt-[50px]"
+                  />
+                </View>
+              </View>
             </TouchableWithoutFeedback>
           </ScrollView>
         </KeyboardAvoidingView>

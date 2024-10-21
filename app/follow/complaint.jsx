@@ -1,3 +1,7 @@
+// REACT IMPORTS
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+
 // NATIVE IMPORTS
 import {
   KeyboardAvoidingView,
@@ -16,54 +20,159 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
 
+// AXIOS
+import { queryEop } from "@/api/eop";
+
 // COMPONENTS
 import Background from "@/components/Background";
+import FormField from "@/components/FormField";
+import CustomButton from "@/components/CustomButton";
+import CustomModal from "@/components/CustomModal";
+
+// CONSTANTS
+import { followComplaintValidation } from "@/constants/validations";
+
+// LIBRARIES
+import LottieView from "lottie-react-native";
+import { showMessage } from "react-native-flash-message";
+import { Chase } from "react-native-animated-spinkit";
+
+// ASSETS
+import { toastStyles } from "@/constants/styles";
+import searchLottie from "@/assets/animations/search-lottie.json";
 
 const FollowComplaint = () => {
+  // LOADIN STATE
+  const [isLoading, setIsLoading] = useState(false);
+  const [queryResult, setQueryResult] = useState("");
+
+  // MODAL STATE
+  const [visible, setVisible] = useState(false);
+
+  // ACCESS HOOK FORM METHODS
+  const { control, handleSubmit, watch, reset } = useForm();
+
+  // ACCESS HOOK FORM DATA
+  const form_data = watch();
+
+  // HANDLERS
+  const onSubmit = async () => {
+    const validations = followComplaintValidation(form_data);
+    for (let validation of validations) {
+      if (validation.check) {
+        showMessage({
+          message: validation.message,
+          type: "danger",
+          titleStyle: toastStyles,
+        });
+        return;
+      }
+    }
+
+    try {
+      setIsLoading(true);
+      const response = await queryEop(parseInt(form_data.publickey));
+      console.log("Query EOP Response: ", response.data);
+      setQueryResult(response.data.message);
+      setVisible(true);
+      reset();
+    } catch (error) {
+      console.log("Query EOP error: ", error.response);
+      showMessage({
+        message: error.response?.data?.message || error.message,
+        type: "danger",
+        titleStyle: toastStyles,
+      });
+      reset();
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <Background>
-      <SafeAreaView className="h-full">
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : undefined}
-        >
-          <ScrollView
-            contentContainerStyle={{
-              flexGrow: 1,
-              paddingBottom: 90,
-              minHeight: "100%",
-            }}
-            showsVerticalScrollIndicator={false}
-            stickyHeaderIndices={[0]}
-            keyboardShouldPersistTaps="handled"
+    <>
+      <CustomModal
+        visible={visible}
+        closeModal={() => setVisible(false)}
+        title="نتیجه پیگیری شما"
+        description={queryResult}
+      />
+      <Background>
+        <SafeAreaView className="h-full">
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : undefined}
           >
-            {/* HEADER SECTION */}
-            <View
-              className="flex-col w-full bg-secondary z-10 justify-center items-center relative"
-              style={styles.headerContainer}
+            <ScrollView
+              contentContainerStyle={{
+                flexGrow: 1,
+                paddingBottom: 90,
+                minHeight: "100%",
+              }}
+              showsVerticalScrollIndicator={false}
+              stickyHeaderIndices={[0]}
+              keyboardShouldPersistTaps="handled"
             >
-              <View className="flex-row w-full justify-between items-center">
-                <Pressable
-                  onPress={() => router.back()}
-                  className="absolute left-4"
-                >
-                  <Feather name="arrow-left" size={25} color="#333" />
-                </Pressable>
-                <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
-                  پیگیری شکایت
-                </Text>
+              {/* HEADER SECTION */}
+              <View
+                className="flex-col w-full bg-secondary z-10 justify-center items-center relative"
+                style={styles.headerContainer}
+              >
+                <View className="flex-row w-full justify-between items-center">
+                  <Pressable
+                    onPress={() => router.back()}
+                    className="absolute left-4"
+                  >
+                    <Feather name="arrow-left" size={25} color="#333" />
+                  </Pressable>
+                  <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
+                    پیگیری شکایت
+                  </Text>
+                </View>
               </View>
 
-              <View className="flex-col px-10 w-full"></View>
-            </View>
+              {/* FORM FIELDS */}
+              <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <View className="w-full px-4">
+                  <View className="flex-col px-10 w-full">
+                    <LottieView
+                      source={searchLottie}
+                      autoPlay
+                      loop
+                      className="w-full h-[150px] mt-[50px]"
+                    />
+                  </View>
 
-            {/* FORM FIELDS */}
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-              <View className="w-full px-4"></View>
-            </TouchableWithoutFeedback>
-          </ScrollView>
-        </KeyboardAvoidingView>
-      </SafeAreaView>
-    </Background>
+                  <FormField
+                    placeholder="شماره پیگیری"
+                    keyboardType="default"
+                    type={"text"}
+                    containerStyle="mt-5"
+                    control={control}
+                    name="publickey"
+                  />
+
+                  {/* RESPONSE CONTAINER */}
+                  <View className="mt-10 justify-center items-center w-full px-2 py-1">
+                    {isLoading && <Chase size={40} color="#164194" />}
+                  </View>
+                </View>
+              </TouchableWithoutFeedback>
+            </ScrollView>
+
+            {/* BOTTOM SECTION */}
+            <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
+              <CustomButton
+                title="ثبت"
+                bgColor="bg-green-700"
+                titleColor="text-white"
+                handlePress={handleSubmit(onSubmit)}
+                isLoading={isLoading}
+              />
+            </View>
+          </KeyboardAvoidingView>
+        </SafeAreaView>
+      </Background>
+    </>
   );
 };
 

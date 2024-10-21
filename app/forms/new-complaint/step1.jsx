@@ -39,7 +39,6 @@ import LottieView from "lottie-react-native";
 // ASSETS
 import { toastStyles } from "@/constants/styles";
 import judgeLottie from "@/assets/animations/judge-lottie.json";
-import { useEffect } from "react";
 
 const Step1 = () => {
   // LOADINT STATE
@@ -57,10 +56,6 @@ const Step1 = () => {
 
   // ACCESS HOOK FORM DATA
   const form_data = watch();
-
-  useEffect(() => {
-    console.log(form_data);
-  }, [form_data]);
 
   // SUBMIT HANDLERS
   const onSubmit = async () => {
@@ -132,7 +127,7 @@ const Step1 = () => {
                 />
 
                 <FormField
-                  placeholder="شماره موبایل :"
+                  placeholder="شماره موبایل"
                   keyboardType="default"
                   type={"text"}
                   editable={false}
@@ -144,7 +139,7 @@ const Step1 = () => {
                 />
 
                 <FormField
-                  placeholder="نام :"
+                  placeholder="نام"
                   keyboardType="default"
                   containerStyle="mt-5"
                   type={"text"}
@@ -156,7 +151,7 @@ const Step1 = () => {
                 />
 
                 <FormField
-                  placeholder="نام خانوادگی :"
+                  placeholder="نام خانوادگی"
                   keyboardType="default"
                   containerStyle="mt-5"
                   type={"text"}
@@ -168,7 +163,7 @@ const Step1 = () => {
                 />
 
                 <FormField
-                  placeholder="کد ملی :"
+                  placeholder="کد ملی"
                   keyboardType="default"
                   type={"text"}
                   control={control}
@@ -180,7 +175,7 @@ const Step1 = () => {
                 />
 
                 <FormField
-                  placeholder="عنوان شکایت :"
+                  placeholder="عنوان شکایت"
                   keyboardType="text"
                   type={"text"}
                   height={"h-[100px]"}

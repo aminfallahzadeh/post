@@ -36,7 +36,7 @@ const CustomModal = ({ visible, closeModal, title, description }) => {
             end={{ x: 1, y: 0 }}
           />
 
-          <Text className="text-gray2 text-center font-isansregular text-[15px] mt-5">
+          <Text className="text-gray2 text-center font-isansbold text-[17px] mt-5 px-4">
             {description}
           </Text>
 

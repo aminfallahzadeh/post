@@ -94,7 +94,7 @@ export const followUpData = [
     title: "پیگیری شکایت",
     gradientColors: ["#00075a", "#009cff"],
     iconName: null,
-    url: null,
+    url: "follow/complaint",
     imageUrl: require("@/assets/images/shekayat-peygiri.png"),
   },
 ];

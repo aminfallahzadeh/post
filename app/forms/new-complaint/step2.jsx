@@ -164,7 +164,7 @@ const Step2 = () => {
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
               <View className="w-full px-4">
                 <FormField
-                  placeholder="شماره سریال بسته پستی :"
+                  placeholder="شماره سریال بسته پستی"
                   keyboardType="default"
                   type={"text"}
                   control={control}
