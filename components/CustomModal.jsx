@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
     width: "80%",
     minHeight: 200,
     borderRadius: 4,
+    paddingVertical: 10,
   },
   gradientLineHorizontal: {
     height: 2,

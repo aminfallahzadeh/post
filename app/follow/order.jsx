@@ -1,3 +1,7 @@
+// REACT IMPORTS
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+
 // NATIVE IMPORTS
 import {
   KeyboardAvoidingView,
@@ -18,14 +22,25 @@ import Feather from "@expo/vector-icons/Feather";
 
 // COMPONENTS
 import Background from "@/components/Background";
+import FormField from "@/components/FormField";
+import CustomButton from "@/components/CustomButton";
 
 // LIBRARIES
 import LottieView from "lottie-react-native";
+import { Chase } from "react-native-animated-spinkit";
 
 // ASSETS
 import searchLottie from "@/assets/animations/search-lottie.json";
 
 const FollowOrder = () => {
+  // ACCESS HOOK FORM METHODS
+  const { control, handleSubmit, watch, reset } = useForm();
+
+  // LOADIN STATE
+  const [isLoading, setIsLoading] = useState(false);
+
+  // HANDLERS
+  const onSubmit = () => {};
   return (
     <Background>
       <SafeAreaView className="h-full">
@@ -71,9 +86,34 @@ const FollowOrder = () => {
                     className="w-full h-[150px] mt-[50px]"
                   />
                 </View>
+
+                <FormField
+                  placeholder="شماره پیگیری"
+                  keyboardType="default"
+                  type={"text"}
+                  containerStyle="mt-5"
+                  control={control}
+                  name="publickey"
+                />
+
+                {/* RESPONSE CONTAINER */}
+                <View className="mt-10 justify-center items-center w-full px-2 py-1">
+                  {isLoading && <Chase size={40} color="#164194" />}
+                </View>
               </View>
             </TouchableWithoutFeedback>
           </ScrollView>
+
+          {/* BOTTOM SECTION */}
+          <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
+            <CustomButton
+              title="جست و جو"
+              bgColor="bg-green-700"
+              titleColor="text-white"
+              handlePress={handleSubmit(onSubmit)}
+              isLoading={isLoading}
+            />
+          </View>
         </KeyboardAvoidingView>
       </SafeAreaView>
     </Background>

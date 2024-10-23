@@ -44,6 +44,8 @@ import searchLottie from "@/assets/animations/search-lottie.json";
 const FollowComplaint = () => {
   // LOADIN STATE
   const [isLoading, setIsLoading] = useState(false);
+
+  // MAIN STATE
   const [queryResult, setQueryResult] = useState("");
 
   // MODAL STATE
@@ -162,7 +164,7 @@ const FollowComplaint = () => {
             {/* BOTTOM SECTION */}
             <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
               <CustomButton
-                title="ثبت"
+                title="جست و جو"
                 bgColor="bg-green-700"
                 titleColor="text-white"
                 handlePress={handleSubmit(onSubmit)}

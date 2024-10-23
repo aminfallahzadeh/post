@@ -25,7 +25,10 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/logo-post.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#ffffff",
+        "runtimeVersion": {
+          "policy": "sdkVersion"
+        }
       }
     },
     "web": {
@@ -50,6 +53,17 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "27eaeb60-277f-4ffa-92c7-16524bb033df"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/27eaeb60-277f-4ffa-92c7-16524bb033df"
     }
   }
 }
