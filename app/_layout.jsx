@@ -50,6 +50,10 @@ const RootLayout = () => {
         />
         <Stack.Screen name="profile/[id]" options={{ headerShown: false }} />
         <Stack.Screen name="follow" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="forms/postalcode-certificate"
+          options={{ headerShown: false }}
+        />
       </Stack>
       <FlashMessage position={"top"} />
     </>

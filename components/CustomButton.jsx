@@ -10,6 +10,7 @@ const CustomButton = ({
   containerStyles,
   testStyles,
   isLoading,
+  disabled,
   bgColor = "bg-secondary",
   titleColor = "text-gray-600",
 }) => {
@@ -20,7 +21,8 @@ const CustomButton = ({
       className={`${bgColor} rounded-md h-14 justify-center items-center ${containerStyles} ${
         isLoading ? "opacity-50" : ""
       }`}
-      disabled={isLoading}
+      style={{ opacity: disabled || isLoading ? 0.5 : 1 }}
+      disabled={disabled || isLoading}
     >
       {isLoading ? (
         <Flow size={45} color="#333" />

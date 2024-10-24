@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   Pressable,
+  Keyboard,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -118,6 +119,7 @@ const Otp = () => {
   // GENERATE OTP FUNCTION
   const generateOTPHandler = async () => {
     setIsLoading(true);
+    Keyboard.dismiss();
     try {
       const response = await generateOTP(mobile);
       setMobile(response.data.itemList[0].mobile);
@@ -142,6 +144,7 @@ const Otp = () => {
 
   // FOR DEVELOPMENT
   // const validateOTPHanlder = useCallback(() => {
+  //   Keyboard.dismiss();
   //   router.replace("/services");
   // }, []);
 
@@ -185,10 +188,10 @@ const Otp = () => {
                 }}
               />
 
-              <View className="flex-row justify-between mt-8 w-full px-10 ">
+              <View className="flex-row justify-between items-center mt-8 w-full px-1">
                 <Pressable
                   onPress={() => {}}
-                  className="border px-4 rounded-full border-gray-300 py-1 justify-center items-center w-[150px] h-[35px]"
+                  className="border rounded-full border-gray-300 justify-center items-center w-[150px] h-[35px]"
                 >
                   {isLoading ? (
                     <View className="py-1 px-4">
@@ -204,7 +207,7 @@ const Otp = () => {
                 <Pressable
                   onPress={generateOTPHandler}
                   disabled={retryDisabled}
-                  className="border px-4 rounded-full border-gray-300 py-1 justify-center items-center w-[110px] h-[35px]"
+                  className="border rounded-full border-gray-300 justify-center items-center w-[110px] h-[35px]"
                 >
                   {isLoading ? (
                     <View className="py-1 px-4">

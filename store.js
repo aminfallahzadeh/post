@@ -15,5 +15,5 @@ export const useUserStore = create(
       })),
 
     removeComplaintData: () => set({ complaintFormData: {} }),
-  })),
+  }))
 );

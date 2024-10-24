@@ -139,7 +139,8 @@ const Login = () => {
               value={phoneNumber}
               handleChange={setPhoneNumber}
               containerStyle="mt-20"
-              keyboardType="default"
+              keyboardType="numeric"
+              max={11}
               type="text"
               control={control}
               name="mobile"

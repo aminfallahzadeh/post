@@ -1,5 +1,5 @@
 // REACT IMPORTS
-import { useCallback, useState, useEffect } from "react";
+import { useCallback, useState } from "react";
 
 // LIBRARIES
 import { showMessage } from "react-native-flash-message";

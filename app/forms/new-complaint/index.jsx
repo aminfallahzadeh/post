@@ -57,7 +57,7 @@ const Step1 = () => {
   // ACCESS HOOK FORM DATA
   const form_data = watch();
 
-  // SUBMIT HANDLERS
+  // SUBMIT HANDLER
   const onSubmit = async () => {
     const validations = stepOneEopValidations(form_data);
 

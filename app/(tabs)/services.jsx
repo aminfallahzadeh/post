@@ -20,17 +20,23 @@ import { useUserStore } from "@/store";
 
 // EXPO IMPORTS
 import { LinearGradient } from "expo-linear-gradient";
-import { Feather, AntDesign, FontAwesome } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
 
 // COMPONENTS
 import Background from "@/components/Background";
 import CustomModal from "@/components/CustomModal";
 
+// HOOKS
+import useRenderService from "@/hooks/useRenderService";
+
 // DATA
 import { filtersData } from "@/data/filters";
 import { followUpData, requestData } from "@/data/services";
 import { allData } from "@/data/services";
+
+// ASSETS
+import images from "@/constants/images";
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
@@ -67,51 +73,21 @@ const Services = () => {
     }).start();
   }, [fadeAnim]);
 
-  const images = [
-    require("../../assets/images/header-1.jpg"),
-    require("../../assets/images/header-2.jpg"),
-    require("../../assets/images/announce-4.png"),
-  ];
-
-  const handlePressNationalCodeRequired = (url) => {
-    if (!userData.birthDate) {
-      setVisible(true);
-      return;
-    }
-    if (url) router.push(url);
-    return;
-  };
-
   const handleOnFilterPress = (option, type) => {
     setSelected(option);
     dispatch({ type });
   };
 
-  const renderPressableItem = (item) => (
-    <Pressable
-      className="justify-center items-center gap-1"
-      key={item.id}
-      style={{ width: "26%", transform: [{ scaleX: -1 }] }}
-      onPress={() => handlePressNationalCodeRequired(item.url)}
-    >
-      {item.iconName === "exclamationcircle" ? (
-        <AntDesign name={item.iconName} size={28} color="white" />
-      ) : item.iconName === "address-card" ? (
-        <FontAwesome name={item.iconName} size={28} color="white" />
-      ) : !item.iconName ? (
-        <Image source={item.imageUrl} style={styles.itemIcon} />
-      ) : (
-        <Feather name={item.iconName} size={30} color="white" />
-      )}
-      <Text
-        className="text-black font-isansmedium text-[12px]"
-        style={{ minHeight: 35, textAlign: "center" }}
-        numberOfLines={2}
-      >
-        {item.title}
-      </Text>
-    </Pressable>
-  );
+  const handlePress = (item) => {
+    if (item.nationalCodeRequired && !userData.birthDate) {
+      setVisible(true);
+      return;
+    } else {
+      if (item.url) router.push(item.url);
+    }
+  };
+
+  const renderSrvices = useRenderService(handlePress);
 
   return (
     <>
@@ -126,7 +102,7 @@ const Services = () => {
           <Animated.View className="mt-16" style={{ opacity: fadeAnim }}>
             <View className="w-full">
               <View style={{ position: "relative" }}>
-                <Image source={images[2]} style={styles.heroImage} />
+                <Image source={images.announce} style={styles.heroImage} />
                 <LinearGradient
                   colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.8)"]}
                   style={[
@@ -202,11 +178,11 @@ const Services = () => {
                 style={{ transform: [{ scaleX: -1 }] }}
               >
                 {filteredItems === "all"
-                  ? allData.map((item) => renderPressableItem(item))
+                  ? allData.map((item) => renderSrvices(item))
                   : filteredItems === "followup"
-                  ? followUpData.map((item) => renderPressableItem(item))
+                  ? followUpData.map((item) => renderSrvices(item))
                   : filteredItems === "request"
-                  ? requestData.map((item) => renderPressableItem(item))
+                  ? requestData.map((item) => renderSrvices(item))
                   : null}
               </View>
             </ScrollView>
@@ -279,10 +255,5 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-  },
-
-  itemIcon: {
-    width: 50,
-    height: 50,
   },
 });

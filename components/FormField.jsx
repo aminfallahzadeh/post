@@ -103,7 +103,6 @@ const FormField = ({
             top: placeholderTranslateY,
             fontSize: placeholderFontSize,
             fontFamily: "IranSans-DemiBold",
-            zIndex: 1,
             borderRadius: 50,
             paddingVertical: 1,
             paddingHorizontal: 10,

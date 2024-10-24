@@ -3,6 +3,7 @@ import logo from "../assets/images/logo-post.png";
 import underline from "../assets/images/underline.png";
 import profile from "../assets/images/profile-pic.jpeg";
 import yafteIcon from "../assets/images/post-yafte.png";
+import announce from "../assets/images/announce-4.png";
 
 export default {
   welcome,
@@ -10,4 +11,5 @@ export default {
   underline,
   profile,
   yafteIcon,
+  announce,
 };

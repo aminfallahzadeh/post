@@ -1,13 +1,13 @@
-// EXPO IMPORTS
+// NATIVE IMPROTS
 import { Stack } from "expo-router";
 
-const CompliantLayout = () => {
+const PostalCodeCertificateLayout = () => {
   return (
-    <Stack options={{ headerShown: false }}>
+    <Stack>
       <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen name="step2" options={{ headerShown: false }} />
     </Stack>
   );
 };
 
-export default CompliantLayout;
+export default PostalCodeCertificateLayout;

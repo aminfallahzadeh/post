@@ -6,14 +6,16 @@ export const allData = [
     iconName: null,
     url: null,
     imageUrl: require("@/assets/images/nerkh-name.png"),
+    nationalCodeRequired: false,
   },
   {
     id: 21,
     title: "گواهی کد پستی",
     gradientColors: ["#755d15", "#ffca2b"],
     iconName: null,
-    url: null,
+    url: "forms/postalcode-certificate",
     imageUrl: require("@/assets/images/code-govahi.png"),
+    nationalCodeRequired: false,
   },
   {
     id: 22,
@@ -22,6 +24,7 @@ export const allData = [
     iconName: null,
     url: null,
     imageUrl: require("@/assets/images/govahi-makani.png"),
+    nationalCodeRequired: false,
   },
   {
     id: 23,
@@ -30,6 +33,7 @@ export const allData = [
     iconName: null,
     url: null,
     imageUrl: require("@/assets/images/code-request.png"),
+    nationalCodeRequired: false,
   },
   {
     id: 20,
@@ -38,6 +42,7 @@ export const allData = [
     iconName: null,
     url: null,
     imageUrl: require("@/assets/images/post-yafte.png"),
+    nationalCodeRequired: false,
   },
   {
     id: 19,
@@ -46,6 +51,7 @@ export const allData = [
     iconName: null,
     url: null,
     imageUrl: require("@/assets/images/gheramat.png"),
+    nationalCodeRequired: false,
   },
   {
     id: 24,
@@ -54,14 +60,16 @@ export const allData = [
     iconName: null,
     url: null,
     imageUrl: require("@/assets/images/gheramat-peygiri.png"),
+    nationalCodeRequired: false,
   },
   {
     id: 17,
     title: "ثبت شکایت",
     gradientColors: ["#00075a", "#009cff"],
     iconName: null,
-    url: "forms/new-complaint/step1",
+    url: "forms/new-complaint",
     imageUrl: require("@/assets/images/shekayat.png"),
+    nationalCodeRequired: true,
   },
   {
     id: 25,
@@ -70,6 +78,7 @@ export const allData = [
     iconName: null,
     url: "follow/complaint",
     imageUrl: require("@/assets/images/shekayat-peygiri.png"),
+    nationalCodeRequired: true,
   },
   // {
   //   id: 26,
@@ -88,6 +97,7 @@ export const followUpData = [
     iconName: null,
     url: null,
     imageUrl: require("@/assets/images/gheramat-peygiri.png"),
+    nationalCodeRequired: false,
   },
   {
     id: 45,
@@ -96,6 +106,7 @@ export const followUpData = [
     iconName: null,
     url: "follow/complaint",
     imageUrl: require("@/assets/images/shekayat-peygiri.png"),
+    nationalCodeRequired: true,
   },
 ];
 
@@ -107,13 +118,15 @@ export const requestData = [
     iconName: null,
     url: null,
     imageUrl: require("@/assets/images/gheramat.png"),
+    nationalCodeRequired: false,
   },
   {
     id: 47,
     title: "ثبت شکایت",
     gradientColors: ["#00075a", "#009cff"],
     iconName: null,
-    url: "forms/new-complaint/step1",
+    url: "forms/new-complaint",
     imageUrl: require("@/assets/images/shekayat.png"),
+    nationalCodeRequired: true,
   },
 ];
