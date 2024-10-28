@@ -17,13 +17,13 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-// AXIOS AND STORE
+// AXIOS
+import { addressByPostCode } from "@/api/gnaf";
+
+// STORE
 import { useUserStore } from "@/store";
 
-// CONSTANTS
-import { stepOneEopValidations } from "@/constants/validations";
-
-// EXPO IMPORTS
+// EXPO
 import { router } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
 
@@ -34,20 +34,21 @@ import ProgressBar from "@/components/ProgressBar";
 import Background from "@/components/Background";
 import PostalCodeCard from "@/components/PostalCodeCard";
 
+// CONSTANTS
+import { postalCodeValidation } from "@/constants/validations";
+
 // LIBRARIES
 import { showMessage } from "react-native-flash-message";
-import LottieView from "lottie-react-native";
 
 // ASSETS
 import { toastStyles } from "@/constants/styles";
-import judgeLottie from "@/assets/animations/judge-lottie.json";
 
 const Index = () => {
   // MAIN STATE
   const [postalCodes, setPostalCodes] = useState([]);
 
   // ACCESS HOOK FORM METHODS
-  const { control, handleSubmit, watch } = useForm();
+  const { control, handleSubmit, watch, setValue } = useForm();
 
   // ACCESS HOOK FORM DATA
   const form_data = watch();
@@ -58,10 +59,10 @@ const Index = () => {
   // PLUS DISABLED
   const [plusDisabled, setPlusDisabled] = useState(true);
 
-  // SUBMIT HANDLER
-  const onSubmit = () => {
-    console.log(form_data);
-  };
+  // ACCESS REDUCERS
+  const setAddressByPostCode = useUserStore(
+    (state) => state.setAddressByPostCode
+  );
 
   // DISBALE HANLDER
   useEffect(() => {
@@ -72,13 +73,22 @@ const Index = () => {
     }
   }, [form_data.postalCode, plusDisabled]);
 
-  // DEBUGGING
-  useEffect(() => {
-    console.log(postalCodes);
-  }, [postalCodes]);
-
   // HANDLERS
   const addPostalCodeHandler = () => {
+    const validations = postalCodeValidation(form_data);
+
+    for (let validation of validations) {
+      if (validation.check) {
+        showMessage({
+          message: validation.message,
+          type: "warning",
+          titleStyle: toastStyles,
+        });
+
+        return;
+      }
+    }
+
     if (postalCodes.includes(form_data.postalCode)) {
       showMessage({
         message: "این کد پستی قبلا اضافه شده است",
@@ -88,10 +98,35 @@ const Index = () => {
       return;
     }
     setPostalCodes([...postalCodes, form_data.postalCode]);
+    setValue("postalCode", "");
   };
 
   const removePostalCodeHandler = (postalCode) => {
     setPostalCodes(postalCodes.filter((item) => item !== postalCode));
+  };
+
+  const onSubmit = async () => {
+    setIsLoading(true);
+    try {
+      const data = postalCodes.map((code, index) => ({
+        clientRowID: index,
+        postCode: code,
+      }));
+      console.log(data);
+      const response = await addressByPostCode(data);
+      console.log("POSTAL CODES RESPONSE: ", response.data.itemList[0].data);
+      await setAddressByPostCode(response.data.itemList[0].data);
+      router.push("forms/postalcode-certificate/step2");
+    } catch (error) {
+      console.log("POSTAL CODE ERRORS: ", error.response);
+      showMessage({
+        message: error.response?.data?.message || error.message,
+        type: "danger",
+        titleStyle: toastStyles,
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -146,6 +181,7 @@ const Index = () => {
                     containerStyle="w-full"
                     control={control}
                     name="postalCode"
+                    max={10}
                   />
                   <TouchableOpacity
                     disabled={plusDisabled}

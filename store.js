@@ -6,6 +6,7 @@ export const useUserStore = create(
     mobile: null,
     userData: null,
     complaintFormData: {},
+    addressByPostCode: [],
 
     setMobile: (mobile) => set({ mobile }),
     setUserData: (userData) => set({ userData }),
@@ -15,5 +16,7 @@ export const useUserStore = create(
       })),
 
     removeComplaintData: () => set({ complaintFormData: {} }),
+
+    setAddressByPostCode: (addressByPostCode) => set({ addressByPostCode }),
   }))
 );
