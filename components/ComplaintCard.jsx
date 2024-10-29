@@ -1,6 +1,3 @@
-// REACT IMPORTS
-import { useState } from "react";
-
 // NATIVE IMPORTS
 import { View, Text, StyleSheet, Pressable } from "react-native";
 
@@ -26,6 +23,12 @@ const ComplaintCard = ({ item, containerStyles }) => {
       titleStyle: toastStyles,
     });
   };
+
+  // STATUS
+
+  const responded = [1, 2];
+  const respondedWithDetails = [3, 4, 5, 6, 7, 8, 9];
+  const error = [-1, -2];
 
   return (
     <View
@@ -54,7 +57,15 @@ const ComplaintCard = ({ item, containerStyles }) => {
       <View style={styles.line} />
 
       <View className="flex-row-reverse">
-        <View style={styles.status} className="mt-1" />
+        {respondedWithDetails.includes(item.stat) ? (
+          <Feather name="alert-circle" size={24} color="#ff9c00" />
+        ) : responded.includes(item.stat) ? (
+          <Feather name="check-circle" size={24} color="#16ed00" />
+        ) : error.includes(item.stat) ? (
+          <Feather name="x-circle" size={24} color="#ff1400" />
+        ) : (
+          <Feather name="help-circle" size={24} color="#ccc" />
+        )}
         <Text className="font-isansregular text-[15px] mr-2">{item.rspns}</Text>
       </View>
     </View>
@@ -73,15 +84,13 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   status: {
-    backgroundColor: "red",
     height: 12,
     width: 12,
     borderRadius: 50,
   },
   line: {
-    // width: 250,
     alignSelf: "center",
-    backgroundColor: "#333",
+    backgroundColor: "#f0f0f0",
     height: 1,
     borderRadius: 50,
     marginVertical: 5,

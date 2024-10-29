@@ -9,8 +9,6 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   Pressable,
-  Platform,
-  KeyboardAvoidingView,
   ScrollView,
   StyleSheet,
 } from "react-native";
@@ -80,129 +78,124 @@ const Step1 = () => {
   return (
     <Background>
       <SafeAreaView className="h-full">
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : undefined}
+        <ScrollView
+          contentContainerStyle={{
+            flexGrow: 1,
+            paddingBottom: 90,
+          }}
+          showsVerticalScrollIndicator={false}
+          stickyHeaderIndices={[0]}
+          keyboardShouldPersistTaps="handled"
         >
-          <ScrollView
-            contentContainerStyle={{
-              flexGrow: 1,
-              paddingBottom: 90,
-              minHeight: "100%",
-            }}
-            showsVerticalScrollIndicator={false}
-            stickyHeaderIndices={[0]}
-            keyboardShouldPersistTaps="handled"
+          {/* HEADER SECTION */}
+
+          <View
+            className="flex-col w-full bg-secondary z-10 justify-center items-center relative"
+            style={styles.headerContainer}
           >
-            {/* HEADER SECTION */}
-
-            <View
-              className="flex-col w-full bg-secondary z-10 justify-center items-center relative"
-              style={styles.headerContainer}
-            >
-              <View className="flex-row w-full justify-between items-center">
-                <Pressable
-                  onPress={() => router.back()}
-                  className="absolute left-4"
-                >
-                  <Feather name="arrow-left" size={25} color="#333" />
-                </Pressable>
-                <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
-                  ثبت شکایت
-                </Text>
-              </View>
-
-              <View className="flex-col px-10 w-full pb-2">
-                <ProgressBar progress={50} />
-              </View>
+            <View className="flex-row w-full justify-between items-center">
+              <Pressable
+                onPress={() => router.back()}
+                className="absolute left-4"
+              >
+                <Feather name="arrow-left" size={25} color="#333" />
+              </Pressable>
+              <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
+                ثبت شکایت
+              </Text>
             </View>
 
-            {/* FORM FIELDS */}
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-              <View className="w-full px-4">
-                <LottieView
-                  source={judgeLottie}
-                  autoPlay
-                  loop
-                  className="w-full h-[100px] mt-[50px]"
-                />
-
-                <FormField
-                  placeholder="شماره موبایل"
-                  keyboardType="default"
-                  type={"text"}
-                  editable={false}
-                  value={mobile || "-"}
-                  style={{ color: "#666666" }}
-                  containerStyle="mt-5"
-                  control={control}
-                  name="mobile"
-                />
-
-                <FormField
-                  placeholder="نام"
-                  keyboardType="default"
-                  containerStyle="mt-5"
-                  type={"text"}
-                  value={userData?.name || "-"}
-                  editable={false}
-                  style={{ color: "#666666" }}
-                  control={control}
-                  name="name"
-                />
-
-                <FormField
-                  placeholder="نام خانوادگی"
-                  keyboardType="default"
-                  containerStyle="mt-5"
-                  type={"text"}
-                  control={control}
-                  editable={false}
-                  style={{ color: "#666666" }}
-                  value={userData?.lastName || "-"}
-                  name="lastname"
-                />
-
-                <FormField
-                  placeholder="کد ملی"
-                  keyboardType="default"
-                  type={"text"}
-                  control={control}
-                  containerStyle="mt-5"
-                  editable={false}
-                  style={{ color: "#666666" }}
-                  value={userData?.nationalCode || "-"}
-                  name="nationalCode"
-                />
-
-                <FormField
-                  placeholder="عنوان شکایت"
-                  keyboardType="text"
-                  type={"text"}
-                  height={"h-[100px]"}
-                  containerStyle="mt-5"
-                  max={800}
-                  multiline
-                  inputStyle={{
-                    textAlignVertical: "top",
-                    textAlign: "right",
-                    paddingTop: 10,
-                  }}
-                  control={control}
-                  name="title"
-                />
-              </View>
-            </TouchableWithoutFeedback>
-          </ScrollView>
-          {/* BOTTOM SECTION */}
-
-          <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
-            <CustomButton
-              title="ادامه"
-              handlePress={handleSubmit(onSubmit)}
-              isLoading={isLoading}
-            />
+            <View className="flex-col px-10 w-full pb-2">
+              <ProgressBar progress={50} />
+            </View>
           </View>
-        </KeyboardAvoidingView>
+
+          {/* FORM FIELDS */}
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View className="w-full px-4">
+              <LottieView
+                source={judgeLottie}
+                autoPlay
+                loop
+                className="w-full h-[100px] mt-[50px]"
+              />
+
+              <FormField
+                placeholder="شماره موبایل"
+                keyboardType="default"
+                type={"text"}
+                editable={false}
+                value={mobile || "-"}
+                style={{ color: "#666666" }}
+                containerStyle="mt-5"
+                control={control}
+                name="mobile"
+              />
+
+              <FormField
+                placeholder="نام"
+                keyboardType="default"
+                containerStyle="mt-5"
+                type={"text"}
+                value={userData?.name || "-"}
+                editable={false}
+                style={{ color: "#666666" }}
+                control={control}
+                name="name"
+              />
+
+              <FormField
+                placeholder="نام خانوادگی"
+                keyboardType="default"
+                containerStyle="mt-5"
+                type={"text"}
+                control={control}
+                editable={false}
+                style={{ color: "#666666" }}
+                value={userData?.lastName || "-"}
+                name="lastname"
+              />
+
+              <FormField
+                placeholder="کد ملی"
+                keyboardType="default"
+                type={"text"}
+                control={control}
+                containerStyle="mt-5"
+                editable={false}
+                style={{ color: "#666666" }}
+                value={userData?.nationalCode || "-"}
+                name="nationalCode"
+              />
+
+              <FormField
+                placeholder="عنوان شکایت"
+                keyboardType="text"
+                type={"text"}
+                height={"h-[100px]"}
+                containerStyle="mt-5"
+                max={800}
+                multiline
+                inputStyle={{
+                  textAlignVertical: "top",
+                  textAlign: "right",
+                  paddingTop: 10,
+                }}
+                control={control}
+                name="title"
+              />
+            </View>
+          </TouchableWithoutFeedback>
+        </ScrollView>
+        {/* BOTTOM SECTION */}
+
+        <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
+          <CustomButton
+            title="ادامه"
+            handlePress={handleSubmit(onSubmit)}
+            isLoading={isLoading}
+          />
+        </View>
       </SafeAreaView>
     </Background>
   );

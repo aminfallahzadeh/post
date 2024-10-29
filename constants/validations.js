@@ -85,3 +85,10 @@ export const postalCodeValidation = (form_data) => [
     message: "کد پستی معتبر نیست",
   },
 ];
+
+export const postalCodeListValidation = (data) => [
+  {
+    check: !data || data.length === 0,
+    message: "حداقل یک کد پستی انتخاب کنید",
+  },
+];

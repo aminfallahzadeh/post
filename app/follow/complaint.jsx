@@ -4,8 +4,6 @@ import { useForm } from "react-hook-form";
 
 // NATIVE IMPORTS
 import {
-  KeyboardAvoidingView,
-  Platform,
   ScrollView,
   Text,
   Pressable,
@@ -101,77 +99,72 @@ const FollowComplaint = () => {
       />
       <Background>
         <SafeAreaView className="h-full">
-          <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : undefined}
+          <ScrollView
+            contentContainerStyle={{
+              flexGrow: 1,
+              paddingBottom: 90,
+            }}
+            showsVerticalScrollIndicator={false}
+            stickyHeaderIndices={[0]}
+            keyboardShouldPersistTaps="handled"
           >
-            <ScrollView
-              contentContainerStyle={{
-                flexGrow: 1,
-                paddingBottom: 90,
-                minHeight: "100%",
-              }}
-              showsVerticalScrollIndicator={false}
-              stickyHeaderIndices={[0]}
-              keyboardShouldPersistTaps="handled"
+            {/* HEADER SECTION */}
+            <View
+              className="flex-col w-full bg-secondary z-10 justify-center items-center relative"
+              style={styles.headerContainer}
             >
-              {/* HEADER SECTION */}
-              <View
-                className="flex-col w-full bg-secondary z-10 justify-center items-center relative"
-                style={styles.headerContainer}
-              >
-                <View className="flex-row w-full justify-between items-center">
-                  <Pressable
-                    onPress={() => router.back()}
-                    className="absolute left-4"
-                  >
-                    <Feather name="arrow-left" size={25} color="#333" />
-                  </Pressable>
-                  <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
-                    پیگیری شکایت
-                  </Text>
+              <View className="flex-row w-full justify-between items-center">
+                <Pressable
+                  onPress={() => router.back()}
+                  className="absolute left-4"
+                >
+                  <Feather name="arrow-left" size={25} color="#333" />
+                </Pressable>
+                <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
+                  پیگیری شکایت
+                </Text>
+              </View>
+            </View>
+
+            {/* FORM FIELDS */}
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+              <View className="w-full px-4">
+                <View className="flex-col px-10 w-full">
+                  <LottieView
+                    source={searchLottie}
+                    autoPlay
+                    loop
+                    className="w-full h-[150px] mt-[50px]"
+                  />
+                </View>
+
+                <FormField
+                  placeholder="شماره پیگیری"
+                  keyboardType="default"
+                  type={"text"}
+                  containerStyle="mt-5"
+                  control={control}
+                  name="publickey"
+                />
+
+                {/* RESPONSE CONTAINER */}
+                <View className="mt-10 justify-center items-center w-full px-2 py-1">
+                  {isLoading && <Chase size={40} color="#164194" />}
                 </View>
               </View>
+            </TouchableWithoutFeedback>
+          </ScrollView>
 
-              {/* FORM FIELDS */}
-              <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                <View className="w-full px-4">
-                  <View className="flex-col px-10 w-full">
-                    <LottieView
-                      source={searchLottie}
-                      autoPlay
-                      loop
-                      className="w-full h-[150px] mt-[50px]"
-                    />
-                  </View>
-
-                  <FormField
-                    placeholder="شماره پیگیری"
-                    keyboardType="default"
-                    type={"text"}
-                    containerStyle="mt-5"
-                    control={control}
-                    name="publickey"
-                  />
-
-                  {/* RESPONSE CONTAINER */}
-                  <View className="mt-10 justify-center items-center w-full px-2 py-1">
-                    {isLoading && <Chase size={40} color="#164194" />}
-                  </View>
-                </View>
-              </TouchableWithoutFeedback>
-            </ScrollView>
-
-            {/* BOTTOM SECTION */}
-            <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
-              <CustomButton
-                title="جست و جو"
-                bgColor="bg-green-700"
-                titleColor="text-white"
-                handlePress={handleSubmit(onSubmit)}
-                isLoading={isLoading}
-              />
-            </View>
-          </KeyboardAvoidingView>
+          {/* BOTTOM SECTION */}
+          <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
+            <CustomButton
+              title="جست و جو"
+              bgColor="bg-green-700"
+              titleColor="text-white"
+              handlePress={handleSubmit(onSubmit)}
+              isLoading={isLoading}
+            />
+          </View>
         </SafeAreaView>
       </Background>
     </>

@@ -8,8 +8,6 @@ import {
   Text,
   TouchableWithoutFeedback,
   Keyboard,
-  Platform,
-  KeyboardAvoidingView,
   ScrollView,
   StyleSheet,
   Pressable,
@@ -85,7 +83,7 @@ const Step2 = () => {
       if (validation.check) {
         showMessage({
           message: validation.message,
-          type: "danger",
+          type: "warning",
           titleStyle: toastStyles,
         });
         return;
@@ -125,145 +123,140 @@ const Step2 = () => {
   return (
     <Background>
       <SafeAreaView className="h-full">
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : undefined}
+        <ScrollView
+          contentContainerStyle={{
+            flexGrow: 1,
+            paddingBottom: 90,
+          }}
+          showsVerticalScrollIndicator={false}
+          stickyHeaderIndices={[0]}
+          keyboardShouldPersistTaps="handled"
         >
-          <ScrollView
-            contentContainerStyle={{
-              flexGrow: 1,
-              paddingBottom: 90,
-              minHeight: "100%",
-            }}
-            showsVerticalScrollIndicator={false}
-            stickyHeaderIndices={[0]}
-            keyboardShouldPersistTaps="handled"
+          {/* HEADER SECTION */}
+          <View
+            className="flex-col w-full bg-secondary z-10 justify-center items-center relative"
+            style={styles.headerContainer}
           >
-            {/* HEADER SECTION */}
-            <View
-              className="flex-col w-full bg-secondary z-10 justify-center items-center relative"
-              style={styles.headerContainer}
-            >
-              <View className="flex-row w-full justify-between items-center">
-                <Pressable
-                  onPress={() => router.back()}
-                  className="absolute left-4"
-                >
-                  <Feather name="arrow-left" size={25} color="#333" />
-                </Pressable>
-                <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
-                  ثبت شکایت
-                </Text>
-              </View>
-
-              <View className="flex-col px-10 w-full pb-2">
-                <ProgressBar progress={100} />
-              </View>
+            <View className="flex-row w-full justify-between items-center">
+              <Pressable
+                onPress={() => router.back()}
+                className="absolute left-4"
+              >
+                <Feather name="arrow-left" size={25} color="#333" />
+              </Pressable>
+              <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
+                ثبت شکایت
+              </Text>
             </View>
 
-            {/* FORM FIELDS */}
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-              <View className="w-full px-4">
-                <FormField
-                  placeholder="شماره سریال بسته پستی"
-                  keyboardType="default"
-                  type={"text"}
-                  control={control}
-                  containerStyle="mt-5"
-                  name="serialNo"
-                />
-                <View className="mt-5">
-                  <Controller
-                    name="complaintType"
-                    control={control}
-                    render={({ field: { onChange } }) => (
-                      <Dropdown
-                        placeholder="نوع شکایت"
-                        options={complaintTypeLookup}
-                        onValueChange={(val) => onChange(val)}
-                        selectedValue={
-                          complaintTypeLookup.find(
-                            (c) => c.value === form_data?.complaintType
-                          )?.value
-                        }
-                        primaryColor={"#164194"}
-                        placeholderStyle={selectPlaceholderStyle}
-                        dropdownContainerStyle={selectContainerStyle}
-                        dropdownStyle={selectDropdownStyle}
-                        selectedItemStyle={selectItemStyle}
-                        checkboxControls={checkboxControls}
-                        modalControls={modalControls}
-                      />
-                    )}
-                  />
-                </View>
-
-                <View className="mt-5">
-                  <Controller
-                    name="serviceId"
-                    control={control}
-                    render={({ field: { onChange } }) => (
-                      <Dropdown
-                        placeholder="نوع سرویس"
-                        options={seriveTypeLookup}
-                        selectedValue={
-                          seriveTypeLookup.find(
-                            (c) => c.value === form_data?.serviceId
-                          )?.value
-                        }
-                        onValueChange={(val) => onChange(val)}
-                        primaryColor={"#164194"}
-                        placeholderStyle={selectPlaceholderStyle}
-                        dropdownContainerStyle={selectContainerStyle}
-                        dropdownStyle={selectDropdownStyle}
-                        selectedItemStyle={selectItemStyle}
-                        checkboxControls={checkboxControls}
-                        modalControls={modalControls}
-                      />
-                    )}
-                  />
-                </View>
-
-                <View className="mt-5">
-                  <Controller
-                    name="to_org_id"
-                    control={control}
-                    render={({ field: { onChange } }) => (
-                      <Dropdown
-                        placeholder="واحد پستی"
-                        options={postalReagionLookup}
-                        selectedValue={
-                          postalReagionLookup.find(
-                            (c) => c.value === form_data?.to_org_id
-                          )?.value
-                        }
-                        onValueChange={(val) => onChange(val)}
-                        primaryColor={"#164194"}
-                        placeholderStyle={selectPlaceholderStyle}
-                        dropdownContainerStyle={selectContainerStyle}
-                        dropdownStyle={selectDropdownStyle}
-                        selectedItemStyle={selectItemStyle}
-                        checkboxControls={checkboxControls}
-                        modalControls={modalControls}
-                      />
-                    )}
-                  />
-                </View>
-              </View>
-            </TouchableWithoutFeedback>
-          </ScrollView>
-
-          {/* BOTTOM SECTION */}
-
-          <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
-            <CustomButton
-              title="ثبت"
-              bgColor="bg-green-700"
-              titleColor="text-white"
-              handlePress={handleSubmit(onSubmit)}
-              isLoading={isLoading}
-            />
+            <View className="flex-col px-10 w-full pb-2">
+              <ProgressBar progress={100} />
+            </View>
           </View>
-        </KeyboardAvoidingView>
+
+          {/* FORM FIELDS */}
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View className="w-full px-4">
+              <FormField
+                placeholder="شماره سریال بسته پستی"
+                keyboardType="default"
+                type={"text"}
+                control={control}
+                containerStyle="mt-5"
+                name="serialNo"
+              />
+              <View className="mt-5">
+                <Controller
+                  name="complaintType"
+                  control={control}
+                  render={({ field: { onChange } }) => (
+                    <Dropdown
+                      placeholder="نوع شکایت"
+                      options={complaintTypeLookup}
+                      onValueChange={(val) => onChange(val)}
+                      selectedValue={
+                        complaintTypeLookup.find(
+                          (c) => c.value === form_data?.complaintType
+                        )?.value
+                      }
+                      primaryColor={"#164194"}
+                      placeholderStyle={selectPlaceholderStyle}
+                      dropdownContainerStyle={selectContainerStyle}
+                      dropdownStyle={selectDropdownStyle}
+                      selectedItemStyle={selectItemStyle}
+                      checkboxControls={checkboxControls}
+                      modalControls={modalControls}
+                    />
+                  )}
+                />
+              </View>
+
+              <View className="mt-5">
+                <Controller
+                  name="serviceId"
+                  control={control}
+                  render={({ field: { onChange } }) => (
+                    <Dropdown
+                      placeholder="نوع سرویس"
+                      options={seriveTypeLookup}
+                      selectedValue={
+                        seriveTypeLookup.find(
+                          (c) => c.value === form_data?.serviceId
+                        )?.value
+                      }
+                      onValueChange={(val) => onChange(val)}
+                      primaryColor={"#164194"}
+                      placeholderStyle={selectPlaceholderStyle}
+                      dropdownContainerStyle={selectContainerStyle}
+                      dropdownStyle={selectDropdownStyle}
+                      selectedItemStyle={selectItemStyle}
+                      checkboxControls={checkboxControls}
+                      modalControls={modalControls}
+                    />
+                  )}
+                />
+              </View>
+
+              <View className="mt-5">
+                <Controller
+                  name="to_org_id"
+                  control={control}
+                  render={({ field: { onChange } }) => (
+                    <Dropdown
+                      placeholder="واحد پستی"
+                      options={postalReagionLookup}
+                      selectedValue={
+                        postalReagionLookup.find(
+                          (c) => c.value === form_data?.to_org_id
+                        )?.value
+                      }
+                      onValueChange={(val) => onChange(val)}
+                      primaryColor={"#164194"}
+                      placeholderStyle={selectPlaceholderStyle}
+                      dropdownContainerStyle={selectContainerStyle}
+                      dropdownStyle={selectDropdownStyle}
+                      selectedItemStyle={selectItemStyle}
+                      checkboxControls={checkboxControls}
+                      modalControls={modalControls}
+                    />
+                  )}
+                />
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
+        </ScrollView>
+
+        {/* BOTTOM SECTION */}
+
+        <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
+          <CustomButton
+            title="ثبت"
+            bgColor="bg-green-700"
+            titleColor="text-white"
+            handlePress={handleSubmit(onSubmit)}
+            isLoading={isLoading}
+          />
+        </View>
       </SafeAreaView>
     </Background>
   );

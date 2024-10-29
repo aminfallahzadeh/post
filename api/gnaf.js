@@ -6,3 +6,9 @@ export function addressByPostCode(data) {
     postCodes: data,
   });
 }
+
+export function generateCertificate(data) {
+  return axiosInstance.post("GNAF/GenerateCertificate", {
+    postCodes: data,
+  });
+}

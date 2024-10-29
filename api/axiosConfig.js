@@ -4,7 +4,8 @@ import { BASE_URL } from "@/constants/apiRoutes";
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
-  timeout: 2000,
+  timeout: 50000,
+  withCredentials: true,
 });
 
 let isRefreshing = false;

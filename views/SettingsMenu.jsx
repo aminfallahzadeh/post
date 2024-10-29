@@ -59,10 +59,11 @@ const SettingsMenu = ({ closeHandler }) => {
           />
         </TouchableOpacity>
 
-        <View className="w-full justify-between items-center flex-row">
-          <Pressable onPress={() => router.push(`profile/${user.id}`)}>
-            <Feather name="edit-2" size={25} color="#333" />
-          </Pressable>
+        <Pressable
+          className="w-full justify-between items-center flex-row"
+          onPress={() => router.push(`profile/${user.id}`)}
+        >
+          <Feather name="edit-2" size={25} color="#333" />
 
           <View className="justify-center items-center flex-row gap-5">
             <View>
@@ -83,7 +84,7 @@ const SettingsMenu = ({ closeHandler }) => {
               style={styles.userIcon}
             />
           </View>
-        </View>
+        </Pressable>
 
         <View className="w-full h-[2px] bg-grey3 rounded-lg" />
 

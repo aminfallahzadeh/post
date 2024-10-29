@@ -10,8 +10,6 @@ import {
   TouchableWithoutFeedback,
   Pressable,
   TouchableOpacity,
-  Platform,
-  KeyboardAvoidingView,
   ScrollView,
   StyleSheet,
 } from "react-native";
@@ -112,10 +110,10 @@ const Index = () => {
         clientRowID: index,
         postCode: code,
       }));
-      console.log(data);
       const response = await addressByPostCode(data);
       console.log("POSTAL CODES RESPONSE: ", response.data.itemList[0].data);
       await setAddressByPostCode(response.data.itemList[0].data);
+      setPostalCodes([]);
       router.push("forms/postalcode-certificate/step2");
     } catch (error) {
       console.log("POSTAL CODE ERRORS: ", error.response);
@@ -132,118 +130,111 @@ const Index = () => {
   return (
     <Background>
       <SafeAreaView className="h-full">
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : undefined}
+        <ScrollView
+          contentContainerStyle={{
+            flexGrow: 1,
+            paddingBottom: 30,
+          }}
+          showsVerticalScrollIndicator={false}
+          stickyHeaderIndices={[0]}
+          keyboardShouldPersistTaps="handled"
         >
-          <ScrollView
-            contentContainerStyle={{
-              flexGrow: 1,
-              paddingBottom: 90,
-              minHeight: "100%",
-            }}
-            showsVerticalScrollIndicator={false}
-            stickyHeaderIndices={[0]}
-            keyboardShouldPersistTaps="handled"
+          {/* HEADER SECTION */}
+          <View
+            className="flex-col w-full bg-secondary z-10 justify-center items-center relative"
+            style={styles.headerContainer}
           >
-            {/* HEADER SECTION */}
-            <View
-              className="flex-col w-full bg-secondary z-10 justify-center items-center relative"
-              style={styles.headerContainer}
-            >
-              <View className="flex-row w-full justify-between items-center">
-                <Pressable
-                  onPress={() => router.back()}
-                  className="absolute left-4"
-                >
-                  <Feather name="arrow-left" size={25} color="#333" />
-                </Pressable>
-                <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
-                  گواهی کد پستی
-                </Text>
-              </View>
-
-              <View className="flex-col px-10 w-full pb-2">
-                <ProgressBar progress={33} />
-              </View>
+            <View className="flex-row w-full justify-between items-center">
+              <Pressable
+                onPress={() => router.back()}
+                className="absolute left-4"
+              >
+                <Feather name="arrow-left" size={25} color="#333" />
+              </Pressable>
+              <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
+                گواهی کد پستی
+              </Text>
             </View>
 
-            {/* FORM FIELDS */}
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-              <View className="w-full px-5">
-                <View
-                  className="w-full flex-row-reverse px-10 justify-between items-center mt-10"
-                  style={styles.inputContainer}
-                >
-                  <FormField
-                    placeholder="کد پستی"
-                    keyboardType="numeric"
-                    type={"text"}
-                    containerStyle="w-full"
-                    control={control}
-                    name="postalCode"
-                    max={10}
-                  />
-                  <TouchableOpacity
-                    disabled={plusDisabled}
-                    onPress={addPostalCodeHandler}
-                  >
-                    <Feather
-                      name="plus"
-                      size={24}
-                      color={`${plusDisabled ? "gray" : "green"}`}
-                    />
-                  </TouchableOpacity>
-                </View>
+            <View className="flex-col px-10 w-full pb-2">
+              <ProgressBar progress={33} />
+            </View>
+          </View>
 
-                <View className="w-full mt-20 justify-center items-center">
-                  <Text className="text-primary font-isansbold text-[18px]">
-                    لیست کد پستی های شما
-                  </Text>
-                  <View
-                    className={`w-full rounded-md mt-5 p-5 items-center ${
-                      postalCodes.length === 0
-                        ? "justify-center"
-                        : "justify-start"
-                    }`}
-                    style={styles.postalCodeContaiers}
-                  >
-                    {postalCodes.length === 0 ? (
-                      <Text className="text-grey4 font-isansregular text-[15px]">
-                        لطفا کد پستی خود را اضافه کنید
-                      </Text>
-                    ) : (
-                      <View
-                        className="w-full flex-row-reverse flex-wrap"
-                        style={styles.postalCodesItemContainer}
-                      >
-                        {postalCodes.map((postalCode, index) => (
-                          <PostalCodeCard
-                            key={index}
-                            postalCode={postalCode}
-                            handlePress={() =>
-                              removePostalCodeHandler(postalCode)
-                            }
-                          />
-                        ))}
-                      </View>
-                    )}
-                  </View>
+          {/* FORM FIELDS */}
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View className="w-full px-5">
+              <View
+                className="w-full flex-row-reverse px-10 justify-between items-center mt-10"
+                style={styles.inputContainer}
+              >
+                <FormField
+                  placeholder="کد پستی"
+                  keyboardType="numeric"
+                  type={"text"}
+                  containerStyle="w-full"
+                  control={control}
+                  name="postalCode"
+                  max={10}
+                />
+                <TouchableOpacity
+                  disabled={plusDisabled}
+                  onPress={addPostalCodeHandler}
+                >
+                  <Feather
+                    name="plus"
+                    size={24}
+                    color={`${plusDisabled ? "gray" : "green"}`}
+                  />
+                </TouchableOpacity>
+              </View>
+
+              <View className="w-full mt-20 justify-center items-center">
+                <Text className="text-primary font-isansbold text-[18px]">
+                  لیست کد پستی های شما
+                </Text>
+                <View
+                  className={`w-full rounded-md mt-5 p-5 items-center ${
+                    postalCodes.length === 0
+                      ? "justify-center"
+                      : "justify-start"
+                  }`}
+                  style={styles.postalCodeContaiers}
+                >
+                  {postalCodes.length === 0 ? (
+                    <Text className="text-grey4 font-isansregular text-[15px]">
+                      لطفا کد پستی خود را اضافه کنید
+                    </Text>
+                  ) : (
+                    <View
+                      className="w-full flex-row-reverse flex-wrap"
+                      style={styles.postalCodesItemContainer}
+                    >
+                      {postalCodes.map((postalCode, index) => (
+                        <PostalCodeCard
+                          key={index}
+                          postalCode={postalCode}
+                          handlePress={() =>
+                            removePostalCodeHandler(postalCode)
+                          }
+                        />
+                      ))}
+                    </View>
+                  )}
                 </View>
               </View>
-            </TouchableWithoutFeedback>
-          </ScrollView>
+            </View>
+          </TouchableWithoutFeedback>
+        </ScrollView>
 
-          {/* BOTTOM SECTION */}
-
-          <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
-            <CustomButton
-              title="ادامه"
-              handlePress={handleSubmit(onSubmit)}
-              isLoading={isLoading}
-              // disabled={true}
-            />
-          </View>
-        </KeyboardAvoidingView>
+        {/* BOTTOM SECTION */}
+        <View className="w-full z-10 px-4 bg-gray-100 py-4">
+          <CustomButton
+            title="ادامه"
+            handlePress={handleSubmit(onSubmit)}
+            isLoading={isLoading}
+          />
+        </View>
       </SafeAreaView>
     </Background>
   );
