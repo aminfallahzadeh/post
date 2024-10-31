@@ -1,7 +1,7 @@
 import React from "react";
 import { ImageBackground, StyleSheet } from "react-native";
 
-export default function Background({ children }) {
+export function Background({ children }) {
   return (
     <ImageBackground
       source={require("../assets/images/background_dot.png")}
@@ -12,6 +12,8 @@ export default function Background({ children }) {
     </ImageBackground>
   );
 }
+
+export default Background;
 
 const styles = StyleSheet.create({
   background: {

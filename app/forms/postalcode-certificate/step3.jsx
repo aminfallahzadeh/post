@@ -16,7 +16,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useUserStore } from "@/store";
 
 // AXIOS
-import { generateCertificate } from "@/api/gnaf";
 
 // EXPO
 import { router } from "expo-router";
@@ -25,8 +24,6 @@ import Feather from "@expo/vector-icons/Feather";
 // COMPONETS
 import ProgressBar from "@/components/ProgressBar";
 import Background from "@/components/Background";
-import AddressCard from "@/components/AddressCard";
-import CustomButton from "@/components/CustomButton";
 
 // CONSTANTS
 import { postalCodeListValidation } from "@/constants/validations";
@@ -38,39 +35,44 @@ import { toastStyles } from "@/constants/styles";
 import { showMessage } from "react-native-flash-message";
 
 const Step3 = () => {
+  // ACCESS GLOBAL STATE
+  const factor = useUserStore((state) => state.factor);
+
   return (
     <Background>
-      <ScrollView
-        contentContainerStyle={{
-          flexGrow: 1,
-          paddingBottom: 90,
-        }}
-        showsVerticalScrollIndicator={false}
-        stickyHeaderIndices={[0]}
-        keyboardShouldPersistTaps="handled"
-      >
-        {/* HEADER SECTION */}
-        <View
-          className="flex-col w-full bg-secondary z-10 justify-center items-center relative"
-          style={styles.headerContainer}
+      <SafeAreaView className="h-full">
+        <ScrollView
+          contentContainerStyle={{
+            flexGrow: 1,
+            paddingBottom: 90,
+          }}
+          showsVerticalScrollIndicator={false}
+          stickyHeaderIndices={[0]}
+          keyboardShouldPersistTaps="handled"
         >
-          <View className="flex-row w-full justify-between items-center">
-            <Pressable
-              onPress={() => router.back()}
-              className="absolute left-4"
-            >
-              <Feather name="arrow-left" size={25} color="#333" />
-            </Pressable>
-            <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
-              گواهی کد پستی
-            </Text>
-          </View>
+          {/* HEADER SECTION */}
+          <View
+            className="flex-col w-full bg-secondary z-10 justify-center items-center relative"
+            style={styles.headerContainer}
+          >
+            <View className="flex-row w-full justify-between items-center">
+              <Pressable
+                onPress={() => router.back()}
+                className="absolute left-4"
+              >
+                <Feather name="arrow-left" size={25} color="#333" />
+              </Pressable>
+              <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
+                گواهی کد پستی
+              </Text>
+            </View>
 
-          <View className="flex-col px-10 w-full pb-2">
-            <ProgressBar progress={100} />
+            <View className="flex-col px-10 w-full pb-2">
+              <ProgressBar progress={100} />
+            </View>
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </SafeAreaView>
     </Background>
   );
 };

@@ -12,7 +12,7 @@ import Animated, {
 // COMPONETNS
 import TabBarButton from "./TabBarButton";
 
-const TabBar = ({ state, descriptors, navigation }) => {
+export const TabBar = ({ state, descriptors, navigation }) => {
   // TAB BAR ICONS BACKGROUND STATE
   const [dimensions, setDimensions] = useState({
     height: 20,

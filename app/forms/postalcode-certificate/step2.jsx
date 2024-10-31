@@ -16,7 +16,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useUserStore } from "@/store";
 
 // AXIOS
-import { generateCertificate } from "@/api/gnaf";
+import { insertRequestCertification } from "@/api/request";
 
 // EXPO
 import { router } from "expo-router";
@@ -41,8 +41,12 @@ const Step2 = () => {
   // LOADING STATE
   const [isLoading, setIsLoading] = useState(false);
 
-  // ACCESS ADDRESS LIST
+  // ACCESS GLOBAL STATE
   const addressByPostCode = useUserStore((state) => state.addressByPostCode);
+  const mobile = useUserStore((state) => state.mobile);
+
+  // ACTIONS
+  const setFactor = useUserStore((state) => state.setFactor);
 
   // SELECT STATES
   const [selectedItems, setSelectedItems] = useState([]);
@@ -90,15 +94,16 @@ const Step2 = () => {
 
     setIsLoading(true);
     try {
-      const data = selectedItems.map((code, index) => ({
-        clientRowID: index,
-        postCode: code,
-      }));
-      const response = await generateCertificate(data);
-      console.log("GENERATE CERTIFICATE RESPONSE: ", response.data);
+      const title = selectedItems.join(",");
+      const response = await insertRequestCertification({
+        mobile,
+        title,
+      });
+      console.log("INSERT REQUEST CERTIFICATE REPONSE: ", response.data);
+      setFactor(response.data.itemList[0]);
       router.push("forms/postalcode-certificate/step3");
     } catch (error) {
-      console.log("GENERATE CERTIFICATE ERROR: ", error.response);
+      console.log("INSERT REQUEST CERTIFICATE ERROR: ", error.response);
       showMessage({
         message: error.response?.data?.message || error.message,
         type: "danger",

@@ -159,7 +159,7 @@ const Step2 = () => {
             <View className="w-full px-4">
               <FormField
                 placeholder="شماره سریال بسته پستی"
-                keyboardType="default"
+                keyboardType="numeric"
                 type={"text"}
                 control={control}
                 containerStyle="mt-5"

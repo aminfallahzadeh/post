@@ -13,7 +13,7 @@ import { showMessage } from "react-native-flash-message";
 // ASSETS
 import { toastStyles } from "@/constants/styles";
 
-const ComplaintCard = ({ item, containerStyles }) => {
+export const ComplaintCard = ({ item, containerStyles }) => {
   // HANDLERS
   const copyHandler = async () => {
     await Clipboard.setStringAsync(item.key.toString());

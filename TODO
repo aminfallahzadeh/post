@@ -1,30 +1,18 @@
-PROFILE: 
-    ✔ change day, month , year to combo box @done(24-10-29 14:52)
-    ✔ allow to remove national code @done(24-10-29 14:12)
-
-SETTINGS: 
-    ✔ make the user navigate to profile by clicking the whole line of name @done(24-10-29 14:06)
-
-COMPLAINTS: 
-    ✔ change the colors based on the status @done(24-10-29 15:23)
-
-FOLLOW COMPLAINTS:
-    □ change the message from modal to the white space area
-
-GENERAL: 
-    □ change all number field keyboards to numeric
-
-
-
-
-
-
-
-
-
-
 // NOTES 
 
 VALID NATIONA CODES
 1671989696
 1671989697
+
+VALID COMPLAINT FOLLOW UP CODES
+1403073440678
+1403073440835
+
+Archive:
+  ✔ change day, month , year to combo box @done(24-10-29 14:52) @project(PROFILE)
+  ✔ allow to remove national code @started(24-10-31 20:41) @done(24-10-31 20:41) @lasted(31s) @project(PROFILE)
+  ✔ make the user navigate to profile by clicking the whole line of name @done(24-10-29 14:06) @project(SETTINGS)
+  ✔ change the colors based on the status @done(24-10-29 15:23) @project(COMPLAINTS)
+  ✔ change the message from modal to the white space area @done(24-10-29 19:12) @project(FOLLOW COMPLAINTS)
+  ✔ change all number field keyboards to numeric @done(24-10-29 18:57) @project(GENERAL)
+  ✔ add loading animation on numbers fill @done(24-10-29 19:15) @project(OTP)

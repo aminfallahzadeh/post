@@ -70,7 +70,7 @@ export const stepTwoEopValidation = (form_data) => [
 
 export const followComplaintValidation = (form_data) => [
   {
-    check: !form_data.publickey || form_data.publickey.length !== 0,
+    check: !form_data.publickey || form_data.publickey.length === 0,
     message: "کد پیگیری را وارد کنید",
   },
   {

@@ -13,7 +13,7 @@ import Animated, {
 // CONTANTS
 import { icons } from "../constants/icons";
 
-const TabBarButton = ({
+export const TabBarButton = ({
   onPress,
   onLongPress,
   routeName,

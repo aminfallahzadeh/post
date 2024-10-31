@@ -25,7 +25,6 @@ import { queryEop } from "@/api/eop";
 import Background from "@/components/Background";
 import FormField from "@/components/FormField";
 import CustomButton from "@/components/CustomButton";
-import CustomModal from "@/components/CustomModal";
 
 // CONSTANTS
 import { followComplaintValidation } from "@/constants/validations";
@@ -44,10 +43,7 @@ const FollowComplaint = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   // MAIN STATE
-  const [queryResult, setQueryResult] = useState("");
-
-  // MODAL STATE
-  const [visible, setVisible] = useState(false);
+  const [queryResult, setQueryResult] = useState(null);
 
   // ACCESS HOOK FORM METHODS
   const { control, handleSubmit, watch, reset } = useForm();
@@ -74,7 +70,6 @@ const FollowComplaint = () => {
       const response = await queryEop(parseInt(form_data.publickey));
       console.log("Query EOP Response: ", response.data);
       setQueryResult(response.data.message);
-      setVisible(true);
       reset();
     } catch (error) {
       console.log("Query EOP error: ", error.response);
@@ -90,84 +85,95 @@ const FollowComplaint = () => {
   };
 
   return (
-    <>
-      <CustomModal
-        visible={visible}
-        closeModal={() => setVisible(false)}
-        title="نتیجه پیگیری شما"
-        description={queryResult}
-      />
-      <Background>
-        <SafeAreaView className="h-full">
-          <ScrollView
-            contentContainerStyle={{
-              flexGrow: 1,
-              paddingBottom: 90,
-            }}
-            showsVerticalScrollIndicator={false}
-            stickyHeaderIndices={[0]}
-            keyboardShouldPersistTaps="handled"
+    <Background>
+      <SafeAreaView className="h-full">
+        <ScrollView
+          contentContainerStyle={{
+            flexGrow: 1,
+            paddingBottom: 90,
+          }}
+          showsVericalScrollIndicator={false}
+          stickyHeaderIndices={[0]}
+          keyboardShouldPersistTaps="handled"
+        >
+          {/* HEADER SECTION */}
+          <View
+            className="flex-col w-full bg-secondary z-10 justify-center items-center relative"
+            style={styles.headerContainer}
           >
-            {/* HEADER SECTION */}
-            <View
-              className="flex-col w-full bg-secondary z-10 justify-center items-center relative"
-              style={styles.headerContainer}
-            >
-              <View className="flex-row w-full justify-between items-center">
-                <Pressable
-                  onPress={() => router.back()}
-                  className="absolute left-4"
-                >
-                  <Feather name="arrow-left" size={25} color="#333" />
-                </Pressable>
-                <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
-                  پیگیری شکایت
-                </Text>
+            <View className="flex-row w-full justify-between items-center">
+              <Pressable
+                onPress={() => router.back()}
+                className="absolute left-4"
+              >
+                <Feather name="arrow-left" size={25} color="#333" />
+              </Pressable>
+              <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
+                پیگیری شکایت
+              </Text>
+            </View>
+          </View>
+
+          {/* FORM FIELDS */}
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View className="w-full px-4">
+              <View className="flex-col px-10 w-full">
+                <LottieView
+                  source={searchLottie}
+                  autoPlay
+                  loop
+                  className="w-full h-[150px] mt-[50px]"
+                />
+              </View>
+
+              <FormField
+                placeholder="شماره پیگیری"
+                keyboardType="numeric"
+                type={"text"}
+                containerStyle="mt-5"
+                control={control}
+                name="publickey"
+              />
+
+              {/* RESPONSE CONTAINER */}
+              <Text className="text-primary font-isansbold text-[18px] w-full justify-normal items-center text-center mt-10">
+                نتیجه جست و جو
+              </Text>
+
+              <View
+                className={`w-full rounded-md mt-5 p-5 items-center ${
+                  !queryResult ? "justify-center" : "justify-start"
+                }`}
+                style={styles.resultContainer}
+              >
+                {isLoading ? (
+                  <Chase size={40} color="#164194" />
+                ) : queryResult ? (
+                  <Text className="text-grey2 font-isansdemibold text-[16px]">
+                    {queryResult}
+                  </Text>
+                ) : (
+                  <Text className="text-grey4 font-isansregular text-[15px]">
+                    شماره پیگیری را وارد کرده و جست و جو کنید
+                  </Text>
+                )}
               </View>
             </View>
+          </TouchableWithoutFeedback>
+        </ScrollView>
 
-            {/* FORM FIELDS */}
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-              <View className="w-full px-4">
-                <View className="flex-col px-10 w-full">
-                  <LottieView
-                    source={searchLottie}
-                    autoPlay
-                    loop
-                    className="w-full h-[150px] mt-[50px]"
-                  />
-                </View>
-
-                <FormField
-                  placeholder="شماره پیگیری"
-                  keyboardType="default"
-                  type={"text"}
-                  containerStyle="mt-5"
-                  control={control}
-                  name="publickey"
-                />
-
-                {/* RESPONSE CONTAINER */}
-                <View className="mt-10 justify-center items-center w-full px-2 py-1">
-                  {isLoading && <Chase size={40} color="#164194" />}
-                </View>
-              </View>
-            </TouchableWithoutFeedback>
-          </ScrollView>
-
-          {/* BOTTOM SECTION */}
-          <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
-            <CustomButton
-              title="جست و جو"
-              bgColor="bg-green-700"
-              titleColor="text-white"
-              handlePress={handleSubmit(onSubmit)}
-              isLoading={isLoading}
-            />
-          </View>
-        </SafeAreaView>
-      </Background>
-    </>
+        {/* BOTTOM SECTION */}
+        <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
+          <CustomButton
+            title="جست و جو"
+            bgColor="bg-green-700"
+            titleColor="text-white"
+            handlePress={handleSubmit(onSubmit)}
+            isLoading={isLoading}
+          />
+        </View>
+      </SafeAreaView>
+    </Background>
   );
 };
 
@@ -181,5 +187,14 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     elevation: 3,
     backgroundColor: "white",
+  },
+  resultContainer: {
+    shadowColor: "black",
+    shadowOpacity: 0.26,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 10,
+    elevation: 3,
+    backgroundColor: "white",
+    minHeight: 100,
   },
 });

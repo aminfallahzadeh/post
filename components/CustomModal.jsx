@@ -14,7 +14,7 @@ import Feather from "@expo/vector-icons/Feather";
 
 const { width, height } = Dimensions.get("screen");
 
-const CustomModal = ({ visible, closeModal, title, description }) => {
+export const CustomModal = ({ visible, closeModal, title, description }) => {
   return (
     <Modal
       visible={visible}

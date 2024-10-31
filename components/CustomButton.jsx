@@ -4,7 +4,7 @@ import { TouchableOpacity, Text } from "react-native";
 // LIBRARIES
 import { Flow } from "react-native-animated-spinkit";
 
-const CustomButton = ({
+export const CustomButton = ({
   title,
   handlePress,
   containerStyles,

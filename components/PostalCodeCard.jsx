@@ -4,7 +4,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 // EXPO
 import Feather from "@expo/vector-icons/Feather";
 
-const PostalCodeCard = ({ postalCode, handlePress }) => {
+export const PostalCodeCard = ({ postalCode, handlePress }) => {
   return (
     <View
       className="flex-row-reverse items-center justify-between rounded-md px-4 py-1 border border-gray-300"

@@ -10,7 +10,7 @@ import { LinearGradient } from "expo-linear-gradient";
 // ICONS
 import Feather from "@expo/vector-icons/Feather";
 
-const AddressCard = ({ item, isSelected, onSelect }) => {
+export const AddressCard = ({ item, isSelected, onSelect }) => {
   // DEBUGGING
   useEffect(() => {
     console.log("THIS IS THE ITEM:", item);

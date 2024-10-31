@@ -14,7 +14,7 @@ const images = {
   "announce-4.png": require("../assets/images/announce-4.png"),
 };
 
-const SliderItem = ({ slideItem }) => {
+export const SliderItem = ({ slideItem }) => {
   return (
     <View style={styles.container}>
       <Image source={images[slideItem.image]} style={styles.image} />

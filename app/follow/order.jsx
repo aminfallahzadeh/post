@@ -89,7 +89,7 @@ const FollowOrder = () => {
 
                 <FormField
                   placeholder="شماره پیگیری"
-                  keyboardType="default"
+                  keyboardType="numeric"
                   type={"text"}
                   containerStyle="mt-5"
                   control={control}

@@ -14,7 +14,7 @@ import { useController } from "react-hook-form";
 // ASSETS
 import Feather from "@expo/vector-icons/Feather";
 
-const FormField = ({
+export const FormField = ({
   title,
   value,
   placeholder,

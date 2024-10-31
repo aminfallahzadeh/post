@@ -17,7 +17,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import LottieView from "lottie-react-native";
 import { OtpInput } from "react-native-otp-entry";
 import { showMessage } from "react-native-flash-message";
-import { Flow } from "react-native-animated-spinkit";
+import { Flow, Chase } from "react-native-animated-spinkit";
 
 // COMPONENTS
 import Background from "@/components/Background";
@@ -102,6 +102,7 @@ const Otp = () => {
         type: "success",
         titleStyle: toastStyles,
       });
+      Keyboard.dismiss();
       await fetchCustomerData(mobile);
       router.replace("/services");
     } catch (error) {
@@ -228,6 +229,10 @@ const Otp = () => {
               <Text className="text-gray-500 font-isansbold mt-7">
                 {formatTime(timeLeft)}
               </Text>
+
+              <View className="mt-20">
+                {isLoading && <Chase size={60} color="#164194" />}
+              </View>
             </View>
           </ScrollView>
         </KeyboardAvoidingView>

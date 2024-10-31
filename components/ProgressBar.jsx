@@ -1,7 +1,7 @@
 // NATIVFE IMPORTS
 import { View } from "react-native";
 
-const ProgressBar = ({
+export const ProgressBar = ({
   progress,
   style,
   bgColor = "bg-grey5",
