@@ -24,6 +24,8 @@ import Feather from "@expo/vector-icons/Feather";
 // COMPONETS
 import ProgressBar from "@/components/ProgressBar";
 import Background from "@/components/Background";
+import Factor from "@/components/Factor";
+import CustomButton from "@/components/CustomButton";
 
 // CONSTANTS
 import { postalCodeListValidation } from "@/constants/validations";
@@ -38,6 +40,20 @@ const Step3 = () => {
   // ACCESS GLOBAL STATE
   const factor = useUserStore((state) => state.factor);
 
+  // CHECKBOX STATE
+  const [checked, setChecked] = useState(false);
+
+  // CHECKBOX HANDLER
+  const handleCheckboxPress = () => {
+    setChecked((prev) => {
+      return !prev;
+    });
+  };
+
+  // DEBUGGING
+  useEffect(() => {
+    console.log("FACTOR:", factor);
+  }, [factor]);
   return (
     <Background>
       <SafeAreaView className="h-full">
@@ -71,7 +87,28 @@ const Step3 = () => {
               <ProgressBar progress={100} />
             </View>
           </View>
+
+          {/* RESULT FACTOR */}
+          <View className="w-full px-5 mt-5">
+            <Text className="font-isansbold text-primary text-[18px] w-full justify-center items-center text-center">
+              فاکتور مجموع
+            </Text>
+            <View className="w-full mt-5">
+              <Factor data={factor} />
+            </View>
+          </View>
         </ScrollView>
+
+        {/* BOTTOM SECTION */}
+        <View className="w-full z-10 px-4 bg-gray-100 py-4">
+          <CustomButton
+            title="پرداخت"
+            bgColor="bg-green-700"
+            titleColor="text-white"
+            // handlePress={onSubmit}
+            // isLoading={isLoading}
+          />
+        </View>
       </SafeAreaView>
     </Background>
   );

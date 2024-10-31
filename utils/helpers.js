@@ -44,3 +44,7 @@ export const generateDaysArray = (start, end) => {
   }
   return days;
 };
+
+export const seperateByThousand = (num) => {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};

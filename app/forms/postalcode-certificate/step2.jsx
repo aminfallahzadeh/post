@@ -71,12 +71,12 @@ const Step2 = () => {
 
   // SELECT ALL EFFECT
   useEffect(() => {
-    if (selectedItems.length === addressByPostCode.length) {
+    if (selectedItems?.length === addressByPostCode?.length) {
       setIsSelectedAll(true);
     } else {
       setIsSelectedAll(false);
     }
-  }, [selectedItems.length, addressByPostCode.length]);
+  }, [selectedItems?.length, addressByPostCode?.length]);
 
   // HANDLE SUBMIT
   const onSubmit = async () => {
