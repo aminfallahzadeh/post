@@ -7,7 +7,7 @@ import { LinearGradient } from "expo-linear-gradient";
 // UTILS
 import { seperateByThousand } from "@/utils/helpers";
 
-const Factor = ({ data }) => {
+export const Factor = ({ data }) => {
   const date = new Date(data.date);
   const postalCodes = data.title.split(",");
 

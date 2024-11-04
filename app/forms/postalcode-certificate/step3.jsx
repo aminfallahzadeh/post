@@ -13,43 +13,51 @@ import { SafeAreaView } from "react-native-safe-area-context";
 // STORE
 import { useUserStore } from "@/store";
 
+// AXIOS
+import { requestPayment } from "@/api/payment";
+
 // EXPO
 import { router } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
 
 // COMPONENTS
-import ProgressBar from "@/components/ProgressBar";
-import Background from "@/components/Background";
-import Factor from "@/components/Factor";
-import CustomButton from "@/components/CustomButton";
+import { ProgressBar, Background, Factor, CustomButton } from "@/components";
+
+// ASSETS
+import { toastStyles } from "@/constants/styles";
 
 // LIBRARIES
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import RNBounceable from "@freakycoder/react-native-bounceable";
+import { showMessage } from "react-native-flash-message";
 
 const Step3 = () => {
+  // lOADING
+  const [isLoading, setIsLoading] = useState(false);
+
   // ACCESS GLOBAL STATE
   const factor = useUserStore((state) => state.factor);
+  const mobile = useUserStore((state) => state.mobile);
 
   // CHECKBOX STATE & REF
   const [checked, setChecked] = useState(false);
   const bouncyCheckboxRef = useRef(null);
 
   // SLIDE AND FADE-IN ANIMATION
-  const slideAnim = useRef(new Animated.Value(50)).current; // Start 50 units below
-  const fadeAnim = useRef(new Animated.Value(0)).current; // Start fully transparent
+  const slideAnim = useRef(new Animated.Value(50)).current;
+  const fadeAnim = useRef(new Animated.Value(0)).current;
 
+  // ANIMATION
   useEffect(() => {
-    // Run the slide and fade-in animation on component mount
     Animated.parallel([
       Animated.timing(slideAnim, {
-        toValue: 0, // End position (no translation)
-        duration: 500, // Adjust the duration as needed
+        toValue: 0,
+        duration: 500,
         useNativeDriver: true,
       }),
       Animated.timing(fadeAnim, {
-        toValue: 1, // Fully opaque
-        duration: 500, // Adjust the duration as needed
+        toValue: 1,
+        duration: 500,
         useNativeDriver: true,
       }),
     ]).start();
@@ -64,6 +72,41 @@ const Step3 = () => {
   useEffect(() => {
     console.log("FACTOR:", factor);
   }, [factor]);
+
+  // HADNLE SUBMIT
+  const onSubmit = async () => {
+    setIsLoading(true);
+    try {
+      const data = {
+        clientOrderID: "string",
+        mobile,
+        paymentTypeID: "2",
+        postUnitID: 2,
+        income: factor.amount + factor.tax,
+        tax: factor.tax,
+        escrow: 0,
+        callBackUrl: "",
+        additionalData: "string",
+        requestID: factor.id,
+      };
+
+      const response = await requestPayment(data);
+      console.log(
+        "REQUEST PAYMENT RESPONSE: ",
+        response.data.itemList[0].data.paymentUrl
+      );
+      router.push(response.data.itemList[0].data.paymentUrl);
+    } catch (error) {
+      console.log("REQUEST PAYMENT ERROR: ", error.response);
+      showMessage({
+        message: error.response?.data?.message || error.message,
+        type: "danger",
+        titleStyle: toastStyles,
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Background>
@@ -154,8 +197,8 @@ const Step3 = () => {
             bgColor="bg-green-700"
             titleColor="text-white"
             disabled={!checked}
-            // handlePress={onSubmit}
-            // isLoading={isLoading}
+            handlePress={onSubmit}
+            isLoading={isLoading}
           />
         </View>
       </SafeAreaView>
