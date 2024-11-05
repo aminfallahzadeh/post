@@ -113,7 +113,6 @@ const Index = () => {
       const response = await addressByPostCode(data);
       console.log("POSTAL CODES RESPONSE: ", response.data.itemList[0].data);
       await setAddressByPostCode(response.data.itemList[0].data);
-      setPostalCodes([]);
       router.push("forms/postalcode-certificate/step2");
     } catch (error) {
       console.log("POSTAL CODE ERRORS: ", error.response);

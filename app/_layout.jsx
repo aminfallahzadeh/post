@@ -2,7 +2,8 @@
 import { useEffect } from "react";
 
 // EXPO
-import { SplashScreen, Stack } from "expo-router";
+import * as Linking from "expo-linking";
+import { SplashScreen, Stack, router } from "expo-router";
 import { useFonts } from "expo-font";
 
 // LIBRARIES
@@ -26,6 +27,36 @@ const RootLayout = () => {
     "IranSans-UltraLight": require("../assets/fonts/IRANSansX-Regular.ttf"),
   });
 
+  // HANDLE DEEP LINK
+  useEffect(() => {
+    const handleUrl = (event) => {
+      const { url } = event;
+      console.log("URL received:", url);
+
+      // Parse the URL and extract parameters
+      const parsedUrl = new URL(url);
+      const requestID = parsedUrl.searchParams.get("requestID");
+      const success = parsedUrl.searchParams.get("success");
+
+      if (requestID && success) {
+        // Navigate to the dynamic route with both parameters
+        router.push({
+          pathname: `/result/${requestID}`,
+          params: { success },
+        });
+      }
+    };
+
+    // Add the event listener for handling URLs
+    const listener = Linking.addEventListener("url", handleUrl);
+
+    // Cleanup the listener on component unmount
+    return () => {
+      listener.remove();
+    };
+  }, []);
+
+  // HANDLE FONTS
   useEffect(() => {
     if (error) throw error;
 
@@ -48,12 +79,13 @@ const RootLayout = () => {
           name="forms/new-complaint"
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="profile/[id]" options={{ headerShown: false }} />
+        <Stack.Screen name="profile" options={{ headerShown: false }} />
         <Stack.Screen name="follow" options={{ headerShown: false }} />
         <Stack.Screen
           name="forms/postalcode-certificate"
           options={{ headerShown: false }}
         />
+        <Stack.Screen name="result" options={{ headerShown: false }} />
       </Stack>
       <FlashMessage position={"top"} />
     </>

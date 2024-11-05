@@ -204,7 +204,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     textAlign: "center",
     flexDirection: Platform.OS === "ios" ? "row" : "row-reverse",
-    direction: "rtl",
     gap: 5,
     borderColor: "#333",
     borderWidth: 0.5,
