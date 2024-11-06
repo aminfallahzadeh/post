@@ -1,17 +1,7 @@
 // REACT IMPORTS
 import { useState, useEffect, useCallback } from "react";
-import {
-  View,
-  Text,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Animated,
-} from "react-native";
+import { View, Text, ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-// STORE
-import { useUserStore } from "@/store";
 
 // AXIOS
 import { generateCertificate } from "@/api/gnaf";
@@ -21,14 +11,14 @@ import { router, useLocalSearchParams } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
 
 // COMPONENTS
-import { ProgressBar, Background, Factor, CustomButton } from "@/components";
+import { Background, CustomButton } from "@/components";
+import { DownloadPDF } from "@/components";
 
 // ASSETS
 import { toastStyles } from "@/constants/styles";
 
 // LIBRARIES
-import BouncyCheckbox from "react-native-bouncy-checkbox";
-import RNBounceable from "@freakycoder/react-native-bounceable";
+import { Chase } from "react-native-animated-spinkit";
 import { showMessage } from "react-native-flash-message";
 
 const PaymentResult = () => {
@@ -52,7 +42,8 @@ const PaymentResult = () => {
     console.log("DETECTED");
     try {
       const response = await generateCertificate(id);
-      console.log("GENERATE CERTIFICATE RESPONSE: ", response.data.data);
+      console.log("GENERATE CERTIFICATE RESPONSE: ", response.data.itemList);
+      setData(response.data.itemList[0].data);
     } catch (error) {
       console.log("GENERATE CERTIFICATE ERROR: ", error.response);
       showMessage({
@@ -118,6 +109,31 @@ const PaymentResult = () => {
               </Text>
             </View>
           </View>
+
+          {/* DOWNLOAD PDF */}
+          {isSuccess && (
+            <View className="mt-10 w-full justify-center items-center">
+              {isLoading ? (
+                <Chase size={50} color="#164194" className="mt-20" />
+              ) : data && data.length > 0 ? (
+                <>
+                  <Text className="text-primary font-isansbold text-[20px]">
+                    دانلود PDF
+                  </Text>
+                  <View className="w-[80%] h-[1px] bg-grey2 mt-2 mb-2" />
+                  <View className="w-full mt-10 justify-center items-center">
+                    {data.map((item, index) => (
+                      <DownloadPDF item={item} key={index} />
+                    ))}
+                  </View>
+                </>
+              ) : (
+                <Text className="font-isansdemibold text-grey2 text-[30px] mt-20">
+                  موردی یافت نشد!
+                </Text>
+              )}
+            </View>
+          )}
         </ScrollView>
 
         {/* BOTTOM SECTION */}
