@@ -40,11 +40,9 @@ export const AddressCard = ({ item, isSelected, onSelect }) => {
           className="flex-row-reverse items-center justify-center"
           style={styles.columnGapMd}
         >
-          <Text className="text-grey2 font-isansbold text-[15px]">
-            کد پستی :
-          </Text>
+          <Text className="text-grey2 font-isansbold text-sm">کد پستی :</Text>
 
-          <Text className="text-grey2 font-isansregular text-[15px]">
+          <Text className="text-grey2 font-isansregular text-sm">
             {item.postcode || "---"}
           </Text>
         </View>
@@ -60,81 +58,87 @@ export const AddressCard = ({ item, isSelected, onSelect }) => {
       </View>
 
       <View
-        className="flex-row-reverse justify-between mt-2"
+        className="flex-row-reverse justify-between mt-2 flex-wrap"
         style={styles.columnGapLg}
       >
         <View
           className="flex-row-reverse justify-center items-center"
           style={styles.columnGapMd}
         >
-          <Text className="text-grey2 font-isansbold text-[15px]">استان :</Text>
-          <Text className="text-grey2 font-isansregular text-[15px]">
+          <Text
+            className="text-grey2 font-isansbold text-sm"
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            استان :
+          </Text>
+          <Text className="text-grey2 font-isansregular text-sm">
             {item.result.province || "---"}
           </Text>
         </View>
 
         <View className="flex-row-reverse" style={styles.columnGapMd}>
-          <Text className="text-grey2 font-isansbold text-[15px]">شهر :</Text>
-          <Text className="text-grey2 font-isansregular text-[15px]">
+          <Text className="text-grey2 font-isansbold text-sm">شهر :</Text>
+          <Text className="text-grey2 font-isansregular text-sm">
             {item.result.localityName || "---"}
           </Text>
         </View>
 
         <View className="flex-row-reverse" style={styles.columnGapMd}>
-          <Text className="text-grey2 font-isansbold text-[15px]">روستا :</Text>
-          <Text className="text-grey2 font-isansregular text-[15px]">
+          <Text className="text-grey2 font-isansbold text-sm">روستا :</Text>
+          <Text className="text-grey2 font-isansregular text-sm">
             {item.result.village || "---"}
           </Text>
         </View>
       </View>
 
       <View
-        className="flex-row-reverse justify-between items-center mt-2"
+        className="flex-row-reverse justify-between items-center mt-2 flex-wrap"
         style={styles.columnGapLg}
       >
         <View className="flex-row-reverse" style={styles.columnGapMd}>
-          <Text className="text-grey2 font-isansbold text-[15px]">بلوک :</Text>
-          <Text className="text-grey2 font-isansdemibold text-[15px]">
+          <Text className="text-grey2 font-isansbold text-sm">بلوک :</Text>
+          <Text className="text-grey2 font-isansdemibold text-sm">
             {item.result.buildingName || "---"}
           </Text>
         </View>
 
         <View className="flex-row-reverse" style={styles.columnGapMd}>
-          <Text className="text-grey2 font-isansbold text-[15px]">ورودی :</Text>
-          <Text className="text-grey2 font-isansregular text-[15px]">
+          <Text className="text-grey2 font-isansbold text-sm">ورودی :</Text>
+          <Text className="text-grey2 font-isansregular text-sm">
             {item.result.description || "---"}
           </Text>
         </View>
 
         <View className="flex-row-reverse" style={styles.columnGapMd}>
-          <Text className="text-grey2 font-isansbold text-[15px]">ناحیه :</Text>
-          <Text className="text-grey2 font-isansregular text-[15px]">
+          <Text className="text-grey2 font-isansbold text-sm">ناحیه :</Text>
+          <Text className="text-grey2 font-isansregular text-sm">
             {item.result.zone || "---"}
           </Text>
         </View>
       </View>
 
       <View
-        className="flex-row-reverse justify-between items-center mt-2"
+        className="flex-row-reverse justify-between items-center mt-2 flex-wrap"
         style={styles.columnGapLg}
       >
         <View className="flex-row-reverse" style={styles.columnGapMd}>
-          <Text className="text-grey2 font-isansbold text-[15px]">پلاک :</Text>
-          <Text className="text-grey2 font-isansregular text-[15px]">
+          <Text className="text-grey2 font-isansbold text-sm">پلاک :</Text>
+          <Text className="text-grey2 font-isansregular text-sm">
             {item.result.houseNumber || "---"}
           </Text>
         </View>
 
         <View className="flex-row-reverse" style={styles.columnGapMd}>
-          <Text className="text-grey2 font-isansbold text-[15px]">طبقه :</Text>
-          <Text className="text-grey2 font-isansregular text-[15px]">
+          <Text className="text-grey2 font-isansbold text-sm">طبقه :</Text>
+          <Text className="text-grey2 font-isansregular text-sm">
             {item.result.floor || "---"}
           </Text>
         </View>
 
         <View className="flex-row-reverse" style={styles.columnGapMd}>
-          <Text className="text-grey2 font-isansbold text-[15px]">واحد :</Text>
-          <Text className="text-grey2 font-isansregular text-[15px]">
+          <Text className="text-grey2 font-isansbold text-sm">واحد :</Text>
+          <Text className="text-grey2 font-isansregular text-sm">
             {item.result.localityCode || "---"}
           </Text>
         </View>

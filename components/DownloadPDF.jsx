@@ -10,7 +10,7 @@ import images from "@/constants/images";
 export const DownloadPDF = ({ item }) => {
   // HANDLE PDF DOWNLOAD
   const downloadPdf = async () => {
-    const pdfUrl = item?.result?.certificateurl;
+    const pdfUrl = item?.result?.certificateUrl;
     const fileUri = `${FileSystem.documentDirectory}${
       item.postcode || "download"
     }.pdf`;

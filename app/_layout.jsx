@@ -85,6 +85,10 @@ const RootLayout = () => {
           name="forms/postalcode-certificate"
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="forms/postalcode-geo"
+          options={{ headerShown: false }}
+        />
         <Stack.Screen name="result" options={{ headerShown: false }} />
       </Stack>
       <FlashMessage position={"top"} />

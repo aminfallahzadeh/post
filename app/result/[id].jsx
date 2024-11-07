@@ -4,7 +4,7 @@ import { View, Text, ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 // AXIOS
-import { generateCertificate } from "@/api/gnaf";
+import { generateCertificate, generateCertificateGeo } from "@/api/gnaf";
 
 // EXPO
 import { router, useLocalSearchParams } from "expo-router";
@@ -22,7 +22,7 @@ import { Chase } from "react-native-animated-spinkit";
 import { showMessage } from "react-native-flash-message";
 
 const PaymentResult = () => {
-  const { id, success } = useLocalSearchParams();
+  const { id, success, type } = useLocalSearchParams();
 
   // STATES
   const [data, setData] = useState(null);
@@ -39,22 +39,30 @@ const PaymentResult = () => {
   // HANDLERS
   const handleGenerateCertificate = useCallback(async () => {
     setIsLoading(true);
-    console.log("DETECTED");
-    try {
-      const response = await generateCertificate(id);
-      console.log("GENERATE CERTIFICATE RESPONSE: ", response.data.itemList);
-      setData(response.data.itemList[0].data);
-    } catch (error) {
-      console.log("GENERATE CERTIFICATE ERROR: ", error.response);
-      showMessage({
-        message: error.response?.data?.message || error.message,
-        type: "danger",
-        titleStyle: toastStyles,
-      });
-    } finally {
-      setIsLoading(false);
+
+    const generateCertificateData = async (generateFunction) => {
+      try {
+        const response = await generateFunction(id);
+        console.log("GENERATE CERTIFICATE RESPONSE: ", response.data.itemList);
+        setData(response.data.itemList[0].data);
+      } catch (error) {
+        console.log("GENERATE CERTIFICATE ERROR: ", error.response);
+        showMessage({
+          message: error.response?.data?.message || error.message,
+          type: "danger",
+          titleStyle: toastStyles,
+        });
+      }
+    };
+
+    if (type === "Certificategeo") {
+      await generateCertificateData(generateCertificateGeo);
+    } else {
+      await generateCertificateData(generateCertificate);
     }
-  }, [id]);
+
+    setIsLoading(false);
+  }, [id, type]);
 
   // CHECK STATUS LOGIC
   useEffect(() => {

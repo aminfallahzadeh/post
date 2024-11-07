@@ -10,7 +10,7 @@ export const PostalCodeCard = ({ postalCode, handlePress }) => {
       className="flex-row-reverse items-center justify-between rounded-md px-4 py-1 border border-gray-300"
       style={styles.container}
     >
-      <Text className="text-grey2 font-isansdemibold text-[18px]">
+      <Text className="text-grey2 font-isansdemibold text-md">
         {postalCode}
       </Text>
       <TouchableOpacity onPress={() => handlePress(postalCode)}>

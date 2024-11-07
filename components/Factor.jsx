@@ -16,7 +16,7 @@ export const Factor = ({ data }) => {
       style={styles.container}
       className="w-full bg-white rounded-md p-2 justify-center items-center border border-grey2"
     >
-      <View className="flex-row-reverse justify-between w-full items-center">
+      <View className="flex-row-reverse justify-between w-full items-center flex-wrap">
         <Text className="font-isansdemibold text-grey2 text-[15px]">
           شماره فاکتور
         </Text>

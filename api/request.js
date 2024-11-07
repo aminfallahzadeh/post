@@ -22,3 +22,7 @@ export function insertRequestCertification(data) {
 
   return axiosInstance.post("/Request/InsertRequestCertification", data);
 }
+
+export function insertRequestCertificationGeo(data) {
+  return axiosInstance.post("/Request/InsertRequestCertificationGeo", data);
+}

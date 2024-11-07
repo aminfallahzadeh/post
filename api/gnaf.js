@@ -12,3 +12,13 @@ export function generateCertificate(id) {
     requestID: id,
   });
 }
+
+export function generateCertificateGeo(id) {
+  return axiosInstance.post("GNAF/GenerateCertificateGeo", {
+    requestID: id,
+  });
+}
+
+export function getCertificate(mobile) {
+  return axiosInstance.get(`GNAF/GetCertificate?mobile=${mobile}`);
+}

@@ -22,7 +22,7 @@ export const allData = [
     title: "گواهی مکانی",
     gradientColors: ["#755d15", "#ffca2b"],
     iconName: null,
-    url: null,
+    url: "forms/postalcode-geo",
     imageUrl: require("@/assets/images/govahi-makani.png"),
     nationalCodeRequired: false,
   },
