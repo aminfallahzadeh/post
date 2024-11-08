@@ -11,6 +11,7 @@ import { Chase } from "react-native-animated-spinkit";
 
 // COMPONENTS
 import Background from "@/components/Background";
+import PostCertificateCard from "@/components/PostCertificateCard";
 
 // STATE
 import { useUserStore } from "@/store";
@@ -34,7 +35,7 @@ const MyGovahiView = () => {
   // ANIMATION REFERENCES
   const fadeAnimRefs = useRef([]);
 
-  const fetchEopList = useCallback(async () => {
+  const fetchCertificateList = useCallback(async () => {
     setIsLoading(true);
     try {
       const response = await getCertificate(mobile);
@@ -54,11 +55,11 @@ const MyGovahiView = () => {
 
   useFocusEffect(
     useCallback(() => {
-      fetchEopList();
+      fetchCertificateList();
       return () => {
         setList([]);
       };
-    }, [fetchEopList])
+    }, [fetchCertificateList])
   );
 
   useEffect(() => {
@@ -86,36 +87,34 @@ const MyGovahiView = () => {
           style={{ transform: [{ scaleX: -1 }], rowGap: 10 }}
           className="justify-normal items-center mt-5 px-10 h-full pb-32"
         >
-          {
-            isLoading ? (
-              <Chase size={50} color="#164194" className="mt-20" />
-            ) : list.length === 0 ? (
-              <Text className="font-isansdemibold text-grey2 text-[30px] mt-20">
-                موردی یافت نشد!
-              </Text>
-            ) : null
-            // (
-            //   list.map((item, index) => (
-            //     <Animated.View
-            //       key={index}
-            //       style={{
-            //         opacity: fadeAnimRefs.current[index],
+          {isLoading ? (
+            <Chase size={50} color="#164194" className="mt-20" />
+          ) : list.length === 0 ? (
+            <Text className="font-isansdemibold text-grey2 text-[30px] mt-20">
+              موردی یافت نشد!
+            </Text>
+          ) : (
+            list.map((item, index) => (
+              <Animated.View
+                key={index}
+                style={{
+                  opacity: fadeAnimRefs.current[index],
+                  width: "100%",
 
-            //         transform: [
-            //           {
-            //             translateY: fadeAnimRefs.current[index].interpolate({
-            //               inputRange: [0, 1],
-            //               outputRange: [50, 0], // Start 50px lower, move to original position
-            //             }),
-            //           },
-            //         ],
-            //       }}
-            //     >
-            //       <ComplaintCard item={item} />
-            //     </Animated.View>
-            //   ))
-            // )
-          }
+                  transform: [
+                    {
+                      translateY: fadeAnimRefs.current[index].interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [50, 0], // Start 50px lower, move to original position
+                      }),
+                    },
+                  ],
+                }}
+              >
+                <PostCertificateCard item={item} />
+              </Animated.View>
+            ))
+          )}
         </View>
       </ScrollView>
     </Background>
