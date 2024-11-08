@@ -58,7 +58,7 @@ const FollowComplaint = () => {
       if (validation.check) {
         showMessage({
           message: validation.message,
-          type: "danger",
+          type: "warning",
           titleStyle: toastStyles,
         });
         return;

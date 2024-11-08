@@ -92,3 +92,10 @@ export const postalCodeListValidation = (data) => [
     message: "حداقل یک کد پستی انتخاب کنید",
   },
 ];
+
+export const orderTrackingValidation = (form_data) => [
+  {
+    check: !form_data.barcode || form_data.barcode.length < 20,
+    message: "کد پیگیری معتبر نیست",
+  },
+];
