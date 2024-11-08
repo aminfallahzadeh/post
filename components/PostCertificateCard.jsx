@@ -1,5 +1,12 @@
 // NATIVE IMPORTS
-import { View, Text, StyleSheet, Pressable, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  Image,
+  Platform,
+} from "react-native";
 
 // EXPO
 import * as FileSystem from "expo-file-system";
@@ -8,24 +15,81 @@ import * as FileSystem from "expo-file-system";
 import images from "@/constants/images";
 
 export const PostCertificateCard = ({ item, containerStyles }) => {
-  const downloadPdf = async () => {
-    const pdfUrl = item?.url;
-    const fileUri = `${FileSystem.documentDirectory}${
-      item.postcode || "download"
-    }.pdf`;
+  // const downloadPdf = async () => {
+  // const pdfUrl = item?.url;
+  //   const fileUri = `${FileSystem.documentDirectory}${
+  //     item.postcode || "download"
+  //   }.pdf`;
+
+  //   try {
+  //     // Download the PDF file
+  //     await FileSystem.downloadAsync(pdfUrl, fileUri);
+  //   } catch (error) {
+  //     alert("Error", "دانلود ناموفق");
+  //     console.error("Download error:", error);
+  //   }
+  // };
+  // const download = async () => {
+  //   const url = "https://www.orimi.com/pdf-test.pdf";
+  //   const fileName = "test.pdf";
+  //   const fileUri = FileSystem.documentDirectory + item?.postcode;
+
+  //   const result = await FileSystem.downloadAsync(
+  //     url,
+  //     FileSystem.documentDirectory + fileName
+  //   );
+  //   console.log(result);
+
+  //   save(result.uri, fileName, result.headers["content-type"]);
+  // };
+
+  const download = async () => {
+    // TEST
+    // const url = "https://www.orimi.com/pdf-test.pdf";
+    // const fileName = "test.pdf";
+    const url = item?.url;
+    const fileName = item?.postcode;
+    const fileUri = FileSystem.documentDirectory + fileName;
 
     try {
-      // Download the PDF file
-      await FileSystem.downloadAsync(pdfUrl, fileUri);
+      const result = await FileSystem.downloadAsync(url, fileUri);
+      console.log("File downloaded to:", result.uri);
+      alert("Download complete! File saved to app storage.");
     } catch (error) {
-      alert("Error", "دانلود ناموفق");
-      console.error("Download error:", error);
+      console.log("Error downloading file:", error);
     }
   };
 
+  // const save = async (uri, filename, mimetype) => {
+  //   if (Platform.OS === "android") {
+  //     const permissions =
+  //       await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync();
+  //     if (permissions.granted) {
+  //       const base64 = await FileSystem.readAsStringAsync(uri, {
+  //         encoding: FileSystem.EncodingType.Base64,
+  //       });
+  //       await FileSystem.StorageAccessFramework.createFileAsync(
+  //         permissions.directoryUri,
+  //         filename,
+  //         mimetype
+  //       )
+  //         .then(async (uri) => {
+  //           await FileSystem.writeAsStringAsync(uri, base64, {
+  //             encoding: FileSystem.EncodingType.Base64,
+  //           });
+  //         })
+  //         .catch((e) => console.log(e));
+  //     } else {
+  //       alert("Not Supported on IOS");
+  //     }
+  //   } else {
+  //     return;
+  //   }
+  // };
+
   return (
     <Pressable
-      onPress={downloadPdf}
+      onPress={download}
       className={`bg-white rounded-md px-5 py-2 w-full ${containerStyles}`}
     >
       <View className="justify-center items-center w-full">

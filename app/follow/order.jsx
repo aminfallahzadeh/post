@@ -27,6 +27,7 @@ import Feather from "@expo/vector-icons/Feather";
 import Background from "@/components/Background";
 import FormField from "@/components/FormField";
 import CustomButton from "@/components/CustomButton";
+import OrderTrackCard from "@/components/OrderTrackCard";
 
 // LIBRARIES
 import LottieView from "lottie-react-native";
@@ -70,8 +71,8 @@ const FollowOrder = () => {
       setIsLoading(true);
       const response = await orderTracking(form_data.barcode);
       console.log("ORDER TRACKING RESPONSE: ", response.data);
-      setResult(response.data.itemList[0]);
-      setDate(response.data.itemList[0].tfDate.split(" ")[0]);
+      setResult(response.data.itemList);
+      // setDate(response.data.itemList[0].tfDate.split(" ")[0]);
       reset();
     } catch (error) {
       console.log("ORDER TRACKING ERROR: ", error.response);
@@ -155,28 +156,31 @@ const FollowOrder = () => {
                   {isLoading ? (
                     <Chase size={40} color="#164194" />
                   ) : result ? (
-                    <View className="w-full">
-                      <View className="flex-row-reverse justify-between mb-2">
-                        <Text className="text-primary font-isansbold text-sm">
-                          تاریخ :
-                        </Text>
-                        <Text className="text-grey2 font-isansdemibold text-sm">
-                          {date}
-                        </Text>
-                      </View>
-
-                      <View className="w-full h-[1px] bg-gray-400" />
-
-                      <View className="mt-2">
-                        <Text className="text-primary font-isansbold text-sm">
-                          توضیحات :
-                        </Text>
-                        <Text className="text-grey2 font-isansdemibold text-sm mt-1">
-                          {result.describe}
-                        </Text>
-                      </View>
-                    </View>
+                    result.map((item, index) => (
+                      <OrderTrackCard key={index} item={item} />
+                    ))
                   ) : (
+                    // <View className="w-full">
+                    //   <View className="flex-row-reverse justify-between mb-2">
+                    //     <Text className="text-primary font-isansbold text-sm">
+                    //       تاریخ :
+                    //     </Text>
+                    //     <Text className="text-grey2 font-isansdemibold text-sm">
+                    //       {date}
+                    //     </Text>
+                    //   </View>
+
+                    //   <View className="w-full h-[1px] bg-gray-400" />
+
+                    //   <View className="mt-2">
+                    //     <Text className="text-primary font-isansbold text-sm">
+                    //       توضیحات :
+                    //     </Text>
+                    //     <Text className="text-grey2 font-isansdemibold text-sm mt-1">
+                    //       {result.describe}
+                    //     </Text>
+                    //   </View>
+                    // </View>
                     <Text className="text-grey4 font-isansregular text-[15px]">
                       شماره پیگیری را وارد کرده و جست و جو کنید
                     </Text>
