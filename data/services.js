@@ -31,7 +31,7 @@ export const allData = [
     title: "درخواست کد پستی",
     gradientColors: ["#755d15", "#ffca2b"],
     iconName: null,
-    url: null,
+    url: "forms/postalcode-request",
     imageUrl: require("@/assets/images/code-request.png"),
     nationalCodeRequired: false,
   },

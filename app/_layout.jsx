@@ -1,13 +1,9 @@
-// REACT IMPORTS
-import { useEffect } from "react";
-
-// EXPO
+// IMPORTS
+import { useEffect, useMemo } from "react";
 import * as Linking from "expo-linking";
 import { SplashScreen, Stack, router } from "expo-router";
 import { useFonts } from "expo-font";
-
-// LIBRARIES
-import FlashMessage from "react-native-flash-message";
+import { toastConfig } from "@/config/toast-config";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -26,6 +22,8 @@ const RootLayout = () => {
     "IranSans-Thin": require("../assets/fonts/IRANSansX-Thin.ttf"),
     "IranSans-UltraLight": require("../assets/fonts/IRANSansX-Regular.ttf"),
   });
+
+  const ToastProvider = useMemo(() => toastConfig.registerProvider, []);
 
   // HANDLE DEEP LINK
   useEffect(() => {
@@ -89,9 +87,13 @@ const RootLayout = () => {
           name="forms/postalcode-geo"
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="forms/postalcode-request"
+          options={{ headerShown: false }}
+        />
         <Stack.Screen name="result" options={{ headerShown: false }} />
       </Stack>
-      <FlashMessage position={"top"} />
+      <ToastProvider />
     </>
   );
 };

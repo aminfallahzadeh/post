@@ -1,4 +1,4 @@
-// NATIVE IMPORTS
+// IMPROTS
 import {
   View,
   Text,
@@ -6,12 +6,8 @@ import {
   TouchableOpacity,
   Animated,
 } from "react-native";
-
-// REACT IMPORTS
 import { useState, useEffect } from "react";
 import { useController } from "react-hook-form";
-
-// ASSETS
 import Feather from "@expo/vector-icons/Feather";
 
 export const FormField = ({
@@ -29,6 +25,7 @@ export const FormField = ({
   clearBtn = true,
   name,
   control,
+  rules,
   ...props
 }) => {
   // STATES
@@ -38,10 +35,11 @@ export const FormField = ({
   // ANIMATION
   const placeholderAnimation = useState(new Animated.Value(0))[0];
 
-  const { field } = useController({
+  const { field, fieldState } = useController({
     control,
     defaultValue: value,
     name,
+    rules,
   });
 
   useEffect(() => {
@@ -112,6 +110,16 @@ export const FormField = ({
         >
           {placeholder}
         </Animated.Text>
+
+        {/* ERROR */}
+
+        {fieldState?.error && (
+          <View className="absolute -top-6 left-0">
+            <Text className="text-orange-500 font-isanslight">
+              {fieldState?.error?.message}
+            </Text>
+          </View>
+        )}
 
         <TextInput
           className="flex-1 text-grey2 font-isansdemibold text-base w-full text-center"

@@ -1,12 +1,12 @@
+// NATIVE IMPROTS
 import { Stack } from "expo-router";
 
-const AuthLayout = () => {
+const PostalCodeGeoLayout = () => {
   return (
     <Stack>
       <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen name="otp" options={{ headerShown: false }} />
     </Stack>
   );
 };
 
-export default AuthLayout;
+export default PostalCodeGeoLayout;

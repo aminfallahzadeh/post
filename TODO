@@ -1,3 +1,11 @@
+Component: 
+  ✔ centralize the dropdown component styles (dropdown helper) @done(24-11-15 03:25)
+  ✔ create a hook for lookup data @done(24-11-16 17:44)
+  ✔ create hook to handle request/response @done(24-11-15 03:04)
+  ✔ setup axios for error handling @done(24-11-14 21:55)
+  ✔ centralize the toast component styles (toast helper) @done(24-11-14 20:15)
+
+
 // NOTES 
 
 VALID NATIONA CODES

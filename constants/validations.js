@@ -1,5 +1,6 @@
-// HELPERS
+// IMPORTS
 import { nationalCodeChekcher } from "@/utils/helpers";
+import { mobilePhoneErrors } from "./messages";
 
 export const userDataValidations = (form_data) => [
   {
@@ -99,3 +100,19 @@ export const orderTrackingValidation = (form_data) => [
     message: "کد پیگیری معتبر نیست",
   },
 ];
+
+///////// NEW
+export const mobilePhoneValidation = {
+  minLength: {
+    value: 11,
+    message: mobilePhoneErrors.NOT_VALID,
+  },
+  maxLength: {
+    value: 11,
+    message: mobilePhoneErrors.NOT_VALID,
+  },
+  required: {
+    value: true,
+    message: mobilePhoneErrors.REQUIRED,
+  },
+};

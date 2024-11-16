@@ -48,3 +48,15 @@ export const checkboxControls = {
     borderRadius: 3,
   },
 };
+
+export const listControls = {
+  emptyListMessage: "موردی پیدا نشد",
+};
+
+export const listComponentStyles = {
+  listEmptyComponentStyle: {
+    color: "gray",
+    transform: [{ scaleX: -1 }],
+    fontFamily: "IranSans-Bold",
+  },
+};

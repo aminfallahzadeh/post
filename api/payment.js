@@ -1,5 +1,5 @@
 // AXIOS
-import axiosInstance from "./axiosConfig";
+import axiosInstance from "@/config/axiosConfig";
 import axios from "axios";
 
 // CONSTANTS

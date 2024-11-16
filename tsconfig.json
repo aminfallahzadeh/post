@@ -17,6 +17,7 @@
     "app/(auth)/otp.jsx",
     "app/(tabs)/_layout.jsx",
     "app/_layout.jsx",
-    "app/(auth)/_layout.jsx"
+    "app/(auth)/_layout.jsx",
+    "constants/messages.js"
   ]
 }

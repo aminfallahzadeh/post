@@ -1,7 +1,5 @@
-// REACT IMPORTS
+// IMPORTS
 import { useEffect, useState, useCallback } from "react";
-
-// NATIVE IMPORTS
 import {
   View,
   ScrollView,
@@ -12,54 +10,35 @@ import {
   Keyboard,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-// LIBRARIES
 import LottieView from "lottie-react-native";
 import { OtpInput } from "react-native-otp-entry";
-import { showMessage } from "react-native-flash-message";
 import { Flow, Chase } from "react-native-animated-spinkit";
-
-// COMPONENTS
 import Background from "@/components/Background";
-
-// AXIOS
 import { validateOTP, generateOTP } from "@/api/auth";
-
-// STORE
 import { useUserStore } from "@/store";
-
-// EXPO IMPORTS
 import { router } from "expo-router";
 import * as SecureStore from "expo-secure-store";
-
-// ASSETS
 import OtpLottie from "@/assets/animations/otp-lottie.json";
-import { toastStyles } from "@/constants/styles";
-
-// HOOKS
 import useGetUserData from "@/hooks/useGetUserData";
-
-// UTILS
 import { formatTime } from "@/utils/helpers";
+import useQuery from "@/hooks/useQuery";
+import useMutation from "@/hooks/useMutation";
+import { toastConfig } from "@/config/toast-config";
 
 const Otp = () => {
-  // DATA STATE
+  // STATES
   const [code, setCode] = useState(null);
-
-  // ACCESS STORE STATE
-  const setMobile = useUserStore((state) => state.setMobile);
-  const mobile = useUserStore((state) => state.mobile);
-
   const [retryDisabled, setRetryDisabled] = useState(true);
-
-  // TIMER STATE
   const [timeLeft, setTimeLeft] = useState(120);
 
-  // LOADING STATE
-  const [isLoading, setIsLoading] = useState(false);
+  // STORE
+  const mobile = useUserStore((state) => state.mobile);
 
   // ACCES HOOK FUNCTIONS
   const { fetchCustomerData } = useGetUserData(mobile);
+
+  const { isLoading, fetchQuery } = useQuery();
+  const { isLoading: isValidating, fetchMutation } = useMutation();
 
   // FUNCTION TO STORE TOKEN
   const saveToken = async function (key, value) {
@@ -87,71 +66,36 @@ const Otp = () => {
 
   // VALIDATE FUNCTION
   const validateOTPHanlder = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const response = await validateOTP({
+    const response = await fetchMutation(
+      validateOTP,
+      undefined,
+      {
         code: parseInt(code),
         mobile,
-      });
-      const data = response.data?.itemList[0];
-      console.log("this is response:", response.data);
-      saveToken("token", data.token);
-      saveRefreshToken("refreshToken", data.refreshToken);
-      showMessage({
-        message: response?.data?.message,
-        type: "success",
-        titleStyle: toastStyles,
-      });
-      Keyboard.dismiss();
-      await fetchCustomerData(mobile);
-      router.replace("/services");
-    } catch (error) {
-      console.log("this is error", error.response.data?.message);
-      showMessage({
-        message: error.response?.data?.message || error.message,
-        type: "danger",
-        titleStyle: toastStyles,
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  }, [code, mobile, fetchCustomerData]);
+      },
+      true
+    );
+    const data = response.data?.itemList[0];
+    saveToken("token", data.token);
+    saveRefreshToken("refreshToken", data.refreshToken);
+    await fetchCustomerData(mobile);
+    router.replace("/services");
+  }, [code, mobile, fetchMutation, fetchCustomerData]);
 
   // GENERATE OTP FUNCTION
   const generateOTPHandler = async () => {
-    setIsLoading(true);
     Keyboard.dismiss();
-    try {
-      const response = await generateOTP(mobile);
-      setMobile(response.data.itemList[0].mobile);
-      showMessage({
-        message: "کد مجددا ارسال شد",
-        type: "success",
-        titleStyle: toastStyles,
-      });
-      setTimeLeft(120);
-      setRetryDisabled(true);
-    } catch (error) {
-      console.log("this is error", error);
-      showMessage({
-        message: error.message || error,
-        type: "danger",
-        titleStyle: toastStyles,
-      });
-    } finally {
-      setIsLoading(false);
-    }
+    await fetchQuery(generateOTP, mobile);
+    setTimeLeft(120);
+    setRetryDisabled(true);
+    toastConfig.success("کد مجددا ارسال شد");
+    setCode(null);
   };
-
-  // FOR DEVELOPMENT
-  // const validateOTPHanlder = useCallback(() => {
-  //   Keyboard.dismiss();
-  //   router.replace("/services");
-  // }, []);
 
   // VLAIDATE ON FILLED
   useEffect(() => {
     if (code?.length === 4) {
+      Keyboard.dismiss();
       validateOTPHanlder();
     }
   }, [code, validateOTPHanlder]);
@@ -194,7 +138,7 @@ const Otp = () => {
                   onPress={() => {}}
                   className="border rounded-full border-gray-300 justify-center items-center w-[150px] h-[35px]"
                 >
-                  {isLoading ? (
+                  {isLoading || isValidating ? (
                     <View className="py-1 px-4">
                       <Flow size={25} color="#d0d0d0" />
                     </View>
@@ -210,7 +154,7 @@ const Otp = () => {
                   disabled={retryDisabled}
                   className="border rounded-full border-gray-300 justify-center items-center w-[110px] h-[35px]"
                 >
-                  {isLoading ? (
+                  {isLoading || isValidating ? (
                     <View className="py-1 px-4">
                       <Flow size={25} color="#d0d0d0" />
                     </View>
@@ -231,7 +175,9 @@ const Otp = () => {
               </Text>
 
               <View className="mt-20">
-                {isLoading && <Chase size={60} color="#164194" />}
+                {isLoading || isValidating ? (
+                  <Chase size={60} color="#164194" />
+                ) : null}
               </View>
             </View>
           </ScrollView>

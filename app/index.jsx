@@ -1,19 +1,11 @@
-// REACT IMPORTS
+// IMPORTS
 import { useEffect, useRef } from "react";
-
-// NATIVE IMPORTS
 import { View, Animated } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-// EXPO IMPORTS
 import { router } from "expo-router";
 import * as SecureStore from "expo-secure-store";
-
-// COMPONETNS
 import CustomButton from "../components/CustomButton";
 import Background from "@/components/Background";
-
-// ASSETS
 import images from "../constants/images";
 
 const Index = () => {
@@ -24,7 +16,7 @@ const Index = () => {
   const buttonOpacity = useRef(new Animated.Value(0)).current;
 
   const handlePress = () => {
-    router.push("/login");
+    router.push("/(auth)");
   };
 
   // FOR DEVELOPMENT

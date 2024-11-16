@@ -1,83 +1,35 @@
-// REACT IMPORTS
+// IMPORTS
 import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
-
-// NATIVE IMPORTS
 import { View, Image, ScrollView, Text, Animated } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-// EXPO IMPORTS
 import { router } from "expo-router";
-
-// AXIOS
 import { generateOTP } from "@/api/auth";
-
-// STORE
 import { useUserStore } from "@/store";
-
-// LIBRARIES
-import { showMessage } from "react-native-flash-message";
-
-// ASSETS
-import images from "../../constants/images";
-import { toastStyles } from "@/constants/styles";
-
-// COMPONETNS
+import images from "@/constants/images";
 import FormField from "@/components/FormField";
 import CustomButton from "@/components/CustomButton";
 import Background from "@/components/Background";
+import { mobilePhoneValidation } from "@/constants/validations";
+import useQuery from "@/hooks/useQuery";
 
 const Login = () => {
-  // LOADING STATE
-  const [isLoading, setIsLoading] = useState(false);
-
-  // FORM STATES
+  // STATES
   const [phoneNumber, setPhoneNumber] = useState(null);
 
-  // ACCESS STORE STATE
+  // STORE
   const setMobile = useUserStore((state) => state.setMobile);
 
-  // ACCESS HOOK FORM METHODS
   const { control, handleSubmit, watch } = useForm();
+  const { isLoading, fetchQuery } = useQuery();
 
-  // ACCESS HOOK FORM DATA
   const form_data = watch();
-
-  // GENERATE OTP FUNCTION
-  const generateOTPHandler = async () => {
-    setIsLoading(true);
-    try {
-      const response = await generateOTP(form_data.mobile);
-      setMobile(response.data.itemList[0].mobile);
-      router.push("/otp");
-    } catch (error) {
-      console.log("this is error", error);
-      showMessage({
-        message: error.message || error,
-        type: "danger",
-        titleStyle: toastStyles,
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  // FOR DEVELOPMENMT
-  // const generateOTPHandler = () => {
-  //   router.push("/otp");
-  // };
 
   // SUBMIT HANDLER
   const onSubmit = async () => {
-    if (!form_data.mobile || form_data.mobile.length !== 11) {
-      showMessage({
-        message: "شماره موبایل معتبر نیست",
-        type: "danger",
-        titleStyle: toastStyles,
-      });
-    } else {
-      generateOTPHandler();
-    }
+    const response = await fetchQuery(generateOTP, form_data.mobile);
+    setMobile(response.data.itemList[0].mobile);
+    router.push("/otp");
   };
 
   // ANIMATIONS
@@ -144,6 +96,7 @@ const Login = () => {
               type="text"
               control={control}
               name="mobile"
+              rules={mobilePhoneValidation}
             />
 
             <CustomButton

@@ -1,5 +1,5 @@
 // AXIOS
-import axiosInstance from "./axiosConfig";
+import axiosInstance from "@/config/axiosConfig";
 
 // EXPO
 import * as SecureStore from "expo-secure-store";
@@ -38,7 +38,7 @@ export async function logout() {
         textAlign: "center",
       },
     });
-    router.replace("login");
+    router.replace("/(auth)");
 
     // DEBUGGING
     console.log("User successfully logged out and tokens cleared.");

@@ -1,5 +1,5 @@
 // AXIOS
-import axiosInstance from "./axiosConfig";
+import axiosInstance from "@/config/axiosConfig";
 
 export async function getCustomerProfile(Mobile) {
   return axiosInstance.get(`/Customer/GetCustomerProfile?Mobile=${Mobile}`);

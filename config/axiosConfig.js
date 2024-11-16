@@ -1,6 +1,8 @@
+// IMPORTS
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import { BASE_URL } from "@/constants/apiRoutes";
+import { toastConfig } from "./toast-config";
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -70,6 +72,7 @@ axiosInstance.interceptors.request.use(
   },
   (error) => {
     console.error("Request error:", error);
+    toastConfig.error(error.message || error);
     return Promise.reject(error);
   }
 );
@@ -145,12 +148,19 @@ axiosInstance.interceptors.response.use(
           .catch((err) => {
             console.error("Refresh token error:", err.response || err);
             processQueue(err, null);
+            toastConfig.error("لطفا مجدادا وارد شوید");
             reject(err);
           })
           .finally(() => {
             isRefreshing = false;
           });
       });
+    }
+
+    if (error.response) {
+      toastConfig.error(error.response.data.message || "خطایی رخ داده است");
+    } else {
+      toastConfig.error("خطا در برقراری ارتباط");
     }
 
     // REJECT WITH ERROR IF NOT 401
