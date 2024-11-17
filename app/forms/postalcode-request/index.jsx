@@ -35,7 +35,7 @@ const Index = () => {
   const [zoneOptions, setZoneOptions] = useState([]);
 
   // CONSTS
-  const { control, handleSubmit, watch } = useForm();
+  const { control, handleSubmit, watch, setValue } = useForm();
   const form_data = watch();
 
   // HANDLERS
@@ -143,7 +143,11 @@ const Index = () => {
                       }
                       disabled={isProvinceLoading}
                       options={provinceOptions}
-                      onValueChange={(val) => onChange(val)}
+                      onValueChange={(val) => {
+                        setValue("countyID", null);
+                        setValue("zoneID", null);
+                        return onChange(val);
+                      }}
                       primaryColor="#164194"
                       selectedValue={
                         provinceOptions.find(
