@@ -65,8 +65,10 @@ const selectSettings = (props) => ({
   },
 });
 
-export const SelectInput = (props) => {
+const SelectInput = (props) => {
   const settings = selectSettings(props);
 
   return <Dropdown {...settings} {...props} />;
 };
+
+export default SelectInput;

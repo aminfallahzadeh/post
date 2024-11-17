@@ -1,0 +1,27 @@
+// IMPORTS
+import { Switch } from "react-native";
+
+const defaultColors = {
+  track: {
+    false: "#164194",
+    true: "#fcd900",
+  },
+  thumb: "#00075a",
+};
+const SwitchInput = ({ trackColor, thumbColor, onValueChange, value }) => {
+  return (
+    <Switch
+      trackColor={trackColor ? trackColor : defaultColors.track}
+      thumbColor={thumbColor ? thumbColor : defaultColors.thumb}
+      onValueChange={onValueChange}
+      value={value}
+      style={{
+        justifyContent: "center",
+        alignItems: "center",
+        alignSelf: "center",
+      }}
+    />
+  );
+};
+
+export default SwitchInput;

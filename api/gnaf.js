@@ -45,3 +45,16 @@ export function getCounty({ id, provinceID, term }) {
 
   return axiosInstance.get(url);
 }
+
+export function getZone({ id, term, provinceID, countyID }) {
+  let url = "GNAF/GetZone";
+  const params = [];
+
+  if (id) params.push(`id=${id}`);
+  if (term) params.push(`Searchstr=${term}`);
+  if (provinceID) params.push(`Provinceid=${provinceID}`);
+  if (countyID) params.push(`countyid=${countyID}`);
+  if (params.length > 0) url += `?${params.join("&")}`;
+
+  return axiosInstance.get(url);
+}

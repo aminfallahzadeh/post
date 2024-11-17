@@ -11,29 +11,39 @@ import {
   StyleSheet,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { getProvince, getCounty } from "@/api/gnaf";
+import { getProvince, getCounty, getZone } from "@/api/gnaf";
 import { router } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
 import CustomButton from "@/components/CustomButton";
 import ProgressBar from "@/components/ProgressBar";
 import Background from "@/components/Background";
-import { SelectInput } from "@/config/dropdown-config";
+import SelectInput from "@/components/SelectInput";
+import SwitchInput from "@/components/SwitchInput";
 import { optionsGenerator } from "@/helpers/selectHelper";
-import { PROVINCE, COUNTY } from "@/constants/consts";
+import { PROVINCE, COUNTY, ZONE } from "@/constants/consts";
 import { LOADING_MESSAGE } from "@/constants/messages";
 
 const Index = () => {
   // STATES
+  const [isUrban, setIsUrban] = useState(true);
   const [isProvinceLoading, setIsProvinceLoading] = useState(false);
   const [isCountyLoading, setIsCountyLoading] = useState(false);
+  const [isZoneLoading, setIsZoneLoading] = useState(false);
+
   const [provinceOptions, setProvinceOptions] = useState([]);
   const [countyOptions, setCountyOptions] = useState([]);
+  const [zoneOptions, setZoneOptions] = useState([]);
 
   // CONSTS
-  const { control, handleSubmit, watch, setValue } = useForm();
+  const { control, handleSubmit, watch } = useForm();
   const form_data = watch();
 
-  // FETHC FUNCTIONS
+  // HANDLERS
+  const changeModeHandler = () => {
+    setIsUrban((prev) => !prev);
+  };
+
+  // FETCH FUNCTIONS
   const fetchProvince = useCallback(async () => {
     setIsProvinceLoading(true);
     const response = await getProvince();
@@ -43,13 +53,23 @@ const Index = () => {
   }, []);
 
   const fetchCounties = useCallback(async () => {
-    setValue("countyID", null);
     setIsCountyLoading(true);
     const response = await getCounty({ provinceID: form_data.provinceID });
     const data = JSON.parse(response.data.noneobject).value;
     setCountyOptions(optionsGenerator(data, "id", "name"));
     setIsCountyLoading(false);
-  }, [form_data.provinceID, setValue]);
+  }, [form_data.provinceID]);
+
+  const fetchZones = useCallback(async () => {
+    setIsZoneLoading(true);
+    const response = await getZone({
+      provinceID: form_data.provinceID,
+      countyID: form_data.countyID,
+    });
+    const data = JSON.parse(response.data.noneobject).value;
+    setZoneOptions(optionsGenerator(data, "id", "name"));
+    setIsZoneLoading(false);
+  }, [form_data.provinceID, form_data.countyID]);
 
   // GET DATA
   useEffect(() => {
@@ -61,6 +81,17 @@ const Index = () => {
       fetchCounties();
     }
   }, [fetchCounties, form_data.provinceID]);
+
+  useEffect(() => {
+    if (form_data.countyID) {
+      fetchZones();
+    }
+  }, [fetchZones, form_data.countyID]);
+
+  // DEBUGGING
+  useEffect(() => {
+    console.log("FORMDATA:", form_data);
+  }, [form_data]);
 
   const onSubmit = () => {};
 
@@ -130,7 +161,7 @@ const Index = () => {
                   render={({ field: { onChange } }) => (
                     <SelectInput
                       placeholder={isCountyLoading ? LOADING_MESSAGE : COUNTY}
-                      disabled={isCountyLoading}
+                      disabled={isCountyLoading || !form_data.provinceID}
                       options={countyOptions}
                       onValueChange={(val) => onChange(val)}
                       primaryColor="#164194"
@@ -143,6 +174,55 @@ const Index = () => {
                   )}
                 />
               </View>
+
+              <View className="mt-5 flex-row-reverse items-center justify-start ">
+                <Text
+                  className={`text-center self-center font-isansdemibold text-lg ${
+                    isUrban ? "text-primary" : "text-gray-400"
+                  }`}
+                >
+                  شهری
+                </Text>
+
+                <SwitchInput
+                  onValueChange={changeModeHandler}
+                  value={isUrban}
+                />
+
+                <Text
+                  className={`text-center self-center font-isansdemibold text-lg ${
+                    !isUrban ? "text-primary" : "text-gray-400"
+                  }`}
+                >
+                  روستایی
+                </Text>
+              </View>
+
+              {isUrban && (
+                <View className="mt-5">
+                  <Controller
+                    name="zoneID"
+                    control={control}
+                    render={({ field: { onChange } }) => (
+                      <SelectInput
+                        placeholder={isZoneLoading ? LOADING_MESSAGE : ZONE}
+                        disabled={isZoneLoading || !form_data.countyID}
+                        options={zoneOptions}
+                        onValueChange={(val) => onChange(val)}
+                        primaryColor="#164194"
+                        selectedValue={
+                          zoneOptions.find((c) => c.value === form_data?.zoneID)
+                            ?.value
+                        }
+                      />
+                    )}
+                  />
+
+                  {/* {
+                    form_data.
+                  } */}
+                </View>
+              )}
             </View>
           </TouchableWithoutFeedback>
         </ScrollView>
