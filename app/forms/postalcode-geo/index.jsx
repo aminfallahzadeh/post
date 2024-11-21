@@ -1,8 +1,6 @@
-// REACT IMPORTS
+// IMPORTS
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-
-// NATIVE IMPORTS
 import {
   View,
   Text,
@@ -14,50 +12,26 @@ import {
   StyleSheet,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-// AXIOS
 import { addressByPostCode } from "@/api/gnaf";
-
-// STORE
 import { useUserStore } from "@/store";
-
-// EXPO
 import { router } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
-
-// COMPONETS
 import CustomButton from "@/components/CustomButton";
 import FormField from "@/components/FormField";
 import ProgressBar from "@/components/ProgressBar";
 import Background from "@/components/Background";
 import PostalCodeCard from "@/components/PostalCodeCard";
-
-// CONSTANTS
 import { postalCodeValidation } from "@/constants/validations";
-
-// LIBRARIES
 import { showMessage } from "react-native-flash-message";
-
-// ASSETS
 import { toastStyles } from "@/constants/styles";
 
 const Index = () => {
-  // MAIN STATE
   const [postalCodes, setPostalCodes] = useState([]);
-
-  // ACCESS HOOK FORM METHODS
-  const { control, handleSubmit, watch, setValue } = useForm();
-
-  // ACCESS HOOK FORM DATA
-  const form_data = watch();
-
-  // LOADINT STATE
   const [isLoading, setIsLoading] = useState(false);
-
-  // PLUS DISABLED
   const [plusDisabled, setPlusDisabled] = useState(true);
 
-  // ACCESS REDUCERS
+  const { control, handleSubmit, watch, setValue } = useForm();
+  const form_data = watch();
   const setAddressByPostCode = useUserStore(
     (state) => state.setAddressByPostCode
   );

@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   Animated,
   Dimensions,
-  StatusBar,
   Platform,
 } from "react-native";
 
@@ -39,7 +38,6 @@ const TabsLayout = () => {
   return (
     <>
       {/* TOP BAR */}
-
       <View
         style={styles.topBar}
         className={Platform.OS === "ios" ? "mt-10 px-6" : ""}
@@ -107,7 +105,7 @@ const styles = {
     shadowOffset: { height: 2, width: 0 },
     position: "absolute",
     zIndex: 1,
-    top: StatusBar.currentHeight + 20,
+    // top: StatusBar.currentHeight + 20,
   },
   menuOverlay: {
     position: "absolute",

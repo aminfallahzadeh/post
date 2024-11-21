@@ -1,8 +1,6 @@
-// REACT IMPORTS
+// IMPORTS
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-
-// NATIVE IMPORTS
 import {
   View,
   Text,
@@ -13,28 +11,16 @@ import {
   StyleSheet,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-// AXIOS AND STORE
 import { useUserStore } from "@/store";
-
-// CONSTANTS
 import { stepOneEopValidations } from "@/constants/validations";
-
-// EXPO IMPORTS
 import { router } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
-
-// COMPONETS
 import CustomButton from "@/components/CustomButton";
 import FormField from "@/components/FormField";
 import ProgressBar from "@/components/ProgressBar";
 import Background from "@/components/Background";
-
-// LIBRARIES
 import { showMessage } from "react-native-flash-message";
 import LottieView from "lottie-react-native";
-
-// ASSETS
 import { toastStyles } from "@/constants/styles";
 import judgeLottie from "@/assets/animations/judge-lottie.json";
 

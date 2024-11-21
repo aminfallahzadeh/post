@@ -1,0 +1,16 @@
+export const postAreaOptions = [
+  { value: 1, label: "منطققه پستی ۱" },
+  { value: 2, label: "منطققه پستی ۲" },
+  { value: 3, label: "منطققه پستی ۳" },
+  { value: 4, label: "منطققه پستی ۴" },
+  { value: 5, label: "منطققه پستی ۵" },
+  { value: 6, label: "منطققه پستی ۶" },
+  { value: 7, label: "منطققه پستی ۷" },
+  { value: 8, label: "منطققه پستی ۸" },
+  { value: 9, label: "منطققه پستی ۹" },
+  { value: 10, label: "منطققه پستی ۱۰" },
+  { value: 11, label: "منطققه پستی ۱۱" },
+  { value: 12, label: "منطققه پستی ۱۲" },
+  { value: 13, label: "منطققه پستی ۱۳" },
+  { value: 14, label: "منطققه پستی ۱۴" },
+];

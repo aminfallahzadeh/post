@@ -8,9 +8,10 @@ export const CustomButton = ({
   title,
   handlePress,
   containerStyles,
-  testStyles,
+  textStyles,
   isLoading,
   disabled,
+  height = "h-12",
   bgColor = "bg-secondary",
   titleColor = "text-gray-600",
 }) => {
@@ -18,7 +19,7 @@ export const CustomButton = ({
     <TouchableOpacity
       onPress={handlePress}
       activeOpacity={0.7}
-      className={`${bgColor} rounded-md h-14 justify-center items-center ${containerStyles} ${
+      className={`${bgColor} rounded-md ${height} justify-center items-center ${containerStyles} ${
         isLoading ? "opacity-50" : ""
       }`}
       style={{ opacity: disabled || isLoading ? 0.5 : 1 }}
@@ -28,7 +29,7 @@ export const CustomButton = ({
         <Flow size={45} color="#333" />
       ) : (
         <Text
-          className={`${titleColor} font-isansdemibold text-lg ${testStyles}`}
+          className={`${titleColor} font-isansdemibold text-md ${textStyles}`}
         >
           {title}
         </Text>

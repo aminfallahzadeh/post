@@ -8,6 +8,8 @@ export const useUserStore = create(
     complaintFormData: {},
     addressByPostCode: [],
     factor: {},
+    userAddress: "",
+    userAddressCodes: {},
 
     setMobile: (mobile) => set({ mobile }),
     setUserData: (userData) => set({ userData }),
@@ -21,5 +23,8 @@ export const useUserStore = create(
     removeComplaintData: () => set({ complaintFormData: {} }),
 
     setAddressByPostCode: (addressByPostCode) => set({ addressByPostCode }),
+
+    setUserAddress: (userAddress) => set({ userAddress }),
+    setUserAddressCodes: (userAddressCodes) => set({ userAddressCodes }),
   }))
 );

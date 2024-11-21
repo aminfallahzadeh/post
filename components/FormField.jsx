@@ -26,6 +26,7 @@ export const FormField = ({
   name,
   control,
   rules,
+  animate = true,
   ...props
 }) => {
   // STATES
@@ -94,22 +95,29 @@ export const FormField = ({
         } border-gray-300`}
       >
         {/* Animated Placeholder */}
-        <Animated.Text
-          style={{
-            position: "absolute",
-            right: 12,
-            top: placeholderTranslateY,
-            fontSize: placeholderFontSize,
-            fontFamily: "IranSans-DemiBold",
-            borderRadius: 50,
-            paddingVertical: 1,
-            paddingHorizontal: 10,
-            backgroundColor: "#fff",
-            color: "#AFB4C0",
-          }}
-        >
-          {placeholder}
-        </Animated.Text>
+
+        {animate ? (
+          <Animated.Text
+            style={{
+              position: "absolute",
+              right: 12,
+              top: placeholderTranslateY,
+              fontSize: placeholderFontSize,
+              fontFamily: "IranSans-DemiBold",
+              borderRadius: 50,
+              paddingVertical: 1,
+              paddingHorizontal: 10,
+              backgroundColor: "#fff",
+              color: "#AFB4C0",
+            }}
+          >
+            {placeholder}
+          </Animated.Text>
+        ) : (
+          <Text className="text-gray-400 font-isansdemibold text-xs absolute -top-2 right-2 bg-white rounded-md px-2">
+            {placeholder}
+          </Text>
+        )}
 
         {/* ERROR */}
 
@@ -122,7 +130,7 @@ export const FormField = ({
         )}
 
         <TextInput
-          className="flex-1 text-grey2 font-isansdemibold text-base w-full text-center"
+          className="flex-1 text-grey2 font-isansdemibold text-sm w-full text-right pl-10"
           value={field.value}
           placeholderTextColor="transparent"
           onChangeText={field.onChange}
@@ -157,7 +165,11 @@ export const FormField = ({
               transform: [{ translateY: -12 }],
             }}
           >
-            <Feather name="x-circle" size={24} color={"#AFB4C0"} />
+            <Feather
+              name="x-circle"
+              size={animate ? 24 : 20}
+              color={"#AFB4C0"}
+            />
           </TouchableOpacity>
         ) : null}
       </View>

@@ -1,23 +1,13 @@
-// REACT IMPORTS
+// IMPORTS
 import { useState, useEffect, useCallback } from "react";
 import { View, Text, ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-// AXIOS
 import { generateCertificate, generateCertificateGeo } from "@/api/gnaf";
-
-// EXPO
 import { router, useLocalSearchParams } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
-
-// COMPONENTS
 import { Background, CustomButton } from "@/components";
 import { DownloadPDF } from "@/components";
-
-// ASSETS
 import { toastStyles } from "@/constants/styles";
-
-// LIBRARIES
 import { Chase } from "react-native-animated-spinkit";
 import { showMessage } from "react-native-flash-message";
 

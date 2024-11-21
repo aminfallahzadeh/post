@@ -1,4 +1,4 @@
-// REACT IMPORTS
+// IMPORTS
 import { useState, useEffect, useRef } from "react";
 import {
   View,
@@ -9,24 +9,12 @@ import {
   Animated,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-// STORE
 import { useUserStore } from "@/store";
-
-// AXIOS
 import { requestPayment } from "@/api/payment";
-
-// EXPO
 import { router } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
-
-// COMPONENTS
 import { ProgressBar, Background, Factor, CustomButton } from "@/components";
-
-// ASSETS
 import { toastStyles } from "@/constants/styles";
-
-// LIBRARIES
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import RNBounceable from "@freakycoder/react-native-bounceable";
 import { showMessage } from "react-native-flash-message";

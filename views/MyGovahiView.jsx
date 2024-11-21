@@ -1,25 +1,13 @@
-// REACT IMPORTS
+// IMPORTS
 import { useState, useEffect, useCallback, useRef } from "react";
-
-// NATIVE IMPORTS
 import { View, Text, ScrollView, Animated } from "react-native";
 import { useFocusEffect } from "expo-router";
-
-// LIBRARIES
 import { showMessage } from "react-native-flash-message";
 import { Chase } from "react-native-animated-spinkit";
-
-// COMPONENTS
 import Background from "@/components/Background";
 import PostCertificateCard from "@/components/PostCertificateCard";
-
-// STATE
 import { useUserStore } from "@/store";
-
-// AXIOS
 import { getCertificate } from "@/api/gnaf";
-
-// ASSETS
 import { toastStyles } from "@/constants/styles";
 
 const MyGovahiView = () => {
@@ -61,19 +49,19 @@ const MyGovahiView = () => {
       };
     }, [fetchCertificateList])
   );
-
   useEffect(() => {
     if (list.length > 0) {
       list.forEach((_, index) => {
-        fadeAnimRefs.current[index] = new Animated.Value(0); // Initialize fade-in value to 0 (invisible)
+        if (!fadeAnimRefs.current[index]) {
+          fadeAnimRefs.current[index] = new Animated.Value(0);
+        }
       });
 
-      // Animate each card with a staggered effect
       list.forEach((_, index) => {
         Animated.timing(fadeAnimRefs.current[index], {
-          toValue: 1, // Fade in to full visibility
-          duration: 500, // Duration for each animation
-          delay: index * 300, // Delay each card animation
+          toValue: 1,
+          duration: 500,
+          delay: index * 300,
           useNativeDriver: true,
         }).start();
       });
@@ -94,26 +82,30 @@ const MyGovahiView = () => {
               موردی یافت نشد!
             </Text>
           ) : (
-            list.map((item, index) => (
-              <Animated.View
-                key={index}
-                style={{
-                  opacity: fadeAnimRefs.current[index],
-                  width: "100%",
-
-                  transform: [
-                    {
-                      translateY: fadeAnimRefs.current[index].interpolate({
-                        inputRange: [0, 1],
-                        outputRange: [50, 0], // Start 50px lower, move to original position
-                      }),
-                    },
-                  ],
-                }}
-              >
-                <PostCertificateCard item={item} />
-              </Animated.View>
-            ))
+            list.map((item, index) => {
+              if (!fadeAnimRefs.current[index]) {
+                fadeAnimRefs.current[index] = new Animated.Value(0);
+              }
+              return (
+                <Animated.View
+                  key={index}
+                  style={{
+                    opacity: fadeAnimRefs.current[index],
+                    width: "100%",
+                    transform: [
+                      {
+                        translateY: fadeAnimRefs.current[index].interpolate({
+                          inputRange: [0, 1],
+                          outputRange: [50, 0],
+                        }),
+                      },
+                    ],
+                  }}
+                >
+                  <PostCertificateCard item={item} />
+                </Animated.View>
+              );
+            })
           )}
         </View>
       </ScrollView>
