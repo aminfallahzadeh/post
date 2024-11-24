@@ -7,7 +7,7 @@ const toastProviderOptions = {
     fontFamily: "IranSans-DemiBold",
     fontSize: 16,
     textAlign: "center",
-    paddingTop: 30,
+    // paddingTop: 30,
   },
 };
 

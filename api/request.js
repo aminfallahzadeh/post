@@ -3,7 +3,7 @@ import axiosInstance from "@/config/axiosConfig";
 
 export function insertRequestCertification(data) {
   /*
-    SCHEMA: 
+    SCHEMA:
     {
         "id": "string",
         "mobile": "string",
@@ -25,4 +25,8 @@ export function insertRequestCertification(data) {
 
 export function insertRequestCertificationGeo(data) {
   return axiosInstance.post("/Request/InsertRequestCertificationGeo", data);
+}
+
+export function insertRequestBulk(data) {
+  return axiosInstance.post("/Request/InsertRequestBulk", data);
 }

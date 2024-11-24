@@ -1,13 +1,7 @@
-// REACT IMPROTS
+// IMPORTS
 import { useEffect } from "react";
-
-// NATIVE IMPROTS
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-
-// EXPO
 import { LinearGradient } from "expo-linear-gradient";
-
-// ICONS
 import Feather from "@expo/vector-icons/Feather";
 
 export const AddressCard = ({ item, isSelected, onSelect }) => {

@@ -1,4 +1,4 @@
-// NATIVE IMPORTS
+// IMPORTS
 import {
   View,
   Text,
@@ -7,8 +7,6 @@ import {
   Modal,
   Pressable,
 } from "react-native";
-
-// EXPO
 import { LinearGradient } from "expo-linear-gradient";
 import Feather from "@expo/vector-icons/Feather";
 

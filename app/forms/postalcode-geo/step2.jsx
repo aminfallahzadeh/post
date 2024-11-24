@@ -102,13 +102,6 @@ const Step2 = () => {
       console.log("INSERT REQUEST CERTIFICATE REPONSE: ", response.data);
       setFactor(response.data.itemList[0]);
       router.push("forms/postalcode-certificate/step3");
-    } catch (error) {
-      console.log("INSERT REQUEST CERTIFICATE ERROR: ", error.response);
-      showMessage({
-        message: error.response?.data?.message || error.message,
-        type: "danger",
-        titleStyle: toastStyles,
-      });
     } finally {
       setIsLoading(false);
     }

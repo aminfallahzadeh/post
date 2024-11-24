@@ -10,10 +10,10 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useUserStore } from "@/store";
-import { requestPayment } from "@/api/payment";
 import { router } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
 import { ProgressBar, Background, Factor, CustomButton } from "@/components";
+import { toastStyles } from "@/constants/styles";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import RNBounceable from "@freakycoder/react-native-bounceable";
 
@@ -54,39 +54,6 @@ const Step3 = () => {
     setChecked((prev) => !prev);
   };
 
-  // DEBUG
-  useEffect(() => {
-    console.log("FACTOR:", factor);
-  }, [factor]);
-
-  // HADNLE SUBMIT
-  const onSubmit = async () => {
-    setIsLoading(true);
-    try {
-      const data = {
-        clientOrderID: "string",
-        mobile,
-        paymentTypeID: "2",
-        postUnitID: 2,
-        income: factor.amount + factor.tax,
-        tax: factor.tax,
-        escrow: 0,
-        callBackUrl: "",
-        additionalData: "string",
-        requestID: factor.id,
-      };
-
-      const response = await requestPayment(data);
-      console.log(
-        "REQUEST PAYMENT RESPONSE: ",
-        response.data.itemList[0].data.paymentUrl
-      );
-      router.push(response.data.itemList[0].data.paymentUrl);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   return (
     <Background>
       <SafeAreaView className="h-full">
@@ -112,7 +79,7 @@ const Step3 = () => {
                 <Feather name="arrow-left" size={25} color="#333" />
               </Pressable>
               <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
-                گواهی کد پستی مکانی
+                درخواست کد پستی
               </Text>
             </View>
 
@@ -176,7 +143,7 @@ const Step3 = () => {
             bgColor="bg-green-700"
             titleColor="text-white"
             disabled={!checked}
-            handlePress={onSubmit}
+            // handlePress={onSubmit}
             isLoading={isLoading}
           />
         </View>

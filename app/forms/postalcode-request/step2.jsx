@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -8,6 +8,7 @@ import {
   ScrollView,
   StyleSheet,
 } from "react-native";
+import { insertRequestBulk } from "@/api/request";
 import { useForm, Controller } from "react-hook-form";
 import CustomButton from "@/components/CustomButton";
 import FormField from "@/components/FormField";
@@ -20,16 +21,63 @@ import { useUserStore } from "@/store";
 import { BuildingDetailInput } from "@/components/BuildingDetailInput";
 
 const Step2 = () => {
+  const [items, setItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const userData = useUserStore((state) => state.userData);
   const userAddress = useUserStore((state) => state.userAddress);
   const mobile = useUserStore((state) => state.mobile);
   const userAddressCodes = useUserStore((state) => state.userAddressCodes);
+  const setFactor = useUserStore((state) => state.setFactor);
   const { control, watch, handleSubmit, setValue } = useForm();
   const form_data = watch();
 
-  useEffect(() => {
-    console.log(userAddress);
-  }, [userAddress]);
+  const deleteBuildingTypeHandler = (id) => {
+    setItems((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  const onSubmit = async () => {
+    setIsLoading(true);
+    const units = items.map((item) => ({
+      floorNo: item.floorNo,
+      sideFloor: item.sideFloor,
+      landUse: item.landUse,
+    }));
+    try {
+      const response = await insertRequestBulk({
+        id: "string",
+        mobile,
+        customerID: "string",
+        trackingID: "string",
+        typeID: "string",
+        date: "2024-11-23T17:16:15.950Z",
+        result: true,
+        title: "string",
+        counter: 0,
+        amount: 0,
+        tax: 0,
+        payment: 0,
+        localityID: 11,
+        unit: 0,
+        firstName: userData.name || "",
+        lastName: userData.lastName || "",
+        prePhoneNo: "",
+        phoneNo: form_data.tel,
+        email: "string",
+        nearestPostCode: form_data.nearestPostCode || "",
+        address: `${userAddress} ${
+          form_data.addressSub ? form_data.addressSub : ""
+        }`,
+        lat: 0,
+        lon: 0,
+        units,
+      });
+      console.log("FINAL RESPONSE:", response.data);
+      setFactor(response.data.itemList[0]);
+      router.push("forms/postalcode-request/step3");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Background>
@@ -130,8 +178,21 @@ const Step2 = () => {
                 multiline={true}
               />
 
+              <FormField
+                placeholder="نزدیکترین کد پستی"
+                keyboardType="numeric"
+                containerStyle="mt-5"
+                type={"text"}
+                control={control}
+                name="nearestPostCode"
+              />
+
               <View className="mt-5">
-                <BuildingDetailInput />
+                <BuildingDetailInput
+                  items={items}
+                  setItems={setItems}
+                  onDeleteItem={deleteBuildingTypeHandler}
+                />
               </View>
             </View>
           </TouchableWithoutFeedback>
@@ -141,7 +202,8 @@ const Step2 = () => {
         <View className="w-full z-10 px-4 bg-gray-100 py-4">
           <CustomButton
             title="ادامه"
-            // handlePress={handleSubmit(onSubmit)}
+            handlePress={handleSubmit(onSubmit)}
+            isLoading={isLoading}
           />
         </View>
       </SafeAreaView>

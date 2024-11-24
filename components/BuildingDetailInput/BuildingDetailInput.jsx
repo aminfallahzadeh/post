@@ -1,12 +1,6 @@
 // IMPORTS
 import { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import CustomButton from "@/components/CustomButton";
 import Feather from "@expo/vector-icons/Feather";
 import FormField from "@/components/FormField";
@@ -15,11 +9,10 @@ import RadioButtons from "@/components/RadioButtons";
 import { buildingTypeOptions } from "@/data/buildingType";
 import Card from "./Card";
 
-export const BuildingDetailInput = () => {
+export const BuildingDetailInput = ({ items, setItems, onDeleteItem }) => {
   const [addMode, setAddMode] = useState(false);
-  const [items, setItems] = useState([]);
 
-  const { control, watch, handleSubmit } = useForm();
+  const { control, watch } = useForm();
   const form_data = watch();
 
   // HANDLERS
@@ -36,14 +29,13 @@ export const BuildingDetailInput = () => {
       ...prev,
       {
         id: Math.random().toString(),
+        floorNo: parseInt(form_data.floor),
+        sideFloor: form_data.section,
+        landUse: 0,
         text,
       },
     ]);
     setAddMode(false);
-  };
-
-  const deleteBuildingTypeHanlder = (id) => {
-    setItems((prev) => prev.filter((item) => item.id !== id));
   };
 
   // DEBUG
@@ -152,7 +144,7 @@ export const BuildingDetailInput = () => {
               id={item.id}
               key={item.id}
               text={item.text}
-              onDelete={deleteBuildingTypeHanlder}
+              onDelete={onDeleteItem}
             />
           ))}
         </View>
