@@ -307,7 +307,7 @@ export const PostalCodeRequest = () => {
                   {form_data.ruralCityID && form_data.ruralCityID === 1051 && (
                     <View className="mt-5">
                       <Controller
-                        name="postArea"
+                        name="unit"
                         control={control}
                         render={({ field: { onChange } }) => (
                           <SelectInput

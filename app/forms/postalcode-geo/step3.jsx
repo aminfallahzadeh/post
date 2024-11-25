@@ -77,10 +77,6 @@ const Step3 = () => {
       };
 
       const response = await requestPayment(data);
-      console.log(
-        "REQUEST PAYMENT RESPONSE: ",
-        response.data.itemList[0].data.paymentUrl
-      );
       router.push(response.data.itemList[0].data.paymentUrl);
     } finally {
       setIsLoading(false);

@@ -1,11 +1,9 @@
+// IMPORTS
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-
-// COMPONETNS
 import MyPostsView from "@/views/MyPostsView";
 import MyComplaintsView from "@/views/MyComplaintsView";
 import MyGovahiView from "@/views/MyGovahiView";
 import MyGheramatsView from "@/views/MyGheramatsView";
-
 import Background from "@/components/Background";
 
 const Tab = createMaterialTopTabNavigator();
@@ -22,9 +20,10 @@ function TopTabsLayout() {
       <Tab.Navigator
         screenOptions={{
           headerShown: false,
+          tabBarScrollEnabled: true,
           tabBarIndicatorStyle: { backgroundColor: "#fcd900" },
         }}
-        className="mt-32"
+        className="mt-14"
         style={{ transform: [{ scaleX: -1 }] }}
       >
         <Tab.Screen
@@ -33,6 +32,9 @@ function TopTabsLayout() {
           options={{
             tabBarLabel: "سفارش",
             tabBarLabelStyle: tabLabelStyle,
+            tabBarItemStyle: {
+              width: 100,
+            },
           }}
         />
         <Tab.Screen
@@ -41,6 +43,9 @@ function TopTabsLayout() {
           options={{
             tabBarLabel: "گواهی",
             tabBarLabelStyle: tabLabelStyle,
+            tabBarItemStyle: {
+              width: 100,
+            },
           }}
         />
         <Tab.Screen
@@ -49,6 +54,9 @@ function TopTabsLayout() {
           options={{
             tabBarLabel: "غرامت",
             tabBarLabelStyle: tabLabelStyle,
+            tabBarItemStyle: {
+              width: 100,
+            },
           }}
         />
         <Tab.Screen
@@ -57,6 +65,31 @@ function TopTabsLayout() {
           options={{
             tabBarLabel: "شکایت",
             tabBarLabelStyle: tabLabelStyle,
+            tabBarItemStyle: {
+              width: 100,
+            },
+          }}
+        />
+        <Tab.Screen
+          name="PostCode"
+          component={MyGheramatsView}
+          options={{
+            tabBarLabel: "کد پستی",
+            tabBarLabelStyle: tabLabelStyle,
+            tabBarItemStyle: {
+              width: 100,
+            },
+          }}
+        />
+        <Tab.Screen
+          name="PostYafte"
+          component={MyGheramatsView}
+          options={{
+            tabBarLabel: "پست یافته",
+            tabBarLabelStyle: tabLabelStyle,
+            tabBarItemStyle: {
+              width: 100,
+            },
           }}
         />
       </Tab.Navigator>

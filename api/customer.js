@@ -8,3 +8,13 @@ export async function getCustomerProfile(Mobile) {
 export async function customerProfile(data) {
   return await axiosInstance.post("/Customer/CustomerProfile", data);
 }
+
+// http://84.241.12.49:8090/payment/ApprovePayment
+// POST
+
+/*
+data:
+{
+
+}
+*/

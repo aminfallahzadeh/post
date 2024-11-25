@@ -12,8 +12,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useUserStore } from "@/store";
 import { router } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
+import { requestPayment } from "@/api/payment";
 import { ProgressBar, Background, Factor, CustomButton } from "@/components";
-import { toastStyles } from "@/constants/styles";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import RNBounceable from "@freakycoder/react-native-bounceable";
 
@@ -52,6 +52,30 @@ const Step3 = () => {
   // CHECKBOX HANDLER
   const handleCheckboxPress = () => {
     setChecked((prev) => !prev);
+  };
+
+  // HADNLE SUBMIT
+  const onSubmit = async () => {
+    setIsLoading(true);
+    try {
+      const data = {
+        clientOrderID: "string",
+        mobile,
+        paymentTypeID: "2",
+        postUnitID: 2,
+        income: factor.amount + factor.tax,
+        tax: factor.tax,
+        escrow: 0,
+        callBackUrl: "",
+        additionalData: "string",
+        requestID: factor.id,
+      };
+
+      const response = await requestPayment(data);
+      router.push(response.data.itemList[0].data.paymentUrl);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -143,7 +167,7 @@ const Step3 = () => {
             bgColor="bg-green-700"
             titleColor="text-white"
             disabled={!checked}
-            // handlePress={onSubmit}
+            handlePress={onSubmit}
             isLoading={isLoading}
           />
         </View>

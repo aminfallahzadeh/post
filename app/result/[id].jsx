@@ -1,8 +1,12 @@
 // IMPORTS
 import { useState, useEffect, useCallback } from "react";
-import { View, Text, ScrollView, StyleSheet } from "react-native";
+import { View, Text, ScrollView, StyleSheet, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { generateCertificate, generateCertificateGeo } from "@/api/gnaf";
+import {
+  generateCertificate,
+  generateCertificateGeo,
+  requestPostCodeBulk,
+} from "@/api/gnaf";
 import { router, useLocalSearchParams } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
 import { Background, CustomButton } from "@/components";
@@ -12,12 +16,13 @@ import { Chase } from "react-native-animated-spinkit";
 import { showMessage } from "react-native-flash-message";
 
 const PaymentResult = () => {
-  const { id, success, type } = useLocalSearchParams();
-
   // STATES
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+
+  // PARAMS
+  const { id, success, type } = useLocalSearchParams();
 
   // SET STATUS
   useEffect(() => {
@@ -25,6 +30,13 @@ const PaymentResult = () => {
       setIsSuccess(true);
     }
   }, [success]);
+
+  // DEBUG
+  useEffect(() => {
+    console.log("ID: ", id);
+    console.log("TYPE: ", type);
+    console.log("SUCCESS: ", success);
+  }, [id, type, success]);
 
   // HANDLERS
   const handleGenerateCertificate = useCallback(async () => {
@@ -47,8 +59,10 @@ const PaymentResult = () => {
 
     if (type === "Certificategeo") {
       await generateCertificateData(generateCertificateGeo);
-    } else {
+    } else if (type === "Certificate") {
       await generateCertificateData(generateCertificate);
+    } else if (type === "NewPostCode") {
+      await generateCertificateData(requestPostCodeBulk);
     }
 
     setIsLoading(false);
@@ -109,29 +123,51 @@ const PaymentResult = () => {
           </View>
 
           {/* DOWNLOAD PDF */}
-          {isSuccess && (
-            <View className="mt-10 w-full justify-center items-center">
-              {isLoading ? (
-                <Chase size={50} color="#164194" className="mt-20" />
-              ) : data && data.length > 0 ? (
-                <>
-                  <Text className="text-primary font-isansbold text-[20px]">
-                    دانلود PDF
+          {isSuccess &&
+            (type === "Certificategeo" || type === "Certificate" ? (
+              <View className="mt-10 w-full justify-center items-center">
+                {isLoading ? (
+                  <Chase size={50} color="#164194" className="mt-20" />
+                ) : data && data.length > 0 ? (
+                  <>
+                    <Text className="text-primary font-isansbold text-[20px]">
+                      دانلود PDF
+                    </Text>
+                    <View className="w-[80%] h-[1px] bg-grey2 mt-2 mb-2" />
+                    <View className="w-full mt-10 justify-center items-center">
+                      {data.map((item, index) => (
+                        <DownloadPDF item={item} key={index} />
+                      ))}
+                    </View>
+                  </>
+                ) : (
+                  <Text className="font-isansdemibold text-grey2 text-[30px] mt-20">
+                    موردی یافت نشد!
                   </Text>
-                  <View className="w-[80%] h-[1px] bg-grey2 mt-2 mb-2" />
-                  <View className="w-full mt-10 justify-center items-center">
-                    {data.map((item, index) => (
-                      <DownloadPDF item={item} key={index} />
-                    ))}
-                  </View>
-                </>
-              ) : (
-                <Text className="font-isansdemibold text-grey2 text-[30px] mt-20">
-                  موردی یافت نشد!
+                )}
+              </View>
+            ) : (
+              <View className="mt-10 w-full justify-center items-center">
+                <Text className="text-grey2 text-lg font-isansbold">TEST</Text>
+              </View>
+            ))}
+
+          <View className="w-full px-11 mt-auto">
+            <View className="mt-auto flex-row-reverse justify-center items-start w-full">
+              <Feather name="alert-circle" size={24} color="blue" />
+
+              <Text className="text-grey2 text-lg font-isansbold text-center mr-2">
+                برای اطلاعات بیشتر به صفحه{"   "}
+                <Text
+                  className="text-primary text-lg font-isansbold text-center underline"
+                  onPress={() => router.replace("/mypost")}
+                >
+                  پست من{" "}
                 </Text>
-              )}
+                مراجعه کنید
+              </Text>
             </View>
-          )}
+          </View>
         </ScrollView>
 
         {/* BOTTOM SECTION */}

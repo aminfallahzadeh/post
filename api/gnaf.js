@@ -19,6 +19,12 @@ export function generateCertificateGeo(id) {
   });
 }
 
+export function requestPostCodeBulk(id) {
+  return axiosInstance.post("GNAF/RequestPostCode_Bulk", {
+    requestID: id,
+  });
+}
+
 export function getCertificate(mobile) {
   return axiosInstance.get(`GNAF/GetCertificate?mobile=${mobile}`);
 }
