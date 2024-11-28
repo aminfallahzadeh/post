@@ -1,6 +1,6 @@
 // IMPORTS
 import { useState, useEffect, useCallback } from "react";
-import { View, Text, ScrollView, StyleSheet, Pressable } from "react-native";
+import { View, Text, ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   generateCertificate,
@@ -46,7 +46,12 @@ const PaymentResult = () => {
       try {
         const response = await generateFunction(id);
         console.log("GENERATE CERTIFICATE RESPONSE: ", response.data.itemList);
-        setData(response.data.itemList[0].data);
+
+        if (type === "NewPostCode") {
+          setData(response.data);
+        } else {
+          setData(response.data.itemList[0].data);
+        }
       } catch (error) {
         console.log("GENERATE CERTIFICATE ERROR: ", error.response);
         showMessage({
@@ -148,7 +153,9 @@ const PaymentResult = () => {
               </View>
             ) : (
               <View className="mt-10 w-full justify-center items-center">
-                <Text className="text-grey2 text-lg font-isansbold">TEST</Text>
+                <Text className="text-grey2 text-lg font-isansbold">
+                  شماره پیگیری شما : {data?.Data?.TrackingCode_ForAll}
+                </Text>
               </View>
             ))}
 

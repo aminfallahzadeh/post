@@ -10,61 +10,7 @@ import { useUserStore } from "@/store";
 import { getCertificate } from "@/api/gnaf";
 import { toastStyles } from "@/constants/styles";
 
-const MyGovahiView = () => {
-  // STATES
-  const [list, setList] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const mobile = useUserStore((state) => state.mobile);
-
-  // CONSTS
-  const fadeAnimRefs = useRef([]);
-
-  // FETCH
-  const fetchCertificateList = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const response = await getCertificate(mobile);
-      console.log("CERTIFICATE LIST RESPONSE: ", response.data.itemList);
-      setList(response.data.itemList);
-    } catch (error) {
-      console.log("CERTIFICATE LIST ERROR:", error.response);
-      showMessage({
-        message: error.response?.data?.message || error.message,
-        type: "danger",
-        titleStyle: toastStyles,
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  }, [mobile]);
-
-  useFocusEffect(
-    useCallback(() => {
-      fetchCertificateList();
-      return () => {
-        setList([]);
-      };
-    }, [fetchCertificateList])
-  );
-  useEffect(() => {
-    if (list.length > 0) {
-      list.forEach((_, index) => {
-        if (!fadeAnimRefs.current[index]) {
-          fadeAnimRefs.current[index] = new Animated.Value(0);
-        }
-      });
-
-      list.forEach((_, index) => {
-        Animated.timing(fadeAnimRefs.current[index], {
-          toValue: 1,
-          duration: 500,
-          delay: index * 300,
-          useNativeDriver: true,
-        }).start();
-      });
-    }
-  }, [list]);
-
+const MyPostYafteView = () => {
   return (
     <Background>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -72,7 +18,10 @@ const MyGovahiView = () => {
           style={{ transform: [{ scaleX: -1 }], rowGap: 10 }}
           className="justify-normal items-center mt-5 px-10 h-full pb-32"
         >
-          {isLoading ? (
+          <Text className="font-isansdemibold text-grey2 text-[30px] mt-20">
+            موردی یافت نشد!
+          </Text>
+          {/* {isLoading ? (
             <Chase size={50} color="#164194" className="mt-20" />
           ) : list.length === 0 ? (
             <Text className="font-isansdemibold text-grey2 text-[30px] mt-20">
@@ -103,11 +52,11 @@ const MyGovahiView = () => {
                 </Animated.View>
               );
             })
-          )}
+          )} */}
         </View>
       </ScrollView>
     </Background>
   );
 };
 
-export default MyGovahiView;
+export default MyPostYafteView;

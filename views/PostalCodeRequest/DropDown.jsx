@@ -7,12 +7,7 @@ const Dropdown = ({ name, options, control, isLoading }) => (
     name={name}
     control={control}
     render={({ field }) => (
-      <SelectInput
-        {...field}
-        options={options}
-        isLoading={isLoading}
-        placeholder={`Select ${name}`}
-      />
+      <SelectInput {...field} options={options} isLoading={isLoading} />
     )}
   />
 );

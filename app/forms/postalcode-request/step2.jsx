@@ -137,12 +137,13 @@ const Step2 = () => {
               />
 
               <FormField
-                placeholder="شماره تلفن همراه"
+                placeholder="تلفن همراه"
                 keyboardType="numeric"
                 containerStyle="mt-5"
                 type={"text"}
                 control={control}
-                value={mobile || ""}
+                editable={false}
+                value={mobile || " "}
                 name="mobile"
               />
 

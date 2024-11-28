@@ -1,20 +1,9 @@
 // IMPORTS
-import { useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Feather from "@expo/vector-icons/Feather";
 
 export const AddressCard = ({ item, isSelected, onSelect }) => {
-  // DEBUGGING
-  useEffect(() => {
-    console.log("THIS IS THE ITEM:", item);
-  }, [item]);
-
-  // SELECT EFFECT
-  useEffect(() => {
-    console.log("THIS IS THE ITEM:", item);
-  }, [item]);
-
   return (
     <TouchableOpacity
       onPress={onSelect}
@@ -133,7 +122,7 @@ export const AddressCard = ({ item, isSelected, onSelect }) => {
         <View className="flex-row-reverse" style={styles.columnGapMd}>
           <Text className="text-grey2 font-isansbold text-sm">واحد :</Text>
           <Text className="text-grey2 font-isansregular text-sm">
-            {item.result.localityCode || "---"}
+            {item.result.sideFloor || "---"}
           </Text>
         </View>
       </View>

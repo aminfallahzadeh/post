@@ -1,4 +1,4 @@
-// AXIOS
+// IMPORTS
 import axiosInstance from "@/config/axiosConfig";
 
 export function orderTracking(barcode) {

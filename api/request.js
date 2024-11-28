@@ -30,3 +30,7 @@ export function insertRequestCertificationGeo(data) {
 export function insertRequestBulk(data) {
   return axiosInstance.post("/Request/InsertRequestBulk", data);
 }
+
+export function insertRequestPostYafte(data) {
+  return axiosInstance.post("/Request/InsertRequestPostYafte", data);
+}

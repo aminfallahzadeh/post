@@ -4,6 +4,7 @@ import MyPostsView from "@/views/MyPostsView";
 import MyComplaintsView from "@/views/MyComplaintsView";
 import MyGovahiView from "@/views/MyGovahiView";
 import MyGheramatsView from "@/views/MyGheramatsView";
+import MuPostYafteView from "@/views/MyPostYafteView";
 import Background from "@/components/Background";
 
 const Tab = createMaterialTopTabNavigator();
@@ -83,7 +84,7 @@ function TopTabsLayout() {
         />
         <Tab.Screen
           name="PostYafte"
-          component={MyGheramatsView}
+          component={MuPostYafteView}
           options={{
             tabBarLabel: "پست یافته",
             tabBarLabelStyle: tabLabelStyle,

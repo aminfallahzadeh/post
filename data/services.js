@@ -40,7 +40,7 @@ export const allData = [
     title: "پست یافته",
     gradientColors: ["#755d15", "#ffca2b"],
     iconName: null,
-    url: null,
+    url: "forms/post-yafte",
     imageUrl: require("@/assets/images/post-yafte.png"),
     nationalCodeRequired: false,
   },

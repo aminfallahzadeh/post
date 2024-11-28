@@ -1,7 +1,5 @@
-// REACT IMPORTS
+// IMPORTS
 import { useState, useEffect } from "react";
-
-// NATIVE IMPORTS
 import {
   View,
   Text,
@@ -11,44 +9,25 @@ import {
   StyleSheet,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-// STORE
 import { useUserStore } from "@/store";
-
-// AXIOS
 import { insertRequestCertification } from "@/api/request";
-
-// EXPO
 import { router } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
-
-// COMPONETS
 import ProgressBar from "@/components/ProgressBar";
 import Background from "@/components/Background";
 import AddressCard from "@/components/AddressCard";
 import CustomButton from "@/components/CustomButton";
-
-// CONSTANTS
 import { postalCodeListValidation } from "@/constants/validations";
-
-// ASSETS
 import { toastStyles } from "@/constants/styles";
-
-// LIBRARIES
 import { showMessage } from "react-native-flash-message";
+import { SELECT_ALL, POST_CODE_CERTIFICATE } from "@/constants/consts";
 
 const Step2 = () => {
-  // LOADING STATE
+  // STATES
   const [isLoading, setIsLoading] = useState(false);
-
-  // ACCESS GLOBAL STATE
   const addressByPostCode = useUserStore((state) => state.addressByPostCode);
   const mobile = useUserStore((state) => state.mobile);
-
-  // ACTIONS
   const setFactor = useUserStore((state) => state.setFactor);
-
-  // SELECT STATES
   const [selectedItems, setSelectedItems] = useState([]);
   const [isSelectedAll, setIsSelectedAll] = useState(false);
 
@@ -139,7 +118,7 @@ const Step2 = () => {
                 <Feather name="arrow-left" size={25} color="#333" />
               </Pressable>
               <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
-                گواهی کد پستی
+                {POST_CODE_CERTIFICATE}
               </Text>
             </View>
 
@@ -159,7 +138,7 @@ const Step2 = () => {
             )}
 
             <Text className="text-grey2 text-[15px] font-isansbold mr-2">
-              انتخاب همه
+              {SELECT_ALL}
             </Text>
           </TouchableOpacity>
 

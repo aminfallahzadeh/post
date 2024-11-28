@@ -317,7 +317,7 @@ export const PostalCodeRequest = () => {
                             primaryColor="#164194"
                             selectedValue={
                               postAreaOptions.find(
-                                (c) => c.value === form_data?.postArea
+                                (c) => c.value === form_data?.unit
                               )?.value
                             }
                           />

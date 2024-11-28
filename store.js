@@ -10,6 +10,7 @@ export const useUserStore = create(
     factor: {},
     userAddress: "",
     userAddressCodes: {},
+    foundDocIds: [],
 
     setMobile: (mobile) => set({ mobile }),
     setUserData: (userData) => set({ userData }),
@@ -26,5 +27,7 @@ export const useUserStore = create(
 
     setUserAddress: (userAddress) => set({ userAddress }),
     setUserAddressCodes: (userAddressCodes) => set({ userAddressCodes }),
+
+    setFoundDocIds: (foundDocIds) => set({ foundDocIds }),
   }))
 );

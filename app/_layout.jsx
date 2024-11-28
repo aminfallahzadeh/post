@@ -92,6 +92,10 @@ const RootLayout = () => {
           name="forms/postalcode-request"
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="forms/post-yafte"
+          options={{ headerShown: false }}
+        />
         <Stack.Screen name="result" options={{ headerShown: false }} />
       </Stack>
       <ToastProvider />
