@@ -110,7 +110,7 @@ const PaymentResult = () => {
               className={
                 "w-full rounded-md mt-20 p-5 items-center justify-center"
               }
-              style={styles.postalCodeContaiers}
+              style={styles.postalCodeContainers}
             >
               <View className="mt-1 ml-1">
                 <Feather
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
   disabledPlus: {
     color: "gray",
   },
-  postalCodeContaiers: {
+  postalCodeContainers: {
     shadowColor: "black",
     shadowOpacity: 0.26,
     shadowOffset: { width: 0, height: 2 },

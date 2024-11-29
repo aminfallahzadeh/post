@@ -34,3 +34,11 @@ export function insertRequestBulk(data) {
 export function insertRequestPostYafte(data) {
   return axiosInstance.post("/Request/InsertRequestPostYafte", data);
 }
+
+export function getRequestBulk(mobile) {
+  return axiosInstance.get(`/Request/GetRequestBulk?Mobile=${mobile}`);
+}
+
+export function getRequestPostYafte(mobile) {
+  return axiosInstance.get(`/Request/GetRequestPostYafte?Mobile=${mobile}`);
+}

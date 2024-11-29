@@ -1,4 +1,4 @@
-// IMPROTS
+// IMPORTS
 import {
   View,
   Text,
@@ -44,7 +44,6 @@ export const FormField = ({
   });
 
   useEffect(() => {
-    //
     Animated.timing(placeholderAnimation, {
       toValue: isFocused || field?.value ? 1 : 0,
       duration: 200,
@@ -122,8 +121,8 @@ export const FormField = ({
         {/* ERROR */}
 
         {fieldState?.error && (
-          <View className="absolute -top-6 left-0">
-            <Text className="text-orange-500 font-isanslight">
+          <View className="absolute -top-5 left-0">
+            <Text className="text-red-500 font-isansregular">
               {fieldState?.error?.message}
             </Text>
           </View>

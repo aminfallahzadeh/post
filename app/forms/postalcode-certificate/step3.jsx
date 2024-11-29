@@ -73,7 +73,7 @@ const Step3 = () => {
     console.log("FACTOR:", factor);
   }, [factor]);
 
-  // HADNLE SUBMIT
+  // HANDLE SUBMIT
   const onSubmit = async () => {
     setIsLoading(true);
     try {
@@ -222,15 +222,6 @@ const styles = StyleSheet.create({
   },
   disabledPlus: {
     color: "gray",
-  },
-  postalCodeContaiers: {
-    shadowColor: "black",
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 10,
-    elevation: 3,
-    backgroundColor: "white",
-    minHeight: 100,
   },
   postalCodesItemContainer: {
     gap: 10,

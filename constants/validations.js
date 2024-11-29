@@ -1,6 +1,6 @@
 // IMPORTS
 import { nationalCodeChekcher } from "@/utils/helpers";
-import { mobilePhoneErrors, REUIRED, POSTCODE_INVALID } from "./messages";
+import { mobilePhoneErrors, REQUIRED, POSTCODE_INVALID } from "./messages";
 
 export const userDataValidations = (form_data) => [
   {
@@ -121,7 +121,7 @@ export const postYafteValidation = {
   address: {
     required: {
       value: true,
-      message: REUIRED,
+      message: REQUIRED,
     },
   },
   postCode: {
@@ -135,7 +135,7 @@ export const postYafteValidation = {
     },
     required: {
       value: true,
-      message: REUIRED,
+      message: REQUIRED,
     },
   },
 };

@@ -2,6 +2,7 @@
 import Dropdown from "react-native-input-select";
 import { selectMessages } from "@/constants/messages";
 import Feather from "@expo/vector-icons/Feather";
+import { Controller } from "react-hook-form";
 
 const selectSettings = (props) => ({
   placeholderStyle: {
@@ -69,6 +70,13 @@ const SelectInput = (props) => {
   const settings = selectSettings(props);
 
   return <Dropdown {...settings} {...props} />;
+  //   return (
+  //     <Controller
+  //       render={({ field: { onChange } }) => (
+  //         <Dropdown {...settings} {...props} />
+  //       )}
+  //     />
+  //   );
 };
 
 export default SelectInput;

@@ -87,7 +87,7 @@ const Services = () => {
     }
   };
 
-  const renderSrvices = useRenderService(handlePress);
+  const renderServices = useRenderService(handlePress);
 
   return (
     <>
@@ -139,7 +139,7 @@ const Services = () => {
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={{
                   alignItems: "center",
-                  justifyContent: "cetner",
+                  justifyContent: "center",
                   gap: 10,
                   paddingHorizontal: 20,
                 }}
@@ -178,11 +178,11 @@ const Services = () => {
                 style={{ transform: [{ scaleX: -1 }] }}
               >
                 {filteredItems === "all"
-                  ? allData.map((item) => renderSrvices(item))
+                  ? allData.map((item) => renderServices(item))
                   : filteredItems === "followup"
-                  ? followUpData.map((item) => renderSrvices(item))
+                  ? followUpData.map((item) => renderServices(item))
                   : filteredItems === "request"
-                  ? requestData.map((item) => renderSrvices(item))
+                  ? requestData.map((item) => renderServices(item))
                   : null}
               </View>
             </ScrollView>

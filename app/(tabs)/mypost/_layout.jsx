@@ -6,6 +6,7 @@ import MyGovahiView from "@/views/MyGovahiView";
 import MyGheramatsView from "@/views/MyGheramatsView";
 import MuPostYafteView from "@/views/MyPostYafteView";
 import Background from "@/components/Background";
+import MyPostCodesView from "@/views/MyPostCodesView";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -73,7 +74,7 @@ function TopTabsLayout() {
         />
         <Tab.Screen
           name="PostCode"
-          component={MyGheramatsView}
+          component={MyPostCodesView}
           options={{
             tabBarLabel: "کد پستی",
             tabBarLabelStyle: tabLabelStyle,

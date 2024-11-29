@@ -1,5 +1,5 @@
 // IMPORTS
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import {
   View,
@@ -21,6 +21,7 @@ import ProgressBar from "@/components/ProgressBar";
 import Background from "@/components/Background";
 import { useUserStore } from "@/store";
 import { POST_YAFTE } from "@/constants/consts";
+import { REQUIRED } from "@/constants/messages";
 import { postYafteValidation } from "@/constants/validations";
 
 const Step2 = () => {
@@ -30,7 +31,12 @@ const Step2 = () => {
   const foundDocIds = useUserStore((state) => state.foundDocIds);
 
   // CONSTS
-  const { control, handleSubmit, watch } = useForm();
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
   const form_data = watch();
 
   // TEMP
@@ -40,30 +46,24 @@ const Step2 = () => {
   const onSubmit = async () => {
     setIsLoading(true);
     try {
+      const docList = foundDocIds.map((doc) => ({
+        foundDocId: doc.id,
+      }));
       const response = await insertRequestPostYafte({
-        mobile: "string",
-        cityID: 0,
-        address: "string",
-        postCode: "string",
-        docList: [
-          {
-            foundDocId: "string",
-          },
-        ],
-        trackingID: "string",
-        id: "string",
+        mobile,
+        cityID: form_data.city_id,
+        address: form_data.address,
+        postCode: form_data.postCode,
+        docList: docList,
+        trackingID: "",
+        id: "",
       });
-      console.log("INSERT REQUEST POST YAFTE RESPONSE: ", response.data);
+      console.log("POST YAFTE RESPONSE: ", response.data);
+      router.replace("/forms/post-yafte/step3");
     } finally {
       setIsLoading(false);
     }
   };
-
-  // DEBUG
-  useEffect(() => {
-    console.log("POST YAFTE FORM:", form_data);
-    console.log("POST YAFTE FOUND DOC IDS:", foundDocIds);
-  }, [form_data, foundDocIds]);
 
   return (
     <Background>
@@ -113,7 +113,7 @@ const Step2 = () => {
               />
 
               <FormField
-                placeholder="آدرس"
+                placeholder="* آدرس"
                 multiline={true}
                 keyboardType="default"
                 type={"text"}
@@ -128,7 +128,7 @@ const Step2 = () => {
               />
 
               <FormField
-                placeholder="کد پستی"
+                placeholder="* کد پستی"
                 keyboardType="numeric"
                 type={"text"}
                 rules={postYafteValidation.postCode}
@@ -137,16 +137,30 @@ const Step2 = () => {
                 name="postCode"
               />
 
-              <View className="mt-5">
+              <View className="mt-5 relative">
+                {errors && (
+                  <View className="absolute -top-5 left-0">
+                    <Text className="text-red-500 font-isansregular">
+                      {errors?.state_id?.message}
+                    </Text>
+                  </View>
+                )}
+
                 <Controller
                   name="state_id"
                   control={control}
+                  rules={{
+                    required: {
+                      value: true,
+                      message: REQUIRED,
+                    },
+                  }}
                   render={({ field: { onChange } }) => (
                     <SelectInput
-                      onValueChange={(val) => onChange(val)}
+                      placeholder="* استان"
                       options={options}
+                      onValueChange={(val) => onChange(val)}
                       primaryColor="#164194"
-                      placeholder="استان"
                       selectedValue={
                         options.find((c) => c.value === form_data?.state_id)
                           ?.value
@@ -156,20 +170,34 @@ const Step2 = () => {
                 />
               </View>
 
-              <View className="mt-5">
+              <View className="mt-5 relative">
+                {errors && (
+                  <View className="absolute -top-5 left-0">
+                    <Text className="text-red-500 font-isansregular">
+                      {errors?.city_id?.message}
+                    </Text>
+                  </View>
+                )}
+
                 <Controller
                   name="city_id"
                   control={control}
+                  rules={{
+                    required: {
+                      value: true,
+                      message: REQUIRED,
+                    },
+                  }}
                   render={({ field: { onChange } }) => (
                     <SelectInput
+                      placeholder="* شهر"
+                      options={options}
                       onValueChange={(val) => onChange(val)}
                       primaryColor="#164194"
                       selectedValue={
                         options.find((c) => c.value === form_data?.city_id)
                           ?.value
                       }
-                      options={options}
-                      placeholder="شهر"
                     />
                   )}
                 />
@@ -209,15 +237,6 @@ const styles = StyleSheet.create({
   },
   disabledPlus: {
     color: "gray",
-  },
-  postalCodeContaiers: {
-    shadowColor: "black",
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 10,
-    elevation: 3,
-    backgroundColor: "white",
-    minHeight: 100,
   },
   postalCodesItemContainer: {
     gap: 10,

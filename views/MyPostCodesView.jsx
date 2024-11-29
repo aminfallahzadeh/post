@@ -5,9 +5,10 @@ import { useFocusEffect } from "expo-router";
 import { Chase } from "react-native-animated-spinkit";
 import Background from "@/components/Background";
 import { useUserStore } from "@/store";
-import { getRequestPostYafte } from "@/api/request";
+import { getRequestBulk } from "@/api/request";
+import { PostCodeCard } from "@/components/PostCodeCard/PostCodeCard";
 
-const MyPostYafteView = () => {
+const MyPostCodesView = () => {
   // STATES
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
@@ -19,7 +20,7 @@ const MyPostYafteView = () => {
   const fetchData = useCallback(async () => {
     setIsLoading(true);
     try {
-      const response = await getRequestPostYafte(mobile);
+      const response = await getRequestBulk(mobile);
       console.log("POST YAFTE RESPONSE:", response.data);
       setData(response.data.itemList);
     } finally {
@@ -90,25 +91,7 @@ const MyPostYafteView = () => {
                     ],
                   }}
                 >
-                  <View className="bg-white rounded-md px-5 py-2 w-full">
-                    <View className="flex-row-reverse justify-between items-center w-full mb-2">
-                      <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm">
-                        وضعیت :
-                      </Text>
-                      <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm py-1">
-                        {item.statusCodeDesc}
-                      </Text>
-                    </View>
-
-                    <View className="flex-row-reverse justify-between items-center w-full mb-2">
-                      <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm">
-                        شماره پیگیری :
-                      </Text>
-                      <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm py-1">
-                        {item.trackingID}
-                      </Text>
-                    </View>
-                  </View>
+                  <PostCodeCard item={item} />
                 </Animated.View>
               );
             })
@@ -119,4 +102,4 @@ const MyPostYafteView = () => {
   );
 };
 
-export default MyPostYafteView;
+export default MyPostCodesView;

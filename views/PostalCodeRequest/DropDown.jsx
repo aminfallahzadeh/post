@@ -2,7 +2,7 @@ import React from "react";
 import { Controller } from "react-hook-form";
 import SelectInput from "@/components/SelectInput";
 
-const Dropdown = ({ name, options, control, isLoading }) => (
+const Dropdown = ({ name, options, control, isLoading, errors }) => (
   <Controller
     name={name}
     control={control}

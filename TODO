@@ -1,14 +1,10 @@
-Component:
-  ✔ centralize the dropdown component styles (dropdown helper) @done(24-11-15 03:25)
-  ✔ create a hook for lookup data @done(24-11-16 17:44)
-  ✔ create hook to handle request/response @done(24-11-15 03:04)
-  ✔ setup axios for error handling @done(24-11-14 21:55)
-  ✔ centralize the toast component styles (toast helper) @done(24-11-14 20:15)
-
+// NEW
+SelectInput:
+    □ add control for select input
 
 // NOTES
 
-VALID NATIONA CODES
+VALID NATIONAL CODES
 1671989696
 1671989697
 
@@ -19,7 +15,6 @@ VALID COMPLAINT FOLLOW UP CODES
 VALID ORDER TRACKING ID
 047860321100026940000114
 
-
 VALID POST YAFTE DATA
 NATIONAL CODE = 0064551751
 
@@ -27,6 +22,11 @@ name = test1
 familyname = test1
 
 Archive:
+  ✔ centralize the dropdown component styles (dropdown helper) @done(24-11-15 03:25) @project(Component)
+  ✔ create a hook for lookup data @done(24-11-16 17:44) @project(Component)
+  ✔ create hook to handle request/response @done(24-11-15 03:04) @project(Component)
+  ✔ setup axios for error handling @done(24-11-14 21:55) @project(Component)
+  ✔ centralize the toast component styles (toast helper) @done(24-11-14 20:15) @project(Component)
   ✔ change day, month , year to combo box @done(24-10-29 14:52) @project(PROFILE)
   ✔ allow to remove national code @started(24-10-31 20:41) @done(24-10-31 20:41) @lasted(31s) @project(PROFILE)
   ✔ make the user navigate to profile by clicking the whole line of name @done(24-10-29 14:06) @project(SETTINGS)

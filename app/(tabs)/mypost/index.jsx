@@ -1,4 +1,4 @@
-// COMPONSNETS
+// COMPONENTS
 import MyPostsView from "@/views/MyPostsView";
 
 function index() {

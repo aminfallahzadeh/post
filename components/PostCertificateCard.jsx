@@ -1,10 +1,6 @@
-// NATIVE IMPORTS
+// IMPORTS
 import { View, Text, StyleSheet, Pressable, Image } from "react-native";
-
-// EXPO
 import { router } from "expo-router";
-
-// ASSETS
 import images from "@/constants/images";
 
 export const PostCertificateCard = ({ item, containerStyles }) => {

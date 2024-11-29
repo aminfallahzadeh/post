@@ -1,4 +1,4 @@
-// FILEDS
+// FIELDS
 export const PROVINCE = "استان";
 export const COUNTY = "شهرستان";
 export const ZONE = "بخش";

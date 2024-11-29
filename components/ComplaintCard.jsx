@@ -1,16 +1,8 @@
-// NATIVE IMPORTS
+// IMPORTS
 import { View, Text, StyleSheet, Pressable } from "react-native";
-
-// EXPO
 import * as Clipboard from "expo-clipboard";
-
-// ICONS
 import Feather from "@expo/vector-icons/Feather";
-
-// LIBRARIES
 import { showMessage } from "react-native-flash-message";
-
-// ASSETS
 import { toastStyles } from "@/constants/styles";
 
 export const ComplaintCard = ({ item, containerStyles }) => {
@@ -25,7 +17,6 @@ export const ComplaintCard = ({ item, containerStyles }) => {
   };
 
   // STATUS
-
   const responded = [1, 2];
   const respondedWithDetails = [3, 4, 5, 6, 7, 8, 9];
   const error = [-1, -2];
@@ -56,7 +47,7 @@ export const ComplaintCard = ({ item, containerStyles }) => {
 
       <View style={styles.line} />
 
-      <View className="flex-row-reverse">
+      <View className="flex-row-reverse w-full">
         {respondedWithDetails.includes(item.stat) ? (
           <Feather name="alert-circle" size={24} color="#ff9c00" />
         ) : responded.includes(item.stat) ? (
@@ -66,7 +57,9 @@ export const ComplaintCard = ({ item, containerStyles }) => {
         ) : (
           <Feather name="help-circle" size={24} color="#ccc" />
         )}
-        <Text className="font-isansregular text-[15px] mr-2">{item.rspns}</Text>
+        <Text className="font-isansregular text-right text-[15px] mr-1">
+          {item.rspns}
+        </Text>
       </View>
     </View>
   );
