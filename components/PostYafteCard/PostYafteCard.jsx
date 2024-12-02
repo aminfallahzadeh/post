@@ -4,7 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import Feather from "@expo/vector-icons/Feather";
 
 export const PostYafteCard = ({ item, isSelected, onSelect }) => {
-  const isDisabled = item.requestStatus === 13;
+  const isDisabled = item.canRequest === false;
   return (
     <TouchableOpacity
       onPress={onSelect}

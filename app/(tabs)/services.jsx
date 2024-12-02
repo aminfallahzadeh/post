@@ -1,7 +1,5 @@
-// REACT IMPORTS
+// IMPORTS
 import { useEffect, useRef, useState, useReducer } from "react";
-
-// NATIVE IMPORTS
 import {
   ScrollView,
   Animated,
@@ -14,28 +12,16 @@ import {
   Pressable,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-// STORE
 import { useUserStore } from "@/store";
-
-// EXPO IMPORTS
 import { LinearGradient } from "expo-linear-gradient";
 import { Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
-
-// COMPONENTS
 import Background from "@/components/Background";
 import CustomModal from "@/components/CustomModal";
-
-// HOOKS
 import useRenderService from "@/hooks/useRenderService";
-
-// DATA
 import { filtersData } from "@/data/filters";
 import { followUpData, requestData } from "@/data/services";
 import { allData } from "@/data/services";
-
-// ASSETS
 import images from "@/constants/images";
 
 const width = Dimensions.get("window").width;

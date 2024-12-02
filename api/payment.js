@@ -1,8 +1,6 @@
-// AXIOS
+// IMPORTS
 import axiosInstance from "@/config/axiosConfig";
 import axios from "axios";
-
-// CONSTANTS
 import { TEST_URL } from "@/constants/apiRoutes";
 
 export function requestPayment(data) {
@@ -21,12 +19,12 @@ export function requestPayment(data) {
   "additionalData": "string",
   "requestID": id
 }
-  
+
   */
   return axiosInstance.post("/Payment/RequestPayment", data);
 }
 
-export function approvePayemnt() {
+export function approvePayment() {
   return axios.post(`${TEST_URL}/ApprovePayment`, {
     TransactionID: "33911098",
     ClientOrderID: "83bfe338c3f7402685f3da15ec93392a",

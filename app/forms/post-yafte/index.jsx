@@ -56,11 +56,11 @@ const Index = () => {
   };
 
   const handleSelectAll = () => {
-    const validItems = data?.filter((c) => c.requestStatus !== 13) || [];
+    const validItems = data?.filter((c) => c.canRequest === true) || [];
     if (selectedItems.length === validItems.length) {
       setSelectedItems([]);
     } else {
-      setSelectedItems(data.filter((c) => c.requestStatus !== 13));
+      setSelectedItems(data.filter((c) => c.canRequest === true));
     }
   };
 
@@ -76,7 +76,7 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-    const validItems = data?.filter((c) => c.requestStatus !== 13) || [];
+    const validItems = data?.filter((c) => c.canRequest === true) || [];
     if (selectedItems?.length === validItems?.length) {
       setIsSelectedAll(true);
     } else {

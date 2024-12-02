@@ -1,5 +1,5 @@
 // IMPORTS
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import {
   View,
@@ -10,6 +10,7 @@ import {
   ScrollView,
   StyleSheet,
 } from "react-native";
+import { LOADING_MESSAGE } from "@/constants/messages";
 import SelectInput from "@/components/SelectInput";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { insertRequestPostYafte } from "@/api/request";
@@ -23,11 +24,17 @@ import { useUserStore } from "@/store";
 import { POST_YAFTE } from "@/constants/consts";
 import { REQUIRED } from "@/constants/messages";
 import { postYafteValidation } from "@/constants/validations";
+import { getYafteProvince, getYafteCity } from "@/api/yafte";
+import { optionsGenerator } from "@/helpers/selectHelper";
 
 const Step2 = () => {
   // STATES
   const mobile = useUserStore((state) => state.mobile);
   const [isLoading, setIsLoading] = useState(false);
+  const [isProvinceLoading, setIsProvinceLoading] = useState(false);
+  const [isCityLoading, setIsCityLoading] = useState(false);
+  const [cityOptions, setCityOptions] = useState([]);
+  const [provinceOptions, setProvinceOptions] = useState([]);
   const foundDocIds = useUserStore((state) => state.foundDocIds);
 
   // CONSTS
@@ -39,10 +46,31 @@ const Step2 = () => {
   } = useForm();
   const form_data = watch();
 
-  // TEMP
-  const options = [{ label: "تهران", value: 1 }];
-
   // HANDLES
+  const fetchProvince = async () => {
+    setIsProvinceLoading(true);
+    try {
+      const response = await getYafteProvince();
+      console.log("PROVINCE RESPONSE: ", response.data);
+      const options = optionsGenerator(response.data.itemList, "id", "name");
+      setProvinceOptions(options);
+    } finally {
+      setIsProvinceLoading(false);
+    }
+  };
+
+  const fetchCity = async (provinceID = null) => {
+    setIsCityLoading(true);
+    try {
+      const response = await getYafteCity({ provinceID });
+      console.log("CITY RESPONSE: ", response.data);
+      const options = optionsGenerator(response.data.itemList, "id", "name");
+      setCityOptions(options);
+    } finally {
+      setIsCityLoading(false);
+    }
+  };
+
   const onSubmit = async () => {
     setIsLoading(true);
     try {
@@ -64,6 +92,12 @@ const Step2 = () => {
       setIsLoading(false);
     }
   };
+
+  // EFFECTS
+  useEffect(() => {
+    fetchCity();
+    fetchProvince();
+  }, []);
 
   return (
     <Background>
@@ -157,13 +191,19 @@ const Step2 = () => {
                   }}
                   render={({ field: { onChange } }) => (
                     <SelectInput
-                      placeholder="* استان"
-                      options={options}
-                      onValueChange={(val) => onChange(val)}
+                      placeholder={
+                        isProvinceLoading ? LOADING_MESSAGE : "* استان"
+                      }
+                      options={provinceOptions}
+                      onValueChange={(val) => {
+                        fetchCity(val);
+                        return onChange(val);
+                      }}
                       primaryColor="#164194"
                       selectedValue={
-                        options.find((c) => c.value === form_data?.state_id)
-                          ?.value
+                        provinceOptions.find(
+                          (c) => c.value === form_data?.state_id
+                        )?.value
                       }
                     />
                   )}
@@ -190,12 +230,12 @@ const Step2 = () => {
                   }}
                   render={({ field: { onChange } }) => (
                     <SelectInput
-                      placeholder="* شهر"
-                      options={options}
+                      placeholder={isCityLoading ? LOADING_MESSAGE : "* شهر"}
+                      options={cityOptions}
                       onValueChange={(val) => onChange(val)}
                       primaryColor="#164194"
                       selectedValue={
-                        options.find((c) => c.value === form_data?.city_id)
+                        cityOptions.find((c) => c.value === form_data?.city_id)
                           ?.value
                       }
                     />

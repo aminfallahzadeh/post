@@ -1,20 +1,24 @@
 // IMPORTS
 import { useState, useRef, useEffect, useCallback } from "react";
 import { View, Text, ScrollView, Animated } from "react-native";
-import { useFocusEffect } from "expo-router";
+import { useFocusEffect, router } from "expo-router";
 import { Chase } from "react-native-animated-spinkit";
 import Background from "@/components/Background";
 import { useUserStore } from "@/store";
 import { getRequestPostYafte } from "@/api/request";
+import { requestPayment } from "@/api/payment";
+import CustomButton from "@/components/CustomButton";
 
 const MyPostYafteView = () => {
   // STATES
   const [isLoading, setIsLoading] = useState(false);
+  const [isRequestLoading, setIsRequestLoading] = useState(false);
   const [data, setData] = useState([]);
   const fadeAnimRefs = useRef([]);
 
   // CONSTS
   const mobile = useUserStore((state) => state.mobile);
+  const setFactor = useUserStore((state) => state.setFactor);
 
   const fetchData = useCallback(async () => {
     setIsLoading(true);
@@ -26,6 +30,34 @@ const MyPostYafteView = () => {
       setIsLoading(false);
     }
   }, [mobile]);
+
+  // HANDLERS
+  const onSubmit = async (item) => {
+    setIsRequestLoading(true);
+    try {
+      const response = await requestPayment({
+        clientOrderID: "",
+        mobile,
+        paymentTypeID: "",
+        postUnitID: 0,
+        income: item.amount,
+        tax: item.tax,
+        escrow: item.escrow,
+        callBackUrl: "",
+        additionalData: "",
+        requestID: item.id,
+      });
+      console.log("REQUEST PAYMENT RESPONSE:", response.data);
+      console.log(response.data.itemList[0].data.paymentUrl);
+      setFactor({
+        ...item,
+        paymentUrl: response.data.itemList[0].data.paymentUrl,
+      });
+      router.push(`/factor/${item.id}`);
+    } finally {
+      setIsRequestLoading(false);
+    }
+  };
 
   // EFFECTS
   useFocusEffect(
@@ -108,6 +140,16 @@ const MyPostYafteView = () => {
                         {item.trackingID}
                       </Text>
                     </View>
+
+                    <CustomButton
+                      title="پرداخت"
+                      bgColor="bg-blue-500"
+                      titleColor="text-white"
+                      height="h-10"
+                      disabled={!item.canPay}
+                      isLoading={isRequestLoading}
+                      handlePress={() => onSubmit(item)}
+                    />
                   </View>
                 </Animated.View>
               );

@@ -13,21 +13,20 @@ import { useUserStore } from "@/store";
 import { router } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
 import { requestPayment } from "@/api/payment";
-import { ProgressBar, Background, Factor, CustomButton } from "@/components";
+import { Background, CustomButton } from "@/components";
+import { FactorPostYafte } from "@/components/FactorPostYafte";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import RNBounceable from "@freakycoder/react-native-bounceable";
 
-const Step3 = () => {
-  // lOADING
+const FactorResult = () => {
+  // STATES
   const [isLoading, setIsLoading] = useState(false);
-
-  // ACCESS GLOBAL STATE
-  const factor = useUserStore((state) => state.factor);
-  const mobile = useUserStore((state) => state.mobile);
-
-  // CHECKBOX STATE & REF
   const [checked, setChecked] = useState(false);
   const bouncyCheckboxRef = useRef(null);
+
+  // CONSTS
+  const factor = useUserStore((state) => state.factor);
+  const mobile = useUserStore((state) => state.mobile);
 
   // SLIDE AND FADE-IN ANIMATION
   const slideAnim = useRef(new Animated.Value(50)).current;
@@ -55,28 +54,13 @@ const Step3 = () => {
   };
 
   // HANDLE SUBMIT
-  const onSubmit = async () => {
-    setIsLoading(true);
-    try {
-      const data = {
-        clientOrderID: "string",
-        mobile,
-        paymentTypeID: "2",
-        postUnitID: 2,
-        income: factor.amount + factor.tax,
-        tax: factor.tax,
-        escrow: 0,
-        callBackUrl: "",
-        additionalData: "string",
-        requestID: factor.id,
-      };
-
-      const response = await requestPayment(data);
-      router.push(response.data.itemList[0].data.paymentUrl);
-    } finally {
-      setIsLoading(false);
-    }
+  const onSubmit = () => {
+    router.push(factor.paymentUrl);
   };
+
+  useEffect(() => {
+    console.log("FACTORR:", factor);
+  }, [factor]);
 
   return (
     <Background>
@@ -103,12 +87,8 @@ const Step3 = () => {
                 <Feather name="arrow-left" size={25} color="#333" />
               </Pressable>
               <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
-                درخواست کد پستی
+                جزئیات پرداخت
               </Text>
-            </View>
-
-            <View className="flex-col px-10 w-full pb-2">
-              <ProgressBar progress={100} />
             </View>
           </View>
 
@@ -126,7 +106,7 @@ const Step3 = () => {
                 styles.factorContainer,
               ]}
             >
-              <Factor data={factor} />
+              <FactorPostYafte data={factor} />
             </Animated.View>
           </View>
 
@@ -140,14 +120,7 @@ const Step3 = () => {
               }}
             >
               <Text className="text-grey2 font-isansregular px-2">
-                موارد فوق مورد تایید است و من با{" "}
-                <Text
-                  style={{ color: "blue" }}
-                  onPress={() => console.log("Navigate to Terms")}
-                >
-                  شرایط{" "}
-                </Text>
-                خرید موافق هستم
+                .تحویل مدرک فقط به شخص صاحب مدرک امکان پذیر است
               </Text>
             </RNBounceable>
             <View>
@@ -176,7 +149,7 @@ const Step3 = () => {
   );
 };
 
-export default Step3;
+export default FactorResult;
 
 const styles = StyleSheet.create({
   inputContainer: {
@@ -193,7 +166,7 @@ const styles = StyleSheet.create({
   disabledPlus: {
     color: "gray",
   },
-  postalCodeContaiers: {
+  postalCodeContainers: {
     shadowColor: "black",
     shadowOpacity: 0.26,
     shadowOffset: { width: 0, height: 2 },

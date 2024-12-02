@@ -59,7 +59,7 @@ const Step3 = () => {
     console.log("FACTOR:", factor);
   }, [factor]);
 
-  // HADNLE SUBMIT
+  // HANDLE SUBMIT
   const onSubmit = async () => {
     setIsLoading(true);
     try {

@@ -3,10 +3,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { seperateByThousand } from "@/utils/helpers";
 
-export const Factor = ({ data }) => {
-  const date = new Date(data.date);
-  const postalCodes = data?.title?.split(",");
-
+export const FactorPostYafte = ({ data }) => {
   return (
     <View
       style={styles.container}
@@ -30,57 +27,7 @@ export const Factor = ({ data }) => {
 
       <View className="flex-row-reverse justify-between w-full items-center">
         <Text className="font-isansdemibold text-grey2 text-[15px]">
-          تاریخ صدور درخواست
-        </Text>
-        <Text className="font-isansregular">{`${date.getFullYear()}/${
-          date.getMonth() + 1
-        }/${date.getDate()}`}</Text>
-      </View>
-
-      <View className="mt-2 mb-2 w-full">
-        <LinearGradient
-          colors={["transparent", "#000", "transparent"]}
-          style={styles.gradientLineHorizontal}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-        />
-      </View>
-
-      <View className="flex-row-reverse justify-between w-full items-center">
-        <Text className="font-isansdemibold text-grey2 text-[15px]">شرح</Text>
-        <Text className="font-isansregular">{data.result || "---"}</Text>
-      </View>
-
-      <View className="mt-2 mb-2 w-full">
-        <LinearGradient
-          colors={["transparent", "#000", "transparent"]}
-          style={styles.gradientLineHorizontal}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-        />
-      </View>
-
-      {postalCodes && (
-        <View className="flex-row-reverse justify-between w-full items-center">
-          <Text className="font-isansdemibold text-grey2 text-[15px]">
-            تعداد کد پستی
-          </Text>
-          <Text className="font-isansregular">{postalCodes.length} عدد</Text>
-        </View>
-      )}
-
-      <View className="mt-2 mb-2 w-full">
-        <LinearGradient
-          colors={["transparent", "#000", "transparent"]}
-          style={styles.gradientLineHorizontal}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-        />
-      </View>
-
-      <View className="flex-row-reverse justify-between w-full items-center">
-        <Text className="font-isansdemibold text-grey2 text-[15px]">
-          مبلغ هر درخواست
+          مبلغ درخواست ارسال :
         </Text>
         <Text className="font-isansregular">
           {seperateByThousand(data.amount)} ریال
@@ -98,10 +45,28 @@ export const Factor = ({ data }) => {
 
       <View className="flex-row-reverse justify-between w-full items-center">
         <Text className="font-isansdemibold text-grey2 text-[15px]">
-          مالیات بر ارزش افزوده
+          مالیات بر ارزش افزوده :
         </Text>
         <Text className="font-isansregular">
-          {seperateByThousand(data.tax)} ریال
+          {seperateByThousand(data?.tax)} ریال
+        </Text>
+      </View>
+
+      <View className="mt-2 mb-2 w-full">
+        <LinearGradient
+          colors={["transparent", "#000", "transparent"]}
+          style={styles.gradientLineHorizontal}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+        />
+      </View>
+
+      <View className="flex-row-reverse justify-between w-full items-center">
+        <Text className="font-isansdemibold text-grey2 text-[15px]">
+          هزینه بسته بندی :
+        </Text>
+        <Text className="font-isansregular">
+          {seperateByThousand(data?.escrow)} ریال
         </Text>
       </View>
 
@@ -112,14 +77,12 @@ export const Factor = ({ data }) => {
           جمع کل
         </Text>
         <Text className="font-isansregular">
-          {seperateByThousand(data.tax + data.amount)} ریال
+          {seperateByThousand(data?.tax + data?.amount + data?.escrow)} ریال
         </Text>
       </View>
     </View>
   );
 };
-
-export default Factor;
 
 const styles = StyleSheet.create({
   container: {

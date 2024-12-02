@@ -1,8 +1,6 @@
-// REACT IMPORTS
-import { useState } from "react";
+// IMPORTS
+import { useState, useEffect, useCallback } from "react";
 import { useForm } from "react-hook-form";
-
-// NATIVE IMPORTS
 import {
   KeyboardAvoidingView,
   Platform,
@@ -15,29 +13,17 @@ import {
   Keyboard,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-// AXIOS
 import { orderTracking } from "@/api/traking";
-
-// EXPO
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
-
-// COMPONENTS
 import Background from "@/components/Background";
 import FormField from "@/components/FormField";
 import CustomButton from "@/components/CustomButton";
 import OrderTrackCard from "@/components/OrderTrackCard";
-
-// LIBRARIES
 import LottieView from "lottie-react-native";
 import { Chase } from "react-native-animated-spinkit";
 import { showMessage } from "react-native-flash-message";
-
-// CONSTS
 import { orderTrackingValidation } from "@/constants/validations";
-
-// ASSETS
 import searchLottie from "@/assets/animations/search-lottie.json";
 import { toastStyles } from "@/constants/styles";
 
@@ -45,13 +31,27 @@ const FollowOrder = () => {
   // STATES
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState(null);
-  const [date, setDate] = useState(null);
 
-  // ACCESS HOOK FORM METHODS
+  // CONSTS
   const { control, handleSubmit, watch, reset } = useForm();
-
-  // ACCESS HOOK FORM DATA
+  const { barcode } = useLocalSearchParams();
   const form_data = watch();
+
+  // FETCH LOGIC
+  const fetchData = useCallback(
+    async (barcode) => {
+      setIsLoading(true);
+      try {
+        const response = await orderTracking(barcode);
+        console.log("ORDER TRACKING RESPONSE: ", response.data);
+        setResult(response.data.itemList);
+        reset();
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [reset]
+  );
 
   // HANDLERS
   const onSubmit = async () => {
@@ -67,25 +67,25 @@ const FollowOrder = () => {
       }
     }
 
-    try {
-      setIsLoading(true);
-      const response = await orderTracking(form_data.barcode);
-      console.log("ORDER TRACKING RESPONSE: ", response.data);
-      setResult(response.data.itemList);
-      // setDate(response.data.itemList[0].tfDate.split(" ")[0]);
-      reset();
-    } catch (error) {
-      console.log("ORDER TRACKING ERROR: ", error.response);
-      showMessage({
-        message: error.response?.data?.message || error.message,
-        type: "danger",
-        titleStyle: toastStyles,
-      });
-      reset();
-    } finally {
-      setIsLoading(false);
-    }
+    fetchData(form_data.barcode);
+    // try {
+    //   setIsLoading(true);
+    //   const response = await orderTracking(form_data.barcode);
+    //   console.log("ORDER TRACKING RESPONSE: ", response.data);
+    //   setResult(response.data.itemList);
+    //   // setDate(response.data.itemList[0].tfDate.split(" ")[0]);
+    //   reset();
+    // } finally {
+    //   setIsLoading(false);
+    // }
   };
+
+  // SEND REQ IF THE BARCODE IS PROVIDED
+  useEffect(() => {
+    if (barcode) {
+      fetchData(barcode);
+    }
+  }, [barcode, fetchData]);
 
   return (
     <Background>
@@ -133,14 +133,16 @@ const FollowOrder = () => {
                   />
                 </View>
 
-                <FormField
-                  placeholder="شماره پیگیری"
-                  keyboardType="numeric"
-                  type={"text"}
-                  containerStyle="mt-5"
-                  control={control}
-                  name="barcode"
-                />
+                {!barcode && (
+                  <FormField
+                    placeholder="شماره پیگیری"
+                    keyboardType="numeric"
+                    type={"text"}
+                    containerStyle="mt-5"
+                    control={control}
+                    name="barcode"
+                  />
+                )}
 
                 {/* RESPONSE CONTAINER */}
                 <Text className="text-primary font-isansbold text-[18px] w-full justify-normal items-center text-center mt-10">
@@ -160,30 +162,11 @@ const FollowOrder = () => {
                       <OrderTrackCard key={index} item={item} />
                     ))
                   ) : (
-                    // <View className="w-full">
-                    //   <View className="flex-row-reverse justify-between mb-2">
-                    //     <Text className="text-primary font-isansbold text-sm">
-                    //       تاریخ :
-                    //     </Text>
-                    //     <Text className="text-grey2 font-isansdemibold text-sm">
-                    //       {date}
-                    //     </Text>
-                    //   </View>
-
-                    //   <View className="w-full h-[1px] bg-gray-400" />
-
-                    //   <View className="mt-2">
-                    //     <Text className="text-primary font-isansbold text-sm">
-                    //       توضیحات :
-                    //     </Text>
-                    //     <Text className="text-grey2 font-isansdemibold text-sm mt-1">
-                    //       {result.describe}
-                    //     </Text>
-                    //   </View>
-                    // </View>
-                    <Text className="text-grey4 font-isansregular text-[15px]">
-                      شماره پیگیری را وارد کرده و جست و جو کنید
-                    </Text>
+                    !barcode && (
+                      <Text className="text-grey4 font-isansregular text-[15px]">
+                        شماره پیگیری را وارد کرده و جست و جو کنید
+                      </Text>
+                    )
                   )}
                 </View>
               </View>
@@ -191,15 +174,17 @@ const FollowOrder = () => {
           </ScrollView>
 
           {/* BOTTOM SECTION */}
-          <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
-            <CustomButton
-              title="جست و جو"
-              bgColor="bg-green-700"
-              titleColor="text-white"
-              handlePress={handleSubmit(onSubmit)}
-              isLoading={isLoading}
-            />
-          </View>
+          {!barcode && (
+            <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
+              <CustomButton
+                title="جست و جو"
+                bgColor="bg-green-700"
+                titleColor="text-white"
+                handlePress={handleSubmit(onSubmit)}
+                isLoading={isLoading}
+              />
+            </View>
+          )}
         </KeyboardAvoidingView>
       </SafeAreaView>
     </Background>
