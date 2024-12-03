@@ -10,6 +10,7 @@ const initialState = {
   userAddress: "",
   userAddressCodes: {},
   foundDocIds: [],
+  gheramatResult: {},
 };
 
 export const useUserStore = create(
@@ -33,6 +34,8 @@ export const useUserStore = create(
     setUserAddressCodes: (userAddressCodes) => set({ userAddressCodes }),
 
     setFoundDocIds: (foundDocIds) => set({ foundDocIds }),
+
+    setGheramatResult: (gheramatResult) => set({ gheramatResult }),
 
     resetStore: () => set(initialState),
   }))

@@ -8,7 +8,3 @@ export function getProvince() {
 export function getServiceType() {
   return axiosInstance.get("Gheramat/GetServiceType");
 }
-
-export function insertRequestGheramat(data) {
-  return axiosInstance.post("Gheramat/InsertRequestGheramate", data);
-}

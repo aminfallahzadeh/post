@@ -11,9 +11,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
 import { Background, CustomButton } from "@/components";
 import { DownloadPDF } from "@/components";
-import { toastStyles } from "@/constants/styles";
 import { Chase } from "react-native-animated-spinkit";
-import { showMessage } from "react-native-flash-message";
 
 const PaymentResult = () => {
   // STATES
@@ -21,44 +19,28 @@ const PaymentResult = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  // PARAMS
+  // CONSTS
   const { id, success, type } = useLocalSearchParams();
 
-  // SET STATUS
+  // EFFECTS
   useEffect(() => {
     if (success === "1") {
       setIsSuccess(true);
     }
   }, [success]);
 
-  // DEBUG
-  useEffect(() => {
-    console.log("ID: ", id);
-    console.log("TYPE: ", type);
-    console.log("SUCCESS: ", success);
-  }, [id, type, success]);
-
   // HANDLERS
   const handleGenerateCertificate = useCallback(async () => {
     setIsLoading(true);
 
     const generateCertificateData = async (generateFunction) => {
-      try {
-        const response = await generateFunction(id);
-        console.log("GENERATE CERTIFICATE RESPONSE: ", response.data.itemList);
+      const response = await generateFunction(id);
+      console.log("GENERATE CERTIFICATE RESPONSE: ", response.data.itemList);
 
-        if (type === "NewPostCode") {
-          setData(response.data);
-        } else {
-          setData(response.data.itemList[0].data);
-        }
-      } catch (error) {
-        console.log("GENERATE CERTIFICATE ERROR: ", error.response);
-        showMessage({
-          message: error.response?.data?.message || error.message,
-          type: "danger",
-          titleStyle: toastStyles,
-        });
+      if (type === "NewPostCode") {
+        setData(response.data);
+      } else {
+        setData(response.data.itemList[0].data);
       }
     };
 

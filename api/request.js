@@ -42,3 +42,7 @@ export function getRequestBulk(mobile) {
 export function getRequestPostYafte(mobile) {
   return axiosInstance.get(`/Request/GetRequestPostYafte?Mobile=${mobile}`);
 }
+
+export function insertRequestGheramat(data) {
+  return axiosInstance.post("Request/InsertRequestGheramate", data);
+}

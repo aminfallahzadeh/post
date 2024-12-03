@@ -21,11 +21,8 @@ import Background from "@/components/Background";
 import * as SecureStore from "expo-secure-store";
 import SelectInput from "@/components/SelectInput";
 import { optionsGenerator } from "@/helpers/selectHelper";
-import {
-  getProvince,
-  getServiceType,
-  insertRequestGheramat,
-} from "@/api/gheramat";
+import { getProvince, getServiceType } from "@/api/gheramat";
+import { insertRequestGheramat } from "@/api/request";
 import { REQUIRED } from "@/constants/messages";
 import { LOADING_MESSAGE } from "@/constants/messages";
 
@@ -38,6 +35,7 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   // CONSTS
+  const setGheramatResult = useUserStore((state) => state.setGheramatResult);
   const userData = useUserStore((state) => state.userData);
   const mobile = SecureStore.getItem("mobile");
   const {
@@ -80,14 +78,14 @@ const Index = () => {
         parcellno: form_data.parcellno,
         serviceKind: form_data.serviceKind,
         province: parseInt(form_data.province),
+        mobile,
         customerName: userData.name,
         customerFamily: userData.lastName,
         nationalID: userData.nationalCode,
-        mobile,
-        pkhcode: "",
-        trackingId: "",
       });
       console.log("GHERAMAT RESPONSE: ", response.data);
+      setGheramatResult(response.data.itemList[0]);
+      router.push("forms/gheramat/step2");
     } finally {
       setIsLoading(false);
     }
@@ -139,7 +137,7 @@ const Index = () => {
               <FormField
                 placeholder="نام"
                 type={"text"}
-                value={userData.name}
+                value={userData?.name || "-"}
                 editable={false}
                 containerStyle="mt-5"
                 control={control}
@@ -149,7 +147,7 @@ const Index = () => {
               <FormField
                 placeholder="نام خانوادگی"
                 type={"text"}
-                value={userData.lastName}
+                value={userData?.lastName || "-"}
                 editable={false}
                 containerStyle="mt-5"
                 control={control}
@@ -159,7 +157,7 @@ const Index = () => {
               <FormField
                 placeholder="کد ملی"
                 type={"text"}
-                value={userData.nationalCode}
+                value={userData?.nationalCode || "-"}
                 editable={false}
                 containerStyle="mt-5"
                 control={control}
@@ -169,7 +167,7 @@ const Index = () => {
               <FormField
                 placeholder="تلفن"
                 type={"text"}
-                value={mobile}
+                value={mobile || "-"}
                 editable={false}
                 containerStyle="mt-5"
                 control={control}

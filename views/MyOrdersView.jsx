@@ -35,9 +35,9 @@ const MyOrdersView = () => {
   const onSubmit = async (barcode) => {
     setIsOrderLoading(true);
     try {
-      const response = await trackingOrder("120920324900026700000114");
+      const response = await trackingOrder(barcode);
       console.log("TRACKING ORDER RESPONSE:", response.data);
-      router.push(`/follow/order?barcode=120920324900026700000114`);
+      router.push(`/follow/order?barcode=${barcode}`);
     } finally {
       setIsOrderLoading(false);
     }
