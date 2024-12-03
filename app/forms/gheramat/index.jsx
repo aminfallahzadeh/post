@@ -10,35 +10,36 @@ import {
   ScrollView,
   StyleSheet,
 } from "react-native";
-import { LOADING_MESSAGE } from "@/constants/messages";
-import SelectInput from "@/components/SelectInput";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { insertRequestPostYafte } from "@/api/request";
+import { useUserStore } from "@/store";
 import { router } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
 import CustomButton from "@/components/CustomButton";
 import FormField from "@/components/FormField";
 import ProgressBar from "@/components/ProgressBar";
 import Background from "@/components/Background";
-import { useUserStore } from "@/store";
-import { POST_YAFTE } from "@/constants/consts";
-import { REQUIRED } from "@/constants/messages";
-import { postYafteValidation } from "@/constants/validations";
-import { getYafteProvince, getYafteCity } from "@/api/yafte";
-import { optionsGenerator } from "@/helpers/selectHelper";
 import * as SecureStore from "expo-secure-store";
+import SelectInput from "@/components/SelectInput";
+import { optionsGenerator } from "@/helpers/selectHelper";
+import {
+  getProvince,
+  getServiceType,
+  insertRequestGheramat,
+} from "@/api/gheramat";
+import { REQUIRED } from "@/constants/messages";
+import { LOADING_MESSAGE } from "@/constants/messages";
 
-const Step2 = () => {
+const Index = () => {
   // STATES
-  const mobile = SecureStore.getItem("mobile");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isServiceLoading, setIsServiceLoading] = useState(false);
+  const [serviceOptions, setServiceOptions] = useState([]);
   const [isProvinceLoading, setIsProvinceLoading] = useState(false);
-  const [isCityLoading, setIsCityLoading] = useState(false);
-  const [cityOptions, setCityOptions] = useState([]);
   const [provinceOptions, setProvinceOptions] = useState([]);
-  const foundDocIds = useUserStore((state) => state.foundDocIds);
+  const [isLoading, setIsLoading] = useState(false);
 
   // CONSTS
+  const userData = useUserStore((state) => state.userData);
+  const mobile = SecureStore.getItem("mobile");
   const {
     control,
     handleSubmit,
@@ -47,11 +48,23 @@ const Step2 = () => {
   } = useForm();
   const form_data = watch();
 
-  // HANDLES
+  // HANDLERS
+  const fetchServiceType = async () => {
+    setIsServiceLoading(true);
+    try {
+      const response = await getServiceType();
+      console.log("SERVICE RESPONSE: ", response.data);
+      const options = optionsGenerator(response.data.itemList, "id", "name");
+      setServiceOptions(options);
+    } finally {
+      setIsServiceLoading(false);
+    }
+  };
+
   const fetchProvince = async () => {
     setIsProvinceLoading(true);
     try {
-      const response = await getYafteProvince();
+      const response = await getProvince();
       console.log("PROVINCE RESPONSE: ", response.data);
       const options = optionsGenerator(response.data.itemList, "id", "name");
       setProvinceOptions(options);
@@ -60,35 +73,21 @@ const Step2 = () => {
     }
   };
 
-  const fetchCity = async (provinceID = null) => {
-    setIsCityLoading(true);
-    try {
-      const response = await getYafteCity({ provinceID });
-      console.log("CITY RESPONSE: ", response.data);
-      const options = optionsGenerator(response.data.itemList, "id", "name");
-      setCityOptions(options);
-    } finally {
-      setIsCityLoading(false);
-    }
-  };
-
   const onSubmit = async () => {
     setIsLoading(true);
     try {
-      const docList = foundDocIds.map((doc) => ({
-        foundDocId: doc.id,
-      }));
-      const response = await insertRequestPostYafte({
+      const response = await insertRequestGheramat({
+        parcellno: form_data.parcellno,
+        serviceKind: form_data.serviceKind,
+        province: parseInt(form_data.province),
+        customerName: userData.name,
+        customerFamily: userData.lastName,
+        nationalID: userData.nationalCode,
         mobile,
-        cityID: form_data.city_id,
-        address: form_data.address,
-        postCode: form_data.postCode,
-        docList: docList,
-        trackingID: "",
-        id: "",
+        pkhcode: "",
+        trackingId: "",
       });
-      console.log("POST YAFTE RESPONSE: ", response.data);
-      router.replace("/forms/post-yafte/step3");
+      console.log("GHERAMAT RESPONSE: ", response.data);
     } finally {
       setIsLoading(false);
     }
@@ -96,8 +95,8 @@ const Step2 = () => {
 
   // EFFECTS
   useEffect(() => {
-    fetchCity();
     fetchProvince();
+    fetchServiceType();
   }, []);
 
   return (
@@ -106,7 +105,7 @@ const Step2 = () => {
         <ScrollView
           contentContainerStyle={{
             flexGrow: 1,
-            paddingBottom: 30,
+            paddingBottom: 90,
           }}
           showsVerticalScrollIndicator={false}
           stickyHeaderIndices={[0]}
@@ -125,64 +124,78 @@ const Step2 = () => {
                 <Feather name="arrow-left" size={25} color="#333" />
               </Pressable>
               <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
-                {POST_YAFTE}
+                درخواست غرامت
               </Text>
             </View>
 
             <View className="flex-col px-10 w-full pb-2">
-              <ProgressBar progress={66} />
+              <ProgressBar progress={50} />
             </View>
           </View>
 
           {/* FORM FIELDS */}
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <View className="w-full px-5">
+            <View className="w-full px-4">
               <FormField
-                placeholder="تلفن همراه"
-                editable={false}
+                placeholder="نام"
                 type={"text"}
-                containerStyle="mt-10"
+                value={userData.name}
+                editable={false}
+                containerStyle="mt-5"
                 control={control}
-                value={mobile || " "}
+                name="name"
+              />
+
+              <FormField
+                placeholder="نام خانوادگی"
+                type={"text"}
+                value={userData.lastName}
+                editable={false}
+                containerStyle="mt-5"
+                control={control}
+                name="lastname"
+              />
+
+              <FormField
+                placeholder="کد ملی"
+                type={"text"}
+                value={userData.nationalCode}
+                editable={false}
+                containerStyle="mt-5"
+                control={control}
+                name="nationalCode"
+              />
+
+              <FormField
+                placeholder="تلفن"
+                type={"text"}
+                value={mobile}
+                editable={false}
+                containerStyle="mt-5"
+                control={control}
                 name="mobile"
               />
 
               <FormField
-                placeholder="* آدرس"
-                multiline={true}
-                keyboardType="default"
-                type={"text"}
-                containerStyle="mt-5"
-                rules={postYafteValidation.address}
-                height={"h-40"}
-                inputStyle={{
-                  textAlignVertical: "top",
-                }}
-                control={control}
-                name="address"
-              />
-
-              <FormField
-                placeholder="* کد پستی"
+                placeholder="شماره مرسوله"
                 keyboardType="numeric"
                 type={"text"}
-                rules={postYafteValidation.postCode}
                 containerStyle="mt-5"
                 control={control}
-                name="postCode"
+                name="parcellno"
               />
 
               <View className="mt-5 relative">
                 {errors && (
                   <View className="absolute -top-5 left-0">
                     <Text className="text-red-500 font-isansregular">
-                      {errors?.state_id?.message}
+                      {errors?.serviceKind?.message}
                     </Text>
                   </View>
                 )}
 
                 <Controller
-                  name="state_id"
+                  name="serviceKind"
                   control={control}
                   rules={{
                     required: {
@@ -193,17 +206,14 @@ const Step2 = () => {
                   render={({ field: { onChange } }) => (
                     <SelectInput
                       placeholder={
-                        isProvinceLoading ? LOADING_MESSAGE : "* استان"
+                        isServiceLoading ? LOADING_MESSAGE : "* نوع سرویس"
                       }
-                      options={provinceOptions}
-                      onValueChange={(val) => {
-                        fetchCity(val);
-                        return onChange(val);
-                      }}
+                      options={serviceOptions}
+                      onValueChange={(val) => onChange(val)}
                       primaryColor="#164194"
                       selectedValue={
-                        provinceOptions.find(
-                          (c) => c.value === form_data?.state_id
+                        serviceOptions.find(
+                          (c) => c.value === form_data?.serviceKind
                         )?.value
                       }
                     />
@@ -215,13 +225,13 @@ const Step2 = () => {
                 {errors && (
                   <View className="absolute -top-5 left-0">
                     <Text className="text-red-500 font-isansregular">
-                      {errors?.city_id?.message}
+                      {errors?.serviceKind?.message}
                     </Text>
                   </View>
                 )}
 
                 <Controller
-                  name="city_id"
+                  name="province"
                   control={control}
                   rules={{
                     required: {
@@ -231,13 +241,16 @@ const Step2 = () => {
                   }}
                   render={({ field: { onChange } }) => (
                     <SelectInput
-                      placeholder={isCityLoading ? LOADING_MESSAGE : "* شهر"}
-                      options={cityOptions}
+                      placeholder={
+                        isProvinceLoading ? LOADING_MESSAGE : "* شهر"
+                      }
+                      options={provinceOptions}
                       onValueChange={(val) => onChange(val)}
                       primaryColor="#164194"
                       selectedValue={
-                        cityOptions.find((c) => c.value === form_data?.city_id)
-                          ?.value
+                        provinceOptions.find(
+                          (c) => c.value === form_data?.province
+                        )?.value
                       }
                     />
                   )}
@@ -248,11 +261,9 @@ const Step2 = () => {
         </ScrollView>
 
         {/* BOTTOM SECTION */}
-        <View className="w-full z-10 px-4 bg-gray-100 py-4">
+        <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
           <CustomButton
-            title="درخواست ارسال"
-            bgColor="bg-green-700"
-            titleColor="text-white"
+            title="ادامه"
             handlePress={handleSubmit(onSubmit)}
             isLoading={isLoading}
           />
@@ -262,12 +273,9 @@ const Step2 = () => {
   );
 };
 
-export default Step2;
+export default Index;
 
 const styles = StyleSheet.create({
-  inputContainer: {
-    columnGap: 10,
-  },
   headerContainer: {
     shadowColor: "black",
     shadowOpacity: 0.26,
@@ -275,11 +283,5 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     elevation: 3,
     backgroundColor: "white",
-  },
-  disabledPlus: {
-    color: "gray",
-  },
-  postalCodesItemContainer: {
-    gap: 10,
   },
 });

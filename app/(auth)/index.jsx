@@ -11,25 +11,32 @@ import FormField from "@/components/FormField";
 import CustomButton from "@/components/CustomButton";
 import Background from "@/components/Background";
 import { mobilePhoneValidation } from "@/constants/validations";
-import useQuery from "@/hooks/useQuery";
+import * as SecureStore from "expo-secure-store";
 
 const Login = () => {
   // STATES
+  const [isLoading, setIsLoading] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState(null);
 
-  // STORE
+  // CONSTS
   const setMobile = useUserStore((state) => state.setMobile);
-
   const { control, handleSubmit, watch } = useForm();
-  const { isLoading, fetchQuery } = useQuery();
-
   const form_data = watch();
 
-  // SUBMIT HANDLER
+  // HANDLERS
   const onSubmit = async () => {
-    const response = await fetchQuery(generateOTP, form_data.mobile);
-    setMobile(response.data.itemList[0].mobile);
-    router.push("/otp");
+    setIsLoading(true);
+    try {
+      const response = await generateOTP(form_data.mobile);
+      setMobile(response.data.itemList[0].mobile);
+      await SecureStore.setItemAsync(
+        "mobile",
+        response.data.itemList[0].mobile
+      );
+      router.push("/otp");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   // ANIMATIONS
@@ -56,7 +63,7 @@ const Login = () => {
       <SafeAreaView className="h-full">
         <ScrollView contentContainerStyle={{ height: "100%" }}>
           <View className="w-full h-full justify-center px-4">
-            <View className="releative mt-3 justify-center items-center">
+            <View className="relative mt-3 justify-center items-center">
               <Animated.Image
                 source={images.logo}
                 className="w-[150px] h-[150px]"
@@ -68,7 +75,7 @@ const Login = () => {
               />
 
               <View className="flex-row justify-center items-center">
-                <View className="relativejustify-center items-center">
+                <View className="relative justify-center items-center">
                   <Text className="text-secondary text-[35px]"> پست </Text>
                   <Image
                     source={images.underline}

@@ -2,18 +2,13 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import * as Clipboard from "expo-clipboard";
 import Feather from "@expo/vector-icons/Feather";
-import { showMessage } from "react-native-flash-message";
-import { toastStyles } from "@/constants/styles";
+import { toastConfig } from "@/config/toast-config";
 
 export const ComplaintCard = ({ item, containerStyles }) => {
   // HANDLERS
   const copyHandler = async () => {
     await Clipboard.setStringAsync(item.key.toString());
-    showMessage({
-      message: "کد پیگیری شما کپی شد",
-      type: "success",
-      titleStyle: toastStyles,
-    });
+    toastConfig.success("کد پیگیری شما کپی شد");
   };
 
   // STATUS

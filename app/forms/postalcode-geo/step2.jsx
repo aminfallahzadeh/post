@@ -1,7 +1,5 @@
-// REACT IMPORTS
+// IMPORTS
 import { useState, useEffect } from "react";
-
-// NATIVE IMPORTS
 import {
   View,
   Text,
@@ -11,48 +9,31 @@ import {
   StyleSheet,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-// STORE
 import { useUserStore } from "@/store";
-
-// AXIOS
 import { insertRequestCertificationGeo } from "@/api/request";
-
-// EXPO
 import { router } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
-
-// COMPONETS
 import ProgressBar from "@/components/ProgressBar";
 import Background from "@/components/Background";
 import AddressCard from "@/components/AddressCard";
 import CustomButton from "@/components/CustomButton";
-
-// CONSTANTS
 import { postalCodeListValidation } from "@/constants/validations";
-
-// ASSETS
 import { toastStyles } from "@/constants/styles";
-
-// LIBRARIES
 import { showMessage } from "react-native-flash-message";
+import * as SecureStore from "expo-secure-store";
 
 const Step2 = () => {
-  // LOADING STATE
+  // STATES
   const [isLoading, setIsLoading] = useState(false);
-
-  // ACCESS GLOBAL STATE
-  const addressByPostCode = useUserStore((state) => state.addressByPostCode);
-  const mobile = useUserStore((state) => state.mobile);
-
-  // ACTIONS
-  const setFactor = useUserStore((state) => state.setFactor);
-
-  // SELECT STATES
   const [selectedItems, setSelectedItems] = useState([]);
   const [isSelectedAll, setIsSelectedAll] = useState(false);
 
-  // HANLDERS
+  // CONSTS
+  const addressByPostCode = useUserStore((state) => state.addressByPostCode);
+  const mobile = SecureStore.getItem("mobile");
+  const setFactor = useUserStore((state) => state.setFactor);
+
+  // HANDLERS
   const handleSelect = (postcode) => {
     setSelectedItems((prevSelectedItems) =>
       prevSelectedItems.includes(postcode)
@@ -99,7 +80,7 @@ const Step2 = () => {
         mobile,
         title,
       });
-      console.log("INSERT REQUEST CERTIFICATE REPONSE: ", response.data);
+      console.log("INSERT REQUEST CERTIFICATE RESPONSE: ", response.data);
       setFactor(response.data.itemList[0]);
       router.push("forms/postalcode-certificate/step3");
     } finally {
@@ -200,15 +181,7 @@ const styles = StyleSheet.create({
   disabledPlus: {
     color: "gray",
   },
-  postalCodeContaiers: {
-    shadowColor: "black",
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 10,
-    elevation: 3,
-    backgroundColor: "white",
-    minHeight: 100,
-  },
+
   postalCodesItemContainer: {
     gap: 10,
   },

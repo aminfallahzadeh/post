@@ -18,20 +18,16 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import RNBounceable from "@freakycoder/react-native-bounceable";
 
 const Step3 = () => {
-  // lOADING
+  // STATES
   const [isLoading, setIsLoading] = useState(false);
-
-  // ACCESS GLOBAL STATE
-  const factor = useUserStore((state) => state.factor);
-  const mobile = useUserStore((state) => state.mobile);
-
-  // CHECKBOX STATE & REF
   const [checked, setChecked] = useState(false);
   const bouncyCheckboxRef = useRef(null);
-
-  // SLIDE AND FADE-IN ANIMATION
   const slideAnim = useRef(new Animated.Value(50)).current;
   const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  // CONSTS
+  const factor = useUserStore((state) => state.factor);
+  const mobile = useUserStore((state) => state.mobile);
 
   // ANIMATION
   useEffect(() => {

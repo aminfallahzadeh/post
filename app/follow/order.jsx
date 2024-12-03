@@ -68,16 +68,6 @@ const FollowOrder = () => {
     }
 
     fetchData(form_data.barcode);
-    // try {
-    //   setIsLoading(true);
-    //   const response = await orderTracking(form_data.barcode);
-    //   console.log("ORDER TRACKING RESPONSE: ", response.data);
-    //   setResult(response.data.itemList);
-    //   // setDate(response.data.itemList[0].tfDate.split(" ")[0]);
-    //   reset();
-    // } finally {
-    //   setIsLoading(false);
-    // }
   };
 
   // SEND REQ IF THE BARCODE IS PROVIDED

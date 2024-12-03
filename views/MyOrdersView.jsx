@@ -6,8 +6,9 @@ import { Chase } from "react-native-animated-spinkit";
 import Background from "@/components/Background";
 import CustomButton from "@/components/CustomButton";
 import { trackingOrderByNID, trackingOrder } from "@/api/tracking";
+import { useUserStore } from "@/store";
 
-const MyPostsView = () => {
+const MyOrdersView = () => {
   // STATES
   const [isLoading, setIsLoading] = useState(false);
   const [isOrderLoading, setIsOrderLoading] = useState(false);
@@ -15,18 +16,20 @@ const MyPostsView = () => {
   const fadeAnimRefs = useRef([]);
 
   // CONSTS
-  const nationalCode = "2640040804";
+  const userData = useUserStore((state) => state.userData);
 
   const fetchData = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const response = await trackingOrderByNID(nationalCode);
-      console.log("TRACKING ORDER RESPONSE:", response.data);
-      setData(response.data.itemList);
-    } finally {
-      setIsLoading(false);
+    if (userData.nationalCode) {
+      setIsLoading(true);
+      try {
+        const response = await trackingOrderByNID(userData.nationalCode);
+        console.log("TRACKING ORDER RESPONSE:", response.data);
+        setData(response.data.itemList);
+      } finally {
+        setIsLoading(false);
+      }
     }
-  }, []);
+  }, [userData.nationalCode]);
 
   // HANDLERS
   const onSubmit = async (barcode) => {
@@ -78,6 +81,10 @@ const MyPostsView = () => {
         >
           {isLoading ? (
             <Chase size={50} color="#164194" className="mt-20" />
+          ) : !userData.nationalCode ? (
+            <Text className="font-isansdemibold text-grey2 text-[30px] mt-20">
+              کد ملی را ثبت کنید
+            </Text>
           ) : data.length === 0 ? (
             <Text className="font-isansdemibold text-grey2 text-[30px] mt-20">
               موردی یافت نشد!
@@ -150,4 +157,4 @@ const MyPostsView = () => {
   );
 };
 
-export default MyPostsView;
+export default MyOrdersView;

@@ -1,4 +1,4 @@
-// NATIVE IMPROTS
+// IMPORTS
 import {
   View,
   Text,
@@ -7,20 +7,19 @@ import {
   Dimensions,
   Platform,
 } from "react-native";
-
-// EXPO IMPORTS
 import { Tabs } from "expo-router";
 import { useState, useRef } from "react";
 import { Ionicons } from "@expo/vector-icons";
-
-// COMPONENTS
 import TabBar from "@/components/TabBar";
 import SettingsMenu from "@/views/SettingsMenu";
 
 const { width, height } = Dimensions.get("screen");
 
 const TabsLayout = () => {
+  // STATES
   const [menuVisible, setMenuVisible] = useState(false);
+
+  // CONSTS
   const animationValue = useRef(new Animated.Value(-width)).current;
 
   // TOGGLE MENU
@@ -47,14 +46,11 @@ const TabsLayout = () => {
         </TouchableOpacity>
         <Text
           style={styles.title}
-          className="text-primary font-bold text-[20px]"
+          className="text-primary font-bold text-[20px] m-auto"
         >
           POST
           <Text className="text-secondary">.IR</Text>
         </Text>
-        <TouchableOpacity>
-          <Ionicons name="search" size={28} color="#333" />
-        </TouchableOpacity>
       </View>
 
       {/* TAB LAYOUT */}

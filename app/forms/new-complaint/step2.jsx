@@ -1,8 +1,6 @@
-// REACT IMPORTS
+// IMPORTS
 import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-
-// NATIVE IMPROTS
 import {
   View,
   Text,
@@ -13,22 +11,14 @@ import {
   Pressable,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-// COMPONETNS
 import ProgressBar from "@/components/ProgressBar";
 import FormField from "@/components/FormField";
 import CustomButton from "@/components/CustomButton";
 import Background from "@/components/Background";
-
-// AXIOS
 import { useUserStore } from "@/store";
 import { newEop } from "@/api/eop";
-
-// LIBRARIES
 import Dropdown from "react-native-input-select";
 import { showMessage } from "react-native-flash-message";
-
-// CONTSTANTS
 import {
   selectPlaceholderStyle,
   selectContainerStyle,
@@ -38,15 +28,9 @@ import {
   checkboxControls,
 } from "@/constants/styles";
 import { stepTwoEopValidation } from "@/constants/validations";
-
-// EXPO IMPORTS
 import { router } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
-
-// ASSETS
 import { toastStyles } from "@/constants/styles";
-
-// DATA
 import {
   seriveTypeLookup,
   postalReagionLookup,
@@ -54,21 +38,18 @@ import {
 } from "@/data/lookup.js";
 
 const Step2 = () => {
-  // LOADING STATE
+  // STATES
   const [isLoading, setIsLoading] = useState(false);
 
-  // ACCES GLOBAL STORE
+  // CONSTS
   const complaintData = useUserStore((state) => state.complaintFormData);
   const removeComplaintData = useUserStore(
     (state) => state.removeComplaintData
   );
-
-  // ACCESS HOOK FORM METHODS
   const { control, handleSubmit, watch, reset } = useForm();
-
-  // ACCESS FORM DATA
   const form_data = watch();
 
+  // EFFECTS
   useEffect(() => {
     console.log("THIS IS THE COMPLAINT", complaintData);
   }, [complaintData]);
@@ -106,7 +87,7 @@ const Step2 = () => {
       router.replace("/services");
       removeComplaintData();
     } catch (error) {
-      console.log("Complait error: ", error.response);
+      console.log("Complain error: ", error.response);
       showMessage({
         message: error.response?.data?.message || error.message,
         type: "danger",

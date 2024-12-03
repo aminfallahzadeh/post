@@ -17,6 +17,7 @@ import { Background, CustomButton } from "@/components";
 import { FactorPostYafte } from "@/components/FactorPostYafte";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import RNBounceable from "@freakycoder/react-native-bounceable";
+import * as SecureStore from "expo-secure-store";
 
 const FactorResult = () => {
   // STATES
@@ -26,7 +27,7 @@ const FactorResult = () => {
 
   // CONSTS
   const factor = useUserStore((state) => state.factor);
-  const mobile = useUserStore((state) => state.mobile);
+  const mobile = SecureStore.getItem("mobile");
 
   // SLIDE AND FADE-IN ANIMATION
   const slideAnim = useRef(new Animated.Value(50)).current;

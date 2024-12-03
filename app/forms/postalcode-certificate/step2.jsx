@@ -21,17 +21,18 @@ import { postalCodeListValidation } from "@/constants/validations";
 import { toastStyles } from "@/constants/styles";
 import { showMessage } from "react-native-flash-message";
 import { SELECT_ALL, POST_CODE_CERTIFICATE } from "@/constants/consts";
+import * as SecureStore from "expo-secure-store";
 
 const Step2 = () => {
   // STATES
   const [isLoading, setIsLoading] = useState(false);
   const addressByPostCode = useUserStore((state) => state.addressByPostCode);
-  const mobile = useUserStore((state) => state.mobile);
+  const mobile = SecureStore.getItem("mobile");
   const setFactor = useUserStore((state) => state.setFactor);
   const [selectedItems, setSelectedItems] = useState([]);
   const [isSelectedAll, setIsSelectedAll] = useState(false);
 
-  // HANLDERS
+  // HANDLERS
   const handleSelect = (postcode) => {
     setSelectedItems((prevSelectedItems) =>
       prevSelectedItems.includes(postcode)
@@ -78,7 +79,7 @@ const Step2 = () => {
         mobile,
         title,
       });
-      console.log("INSERT REQUEST CERTIFICATE REPONSE: ", response.data);
+      console.log("INSERT REQUEST CERTIFICATE RESPONSE: ", response.data);
       setFactor(response.data.itemList[0]);
       router.push("forms/postalcode-certificate/step3");
     } catch (error) {
@@ -186,15 +187,7 @@ const styles = StyleSheet.create({
   disabledPlus: {
     color: "gray",
   },
-  postalCodeContaiers: {
-    shadowColor: "black",
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 10,
-    elevation: 3,
-    backgroundColor: "white",
-    minHeight: 100,
-  },
+
   postalCodesItemContainer: {
     gap: 10,
   },

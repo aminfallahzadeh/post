@@ -38,7 +38,7 @@ const Index = () => {
     (state) => state.setAddressByPostCode
   );
 
-  // DISBALE HANLDER
+  // DISABLE HANDLER
   useEffect(() => {
     if (form_data.postalCode && form_data.postalCode.length > 0) {
       setPlusDisabled(false);
@@ -174,7 +174,7 @@ const Index = () => {
                       ? "justify-center"
                       : "justify-start"
                   }`}
-                  style={styles.postalCodeContaiers}
+                  style={styles.postalCodeContainers}
                 >
                   {postalCodes.length === 0 ? (
                     <Text className="text-grey4 font-isansregular text-[15px]">
@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
   disabledPlus: {
     color: "gray",
   },
-  postalCodeContaiers: {
+  postalCodeContainers: {
     shadowColor: "black",
     shadowOpacity: 0.26,
     shadowOffset: { width: 0, height: 2 },

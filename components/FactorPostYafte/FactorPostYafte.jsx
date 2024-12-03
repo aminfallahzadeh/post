@@ -1,7 +1,7 @@
 // IMPORTS
 import { View, Text, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { seperateByThousand } from "@/utils/helpers";
+import { separateByThousand } from "@/utils/numberSeparator";
 
 export const FactorPostYafte = ({ data }) => {
   return (
@@ -30,7 +30,7 @@ export const FactorPostYafte = ({ data }) => {
           مبلغ درخواست ارسال :
         </Text>
         <Text className="font-isansregular">
-          {seperateByThousand(data.amount)} ریال
+          {separateByThousand(data.amount)} ریال
         </Text>
       </View>
 
@@ -48,7 +48,7 @@ export const FactorPostYafte = ({ data }) => {
           مالیات بر ارزش افزوده :
         </Text>
         <Text className="font-isansregular">
-          {seperateByThousand(data?.tax)} ریال
+          {separateByThousand(data?.tax)} ریال
         </Text>
       </View>
 
@@ -66,7 +66,7 @@ export const FactorPostYafte = ({ data }) => {
           هزینه بسته بندی :
         </Text>
         <Text className="font-isansregular">
-          {seperateByThousand(data?.escrow)} ریال
+          {separateByThousand(data?.escrow)} ریال
         </Text>
       </View>
 
@@ -77,7 +77,7 @@ export const FactorPostYafte = ({ data }) => {
           جمع کل
         </Text>
         <Text className="font-isansregular">
-          {seperateByThousand(data?.tax + data?.amount + data?.escrow)} ریال
+          {separateByThousand(data?.tax + data?.amount + data?.escrow)} ریال
         </Text>
       </View>
     </View>

@@ -34,13 +34,14 @@ import { LOADING_MESSAGE } from "@/constants/messages";
 import { postAreaOptions } from "@/data/postArea";
 
 export const PostalCodeRequest = () => {
+  // STATES
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  // CONSTS
   const { control, watch, handleSubmit, setValue } = useForm();
   const form_data = watch();
   const fetchData = useFetchData(dispatch);
-
-  // STORE
   const setUserAddress = useUserStore((state) => state.setUserAddress);
   const setUserAddressCodes = useUserStore(
     (state) => state.setUserAddressCodes

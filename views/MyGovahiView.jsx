@@ -6,17 +6,17 @@ import { showMessage } from "react-native-flash-message";
 import { Chase } from "react-native-animated-spinkit";
 import Background from "@/components/Background";
 import PostCertificateCard from "@/components/PostCertificateCard";
-import { useUserStore } from "@/store";
 import { getCertificate } from "@/api/gnaf";
 import { toastStyles } from "@/constants/styles";
+import * as SecureStore from "expo-secure-store";
 
 const MyGovahiView = () => {
   // STATES
   const [list, setList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const mobile = useUserStore((state) => state.mobile);
 
   // CONSTS
+  const mobile = SecureStore.getItem("mobile");
   const fadeAnimRefs = useRef([]);
 
   // FETCH

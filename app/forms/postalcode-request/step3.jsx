@@ -16,20 +16,17 @@ import { requestPayment } from "@/api/payment";
 import { ProgressBar, Background, Factor, CustomButton } from "@/components";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import RNBounceable from "@freakycoder/react-native-bounceable";
+import * as SecureStore from "expo-secure-store";
 
 const Step3 = () => {
-  // lOADING
+  // STATES
   const [isLoading, setIsLoading] = useState(false);
-
-  // ACCESS GLOBAL STATE
-  const factor = useUserStore((state) => state.factor);
-  const mobile = useUserStore((state) => state.mobile);
-
-  // CHECKBOX STATE & REF
   const [checked, setChecked] = useState(false);
   const bouncyCheckboxRef = useRef(null);
 
-  // SLIDE AND FADE-IN ANIMATION
+  // CONSTS
+  const factor = useUserStore((state) => state.factor);
+  const mobile = SecureStore.getItem("mobile");
   const slideAnim = useRef(new Animated.Value(50)).current;
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
@@ -192,15 +189,6 @@ const styles = StyleSheet.create({
   },
   disabledPlus: {
     color: "gray",
-  },
-  postalCodeContaiers: {
-    shadowColor: "black",
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 10,
-    elevation: 3,
-    backgroundColor: "white",
-    minHeight: 100,
   },
   postalCodesItemContainer: {
     gap: 10,

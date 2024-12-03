@@ -14,42 +14,24 @@ import LottieView from "lottie-react-native";
 import { OtpInput } from "react-native-otp-entry";
 import { Flow, Chase } from "react-native-animated-spinkit";
 import Background from "@/components/Background";
-import { validateOTP, generateOTP } from "@/api/auth";
-import { useUserStore } from "@/store";
-import { router } from "expo-router";
-import * as SecureStore from "expo-secure-store";
+import { login, generateOTP } from "@/api/auth";
 import OtpLottie from "@/assets/animations/otp-lottie.json";
 import useGetUserData from "@/hooks/useGetUserData";
-import { formatTime } from "@/utils/helpers";
-import useQuery from "@/hooks/useQuery";
-import useMutation from "@/hooks/useMutation";
+import { formatTime } from "@/utils/formatTime";
 import { toastConfig } from "@/config/toast-config";
+import * as SecureStore from "expo-secure-store";
 
 const Otp = () => {
   // STATES
+  const [isValidating, setIsValidating] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [code, setCode] = useState(null);
   const [retryDisabled, setRetryDisabled] = useState(true);
   const [timeLeft, setTimeLeft] = useState(120);
 
-  // STORE
-  const mobile = useUserStore((state) => state.mobile);
-
-  // ACCES HOOK FUNCTIONS
+  // CONSTS
+  const mobile = SecureStore.getItem("mobile");
   const { fetchCustomerData } = useGetUserData(mobile);
-
-  const { isLoading, fetchQuery } = useQuery();
-  const { isLoading: isValidating, fetchMutation } = useMutation();
-
-  // FUNCTION TO STORE TOKEN
-  const saveToken = async function (key, value) {
-    await SecureStore.setItemAsync(key, value);
-    console.log("token saved");
-  };
-
-  const saveRefreshToken = async function (key, value) {
-    await SecureStore.setItemAsync(key, value);
-    console.log("refresh token saved");
-  };
 
   useEffect(() => {
     if (timeLeft > 0) {
@@ -65,40 +47,38 @@ const Otp = () => {
   }, [timeLeft]);
 
   // VALIDATE FUNCTION
-  const validateOTPHanlder = useCallback(async () => {
-    const response = await fetchMutation(
-      validateOTP,
-      undefined,
-      {
-        code: parseInt(code),
-        mobile,
-      },
-      true
-    );
-    const data = response.data?.itemList[0];
-    saveToken("token", data.token);
-    saveRefreshToken("refreshToken", data.refreshToken);
-    await fetchCustomerData(mobile);
-    router.replace("/services");
-  }, [code, mobile, fetchMutation, fetchCustomerData]);
+  const loginHandler = useCallback(async () => {
+    setIsValidating(true);
+    try {
+      await login({ code: parseInt(code), mobile });
+      await fetchCustomerData(mobile);
+    } finally {
+      setIsValidating(false);
+    }
+  }, [code, mobile, fetchCustomerData]);
 
   // GENERATE OTP FUNCTION
   const generateOTPHandler = async () => {
-    Keyboard.dismiss();
-    await fetchQuery(generateOTP, mobile);
-    setTimeLeft(120);
-    setRetryDisabled(true);
-    toastConfig.success("کد مجددا ارسال شد");
-    setCode(null);
+    setIsLoading(true);
+    try {
+      Keyboard.dismiss();
+      await generateOTP(mobile);
+      setTimeLeft(120);
+      setRetryDisabled(true);
+      toastConfig.success("کد مجددا ارسال شد");
+      setCode(null);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  // VLAIDATE ON FILLED
+  // VALIDATE ON FILLED
   useEffect(() => {
     if (code?.length === 4) {
       Keyboard.dismiss();
-      validateOTPHanlder();
+      loginHandler();
     }
-  }, [code, validateOTPHanlder]);
+  }, [code, loginHandler]);
 
   return (
     <Background>
@@ -144,7 +124,7 @@ const Otp = () => {
                     </View>
                   ) : (
                     <Text className="text-primary font-isansbold">
-                      کد را دریافت نمیکنم
+                      کد را دریافت نمی کنم
                     </Text>
                   )}
                 </Pressable>

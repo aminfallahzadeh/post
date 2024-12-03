@@ -1,8 +1,6 @@
-// REACT IMPORTS
+// IMPORTS
 import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-
-// NATIVE
 import {
   View,
   Text,
@@ -13,38 +11,22 @@ import {
   ScrollView,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-// EXPO
 import { useLocalSearchParams, router } from "expo-router";
 import { Feather } from "@expo/vector-icons";
-
-// STORE
 import { useUserStore } from "@/store";
-
-// AXIOS
 import { customerProfile } from "@/api/customer";
-
-// LIBRARIES
 import { showMessage } from "react-native-flash-message";
 import LottieView from "lottie-react-native";
 import Dropdown from "react-native-input-select";
-
-// DATA
 import { days, months, years } from "@/data/lookup";
-
-// ASSETS
 import userLottie from "@/assets/animations/user-lottie.json";
-
-// COMPONENTS
+import { toastConfig } from "@/config/toast-config";
 import FormField from "@/components/FormField";
 import CustomButton from "@/components/CustomButton";
 import Background from "@/components/Background";
-
-// HOOKS
 import useGetUserData from "@/hooks/useGetUserData";
-
-// CONTSTANTS
 import { userDataValidations } from "@/constants/validations";
+import * as SecureStore from "expo-secure-store";
 
 // ASSETS
 import { toastStyles } from "@/constants/styles";
@@ -58,19 +40,14 @@ import {
 } from "@/constants/styles";
 
 const UserProfile = () => {
-  const { id } = useLocalSearchParams();
-
-  // LOADING STATE
+  // STATES
   const [isLoading, setIsLoading] = useState(false);
 
-  // GLOBAL STATES
-  const mobile = useUserStore((state) => state.mobile);
+  // CONSTS
+  const { id } = useLocalSearchParams();
+  const mobile = SecureStore.getItem("mobile");
   const userData = useUserStore((state) => state.userData);
-
-  // ACCESS HOOK FORM METHODS
   const { control, handleSubmit, watch, setValue, reset } = useForm();
-
-  // ACCESS HOOK FORM DATA
   const form_data = watch();
 
   // ACCESS HOOK FUNCTIONS
@@ -79,7 +56,6 @@ const UserProfile = () => {
 
   // FILL FORM BASED ON USER CURRENT DATA
   useEffect(() => {
-    console.log(userData);
     if (userData && userData.birthDate) {
       const [year, month, day] = userData?.birthDate?.split("/");
       Object.keys(userData).forEach((key) => {
@@ -123,19 +99,8 @@ const UserProfile = () => {
       reset();
 
       console.log("Customer profile response", response);
-      showMessage({
-        message: response.data.message,
-        type: "success",
-        titleStyle: toastStyles,
-      });
+      toastConfig.success(response.data.message);
       router.replace("/services");
-    } catch (error) {
-      console.log("Customer profile error: ", error);
-      showMessage({
-        message: error.response.data.message || error.message,
-        type: "danger",
-        titleStyle: toastStyles,
-      });
     } finally {
       setIsLoading(false);
     }
@@ -188,6 +153,7 @@ const UserProfile = () => {
                 containerStyle="mt-5"
                 name="name"
               />
+
               <FormField
                 placeholder="نام خانوادگی"
                 keyboardType="default"
@@ -206,7 +172,7 @@ const UserProfile = () => {
               />
 
               <View className="mt-5">
-                <Text className="text-base text-gray2 font-isansmedium">
+                <Text className="text-base text-gray2 font-isansmedium w-full text-right px-2">
                   تاریخ تولد :
                 </Text>
               </View>

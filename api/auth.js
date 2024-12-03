@@ -1,57 +1,31 @@
-// AXIOS
+// IMPORTS
 import axiosInstance from "@/config/axiosConfig";
-
-// EXPO
-import * as SecureStore from "expo-secure-store";
 import { router } from "expo-router";
-
-// LIBRARIES
-import { showMessage } from "react-native-flash-message";
+import { removeCredentials, setCredentials } from "@/utils/authUtils";
+import { toastConfig } from "@/config/toast-config";
 
 export function generateOTP(Mobile) {
   return axiosInstance.post(`/Customer/GenerateOTP?Mobile=${Mobile}`);
 }
 
-export function validateOTP(data) {
-  return axiosInstance.post("/Customer/ValidateOTP", data);
+export async function login(data) {
+  const response = await axiosInstance.post("/Customer/ValidateOTP", data);
+  const expireTime = 90 * 24 * 60 * 60 * 1000; // 90 days in milliseconds
+  const expiryDate = new Date(Date.now() + expireTime).toISOString();
+  console.log("login", response.data);
+  toastConfig.success(response.data.message);
+  setCredentials(
+    response?.data?.itemList[0].token,
+    response?.data?.itemList[0].refreshToken,
+    expiryDate
+  );
+  router.replace("/services");
 }
 
-// LOGOUT API
-// REMOVE TOKENS FROM SECURE STORE
-const removeTokens = async () => {
-  await SecureStore.deleteItemAsync("token");
-  await SecureStore.deleteItemAsync("refreshToken");
-};
-
 export async function logout() {
-  try {
-    const response = await axiosInstance.post("/Customer/Logout");
-    console.log("Logout response:", response);
-    await removeTokens();
-
-    showMessage({
-      message: `\n ${response.data.message}`,
-      type: "success",
-      titleStyle: {
-        fontFamily: "IranSans-DemiBold",
-        fontSize: 16,
-        textAlign: "center",
-      },
-    });
-    router.replace("/(auth)");
-
-    // DEBUGGING
-    console.log("User successfully logged out and tokens cleared.");
-  } catch (error) {
-    console.error("Error during logout:", error.response || error);
-    showMessage({
-      message: `\n ${error.response.data.message}` || `\n ${error.message}`,
-      type: "danger",
-      titleStyle: {
-        fontFamily: "IranSans-DemiBold",
-        fontSize: 16,
-        textAlign: "center",
-      },
-    });
-  }
+  const response = await axiosInstance.post("/Customer/Logout");
+  console.log("Logout response:", response);
+  await removeCredentials();
+  toastConfig.success(response.data.message);
+  router.replace("/(auth)");
 }

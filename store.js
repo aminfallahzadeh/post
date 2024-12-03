@@ -1,16 +1,20 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
+const initialState = {
+  mobile: null,
+  userData: null,
+  complaintFormData: {},
+  addressByPostCode: [],
+  factor: {},
+  userAddress: "",
+  userAddressCodes: {},
+  foundDocIds: [],
+};
+
 export const useUserStore = create(
   devtools((set) => ({
-    mobile: null,
-    userData: null,
-    complaintFormData: {},
-    addressByPostCode: [],
-    factor: {},
-    userAddress: "",
-    userAddressCodes: {},
-    foundDocIds: [],
+    ...initialState,
 
     setMobile: (mobile) => set({ mobile }),
     setUserData: (userData) => set({ userData }),
@@ -29,5 +33,7 @@ export const useUserStore = create(
     setUserAddressCodes: (userAddressCodes) => set({ userAddressCodes }),
 
     setFoundDocIds: (foundDocIds) => set({ foundDocIds }),
+
+    resetStore: () => set(initialState),
   }))
 );

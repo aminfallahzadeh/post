@@ -1,7 +1,7 @@
 // IMPORTS
 import { View, Text, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { seperateByThousand } from "@/utils/helpers";
+import { separateByThousand } from "@/utils/numberSeparator";
 
 export const Factor = ({ data }) => {
   const date = new Date(data.date);
@@ -83,7 +83,7 @@ export const Factor = ({ data }) => {
           مبلغ هر درخواست
         </Text>
         <Text className="font-isansregular">
-          {seperateByThousand(data.amount)} ریال
+          {separateByThousand(data.amount)} ریال
         </Text>
       </View>
 
@@ -101,7 +101,7 @@ export const Factor = ({ data }) => {
           مالیات بر ارزش افزوده
         </Text>
         <Text className="font-isansregular">
-          {seperateByThousand(data.tax)} ریال
+          {separateByThousand(data.tax)} ریال
         </Text>
       </View>
 
@@ -112,7 +112,7 @@ export const Factor = ({ data }) => {
           جمع کل
         </Text>
         <Text className="font-isansregular">
-          {seperateByThousand(data.tax + data.amount)} ریال
+          {separateByThousand(data.tax + data.amount)} ریال
         </Text>
       </View>
     </View>

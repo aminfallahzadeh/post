@@ -23,25 +23,22 @@ import { showMessage } from "react-native-flash-message";
 import LottieView from "lottie-react-native";
 import { toastStyles } from "@/constants/styles";
 import judgeLottie from "@/assets/animations/judge-lottie.json";
+import * as SecureStore from "expo-secure-store";
 
-const Step1 = () => {
-  // LOADINT STATE
+const Index = () => {
+  // STATES
   const [isLoading, setIsLoading] = useState(false);
 
-  // ACCESS GLOBAL STATES
-  const mobile = useUserStore((state) => state.mobile);
+  // CONSTS
+  const mobile = SecureStore.getItem("mobile");
   const userData = useUserStore((state) => state.userData);
   const setComplaintFormData = useUserStore(
     (state) => state.setComplaintFormData
   );
-
-  // ACCESS HOOK FORM METHODS
   const { control, handleSubmit, watch } = useForm();
-
-  // ACCESS HOOK FORM DATA
   const form_data = watch();
 
-  // SUBMIT HANDLER
+  // HANDLERS
   const onSubmit = async () => {
     const validations = stepOneEopValidations(form_data);
 
@@ -74,7 +71,6 @@ const Step1 = () => {
           keyboardShouldPersistTaps="handled"
         >
           {/* HEADER SECTION */}
-
           <View
             className="flex-col w-full bg-secondary z-10 justify-center items-center relative"
             style={styles.headerContainer}
@@ -173,8 +169,8 @@ const Step1 = () => {
             </View>
           </TouchableWithoutFeedback>
         </ScrollView>
-        {/* BOTTOM SECTION */}
 
+        {/* BOTTOM SECTION */}
         <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
           <CustomButton
             title="ادامه"
@@ -187,7 +183,7 @@ const Step1 = () => {
   );
 };
 
-export default Step1;
+export default Index;
 
 const styles = StyleSheet.create({
   headerContainer: {

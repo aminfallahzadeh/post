@@ -23,6 +23,7 @@ import { filtersData } from "@/data/filters";
 import { followUpData, requestData } from "@/data/services";
 import { allData } from "@/data/services";
 import images from "@/constants/images";
+import * as SecureStore from "expo-secure-store";
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
@@ -48,7 +49,6 @@ const Services = () => {
 
   // ACCESS USER DATA
   const userData = useUserStore((state) => state.userData);
-
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -58,6 +58,13 @@ const Services = () => {
       useNativeDriver: true,
     }).start();
   }, [fadeAnim]);
+
+  // FOR TESTING
+  useEffect(() => {
+    console.log("token ", SecureStore.getItem("token"));
+    console.log("refreshToken ", SecureStore.getItem("refreshToken"));
+    console.log("expireTime ", SecureStore.getItem("expireTime"));
+  }, []);
 
   const handleOnFilterPress = (option, type) => {
     setSelected(option);
@@ -74,6 +81,10 @@ const Services = () => {
   };
 
   const renderServices = useRenderService(handlePress);
+
+  useEffect(() => {
+    console.log("USER DATA: ", userData);
+  }, [userData]);
 
   return (
     <>

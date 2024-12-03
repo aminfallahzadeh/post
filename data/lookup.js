@@ -1,5 +1,5 @@
 // HELPERS
-import { generateYearsArray, generateDaysArray } from "@/utils/helpers";
+import { generateYearsArray, generateDaysArray } from "@/utils/generateArray";
 
 export const complaintTypeLookup = [
   { label: "آسیب دیدگی مرسوله", value: 73 },

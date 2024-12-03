@@ -1,10 +1,10 @@
 // IMPORTS
-import { nationalCodeChekcher } from "@/utils/helpers";
+import { nationalCodeChecker } from "@/utils/nationalCodeChecker";
 import { mobilePhoneErrors, REQUIRED, POSTCODE_INVALID } from "./messages";
 
 export const userDataValidations = (form_data) => [
   {
-    check: !nationalCodeChekcher(form_data.nationalCode),
+    check: !nationalCodeChecker(form_data.nationalCode),
     message: "کد ملی معتبر نیست",
   },
   {

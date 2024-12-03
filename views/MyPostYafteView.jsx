@@ -8,6 +8,7 @@ import { useUserStore } from "@/store";
 import { getRequestPostYafte } from "@/api/request";
 import { requestPayment } from "@/api/payment";
 import CustomButton from "@/components/CustomButton";
+import * as SecureStore from "expo-secure-store";
 
 const MyPostYafteView = () => {
   // STATES
@@ -17,7 +18,7 @@ const MyPostYafteView = () => {
   const fadeAnimRefs = useRef([]);
 
   // CONSTS
-  const mobile = useUserStore((state) => state.mobile);
+  const mobile = SecureStore.getItem("mobile");
   const setFactor = useUserStore((state) => state.setFactor);
 
   const fetchData = useCallback(async () => {

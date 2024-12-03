@@ -4,9 +4,9 @@ import { View, Text, ScrollView, Animated } from "react-native";
 import { useFocusEffect } from "expo-router";
 import { Chase } from "react-native-animated-spinkit";
 import Background from "@/components/Background";
-import { useUserStore } from "@/store";
 import { getRequestBulk } from "@/api/request";
 import { PostCodeCard } from "@/components/PostCodeCard/PostCodeCard";
+import * as SecureStore from "expo-secure-store";
 
 const MyPostCodesView = () => {
   // STATES
@@ -15,7 +15,7 @@ const MyPostCodesView = () => {
   const fadeAnimRefs = useRef([]);
 
   // CONSTS
-  const mobile = useUserStore((state) => state.mobile);
+  const mobile = SecureStore.getItem("mobile");
 
   const fetchData = useCallback(async () => {
     setIsLoading(true);

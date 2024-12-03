@@ -1,39 +1,21 @@
-// REACT IMPORTS
+// IMPORTS
 import { useState, useEffect, useCallback, useRef } from "react";
-
-// NATIVE IMPORTS
 import { View, Text, ScrollView, Animated } from "react-native";
 import { useFocusEffect } from "expo-router";
-
-// LIBRARIES
-import { showMessage } from "react-native-flash-message";
 import { Chase } from "react-native-animated-spinkit";
-
-// COMPONENTS
 import Background from "@/components/Background";
 import ComplaintCard from "@/components/ComplaintCard";
-
-// STATE
-import { useUserStore } from "@/store";
-
-// AXIOS
 import { eopList } from "@/api/eop";
-
-// ASSETS
-import { toastStyles } from "@/constants/styles";
+import * as SecureStore from "expo-secure-store";
 
 const MyComplaintsView = () => {
-  // LIST DATA
+  // STATES
   const [list, setList] = useState([]);
-
-  // LOADING STATE
   const [isLoading, setIsLoading] = useState(false);
-
-  // GLOBAL STATE
-  const mobile = useUserStore((state) => state.mobile);
-
-  // ANIMATION REFERENCES
   const fadeAnimRefs = useRef([]);
+
+  // CONSTS
+  const mobile = SecureStore.getItem("mobile");
 
   const fetchEopList = useCallback(async () => {
     setIsLoading(true);
@@ -41,13 +23,6 @@ const MyComplaintsView = () => {
       const response = await eopList(mobile);
       console.log("EOP LIST RESPONSE: ", response.data.itemList);
       setList(response.data.itemList);
-    } catch (error) {
-      console.log("EOP LIST ERROR:", error.response);
-      showMessage({
-        message: error.response?.data?.message || error.message,
-        type: "danger",
-        titleStyle: toastStyles,
-      });
     } finally {
       setIsLoading(false);
     }

@@ -1,8 +1,8 @@
 // COMPONENTS
-import MyPostsView from "@/views/MyPostsView";
+import MyOrdersView from "@/views/MyOrdersView";
 
 function index() {
-  return <MyPostsView />;
+  return <MyOrdersView />;
 }
 
 export default index;

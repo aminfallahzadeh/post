@@ -1,7 +1,5 @@
-// REACT IMPORTS
+// IMPORTS
 import { useState } from "react";
-
-// NATIVE IMPORTS
 import {
   View,
   TouchableOpacity,
@@ -11,37 +9,30 @@ import {
   Pressable,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-// STORE
 import { useUserStore } from "@/store";
-
-// EXPO IMPORTS
 import { Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
-
-// APIs
 import { logout } from "@/api/auth";
-
-// COMPONSNETS
 import CustomButton from "@/components/CustomButton";
 import Background from "@/components/Background";
-
-// ASSETS
 import images from "@/constants/images";
+import * as SecureStore from "expo-secure-store";
 
 const SettingsMenu = ({ closeHandler }) => {
-  // ACCESS GLOBAL STATES
-  const mobile = useUserStore((state) => state.mobile);
-  const user = useUserStore((state) => state.userData);
-
-  // LOADING STATE
+  // STATES
   const [isLogoutLoading, setIsLogoutLoading] = useState(false);
 
+  // CONSTS
+  const mobile = SecureStore.getItem("mobile");
+  const user = useUserStore((state) => state.userData);
+  const resetStore = useUserStore((state) => state.resetStore);
+
   // HANDLE LOGOUT
-  const handleLogout = async () => {
+  const logoutHandler = async () => {
     setIsLogoutLoading(true);
     try {
       await logout();
+      resetStore();
     } finally {
       setIsLogoutLoading(false);
     }
@@ -49,7 +40,7 @@ const SettingsMenu = ({ closeHandler }) => {
 
   return (
     <Background>
-      <SafeAreaView className="w-full h-fullrelative px-2 gap-y-[30px]">
+      <SafeAreaView className="w-full h-full relative px-2 gap-y-[30px]">
         <TouchableOpacity onPress={closeHandler}>
           <Feather
             name="arrow-right"
@@ -174,7 +165,7 @@ const SettingsMenu = ({ closeHandler }) => {
             bgColor="bg-red-500"
             titleColor="text-white"
             containerStyles={"mt-10"}
-            handlePress={handleLogout}
+            handlePress={logoutHandler}
             isLoading={isLogoutLoading}
           />
         </View>

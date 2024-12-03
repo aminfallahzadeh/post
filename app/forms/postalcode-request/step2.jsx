@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   View,
   Text,
@@ -9,7 +9,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { insertRequestBulk } from "@/api/request";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import CustomButton from "@/components/CustomButton";
 import FormField from "@/components/FormField";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -19,16 +19,20 @@ import Feather from "@expo/vector-icons/Feather";
 import ProgressBar from "@/components/ProgressBar";
 import { useUserStore } from "@/store";
 import { BuildingDetailInput } from "@/components/BuildingDetailInput";
+import * as SecureStore from "expo-secure-store";
 
 const Step2 = () => {
+  // STATES
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  // CONSTS
   const userData = useUserStore((state) => state.userData);
   const userAddress = useUserStore((state) => state.userAddress);
-  const mobile = useUserStore((state) => state.mobile);
+  const mobile = SecureStore.getItem("mobile");
   const userAddressCodes = useUserStore((state) => state.userAddressCodes);
   const setFactor = useUserStore((state) => state.setFactor);
-  const { control, watch, handleSubmit, setValue } = useForm();
+  const { control, watch, handleSubmit } = useForm();
   const form_data = watch();
 
   const deleteBuildingTypeHandler = (id) => {
@@ -229,15 +233,7 @@ const styles = StyleSheet.create({
   disabledPlus: {
     color: "gray",
   },
-  postalCodeContaiers: {
-    shadowColor: "black",
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 10,
-    elevation: 3,
-    backgroundColor: "white",
-    minHeight: 100,
-  },
+
   postalCodesItemContainer: {
     gap: 10,
   },

@@ -1,6 +1,6 @@
 // IMPORTS
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import MyPostsView from "@/views/MyPostsView";
+import MyOrdersView from "@/views/MyOrdersView";
 import MyComplaintsView from "@/views/MyComplaintsView";
 import MyGovahiView from "@/views/MyGovahiView";
 import MyGheramatsView from "@/views/MyGheramatsView";
@@ -30,7 +30,7 @@ function TopTabsLayout() {
       >
         <Tab.Screen
           name="Posts"
-          component={MyPostsView}
+          component={MyOrdersView}
           options={{
             tabBarLabel: "سفارش",
             tabBarLabelStyle: tabLabelStyle,

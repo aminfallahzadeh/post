@@ -1,8 +1,6 @@
-// REACT IMPORTS
+// IMPORTS
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-
-// NATIVE IMPORTS
 import {
   ScrollView,
   Text,
@@ -13,42 +11,26 @@ import {
   Keyboard,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-// EXPO
 import { router } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
-
-// AXIOS
 import { queryEop } from "@/api/eop";
-
-// COMPONENTS
 import Background from "@/components/Background";
 import FormField from "@/components/FormField";
 import CustomButton from "@/components/CustomButton";
-
-// CONSTANTS
 import { followComplaintValidation } from "@/constants/validations";
-
-// LIBRARIES
 import LottieView from "lottie-react-native";
 import { showMessage } from "react-native-flash-message";
 import { Chase } from "react-native-animated-spinkit";
-
-// ASSETS
 import { toastStyles } from "@/constants/styles";
 import searchLottie from "@/assets/animations/search-lottie.json";
 
 const FollowComplaint = () => {
-  // LOADIN STATE
+  // STATES
   const [isLoading, setIsLoading] = useState(false);
-
-  // MAIN STATE
   const [queryResult, setQueryResult] = useState(null);
 
-  // ACCESS HOOK FORM METHODS
+  // CONSTS
   const { control, handleSubmit, watch, reset } = useForm();
-
-  // ACCESS HOOK FORM DATA
   const form_data = watch();
 
   // HANDLERS
@@ -71,14 +53,6 @@ const FollowComplaint = () => {
       console.log("Query EOP Response: ", response.data);
       setQueryResult(response.data.message);
       reset();
-    } catch (error) {
-      console.log("Query EOP error: ", error.response);
-      showMessage({
-        message: error.response?.data?.message || error.message,
-        type: "danger",
-        titleStyle: toastStyles,
-      });
-      reset();
     } finally {
       setIsLoading(false);
     }
@@ -92,7 +66,7 @@ const FollowComplaint = () => {
             flexGrow: 1,
             paddingBottom: 90,
           }}
-          showsVericalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
           stickyHeaderIndices={[0]}
           keyboardShouldPersistTaps="handled"
         >
@@ -149,7 +123,7 @@ const FollowComplaint = () => {
                 {isLoading ? (
                   <Chase size={40} color="#164194" />
                 ) : queryResult ? (
-                  <Text className="text-grey2 font-isansdemibold text-[16px]">
+                  <Text className="text-grey2 font-isansdemibold text-[16px] text-right">
                     {queryResult}
                   </Text>
                 ) : (

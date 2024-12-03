@@ -1,4 +1,4 @@
-// REACT IMPORTS
+// IMPORTS
 import { useState, useEffect, useRef } from "react";
 import {
   View,
@@ -9,43 +9,28 @@ import {
   Animated,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-// STORE
 import { useUserStore } from "@/store";
-
-// AXIOS
 import { requestPayment } from "@/api/payment";
-
-// EXPO
 import { router } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
-
-// COMPONENTS
 import { ProgressBar, Background, Factor, CustomButton } from "@/components";
-
-// ASSETS
 import { toastStyles } from "@/constants/styles";
-
-// LIBRARIES
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import RNBounceable from "@freakycoder/react-native-bounceable";
 import { showMessage } from "react-native-flash-message";
+import * as SecureStore from "expo-secure-store";
 
 const Step3 = () => {
-  // lOADING
+  // STATES
   const [isLoading, setIsLoading] = useState(false);
-
-  // ACCESS GLOBAL STATE
-  const factor = useUserStore((state) => state.factor);
-  const mobile = useUserStore((state) => state.mobile);
-
-  // CHECKBOX STATE & REF
   const [checked, setChecked] = useState(false);
   const bouncyCheckboxRef = useRef(null);
-
-  // SLIDE AND FADE-IN ANIMATION
   const slideAnim = useRef(new Animated.Value(50)).current;
   const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  // CONSTS
+  const factor = useUserStore((state) => state.factor);
+  const mobile = SecureStore.getItem("mobile");
 
   // ANIMATION
   useEffect(() => {
