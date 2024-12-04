@@ -1,7 +1,6 @@
-// REACT IMPORTS
+// IMPORTS
+import { useForm } from "react-hook-form";
 import { useState } from "react";
-
-// NATIVE IMPORTS
 import {
   View,
   Text,
@@ -10,21 +9,19 @@ import {
   Keyboard,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-// EXPO IMPORTS
 import Feather from "@expo/vector-icons/Feather";
 import { router } from "expo-router";
-
-// COMPONENTS
 import CustomButton from "@/components/CustomButton";
 import FormField from "@/components/FormField";
-
-// LIBRARIES
 import Dropdown from "react-native-input-select";
 
 const Step6 = () => {
+  // STATES
   const [insurance, setInsurance] = useState(null);
   const [group, setGroup] = useState(null);
+
+  // CONSTS
+  const { control } = useForm();
 
   const mohtaviyatGroupOptions = [
     { label: "تهران", value: "tehran" },
@@ -106,9 +103,12 @@ const Step6 = () => {
           <View className="flex-row justify-between mb-2">
             <View className="flex-1">
               <FormField
-                title="مبلغ اظهار شده :"
-                keyboardType="text"
+                placeholder="مبلغ اظهار شده"
                 type={"text"}
+                containerStyle="mt-5"
+                control={control}
+                keyboardType="numeric"
+                name="price"
               />
             </View>
           </View>
@@ -117,9 +117,12 @@ const Step6 = () => {
           <View className="flex-row justify-between mb-2">
             <View className="flex-1">
               <FormField
-                title="محتویات مرسوله : :"
-                keyboardType="text"
+                placeholder="محتویات مرسوله"
                 type={"text"}
+                containerStyle="mt-5"
+                control={control}
+                keyboardType="default"
+                name="content"
               />
             </View>
           </View>

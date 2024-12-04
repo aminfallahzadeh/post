@@ -1,7 +1,6 @@
-// REACT IMPORTS
+// IMPORTS
 import { useState } from "react";
-
-// NATIVE IMPORTS
+import { useForm } from "react-hook-form";
 import {
   View,
   Text,
@@ -12,24 +11,20 @@ import {
   Keyboard,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-// EXPO IMPORTS
 import Feather from "@expo/vector-icons/Feather";
 import { router } from "expo-router";
-
-// COMPONENTS
 import CustomButton from "@/components/CustomButton";
 import FormField from "@/components/FormField";
 import ProgressBar from "@/components/ProgressBar";
-
-// LIBRARIES
 import Dropdown from "react-native-input-select";
 
 const Step1 = () => {
+  // STATES
   const [packageType, setPackageType] = useState(null);
   const [selectedType, setSelectedType] = useState(null);
-  const [weight, setWeight] = useState(0);
-  const [packageNumber, setPackageNumber] = useState(0);
+
+  // CONSTS
+  const { control } = useForm();
 
   const packageTypeOptions = [
     { id: 1, label: "قابل تفکیک", disabled: false, type: "tafkik" },
@@ -54,24 +49,22 @@ const Step1 = () => {
           <View className="flex-row justify-between items-center">
             <View className="flex-1 mr-2">
               <FormField
-                title="وزن مرسوله :"
-                keyboardType="default"
+                placeholder="وزن مرسوله"
                 type={"text"}
-                handleChange={setWeight}
-                value={weight}
-                height={"h-10"}
-                max={3}
+                containerStyle="mt-5"
+                control={control}
+                keyboardType="numeric"
+                name="weight"
               />
             </View>
             <View className="flex-1 ml-2">
               <FormField
-                title="تعداد مرسولات :"
-                keyboardType="default"
+                placeholder="تعداد مرسوله"
                 type={"text"}
-                handleChange={setPackageNumber}
-                value={packageNumber}
-                height={"h-10"}
-                max={3}
+                containerStyle="mt-5"
+                control={control}
+                keyboardType="numeric"
+                name="weight"
               />
             </View>
           </View>
@@ -83,7 +76,7 @@ const Step1 = () => {
               options={[
                 { label: "کارتن", value: "karton" },
                 { label: "پاکت پلاستیکی", value: "plastic" },
-                { label: "پاکت حبابدار", value: "bubilon" },
+                { label: "پاکت حباب دار", value: "bubilon" },
                 { label: "سفارشی", value: "vijhe" },
               ]}
               labelStyle={{

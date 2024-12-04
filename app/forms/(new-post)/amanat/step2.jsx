@@ -1,16 +1,16 @@
-// NATIVE IMPORTS
+// IMPORTS
+import { useForm } from "react-hook-form";
 import { View, Text, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-// EXPO IMPORTS
 import Feather from "@expo/vector-icons/Feather";
 import { router } from "expo-router";
-
-// COMPONENTS
 import CustomButton from "@/components/CustomButton";
 import FormField from "@/components/FormField";
 
 const Step2 = () => {
+  // CONSTS
+  const { control } = useForm();
+
   return (
     <SafeAreaView className="bg-grey1 h-full px-3 justify-between items-center min-h-full">
       {/* Top Section */}
@@ -31,18 +31,22 @@ const Step2 = () => {
           <View className="flex-row justify-between mb-2">
             <View className="flex-1 mr-2">
               <FormField
-                title="نام خانوادگی :"
-                keyboardType="text"
+                placeholder="نام خانوادگی"
                 type={"text"}
-                height={"h-10"}
+                containerStyle="mt-5"
+                control={control}
+                keyboardType="default"
+                name="lastName"
               />
             </View>
             <View className="flex-1 ml-2">
               <FormField
-                title="نام :"
-                keyboardType="text"
+                placeholder="نام"
                 type={"text"}
-                height={"h-10"}
+                containerStyle="mt-5"
+                control={control}
+                keyboardType="default"
+                name="name"
               />
             </View>
           </View>
@@ -51,18 +55,22 @@ const Step2 = () => {
           <View className="flex-row justify-between mb-2">
             <View className="flex-1 mr-2">
               <FormField
-                title="کد پستی :"
-                keyboardType="text"
+                placeholder="کد پستی"
                 type={"text"}
-                height={"h-10"}
+                containerStyle="mt-5"
+                control={control}
+                keyboardType="numeric"
+                name="postalCode"
               />
             </View>
             <View className="flex-1 ml-2">
               <FormField
-                title="کد ملی :"
-                keyboardType="text"
+                placeholder="کد ملی"
                 type={"text"}
-                height={"h-10"}
+                containerStyle="mt-5"
+                control={control}
+                keyboardType="numeric"
+                name="nationalCode"
               />
             </View>
           </View>
@@ -71,18 +79,22 @@ const Step2 = () => {
           <View className="flex-row justify-between mb-2">
             <View className="flex-1 mr-2">
               <FormField
-                title="تلفن همراه :"
-                keyboardType="text"
+                placeholder="تلفن همراه"
                 type={"text"}
-                height={"h-10"}
+                containerStyle="mt-5"
+                control={control}
+                keyboardType="numeric"
+                name="mobile"
               />
             </View>
             <View className="flex-1 ml-2">
               <FormField
-                title="تلفن ثابت :"
-                keyboardType="text"
+                placeholder="تلفن ثابت"
                 type={"text"}
-                height={"h-10"}
+                containerStyle="mt-5"
+                control={control}
+                keyboardType="numeric"
+                name="phone"
               />
             </View>
           </View>
@@ -90,10 +102,13 @@ const Step2 = () => {
           {/* Address Field */}
           <View className="mb-2">
             <FormField
-              title="آدرس :"
-              keyboardType="text"
+              placeholder="ادرس"
               type={"text"}
-              height={"h-10"}
+              containerStyle="mt-5"
+              control={control}
+              keyboardType="numeric"
+              name="address"
+              multiline={true}
             />
           </View>
         </View>

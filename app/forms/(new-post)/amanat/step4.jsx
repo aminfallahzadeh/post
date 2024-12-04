@@ -1,7 +1,6 @@
-// REACT IMPORTS
+// IMPORTS
+import { useForm } from "react-hook-form";
 import { useState } from "react";
-
-// NATIVE IMPORTS
 import {
   View,
   Text,
@@ -12,24 +11,22 @@ import {
   Keyboard,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-// EXPO IMPORTS
 import Feather from "@expo/vector-icons/Feather";
 import { router } from "expo-router";
-
-// COMPONENTS
 import CustomButton from "@/components/CustomButton";
 import FormField from "@/components/FormField";
-
-// LIBRARIES
 import Dropdown from "react-native-input-select";
 
 const Step4 = () => {
+  // STATES
   const [destinationType, setDestinationType] = useState(null);
   const [city, setCity] = useState(null);
   const [province, setProvince] = useState(null);
   const [sendType, setSendType] = useState(null);
   const [forbiddenType, setForbiddenType] = useState(null);
+
+  // CONSTS
+  const { control } = useForm();
 
   const destinationTYpeData = [
     { id: 1, label: "شهری", disabled: false, type: "urban" },
@@ -206,9 +203,11 @@ const Step4 = () => {
             <View className="flex-1 mr-2">
               <FormField
                 placeholder="کد مقصد"
-                keyboardType="text"
                 type={"text"}
-                //   height={"h-10"}
+                containerStyle="mt-5"
+                control={control}
+                keyboardType="numeric"
+                name="destination"
               />
             </View>
 

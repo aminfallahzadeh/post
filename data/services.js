@@ -4,7 +4,7 @@ export const allData = [
     title: "نرخ نامه",
     gradientColors: ["#755d15", "#ffca2b"],
     iconName: null,
-    url: null,
+    url: "forms/(new-post)",
     imageUrl: require("@/assets/images/nerkh-name.png"),
     nationalCodeRequired: false,
   },

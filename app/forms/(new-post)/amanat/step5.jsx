@@ -1,7 +1,6 @@
-// REACT IMPORTS
+// IMPORTS
+import { useForm } from "react-hook-form";
 import { useState } from "react";
-
-// NATIVE IMPORTS
 import {
   View,
   Text,
@@ -12,22 +11,20 @@ import {
   Keyboard,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-// EXPO IMPORTS
 import Feather from "@expo/vector-icons/Feather";
 import { router } from "expo-router";
-
-// COMPONENTS
 import CustomButton from "@/components/CustomButton";
 import FormField from "@/components/FormField";
-
-// LIBRARIES
 import Dropdown from "react-native-input-select";
 
 const Step5 = () => {
+  // STATES
   const [must, setMust] = useState(null);
   const [packageCartoon, setPackageCartoon] = useState(null);
   const [customerType, setCustomerType] = useState(null);
+
+  // CONSTS
+  const { control } = useForm();
 
   const mustOptions = [
     { label: "تهران", value: "tehran" },
@@ -79,8 +76,11 @@ const Step5 = () => {
             <View className="mr-2 w-1/3">
               <FormField
                 placeholder="تعداد"
-                keyboardType="text"
                 type={"text"}
+                containerStyle="mt-5"
+                control={control}
+                keyboardType="numeric"
+                name="number"
               />
             </View>
 
@@ -129,8 +129,11 @@ const Step5 = () => {
             <View className="mr-2 w-1/3">
               <FormField
                 placeholder="تعداد"
-                keyboardType="text"
                 type={"text"}
+                containerStyle="mt-5"
+                control={control}
+                keyboardType="numeric"
+                name="number"
               />
             </View>
 

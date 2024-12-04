@@ -1,15 +1,11 @@
-// NATIVE IMPORTS
+// IMPORTS
 import { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-// COMPONENTS
 import CustomButton from "@/components/CustomButton";
-
-// EXPO IMPORTS
 import { router } from "expo-router";
 
-const Type = () => {
+const Index = () => {
   const [selected, setSelected] = useState(null);
 
   const handleSubmit = () => {
@@ -66,7 +62,7 @@ const Type = () => {
   );
 };
 
-export default Type;
+export default Index;
 
 const styles = StyleSheet.create({
   select: {

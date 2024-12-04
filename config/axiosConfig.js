@@ -126,14 +126,11 @@ axiosInstance.interceptors.response.use(
           .then(async ({ data }) => {
             // DEBUGGING: REFRESH TOKEN RESPONSE
             console.log("Refresh token response:", data);
-
             await saveTokens(
               data.itemList[0].token,
               data.itemList[0].refreshToken
             );
-
             console.log("NEW TOKENS SAVED");
-
             axiosInstance.defaults.headers[
               "Authorization"
             ] = `Bearer ${data.itemList[0].token}`;
@@ -148,7 +145,7 @@ axiosInstance.interceptors.response.use(
           .catch((err) => {
             console.error("Refresh token error:", err.response || err);
             processQueue(err, null);
-            toastConfig.error("لطفا مجدادا وارد شوید");
+            toastConfig.error("لطفا مجددا وارد شوید");
             reject(err);
           })
           .finally(() => {

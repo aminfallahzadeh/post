@@ -25,7 +25,7 @@ const NewPostFormLayout = () => {
       </View>
 
       <Stack options={{ headerShown: false }}>
-        <Stack.Screen name="type" options={{ headerShown: false }} />
+        <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="pishtaz/step1" options={{ headerShown: false }} />
         <Stack.Screen name="amanat/step1" options={{ headerShown: false }} />
         <Stack.Screen name="amanat/step2" options={{ headerShown: false }} />
