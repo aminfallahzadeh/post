@@ -31,6 +31,7 @@ const Index = () => {
   // EFFECTS
   useEffect(() => {
     if (Platform.OS === "ios") {
+      setLoading(false);
       return;
     }
 
