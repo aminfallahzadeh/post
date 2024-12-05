@@ -2,7 +2,9 @@
   "cSpell.words": [
     "adate",
     "amanat",
+    "amindevtech",
     "axios",
+    "boxsize",
     "bubilon",
     "Demi",
     "familyname",
@@ -13,14 +15,18 @@
     "isanslight",
     "isansmedium",
     "isansregular",
+    "joogh",
     "karton",
     "khorasan",
     "mahshahr",
     "MARSOOLE",
+    "nerkhname",
     "notafkik",
     "parcellno",
+    "parceltype",
     "pishtaz",
     "pkhcode",
+    "postir",
     "Postyafteh",
     "Pressable",
     "provinceid",
@@ -33,6 +39,7 @@
     "tafkik",
     "Traking",
     "vijhe",
-    "Yafte"
+    "Yafte",
+    "نرخنامه"
   ]
 }

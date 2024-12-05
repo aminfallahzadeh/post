@@ -4,6 +4,7 @@ import * as Linking from "expo-linking";
 import { SplashScreen, Stack, router } from "expo-router";
 import { useFonts } from "expo-font";
 import { toastConfig } from "@/config/toast-config";
+import { StatusBar } from "expo-status-bar";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -66,14 +67,12 @@ const RootLayout = () => {
 
   return (
     <>
+      <StatusBar style="dark" />
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="forms/(new-post)"
-          options={{ headerShown: false }}
-        />
+        <Stack.Screen name="forms/nerkhname" options={{ headerShown: false }} />
         <Stack.Screen
           name="forms/new-complaint"
           options={{ headerShown: false }}

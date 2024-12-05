@@ -1,58 +1,37 @@
 // IMPORTS
-import { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 const RadioButtons = ({
   title,
   options,
-  value,
+  value = [],
   onChange,
-  //   buttonComponent: ButtonComponent,
   containerStyle,
   titleStyle,
+  isMulti = false,
+  itemsContainerStyle = "flex-row flex-wrap justify-between items-center gap-y-3 w-full",
 }) => {
   const handleOptionPress = (option) => {
-    onChange(option); // Update the selected option
+    if (isMulti) {
+      const isSelected = value.some((selected) => selected.id === option.id);
+      if (isSelected) {
+        onChange(value.filter((selected) => selected.id !== option.id));
+      } else {
+        onChange([...value, option]);
+      }
+    } else {
+      onChange(option);
+    }
   };
 
-  //   const handleSubmit = () => {
-  //     if (selected) {
-  //       onSubmit(selected);
-  //     }
-  //   };
+  const isSelected = (option) => {
+    if (isMulti) {
+      return value.some((selected) => selected.id === option.id);
+    }
+    return value?.id === option.id;
+  };
 
   return (
-    // <View className={`justify-center items-center gap-y-10 ${containerStyle}`}>
-    //   {title && (
-    //     <Text
-    //       className={`text-primary font-isansbold text-center text-[20px] ${titleStyle}`}
-    //     >
-    //       {title}
-    //     </Text>
-    //   )}
-
-    //   <View className="flex-row flex-wrap justify-between items-center gap-y-3 w-full">
-    //     {options.map((option) => (
-    //       <TouchableOpacity
-    //         key={option.id}
-    //         onPress={() => handleOptionPress(option)}
-    //         style={[
-    //           styles.select,
-    //           selected?.id === option.id && styles.selected,
-    //           option.disabled && styles.disabled,
-    //         ]}
-    //         disabled={option.disabled}
-    //       >
-    //         <Text
-    //           className={`text-center font-isansdemibold text-[16px] ${
-    //             option.disabled ? "text-gray-400" : ""
-    //           }`}
-    //         >
-    //           {option.label}
-    //         </Text>
-    //       </TouchableOpacity>
-    //     ))}
-    //   </View>
     <View className={`justify-center items-center gap-y-10 ${containerStyle}`}>
       {title && (
         <Text
@@ -62,14 +41,14 @@ const RadioButtons = ({
         </Text>
       )}
 
-      <View className="flex-row flex-wrap justify-between items-center gap-y-3 w-full">
+      <View className={itemsContainerStyle}>
         {options.map((option) => (
           <TouchableOpacity
             key={option.id}
             onPress={() => handleOptionPress(option)}
             style={[
               styles.select,
-              value?.id === option.id && styles.selected,
+              isSelected(option) && styles.selected,
               option.disabled && styles.disabled,
             ]}
             disabled={option.disabled}
@@ -84,20 +63,6 @@ const RadioButtons = ({
           </TouchableOpacity>
         ))}
       </View>
-
-      {/* <View className="w-full">
-        {ButtonComponent ? (
-          <ButtonComponent handlePress={handleSubmit} isDisabled={!selected} />
-        ) : (
-          <TouchableOpacity
-            onPress={handleSubmit}
-            disabled={!selected}
-            style={[styles.defaultButton, !selected && styles.disabledButton]}
-          >
-            <Text style={styles.buttonText}>ادامه</Text>
-          </TouchableOpacity>
-        )}
-      </View> */}
     </View>
   );
 };

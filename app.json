@@ -11,6 +11,9 @@
       "image": "./assets/images/splash.png",
       "backgroundColor": "#ffffff"
     },
+    "androidStatusBar": {
+      "hidden": false
+    },
     "ios": {
       "infoPlist": {
         "NSAppTransportSecurity": {

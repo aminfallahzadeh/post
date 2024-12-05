@@ -10,7 +10,6 @@ import {
   ScrollView,
   StyleSheet,
 } from "react-native";
-import { LOADING_MESSAGE } from "@/constants/messages";
 import SelectInput from "@/components/SelectInput";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { insertRequestPostYafte } from "@/api/request";
@@ -22,7 +21,7 @@ import ProgressBar from "@/components/ProgressBar";
 import Background from "@/components/Background";
 import { useUserStore } from "@/store";
 import { POST_YAFTE } from "@/constants/consts";
-import { REQUIRED } from "@/constants/messages";
+import { REQUIRED, LOADING_MESSAGE } from "@/constants/messages";
 import { postYafteValidation } from "@/constants/validations";
 import { getYafteProvince, getYafteCity } from "@/api/yafte";
 import { optionsGenerator } from "@/helpers/selectHelper";

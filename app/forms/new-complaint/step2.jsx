@@ -232,7 +232,7 @@ const Step2 = () => {
         <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
           <CustomButton
             title="ثبت"
-            bgColor="bg-green-700"
+            bgColor="bg-green-500"
             titleColor="text-white"
             handlePress={handleSubmit(onSubmit)}
             isLoading={isLoading}

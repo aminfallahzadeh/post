@@ -11,6 +11,7 @@ const initialState = {
   userAddressCodes: {},
   foundDocIds: [],
   gheramatResult: {},
+  nerkhname: [],
 };
 
 export const useUserStore = create(
@@ -36,6 +37,8 @@ export const useUserStore = create(
     setFoundDocIds: (foundDocIds) => set({ foundDocIds }),
 
     setGheramatResult: (gheramatResult) => set({ gheramatResult }),
+
+    setNerkhname: (nerkhname) => set({ nerkhname }),
 
     resetStore: () => set(initialState),
   }))

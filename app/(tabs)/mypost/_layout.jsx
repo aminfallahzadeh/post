@@ -25,7 +25,7 @@ function TopTabsLayout() {
           tabBarScrollEnabled: true,
           tabBarIndicatorStyle: { backgroundColor: "#fcd900" },
         }}
-        className="mt-14"
+        className="mt-24"
         style={{ transform: [{ scaleX: -1 }] }}
       >
         <Tab.Screen

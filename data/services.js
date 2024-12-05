@@ -4,7 +4,7 @@ export const allData = [
     title: "نرخ نامه",
     gradientColors: ["#755d15", "#ffca2b"],
     iconName: null,
-    url: "forms/(new-post)",
+    url: "forms/nerkhname",
     imageUrl: require("@/assets/images/nerkh-name.png"),
     nationalCodeRequired: false,
   },
@@ -80,13 +80,6 @@ export const allData = [
     imageUrl: require("@/assets/images/shekayat-peygiri.png"),
     nationalCodeRequired: true,
   },
-  // {
-  //   id: 26,
-  //   title: "ثبت سفارش",
-  //   gradientColors: ["#00075a", "#009cff"],
-  //   iconName: "clipboard",
-  //   url: "/forms/type",
-  // },
 ];
 
 export const followUpData = [

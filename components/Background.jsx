@@ -1,4 +1,4 @@
-import React from "react";
+// IMPORTS
 import { ImageBackground, StyleSheet } from "react-native";
 
 export function Background({ children }) {

@@ -139,3 +139,24 @@ export const postYafteValidation = {
     },
   },
 };
+
+export const nerkhnameValidations = {
+  weight: {
+    required: {
+      value: true,
+      message: REQUIRED,
+    },
+  },
+  parceltype: {
+    required: {
+      value: true,
+      message: REQUIRED,
+    },
+  },
+  BoxSize: {
+    required: {
+      value: true,
+      message: REQUIRED,
+    },
+  },
+};

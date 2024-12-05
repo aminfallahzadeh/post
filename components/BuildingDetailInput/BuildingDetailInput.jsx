@@ -38,11 +38,6 @@ export const BuildingDetailInput = ({ items, setItems, onDeleteItem }) => {
     setAddMode(false);
   };
 
-  // DEBUG
-  useEffect(() => {
-    console.log("BUILDING DETAIL INPUT:", form_data);
-  }, [form_data]);
-
   return (
     <View
       className="w-full rounded-md items-center py-2 px-2 bg-white min-h-[150px]"

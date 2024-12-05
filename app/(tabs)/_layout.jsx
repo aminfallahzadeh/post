@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   Animated,
   Dimensions,
-  Platform,
 } from "react-native";
 import { Tabs } from "expo-router";
 import { useState, useRef } from "react";
@@ -37,10 +36,7 @@ const TabsLayout = () => {
   return (
     <>
       {/* TOP BAR */}
-      <View
-        style={styles.topBar}
-        className={Platform.OS === "ios" ? "mt-10 px-6" : ""}
-      >
+      <View style={styles.topBar} className="mt-10">
         <TouchableOpacity onPress={toggleMenu}>
           <Ionicons name="menu" size={28} color="#333" />
         </TouchableOpacity>
