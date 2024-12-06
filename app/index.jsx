@@ -1,6 +1,6 @@
 // IMPORTS
 import { useEffect, useRef, useState } from "react";
-import { View, Animated, Platform } from "react-native";
+import { View, Animated } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import CustomButton from "../components/CustomButton";
@@ -30,11 +30,6 @@ const Index = () => {
 
   // EFFECTS
   useEffect(() => {
-    if (Platform.OS === "ios") {
-      setLoading(false);
-      return;
-    }
-
     const checkLogin = async () => {
       const isValid = await isLoginValid();
 

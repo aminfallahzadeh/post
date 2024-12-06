@@ -14,7 +14,6 @@ export const FormField = ({
   title,
   value,
   placeholder,
-  handleChange,
   containerStyle,
   textStyle,
   type,

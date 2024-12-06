@@ -19,6 +19,7 @@ import Feather from "@expo/vector-icons/Feather";
 import CustomButton from "@/components/CustomButton";
 import SelectInput from "@/components/SelectInput";
 import { insuranceOptions } from "@/data/insuranceOptions";
+import FormField from "@/components/FormField";
 
 const NerkhnameStep5 = () => {
   // CONSTS
@@ -109,6 +110,24 @@ const NerkhnameStep5 = () => {
                   )}
                 />
               </View>
+
+              <FormField
+                placeholder="مبلغ اظهار شده"
+                type={"text"}
+                keyboardType="numeric"
+                containerStyle="mt-5"
+                control={control}
+                name="insuranceamount"
+              />
+
+              <FormField
+                placeholder="محتویات مرسوله"
+                type={"text"}
+                keyboardType="default"
+                containerStyle="mt-5"
+                control={control}
+                name="Contents"
+              />
             </View>
           </TouchableWithoutFeedback>
         </ScrollView>

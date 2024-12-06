@@ -2,11 +2,10 @@
 import * as SecureStore from "expo-secure-store";
 
 export const isLoginValid = async () => {
+  console.log("Checking User Persistency...");
   const expireTime = await SecureStore.getItemAsync("expireTime");
-  console.log("EXPIRE DATE:", expireTime);
   const expireDate = new Date(expireTime);
   const now = new Date();
-  console.log("IS VALID:", now < expireDate);
   return now < expireDate;
 };
 

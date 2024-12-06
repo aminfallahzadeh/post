@@ -3,6 +3,7 @@ import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import { BASE_URL } from "@/constants/apiRoutes";
 import { toastConfig } from "./toast-config";
+import { logout } from "@/api/auth";
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -146,6 +147,7 @@ axiosInstance.interceptors.response.use(
             console.error("Refresh token error:", err.response || err);
             processQueue(err, null);
             toastConfig.error("لطفا مجددا وارد شوید");
+            logout();
             reject(err);
           })
           .finally(() => {
