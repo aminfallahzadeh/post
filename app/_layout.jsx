@@ -98,6 +98,7 @@ const RootLayout = () => {
         <Stack.Screen name="forms/gheramat" options={{ headerShown: false }} />
         <Stack.Screen name="result" options={{ headerShown: false }} />
         <Stack.Screen name="factor" options={{ headerShown: false }} />
+        <Stack.Screen name="ehraz" options={{ headerShown: false }} />
       </Stack>
       <ToastProvider />
     </>

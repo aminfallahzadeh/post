@@ -23,6 +23,7 @@ import { showMessage } from "react-native-flash-message";
 import { Chase } from "react-native-animated-spinkit";
 import { toastStyles } from "@/constants/styles";
 import searchLottie from "@/assets/animations/search-lottie.json";
+import { Title } from "@/components/Title";
 
 const FollowComplaint = () => {
   // STATES
@@ -71,6 +72,8 @@ const FollowComplaint = () => {
           keyboardShouldPersistTaps="handled"
         >
           {/* HEADER SECTION */}
+          <Title title={"پیگیری شکایت"} home={false} />
+
           <View
             className="flex-col w-full bg-secondary z-10 justify-center items-center relative"
             style={styles.headerContainer}

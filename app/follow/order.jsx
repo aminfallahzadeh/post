@@ -6,7 +6,6 @@ import {
   Platform,
   ScrollView,
   Text,
-  Pressable,
   View,
   StyleSheet,
   TouchableWithoutFeedback,
@@ -14,8 +13,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { orderTracking } from "@/api/traking";
-import { router, useLocalSearchParams } from "expo-router";
-import Feather from "@expo/vector-icons/Feather";
+import { useLocalSearchParams } from "expo-router";
 import Background from "@/components/Background";
 import FormField from "@/components/FormField";
 import CustomButton from "@/components/CustomButton";
@@ -26,6 +24,7 @@ import { showMessage } from "react-native-flash-message";
 import { orderTrackingValidation } from "@/constants/validations";
 import searchLottie from "@/assets/animations/search-lottie.json";
 import { toastStyles } from "@/constants/styles";
+import { Title } from "@/components/Title";
 
 const FollowOrder = () => {
   // STATES
@@ -94,22 +93,7 @@ const FollowOrder = () => {
             keyboardShouldPersistTaps="handled"
           >
             {/* HEADER SECTION */}
-            <View
-              className="flex-col w-full bg-secondary z-10 justify-center items-center relative"
-              style={styles.headerContainer}
-            >
-              <View className="flex-row w-full justify-between items-center">
-                <Pressable
-                  onPress={() => router.back()}
-                  className="absolute left-4"
-                >
-                  <Feather name="arrow-left" size={25} color="#333" />
-                </Pressable>
-                <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
-                  پیگیری مرسوله
-                </Text>
-              </View>
-            </View>
+            <Title title={"پیگیری مرسوله"} home={false} />
 
             {/* FORM FIELDS */}
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

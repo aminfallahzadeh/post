@@ -2,7 +2,6 @@
 import Dropdown from "react-native-input-select";
 import { selectMessages } from "@/constants/messages";
 import Feather from "@expo/vector-icons/Feather";
-import { Controller } from "react-hook-form";
 
 const selectSettings = (props) => ({
   placeholderStyle: {
@@ -31,6 +30,7 @@ const selectSettings = (props) => ({
     checkboxLabelStyle: {
       fontFamily: "IranSans-DemiBold",
       transform: [{ scaleX: -1 }],
+      textAlign: "right",
     },
     checkboxStyle: {
       transform: [{ scaleX: -1 }],
@@ -41,16 +41,22 @@ const selectSettings = (props) => ({
     modalOptionsContainerStyle: {
       fontFamily: "IranSans-DemiBold",
       transform: [{ scaleX: -1 }],
+      padding: 10,
     },
   },
   listControls: {
     emptyListMessage: selectMessages.EMPTY_LIST,
   },
   listComponentStyles: {
+    textAlign: "center",
     listEmptyComponentStyle: {
       color: "gray",
       transform: [{ scaleX: -1 }],
       fontFamily: "IranSans-Bold",
+    },
+    itemSeparatorStyle: {
+      height: 1,
+      backgroundColor: "blue",
     },
   },
   dropdownIcon: (

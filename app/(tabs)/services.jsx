@@ -96,10 +96,14 @@ const Services = () => {
       />
       <Background>
         <SafeAreaView className="h-full">
-          <Animated.View className="mt-16" style={{ opacity: fadeAnim }}>
+          <Animated.View className="mt-12" style={{ opacity: fadeAnim }}>
             <View className="w-full">
               <View style={{ position: "relative" }}>
-                <Image source={images.announce} style={styles.heroImage} />
+                <Image
+                  source={images.home}
+                  style={styles.heroImage}
+                  resizeMode="cover"
+                />
                 <LinearGradient
                   colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.8)"]}
                   style={[
@@ -113,21 +117,23 @@ const Services = () => {
                     },
                   ]}
                 />
-                <View style={styles.heroTextContainer}>
-                  <Pressable onPress={() => router.push("follow")}>
-                    <View className="flex-row justify-center items-center gap-x-2">
-                      <Text className="text-tertiary font-isansbold text-2xl text-center">
-                        پیگیری مرسوله
-                      </Text>
 
-                      <Feather
-                        size={25}
-                        name="arrow-right-circle"
-                        color="#164194"
-                      />
-                    </View>
-                  </Pressable>
-                </View>
+                <Pressable
+                  onPress={() => router.push("follow")}
+                  style={styles.heroTextContainer}
+                >
+                  <View className="flex-row justify-center items-center gap-x-2">
+                    <Text className="text-tertiary font-isansbold text-lg text-center">
+                      پیگیری مرسوله
+                    </Text>
+
+                    <Feather
+                      size={25}
+                      name="arrow-right-circle"
+                      color="#164194"
+                    />
+                  </View>
+                </Pressable>
               </View>
             </View>
             <View className="mt-5">
@@ -244,8 +250,9 @@ const styles = StyleSheet.create({
 
   heroTextContainer: {
     position: "absolute",
-    bottom: 25,
-    backgroundColor: "#fcd900",
+    bottom: 15,
+    // backgroundColor: "#fcd900",
+    backgroundColor: "rgba(252, 217, 0, 0.7)",
     paddingHorizontal: 20,
     paddingVertical: 5,
     width: "100%",

@@ -1,4 +1,4 @@
-// NATIVFE IMPORTS
+// NATIVE IMPORTS
 import { View } from "react-native";
 
 export const ProgressBar = ({

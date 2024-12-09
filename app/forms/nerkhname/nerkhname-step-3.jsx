@@ -3,10 +3,8 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import {
   View,
-  Text,
   ScrollView,
   StyleSheet,
-  Pressable,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
@@ -14,10 +12,9 @@ import { useUserStore } from "@/store";
 import Background from "@/components/Background";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
-import ProgressBar from "@/components/ProgressBar";
-import Feather from "@expo/vector-icons/Feather";
 import CustomButton from "@/components/CustomButton";
 import FormField from "@/components/FormField";
+import { Title } from "@/components/Title";
 
 const NerkhnameStep3 = () => {
   // CONSTS
@@ -52,26 +49,10 @@ const NerkhnameStep3 = () => {
           keyboardShouldPersistTaps="handled"
         >
           {/* HEADER SECTION */}
-          <View
-            className="flex-col w-full bg-secondary z-10 justify-center items-center relative"
-            style={styles.headerContainer}
-          >
-            <View className="flex-row w-full justify-between items-center">
-              <Pressable
-                onPress={() => router.back()}
-                className="absolute left-4"
-              >
-                <Feather name="arrow-left" size={25} color="#333" />
-              </Pressable>
-              <Text className="text-primary font-isansbold text-center text-[15px] py-2 mr-auto ml-auto">
-                {nerkhname?.servicetype?.label} : اطلاعات گیرنده
-              </Text>
-            </View>
-
-            <View className="flex-col px-10 w-full pb-2">
-              <ProgressBar progress={60} />
-            </View>
-          </View>
+          <Title
+            title={`${nerkhname?.servicetype?.label} : اطلاعات گیرنده`}
+            progress={60}
+          />
 
           {/* FORM FIELDS */}
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

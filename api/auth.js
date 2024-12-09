@@ -23,9 +23,10 @@ export async function login(data) {
 }
 
 export async function logout() {
-  const response = await axiosInstance.post("/Customer/Logout");
-  console.log("Logout response:", response);
+  console.log("logout............................");
+  //   const response = await axiosInstance.post("/Customer/Logout");
+  //   console.log("Logout response:", response);
   await removeCredentials();
-  toastConfig.success(response.data.message);
+  toastConfig.success("خروج با موفقیت انجام شد");
   router.replace("/(auth)");
 }

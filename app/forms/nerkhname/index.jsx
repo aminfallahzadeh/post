@@ -1,16 +1,15 @@
 // IMPORTS
 import { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { View, Text, StyleSheet, Pressable, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "@/components/CustomButton";
 import { router } from "expo-router";
 import Background from "@/components/Background";
-import ProgressBar from "@/components/ProgressBar";
-import Feather from "@expo/vector-icons/Feather";
 import RadioButtons from "@/components/RadioButtons";
 import { serviceOptions } from "@/data/serviceOptions";
 import { useUserStore } from "@/store";
+import { Title } from "@/components/Title";
 
 const Index = () => {
   // CONSTS
@@ -42,29 +41,9 @@ const Index = () => {
           keyboardShouldPersistTaps="handled"
         >
           {/* HEADER SECTION */}
-          <View
-            className="flex-col w-full bg-secondary z-10 justify-center items-center relative"
-            style={styles.headerContainer}
-          >
-            <View className="flex-row w-full justify-between items-center">
-              <Pressable
-                onPress={() => router.back()}
-                className="absolute left-4"
-              >
-                <Feather name="arrow-left" size={25} color="#333" />
-              </Pressable>
-              <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
-                نوع سرویس
-              </Text>
-            </View>
-
-            <View className="flex-col px-10 w-full pb-2">
-              <ProgressBar progress={15} />
-            </View>
-          </View>
+          <Title progress={15} title="نوع سرویس" />
 
           {/* FORM FIELDS */}
-
           <View className="w-full px-5 mt-10">
             <Controller
               name="servicetype"
@@ -97,23 +76,3 @@ const Index = () => {
 };
 
 export default Index;
-
-const styles = StyleSheet.create({
-  select: {
-    borderWidth: 1,
-    borderColor: "#fcd900",
-    borderRadius: 10,
-    padding: 10,
-    shadowColor: "#000",
-    width: "100%",
-    alignItems: "center",
-  },
-  selected: {
-    backgroundColor: "#fcd900",
-    borderColor: "#000",
-  },
-  disabled: {
-    backgroundColor: "#f0f0f0",
-    borderColor: "#ddd",
-  },
-});
