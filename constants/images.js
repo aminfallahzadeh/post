@@ -6,6 +6,8 @@ import yafteIcon from "../assets/images/post-yafte.png";
 import announce from "../assets/images/announce-4.png";
 import home from "../assets/images/home.webp";
 import pdf from "../assets/images/pdf.png";
+import welcomeNew from "../assets/images/welcome-new.png";
+import otpNew from "../assets/images/otp-new.png";
 
 export default {
   welcome,
@@ -16,4 +18,6 @@ export default {
   announce,
   pdf,
   home,
+  welcomeNew,
+  otpNew,
 };

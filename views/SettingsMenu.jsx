@@ -99,7 +99,10 @@ const SettingsMenu = ({ closeHandler }) => {
             </View>
           </View>
 
-          <View className="flex-row items-center justify-between w-full">
+          <Pressable
+            className="flex-row items-center justify-between w-full"
+            onPress={() => router.push("map")}
+          >
             <Text className="text-grey5 font-isansmedium text-[12px]">
               دریافت اطلاعات مراکز
             </Text>
@@ -116,7 +119,7 @@ const SettingsMenu = ({ closeHandler }) => {
 
               <Feather name="mail" size={25} color="#333" />
             </View>
-          </View>
+          </Pressable>
 
           <View className="w-full h-[2px] bg-grey3 rounded-lg" />
 

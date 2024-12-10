@@ -1,7 +1,7 @@
 export const allData = [
   {
     id: 18,
-    title: "نرخ نامه",
+    title: "سفارش",
     gradientColors: ["#755d15", "#ffca2b"],
     iconName: null,
     url: "forms/nerkhname",
@@ -60,6 +60,15 @@ export const allData = [
     iconName: null,
     url: "ehraz",
     imageUrl: require("@/assets/images/gheramat-peygiri.png"),
+    nationalCodeRequired: false,
+  },
+  {
+    id: 25,
+    title: "نرخ نامه",
+    gradientColors: ["#755d15", "#ffca2b"],
+    iconName: null,
+    url: null,
+    imageUrl: require("@/assets/images/nerkh-name.png"),
     nationalCodeRequired: false,
   },
   //   {

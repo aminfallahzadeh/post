@@ -8,6 +8,7 @@ import {
   Platform,
   Pressable,
   Keyboard,
+  Image,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import LottieView from "lottie-react-native";
@@ -20,6 +21,7 @@ import useGetUserData from "@/hooks/useGetUserData";
 import { formatTime } from "@/utils/formatTime";
 import { toastConfig } from "@/config/toast-config";
 import * as SecureStore from "expo-secure-store";
+import images from "@/constants/images";
 
 const Otp = () => {
   // STATES
@@ -94,13 +96,14 @@ const Otp = () => {
             }}
             showsVerticalScrollIndicator={false}
           >
+            <Image source={images.otpNew} className="w-full h-[500px]" />
             <View className="w-full h-full justify-normal items-center px-7 mt-15">
-              <LottieView
+              {/* <LottieView
                 source={OtpLottie}
                 autoPlay
                 loop
                 className="w-full h-[250px] mt-[100px]"
-              />
+              /> */}
 
               <OtpInput
                 numberOfDigits={4}
@@ -154,7 +157,7 @@ const Otp = () => {
                 {formatTime(timeLeft)}
               </Text>
 
-              <View className="mt-20">
+              <View className="mt-15">
                 {isLoading || isValidating ? (
                   <Chase size={60} color="#164194" />
                 ) : null}

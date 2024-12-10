@@ -102,6 +102,13 @@ export const orderTrackingValidation = (form_data) => [
 ];
 
 ///////// NEW
+export const requiredRule = {
+  required: {
+    value: true,
+    message: REQUIRED,
+  },
+};
+
 export const mobilePhoneValidation = {
   minLength: {
     value: 11,
@@ -158,5 +165,20 @@ export const nerkhnameValidations = {
       value: true,
       message: REQUIRED,
     },
+  },
+};
+
+export const postCodeRules = {
+  minLength: {
+    value: 10,
+    message: POSTCODE_INVALID,
+  },
+  maxLength: {
+    value: 10,
+    message: POSTCODE_INVALID,
+  },
+  required: {
+    value: true,
+    message: REQUIRED,
   },
 };

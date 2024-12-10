@@ -16,6 +16,7 @@ import SelectInput from "@/components/SelectInput";
 import { useUserStore } from "@/store";
 import { Title } from "@/components/Title";
 import FormField from "@/components/FormField";
+import { requiredRule } from "@/constants/validations";
 import {
   applicantTypeOptions,
   genderOptions,
@@ -25,6 +26,7 @@ import {
 const Index = () => {
   // STATES
   const userData = useUserStore((state) => state.userData);
+  const setEhrazFormData = useUserStore((state) => state.setEhrazFormData);
 
   // CONSTS
   const {
@@ -41,7 +43,8 @@ const Index = () => {
   });
   const form_data = watch();
 
-  const onSubmit = () => {
+  const onSubmit = (data) => {
+    setEhrazFormData(data);
     router.push("/ehraz/ehraz-step-2");
   };
 
@@ -58,7 +61,7 @@ const Index = () => {
           keyboardShouldPersistTaps="handled"
         >
           {/* HEADER SECTION */}
-          <Title progress={50} title="احراز نشانی" />
+          <Title progress={50} title="احراز نشانی" home={false} />
 
           {/* FORM FIELDS */}
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -67,7 +70,7 @@ const Index = () => {
                 {errors && (
                   <View className="absolute -top-5 left-0">
                     <Text className="text-red-500 font-isansregular">
-                      {errors?.parceltype?.message}
+                      {errors?.applicantType?.message}
                     </Text>
                   </View>
                 )}
@@ -75,6 +78,7 @@ const Index = () => {
                 <Controller
                   name="applicantType"
                   control={control}
+                  rules={requiredRule}
                   render={({ field: { onChange } }) => (
                     <SelectInput
                       placeholder="* نوع شخصیت"
@@ -95,7 +99,7 @@ const Index = () => {
                 {errors && (
                   <View className="absolute -top-5 left-0">
                     <Text className="text-red-500 font-isansregular">
-                      {errors?.parceltype?.message}
+                      {errors?.gender?.message}
                     </Text>
                   </View>
                 )}
@@ -103,6 +107,7 @@ const Index = () => {
                 <Controller
                   name="gender"
                   control={control}
+                  rules={requiredRule}
                   render={({ field: { onChange } }) => (
                     <SelectInput
                       placeholder="* جنسیت"
@@ -123,6 +128,7 @@ const Index = () => {
                 type={"text"}
                 containerStyle="mt-5"
                 keyboardType="default"
+                rules={requiredRule}
                 control={control}
                 name="firstName"
               />
@@ -132,6 +138,7 @@ const Index = () => {
                 type={"text"}
                 containerStyle="mt-5"
                 keyboardType="default"
+                rules={requiredRule}
                 control={control}
                 name="lastName"
               />
@@ -141,6 +148,7 @@ const Index = () => {
                 type={"text"}
                 containerStyle="mt-5"
                 keyboardType="numeric"
+                rules={requiredRule}
                 control={control}
                 name="nationalCodeOrId"
               />
@@ -149,7 +157,7 @@ const Index = () => {
                 {errors && (
                   <View className="absolute -top-5 left-0">
                     <Text className="text-red-500 font-isansregular">
-                      {errors?.parceltype?.message}
+                      {errors?.addressStatus?.message}
                     </Text>
                   </View>
                 )}
@@ -157,6 +165,7 @@ const Index = () => {
                 <Controller
                   name="addressStatus"
                   control={control}
+                  rules={requiredRule}
                   render={({ field: { onChange } }) => (
                     <SelectInput
                       placeholder="وضعیت نشانی"

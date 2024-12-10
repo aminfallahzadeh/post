@@ -6,6 +6,7 @@
     "axios",
     "boxsize",
     "bubilon",
+    "countyid",
     "Demi",
     "ehraz",
     "familyname",
@@ -34,6 +35,8 @@
     "provinceid",
     "REUIRED",
     "rspns",
+    "ruralid",
+    "Searchstr",
     "sefareshi",
     "seperate",
     "Shamsi",
@@ -42,6 +45,7 @@
     "Traking",
     "vijhe",
     "Yafte",
+    "zoneid",
     "دائمی",
     "نرخنامه"
   ]

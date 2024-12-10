@@ -12,6 +12,7 @@ const initialState = {
   foundDocIds: [],
   gheramatResult: {},
   nerkhname: [],
+  ehrazFormData: {},
 };
 
 export const useUserStore = create(
@@ -39,6 +40,8 @@ export const useUserStore = create(
     setGheramatResult: (gheramatResult) => set({ gheramatResult }),
 
     setNerkhname: (nerkhname) => set({ nerkhname }),
+
+    setEhrazFormData: (ehrazFormData) => set({ ehrazFormData }),
 
     resetStore: () => set(initialState),
   }))

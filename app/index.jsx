@@ -88,37 +88,47 @@ const Index = () => {
   return (
     <Background>
       <SafeAreaView className="h-full w-full">
-        <View className="flex-1 w-full justify-normal items-center px-7">
+        <View className="flex-1 w-full justify-normal items-center">
           <Animated.Image
-            source={images.welcome}
-            className="w-[300px] h-[300px] mt-[100px]"
-            resizeMode="contain"
+            source={images.welcomeNew}
+            // className="w-[300px] h-[300px] mt-[100px]"
+            className="w-full h-[500px]"
+            // resizeMode="contain"
             style={{
               opacity: imageOpacity,
               transform: [{ translateY: imageTranslateY }],
             }}
           />
-          <Animated.Text
-            className="text-primary font-isansbold text-[30px] mt-10 text-center w-full"
-            style={{ opacity: textOpacity }}
-          >
-            خوش آمدید...
-          </Animated.Text>
 
-          <Animated.Text
-            className="text-grey2 font-isansregular text-[17px] mt-10 text-center w-full"
-            style={{ opacity: textOpacity }}
-          >
-            سریع‌ترین و مطمئن‌ترین راه برای ارسال بسته‌های شما، تنها با یک لمس!
-          </Animated.Text>
+          <View className="w-full px-7 mt-10">
+            <Animated.Text
+              className="text-primary font-isansbold text-[30px] text-center w-full"
+              style={{ opacity: textOpacity }}
+            >
+              خوش آمدید...
+            </Animated.Text>
 
-          <Animated.View style={{ opacity: buttonOpacity, width: "100%" }}>
-            <CustomButton
-              title={"وارد شوید"}
-              handlePress={handlePress}
-              containerStyles="w-full mt-7"
-            />
-          </Animated.View>
+            <Animated.Text
+              className="text-grey2 font-isansregular text-[17px] mt-10 text-center w-full px-10"
+              style={{ opacity: textOpacity }}
+            >
+              سریع‌ترین و مطمئن‌ترین راه برای ارسال بسته‌های شما، تنها با یک
+              لمس!
+            </Animated.Text>
+
+            <Animated.View
+              style={{
+                opacity: buttonOpacity,
+                width: "100%",
+              }}
+            >
+              <CustomButton
+                title={"وارد شوید"}
+                handlePress={handlePress}
+                containerStyles="w-full mt-7"
+              />
+            </Animated.View>
+          </View>
         </View>
       </SafeAreaView>
     </Background>

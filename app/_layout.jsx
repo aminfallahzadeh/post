@@ -99,6 +99,7 @@ const RootLayout = () => {
         <Stack.Screen name="result" options={{ headerShown: false }} />
         <Stack.Screen name="factor" options={{ headerShown: false }} />
         <Stack.Screen name="ehraz" options={{ headerShown: false }} />
+        <Stack.Screen name="map" options={{ headerShown: false }} />
       </Stack>
       <ToastProvider />
     </>

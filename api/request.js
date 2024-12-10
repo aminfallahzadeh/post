@@ -46,3 +46,24 @@ export function getRequestPostYafte(mobile) {
 export function insertRequestGheramat(data) {
   return axiosInstance.post("Request/InsertRequestGheramate", data);
 }
+
+export function insertRequestEhraz(data) {
+  /**
+     *
+     * {
+  "phoneNumber": "string",
+  "applicantType": 0,
+  "gender": 0,
+  "firstName": "string",
+  "lastName": "string",
+  "nationalCodeOrId": "string",
+  "addressStatus": 0,
+  "postalCode": "string",
+  "lastStreet": "string",
+  "buildingNumber": "string",
+  "floor": "string",
+  "unit": "string"
+}
+  */
+  return axiosInstance.post("Request/InsertRequestEhraz", data);
+}
