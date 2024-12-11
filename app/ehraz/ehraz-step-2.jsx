@@ -21,8 +21,7 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import RNBounceable from "@freakycoder/react-native-bounceable";
 import { insertRequestEhraz } from "@/api/request";
 import * as SecureStore from "expo-secure-store";
-import { toastConfig } from "@/config/toast-config";
-import { requiredRule } from "@/constants/validations";
+import { lastStreetRules } from "@/constants/validations";
 
 const EhrazStep2 = () => {
   // STATES
@@ -35,6 +34,7 @@ const EhrazStep2 = () => {
 
   // CONSTS
   const ehrazFormData = useUserStore((state) => state.ehrazFormData);
+  const setFactor = useUserStore((state) => state.setFactor);
   const mobile = SecureStore.getItem("mobile");
   const {
     watch,
@@ -81,11 +81,11 @@ const EhrazStep2 = () => {
     setValue("address", address);
   }, [postalCode, setValue]);
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     setIsLoading(true);
     try {
       const { postalCode, lastStreet, buildingNumber, floor, unit } = data;
-      const response = insertRequestEhraz({
+      const response = await insertRequestEhraz({
         ...ehrazFormData,
         postalCode,
         lastStreet,
@@ -96,8 +96,8 @@ const EhrazStep2 = () => {
       });
 
       console.log("INSERT EHRAZ RESPONSE: ", response.data);
-      toastConfig.success("درخواست شما با موفقیت ثبت شد");
-      router.replace("/services");
+      setFactor(response.data.itemList[0]);
+      router.push("ehraz/ehraz-step-3");
     } finally {
       setIsLoading(false);
     }
@@ -129,7 +129,7 @@ const EhrazStep2 = () => {
           keyboardShouldPersistTaps="handled"
         >
           {/* HEADER SECTION */}
-          <Title progress={100} title="احراز نشانی" />
+          <Title progress={66} title="احراز نشانی" />
           {/* FORM FIELDS */}
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View className="w-full px-5">
@@ -189,6 +189,7 @@ const EhrazStep2 = () => {
                 editable={checked}
                 control={control}
                 height={"h-28"}
+                rules={lastStreetRules}
                 inputStyle={{
                   textAlignVertical: "top",
                   textAlign: "right",

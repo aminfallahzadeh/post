@@ -6,6 +6,7 @@ import {
   generateCertificate,
   generateCertificateGeo,
   requestPostCodeBulk,
+  generateEhraz,
 } from "@/api/gnaf";
 import { router, useLocalSearchParams } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
@@ -50,6 +51,8 @@ const PaymentResult = () => {
       await generateCertificateData(generateCertificate);
     } else if (type === "NewPostCode") {
       await generateCertificateData(requestPostCodeBulk);
+    } else if (type === "Ehraz") {
+      await generateCertificateData(generateEhraz);
     }
 
     setIsLoading(false);

@@ -182,3 +182,14 @@ export const postCodeRules = {
     message: REQUIRED,
   },
 };
+
+export const lastStreetRules = {
+  pattern: {
+    value: /^[\u0600-\u06FF\s]+$/,
+    message: "فقط حروف فارسی مجاز هستند",
+  },
+  maxLength: {
+    value: 20,
+    message: "حداکثر ۲۰ کاراکتر",
+  },
+};

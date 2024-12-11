@@ -61,22 +61,23 @@ export const Factor = ({ data }) => {
       </View>
 
       {postalCodes && (
-        <View className="flex-row-reverse justify-between w-full items-center">
-          <Text className="font-isansdemibold text-grey2 text-[15px]">
-            تعداد کد پستی
-          </Text>
-          <Text className="font-isansregular">{postalCodes.length} عدد</Text>
-        </View>
+        <>
+          <View className="flex-row-reverse justify-between w-full items-center">
+            <Text className="font-isansdemibold text-grey2 text-[15px]">
+              تعداد کد پستی
+            </Text>
+            <Text className="font-isansregular">{postalCodes.length} عدد</Text>
+          </View>
+          <View className="mt-2 mb-2 w-full">
+            <LinearGradient
+              colors={["transparent", "#000", "transparent"]}
+              style={styles.gradientLineHorizontal}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+            />
+          </View>
+        </>
       )}
-
-      <View className="mt-2 mb-2 w-full">
-        <LinearGradient
-          colors={["transparent", "#000", "transparent"]}
-          style={styles.gradientLineHorizontal}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-        />
-      </View>
 
       <View className="flex-row-reverse justify-between w-full items-center">
         <Text className="font-isansdemibold text-grey2 text-[15px]">

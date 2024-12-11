@@ -1,26 +1,19 @@
 // IMPORTS
 import { useState, useEffect, useRef } from "react";
-import {
-  View,
-  Text,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Animated,
-} from "react-native";
+import { View, Text, ScrollView, StyleSheet, Animated } from "react-native";
+import { Title } from "@/components/Title";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useUserStore } from "@/store";
 import { requestPayment } from "@/api/payment";
 import { router } from "expo-router";
-import Feather from "@expo/vector-icons/Feather";
-import { ProgressBar, Background, Factor, CustomButton } from "@/components";
+import { Background, Factor, CustomButton } from "@/components";
 import { toastStyles } from "@/constants/styles";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import RNBounceable from "@freakycoder/react-native-bounceable";
 import { showMessage } from "react-native-flash-message";
 import * as SecureStore from "expo-secure-store";
 
-const Step3 = () => {
+const EhrazStep3 = () => {
   // STATES
   const [isLoading, setIsLoading] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -106,26 +99,7 @@ const Step3 = () => {
           keyboardShouldPersistTaps="handled"
         >
           {/* HEADER SECTION */}
-          <View
-            className="flex-col w-full bg-secondary z-10 justify-center items-center relative"
-            style={styles.headerContainer}
-          >
-            <View className="flex-row w-full justify-between items-center">
-              <Pressable
-                onPress={() => router.back()}
-                className="absolute left-4"
-              >
-                <Feather name="arrow-left" size={25} color="#333" />
-              </Pressable>
-              <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
-                گواهی کد پستی
-              </Text>
-            </View>
-
-            <View className="flex-col px-10 w-full pb-2">
-              <ProgressBar progress={100} />
-            </View>
-          </View>
+          <Title progress={100} title="احراز نشانی" />
 
           {/* RESULT FACTOR */}
           <View className="w-full px-5 mt-5">
@@ -191,7 +165,7 @@ const Step3 = () => {
   );
 };
 
-export default Step3;
+export default EhrazStep3;
 
 const styles = StyleSheet.create({
   inputContainer: {
@@ -207,9 +181,6 @@ const styles = StyleSheet.create({
   },
   disabledPlus: {
     color: "gray",
-  },
-  postalCodesItemContainer: {
-    gap: 10,
   },
   factorContainer: {
     width: "100%",

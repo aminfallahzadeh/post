@@ -19,6 +19,12 @@ export function generateCertificateGeo(id) {
   });
 }
 
+export function generateEhraz(id) {
+  return axiosInstance.post("GNAF/GenerateEhraz", {
+    requestID: id,
+  });
+}
+
 export function requestPostCodeBulk(id) {
   return axiosInstance.post("GNAF/RequestPostCode_Bulk", {
     requestID: id,

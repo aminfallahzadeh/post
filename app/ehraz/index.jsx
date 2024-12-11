@@ -61,7 +61,7 @@ const Index = () => {
           keyboardShouldPersistTaps="handled"
         >
           {/* HEADER SECTION */}
-          <Title progress={50} title="احراز نشانی" home={false} />
+          <Title progress={33} title="احراز نشانی" home={false} />
 
           {/* FORM FIELDS */}
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
