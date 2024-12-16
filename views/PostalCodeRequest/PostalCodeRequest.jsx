@@ -117,7 +117,7 @@ export const PostalCodeRequest = () => {
 
     if (!province || !county) {
       setIsSubmitLoading(false);
-      return alert("Required fields are missing.");
+      //   return alert("Required fields are missing.");
     }
 
     const main = `شهرستان ${province?.label || ""} استان ${

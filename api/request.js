@@ -67,3 +67,45 @@ export function insertRequestEhraz(data) {
   */
   return axiosInstance.post("Request/InsertRequestEhraz", data);
 }
+
+export function insertRequestPriceOrder(data) {
+  /**
+     *
+     * {
+  "contractcode": "string",
+  "username": "string",
+  "password": "string",
+  "postnodecode": "string",
+  "mobile": "string",
+  "trackingId": "string",
+  "typecode": 0,
+  "servicetype": 0,
+  "parceltype": 0,
+  "sourcecode": 0,
+  "destcode": 0,
+  "sendername": "string",
+  "receivername": "string",
+  "receiverpostalcode": "string",
+  "senderpostalcode": "string",
+  "weight": 0,
+  "senderid": "string",
+  "receiverid": "string",
+  "sendermobile": "string",
+  "receivermobile": "string",
+  "senderaddress": "string",
+  "receiveraddress": "string",
+  "insurancetype": 0,
+  "insuranceamount": 0,
+  "spsdestinationtype": 0,
+  "spsreceivertimetype": 0,
+  "spsparceltype": 0,
+  "electworeceiptant": true,
+  "iscot": true,
+  "smsservice": true,
+  "isnonstandard": true,
+  "contetnts": "string",
+  "boxsize": 0
+}
+     */
+  return axiosInstance.post("Request/InsertRequestPriceOrder", data);
+}

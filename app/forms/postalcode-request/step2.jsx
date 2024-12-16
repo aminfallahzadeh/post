@@ -50,7 +50,8 @@ const Step2 = () => {
       const response = await insertRequestBulk({
         mobile,
         counter: 1,
-        localityID: 11,
+        sunCityID: userAddressCodes.ruralCityID,
+        sunVillageID: userAddressCodes.villageID || null,
         unit: userAddressCodes.unit || 1,
         email: "",
         prePhoneNo: "",

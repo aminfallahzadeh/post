@@ -1,38 +1,42 @@
 export const boxsizeOptions = [
   {
-    label: "1",
+    label: "۱ (۱۵۰*۱۰۰*۱۰۰)",
     value: 1,
   },
   {
-    label: "2",
+    label: "۲ (۲۰۰*۱۵۰*۱۰۰)",
     value: 2,
   },
   {
-    label: "3",
+    label: "۳ (۲۰۰*۲۰۰*۱۵۰)",
     value: 3,
   },
   {
-    label: "4",
+    label: "۴ (۳۰۰*۲۰۰*۲۰۰)",
     value: 4,
   },
   {
-    label: "5",
+    label: "۵ (۳۵۰*۲۵۰*۲۰۰)",
     value: 5,
   },
   {
-    label: "6",
+    label: "۶ (۴۵۰*۲۵۰*۲۰۰)",
     value: 6,
   },
   {
-    label: "7",
+    label: "۷ (۴۰۰*۳۰۰*۲۵۰)",
     value: 7,
   },
   {
-    label: "8",
+    label: "۸ (۴۵۰*۴۰۰*۳۰۰)",
     value: 8,
   },
   {
-    label: "9",
+    label: "۹ (۵۵۰*۴۵۰*۳۵۰)",
     value: 9,
+  },
+  {
+    label: "۱۰ (سایز غیر متعارف)",
+    value: 10,
   },
 ];

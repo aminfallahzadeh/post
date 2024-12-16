@@ -27,22 +27,28 @@ export const specialServiceOptions = [
     disabled: false,
     type: "SMS",
   },
-  {
-    id: 9,
-    label: "اکسپرس",
-    disabled: false,
-    type: "express",
-  },
-  {
-    id: 10,
-    label: "مرسولات جوق",
-    disabled: false,
-    type: "joogh",
-  },
+  //   {
+  //     id: 9,
+  //     label: "اکسپرس",
+  //     disabled: false,
+  //     type: "express",
+  //   },
+  //   {
+  //     id: 10,
+  //     label: "مرسولات جوق",
+  //     disabled: false,
+  //     type: "joogh",
+  //   },
   {
     id: 11,
     label: "تحویل در صندوق شخصی",
     disabled: false,
     type: "personalSandogh",
+  },
+  {
+    id: 12,
+    label: "حق مقر",
+    disabled: true,
+    type: "haghMaghar",
   },
 ];

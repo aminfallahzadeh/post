@@ -14,19 +14,17 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useUserStore } from "@/store";
 import { LinearGradient } from "expo-linear-gradient";
-import { Feather } from "@expo/vector-icons";
+import Service from "@/components/Service";
 import { router } from "expo-router";
 import Background from "@/components/Background";
 import CustomModal from "@/components/CustomModal";
 import useRenderService from "@/hooks/useRenderService";
 import { filtersData } from "@/data/filters";
-import { followUpData, requestData } from "@/data/services";
 import { allData } from "@/data/services";
 import images from "@/constants/images";
 import * as SecureStore from "expo-secure-store";
 
 const width = Dimensions.get("window").width;
-const height = Dimensions.get("window").height;
 
 const filterReducer = (state, actions) => {
   switch (actions.type) {
@@ -96,16 +94,16 @@ const Services = () => {
       />
       <Background>
         <SafeAreaView className="h-full">
-          <Animated.View className="mt-12" style={{ opacity: fadeAnim }}>
+          <Animated.View style={{ opacity: fadeAnim }}>
             <View className="w-full">
               <View style={{ position: "relative" }}>
                 <Image
                   source={images.home}
                   style={styles.heroImage}
-                  resizeMode="cover"
+                  resizeMode="contain"
                 />
                 <LinearGradient
-                  colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.8)"]}
+                  colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.0)"]}
                   style={[
                     styles.heroImage,
                     {
@@ -122,21 +120,21 @@ const Services = () => {
                   onPress={() => router.push("follow")}
                   style={styles.heroTextContainer}
                 >
-                  <View className="flex-row justify-center items-center gap-x-2">
-                    <Text className="text-tertiary font-isansbold text-lg text-center">
+                  <View className="flex-row justify-center items-center bg-primary px-2 py-1 rounded-md">
+                    <Text className="text-white font-isansbold text-lg text-center">
                       پیگیری مرسوله
                     </Text>
 
-                    <Feather
+                    {/* <Feather
                       size={25}
                       name="arrow-right-circle"
                       color="#164194"
-                    />
+                    /> */}
                   </View>
                 </Pressable>
               </View>
             </View>
-            <View className="mt-5">
+            {/* <View className="mt-5">
               <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
@@ -170,23 +168,32 @@ const Services = () => {
                   </Pressable>
                 ))}
               </ScrollView>
-            </View>
+            </View> */}
 
             <ScrollView
               showsVerticalScrollIndicator={false}
-              contentContainerStyle={{ paddingBottom: 300 }}
+              contentContainerStyle={{
+                flexGrow: 1,
+                paddingTop: 20,
+                paddingBottom: 600,
+              }}
             >
               <View
-                className="flex-row flex-wrap gap-y-4 justify-start mt-5 px-2"
+                className="flex-row flex-wrap gap-y-4 justify-start px-2 "
                 style={{ transform: [{ scaleX: -1 }] }}
               >
-                {filteredItems === "all"
+                {/* {allData.map((item) => renderServices(item))} */}
+                {allData.map((item, index) => (
+                  <Service key={index} item={item} />
+                ))}
+
+                {/* {filteredItems === "all"
                   ? allData.map((item) => renderServices(item))
                   : filteredItems === "followup"
                   ? followUpData.map((item) => renderServices(item))
                   : filteredItems === "request"
                   ? requestData.map((item) => renderServices(item))
-                  : null}
+                  : null} */}
               </View>
             </ScrollView>
           </Animated.View>
@@ -245,14 +252,14 @@ const styles = StyleSheet.create({
 
   heroImage: {
     width,
-    height: height / 5,
+    // height: height / 5,
   },
 
   heroTextContainer: {
     position: "absolute",
-    bottom: 15,
+    bottom: 40,
     // backgroundColor: "#fcd900",
-    backgroundColor: "rgba(252, 217, 0, 0.7)",
+    // backgroundColor: "rgba(252, 217, 0, 0.7)",
     paddingHorizontal: 20,
     paddingVertical: 5,
     width: "100%",

@@ -1,5 +1,5 @@
 // IMPORTS
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import {
   View,
@@ -17,13 +17,15 @@ import FormField from "@/components/FormField";
 import SelectInput from "@/components/SelectInput";
 import { parcelOptions } from "@/data/parcelOptions";
 import { boxsizeOptions } from "@/data/boxsizeOptions";
-import { nerkhnameValidations } from "@/constants/validations";
+import { nerkhnameValidations, requiredRule } from "@/constants/validations";
 import { Title } from "@/components/Title";
 
 const NerkhNameStep1 = () => {
+  // STATES
+  const [weightRules, setWeightRules] = useState({});
   // CONSTS
-  const nerkhname = useUserStore((state) => state.nerkhname);
-  const setNerkhname = useUserStore((state) => state.setNerkhname);
+  const order = useUserStore((state) => state.order);
+  const setOrder = useUserStore((state) => state.setOrder);
   const {
     watch,
     handleSubmit,
@@ -34,15 +36,24 @@ const NerkhNameStep1 = () => {
 
   // HANDLERS
   const onSubmit = () => {
-    const data = { ...nerkhname, ...form_data };
-    setNerkhname(data);
-    router.push(`/forms/nerkhname/nerkhname-step-2`);
+    const data = { ...order, ...form_data };
+    setOrder(data);
+    router.push(`/forms/order/order-step-2`);
   };
 
   // DEBUG
   useEffect(() => {
-    console.log("NERKHNAME Step 1: ", nerkhname);
-  }, [nerkhname]);
+    console.log("data ", form_data);
+  }, [form_data]);
+
+  // EFFECTS
+  useEffect(() => {
+    if (form_data?.parceltype === 3) {
+      setWeightRules(nerkhnameValidations.weight.underOneKilo);
+    } else {
+      setWeightRules(nerkhnameValidations.weight.other);
+    }
+  }, [form_data?.parceltype]);
 
   return (
     <Background>
@@ -58,7 +69,7 @@ const NerkhNameStep1 = () => {
         >
           {/* HEADER SECTION */}
           <Title
-            title={`${nerkhname?.servicetype?.label} : اطلاعات مرسوله`}
+            title={`${order?.servicetype?.label} : اطلاعات مرسوله`}
             progress={30}
           />
 
@@ -75,16 +86,6 @@ const NerkhNameStep1 = () => {
                 name="number"
               />
 
-              <FormField
-                placeholder="وزن مرسوله"
-                type={"text"}
-                keyboardType="numeric"
-                containerStyle="mt-5"
-                control={control}
-                rules={nerkhnameValidations.weight}
-                name="weight"
-              />
-
               <View className="mt-5 relative">
                 {errors && (
                   <View className="absolute -top-5 left-0">
@@ -98,21 +99,57 @@ const NerkhNameStep1 = () => {
                   name="parceltype"
                   control={control}
                   rules={nerkhnameValidations.parceltype}
-                  render={({ field: { onChange } }) => (
-                    <SelectInput
-                      placeholder="* نوع مرسوله"
-                      options={parcelOptions}
-                      onValueChange={(val) => onChange(val)}
-                      primaryColor="#164194"
-                      selectedValue={
-                        parcelOptions.find(
-                          (c) => c.value === form_data?.parceltype
-                        )?.value
-                      }
-                    />
-                  )}
+                  render={({ field: { onChange } }) => {
+                    const options =
+                      order?.servicetype?.id === 19
+                        ? parcelOptions.sefareshi
+                        : order?.servicetype?.id === 27
+                        ? parcelOptions.amanat
+                        : parcelOptions.pishtaz;
+
+                    const selectedOption = options.find(
+                      (option) => option.value === form_data?.parceltype
+                    );
+
+                    return (
+                      <SelectInput
+                        placeholder="* نوع مرسوله"
+                        options={options}
+                        onValueChange={(val) => onChange(val)}
+                        primaryColor="#164194"
+                        selectedValue={selectedOption?.value}
+                      />
+                    );
+                  }}
                 />
               </View>
+
+              <View className="flex-row-reverse justify-center items-center">
+                <View className="flex-1 ml-2">
+                  <FormField
+                    placeholder="وزن مرسوله"
+                    type={"number"}
+                    keyboardType="numeric"
+                    containerStyle="mt-5"
+                    control={control}
+                    rules={{ ...requiredRule, ...weightRules }}
+                    name="weight"
+                  />
+                </View>
+
+                <Text className="flex-3 self-center text-primary text-xl font-isansbold text-center rounded-lg pt-5">
+                  گرم
+                </Text>
+              </View>
+
+              <FormField
+                placeholder="محتویات مرسوله"
+                type={"text"}
+                keyboardType="default"
+                containerStyle="mt-5"
+                control={control}
+                name="Contents"
+              />
 
               <View className="mt-5 relative">
                 {errors && (
@@ -126,10 +163,15 @@ const NerkhNameStep1 = () => {
                 <Controller
                   name="BoxSize"
                   control={control}
-                  rules={nerkhnameValidations.BoxSize}
                   render={({ field: { onChange } }) => (
                     <SelectInput
-                      placeholder="* سایز جعبه"
+                      disabled={
+                        form_data?.parceltype === 1 ||
+                        form_data?.parceltype === 2
+                          ? true
+                          : false
+                      }
+                      placeholder="* سایز کارتن"
                       options={boxsizeOptions}
                       onValueChange={(val) => onChange(val)}
                       primaryColor="#164194"

@@ -8,3 +8,7 @@ export function getProvince() {
 export function getServiceType() {
   return axiosInstance.get("Gheramat/GetServiceType");
 }
+
+export function trackingGheramat(mobile) {
+  return axiosInstance.get(`Gheramat/TrakingGheramat?mobile=${mobile}`);
+}

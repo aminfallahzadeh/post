@@ -1,11 +1,10 @@
 // IMPORTS
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import {
   View,
   Text,
   ScrollView,
-  StyleSheet,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
@@ -15,13 +14,18 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "@/components/CustomButton";
 import SelectInput from "@/components/SelectInput";
 import { insuranceOptions } from "@/data/insuranceOptions";
+import { insurancePriceRules, requiredRule } from "@/constants/validations";
 import FormField from "@/components/FormField";
 import { Title } from "@/components/Title";
+import { insertRequestPriceOrder } from "@/api/request";
 
 const NerkhnameStep5 = () => {
+  // STATES
+  const [priceRules, setPriceRules] = useState({});
+
   // CONSTS
-  const nerkhname = useUserStore((state) => state.nerkhname);
-  const setNerkhname = useUserStore((state) => state.setNerkhname);
+  const order = useUserStore((state) => state.order);
+
   const {
     watch,
     handleSubmit,
@@ -32,16 +36,24 @@ const NerkhnameStep5 = () => {
 
   // HANDLERS
   const onSubmit = () => {
-    // const data = { ...nerkhname, receiver: { ...form_data } };
-    // setNerkhname(data);
-    // router.push(`/forms/nerkhname/nerkhname-step-4`);
+    const data = { ...order, ...form_data };
+
     console.log("FORM DATA: ", form_data);
   };
 
   // DEBUG
   useEffect(() => {
-    console.log("NERKHNAME Step 5: ", nerkhname);
-  }, [nerkhname]);
+    console.log("NERKHNAME Step 5: ", order);
+  }, [order]);
+
+  // EFFECTS
+  useEffect(() => {
+    if (form_data.insurancetype === 3) {
+      setPriceRules(insurancePriceRules.oragh);
+    } else if (form_data.insurancetype === 5) {
+      setPriceRules(insurancePriceRules.sayer);
+    }
+  }, [form_data.insurancetype]);
 
   return (
     <Background>
@@ -56,10 +68,7 @@ const NerkhnameStep5 = () => {
           keyboardShouldPersistTaps="handled"
         >
           {/* HEADER SECTION */}
-          <Title
-            title={`${nerkhname?.servicetype?.label} : بیمه`}
-            progress={100}
-          />
+          <Title title={`${order?.servicetype?.label} : بیمه`} progress={100} />
 
           {/* FORM FIELDS */}
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -91,24 +100,23 @@ const NerkhnameStep5 = () => {
                   )}
                 />
               </View>
-
-              <FormField
-                placeholder="مبلغ اظهار شده"
-                type={"text"}
-                keyboardType="numeric"
-                containerStyle="mt-5"
-                control={control}
-                name="insuranceamount"
-              />
-
-              <FormField
-                placeholder="محتویات مرسوله"
-                type={"text"}
-                keyboardType="default"
-                containerStyle="mt-5"
-                control={control}
-                name="Contents"
-              />
+              <View className="flex-row-reverse justify-center items-center">
+                <View className="flex-1 ml-2">
+                  <FormField
+                    placeholder="مبلغ اظهار شده"
+                    type={"number"}
+                    keyboardType="numeric"
+                    rules={{ ...requiredRule, ...priceRules }}
+                    containerStyle="mt-5"
+                    editable={form_data.insurancetype === 1 ? false : true}
+                    control={control}
+                    name="insuranceamount"
+                  />
+                </View>
+                <Text className="flex-3 self-center text-primary text-xl font-isansbold text-center rounded-lg pt-5">
+                  ریال
+                </Text>
+              </View>
             </View>
           </TouchableWithoutFeedback>
         </ScrollView>
@@ -138,23 +146,3 @@ const NerkhnameStep5 = () => {
 };
 
 export default NerkhnameStep5;
-
-const styles = StyleSheet.create({
-  select: {
-    borderWidth: 1,
-    borderColor: "#fcd900",
-    borderRadius: 10,
-    padding: 10,
-    shadowColor: "#000",
-    width: "100%",
-    alignItems: "center",
-  },
-  selected: {
-    backgroundColor: "#fcd900",
-    borderColor: "#000",
-  },
-  disabled: {
-    backgroundColor: "#f0f0f0",
-    borderColor: "#ddd",
-  },
-});

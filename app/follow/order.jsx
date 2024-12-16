@@ -152,8 +152,6 @@ const FollowOrder = () => {
             <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
               <CustomButton
                 title="جست و جو"
-                bgColor="bg-green-700"
-                titleColor="text-white"
                 handlePress={handleSubmit(onSubmit)}
                 isLoading={isLoading}
               />

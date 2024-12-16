@@ -1,11 +1,10 @@
 // IMPORTS
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import {
   View,
   Text,
   ScrollView,
-  StyleSheet,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
@@ -20,12 +19,22 @@ import SelectInput from "@/components/SelectInput";
 import { originOptions } from "@/data/originOptions";
 import { destinationOptions } from "@/data/destinationOptions";
 import { Title } from "@/components/Title";
+import { requiredRule } from "@/constants/validations";
+import { LOADING_MESSAGE } from "@/constants/messages";
+import { getProvince, getCity } from "@/api/order";
+import { optionsGenerator } from "@/helpers/selectHelper";
 
 const NerkhnameStep2 = () => {
+  // STATES
+  const [provinceOptions, setProvinceOptions] = useState([]);
+  const [cityOptions, setCityOptions] = useState([]);
+  const [isCityLoading, setIsCityLoading] = useState(false);
+  const [isProvinceLoading, setIsProvinceLoading] = useState(false);
+
   // CONSTS
-  const nerkhname = useUserStore((state) => state.nerkhname);
+  const order = useUserStore((state) => state.order);
   const userData = useUserStore((state) => state.userData);
-  const setNerkhname = useUserStore((state) => state.setNerkhname);
+  const setOrder = useUserStore((state) => state.setOrder);
   const mobile = SecureStore.getItem("mobile");
   const {
     watch,
@@ -42,15 +51,51 @@ const NerkhnameStep2 = () => {
 
   // HANDLERS
   const onSubmit = () => {
-    const data = { ...nerkhname, sender: { ...form_data } };
-    setNerkhname(data);
-    router.push(`/forms/nerkhname/nerkhname-step-3`);
+    const data = { ...order, sender: { ...form_data } };
+    setOrder(data);
+    router.push(`/forms/order/order-step-3`);
   };
+
+  const fetchProvince = async () => {
+    setIsProvinceLoading(true);
+    try {
+      const response = await getProvince();
+      console.log("PROVINCE RESPONSE: ", response.data);
+      const options = optionsGenerator(
+        response.data.itemList,
+        "provinceCode",
+        "provinceName"
+      );
+      setProvinceOptions(options);
+    } finally {
+      setIsProvinceLoading(false);
+    }
+  };
+
+  const fetchCity = async (provinceID = null) => {
+    setIsCityLoading(true);
+    try {
+      const response = await getCity(provinceID);
+      console.log("CITY RESPONSE: ", response.data);
+      const options = optionsGenerator(
+        response.data.itemList,
+        "cityCode",
+        "cityName"
+      );
+      setCityOptions(options);
+    } finally {
+      setIsCityLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProvince();
+  }, []);
 
   // DEBUG
   useEffect(() => {
-    console.log("NERKHNAME Step 2: ", nerkhname);
-  }, [nerkhname]);
+    console.log("NERKHNAME Step 2: ", order);
+  }, [order]);
 
   return (
     <Background>
@@ -66,36 +111,39 @@ const NerkhnameStep2 = () => {
         >
           {/* HEADER SECTION */}
           <Title
-            title={`${nerkhname?.servicetype?.label} : اطلاعات فرستنده`}
+            title={`${order?.servicetype?.label} : اطلاعات فرستنده`}
             progress={45}
           />
 
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View className="w-full px-5">
               <FormField
-                placeholder="نام"
+                placeholder="* نام"
                 type={"text"}
                 keyboardType="default"
                 containerStyle="mt-10"
                 control={control}
+                rules={requiredRule}
                 name="name"
               />
 
               <FormField
-                placeholder="نام خانوادگی"
+                placeholder="* نام خانوادگی"
                 type={"text"}
                 keyboardType="default"
                 containerStyle="mt-5"
                 control={control}
+                rules={requiredRule}
                 name="lastName"
               />
 
               <FormField
-                placeholder="تلفن همراه"
+                placeholder="* تلفن همراه"
                 type={"text"}
                 keyboardType="numeric"
                 containerStyle="mt-5"
                 control={control}
+                rules={requiredRule}
                 name="mobile"
               />
 
@@ -109,20 +157,22 @@ const NerkhnameStep2 = () => {
               />
 
               <FormField
-                placeholder="کد ملی"
+                placeholder="* کد ملی"
                 type={"text"}
                 keyboardType="numeric"
                 containerStyle="mt-5"
                 control={control}
+                rules={requiredRule}
                 name="nationalCode"
               />
 
               <FormField
-                placeholder="کد پستی"
+                placeholder="* کد پستی"
                 type={"text"}
                 keyboardType="numeric"
                 containerStyle="mt-5"
                 control={control}
+                rules={requiredRule}
                 name="postalCode"
               />
 
@@ -140,7 +190,7 @@ const NerkhnameStep2 = () => {
                   control={control}
                   render={({ field: { onChange } }) => (
                     <SelectInput
-                      placeholder="* مبدا"
+                      placeholder="مبدا"
                       options={originOptions}
                       onValueChange={(val) => onChange(val)}
                       primaryColor="#164194"
@@ -167,7 +217,7 @@ const NerkhnameStep2 = () => {
                   control={control}
                   render={({ field: { onChange } }) => (
                     <SelectInput
-                      placeholder="* مقصد"
+                      placeholder="مقصد"
                       options={destinationOptions}
                       onValueChange={(val) => onChange(val)}
                       primaryColor="#164194"
@@ -181,19 +231,77 @@ const NerkhnameStep2 = () => {
                 />
               </View>
 
-              <FormField
-                placeholder="شهر"
-                type={"text"}
-                keyboardType="default"
-                containerStyle="mt-5"
-                control={control}
-                name="city"
-              />
+              <View className="mt-5 relative">
+                {errors && (
+                  <View className="absolute -top-5 left-0">
+                    <Text className="text-red-500 font-isansregular">
+                      {errors?.city_id?.message}
+                    </Text>
+                  </View>
+                )}
+
+                <Controller
+                  name="provinceID"
+                  control={control}
+                  rules={requiredRule}
+                  render={({ field: { onChange } }) => (
+                    <SelectInput
+                      placeholder={
+                        isProvinceLoading ? LOADING_MESSAGE : "* استان"
+                      }
+                      options={provinceOptions}
+                      onValueChange={(val) => {
+                        if (val) {
+                          fetchCity(val);
+                        } else {
+                          setCityOptions([]);
+                        }
+                        return onChange(val);
+                      }}
+                      primaryColor="#164194"
+                      selectedValue={
+                        provinceOptions.find(
+                          (c) => c.value === form_data?.provinceID
+                        )?.value
+                      }
+                    />
+                  )}
+                />
+              </View>
+
+              <View className="mt-5 relative">
+                {errors && (
+                  <View className="absolute -top-5 left-0">
+                    <Text className="text-red-500 font-isansregular">
+                      {errors?.city_id?.message}
+                    </Text>
+                  </View>
+                )}
+
+                <Controller
+                  name="cityID"
+                  control={control}
+                  rules={requiredRule}
+                  render={({ field: { onChange } }) => (
+                    <SelectInput
+                      placeholder={isCityLoading ? LOADING_MESSAGE : "* شهر"}
+                      options={cityOptions}
+                      onValueChange={(val) => onChange(val)}
+                      primaryColor="#164194"
+                      selectedValue={
+                        cityOptions.find((c) => c.value === form_data?.cityID)
+                          ?.value
+                      }
+                    />
+                  )}
+                />
+              </View>
 
               <FormField
-                placeholder="آدرس"
+                placeholder="* آدرس"
                 type={"text"}
                 multiline={true}
+                rules={requiredRule}
                 keyboardType="default"
                 containerStyle="mt-5"
                 height="h-32 align-top"
@@ -219,23 +327,3 @@ const NerkhnameStep2 = () => {
 };
 
 export default NerkhnameStep2;
-
-const styles = StyleSheet.create({
-  select: {
-    borderWidth: 1,
-    borderColor: "#fcd900",
-    borderRadius: 10,
-    padding: 10,
-    shadowColor: "#000",
-    width: "100%",
-    alignItems: "center",
-  },
-  selected: {
-    backgroundColor: "#fcd900",
-    borderColor: "#000",
-  },
-  disabled: {
-    backgroundColor: "#f0f0f0",
-    borderColor: "#ddd",
-  },
-});

@@ -26,6 +26,7 @@ export const FormField = ({
   control,
   rules,
   animate = true,
+
   ...props
 }) => {
   // STATES
@@ -60,6 +61,7 @@ export const FormField = ({
     inputRange: [0, 1],
     outputRange: [13, 12],
   });
+
   // HANDLERS
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -118,7 +120,6 @@ export const FormField = ({
         )}
 
         {/* ERROR */}
-
         {fieldState?.error && (
           <View className="absolute -top-5 left-0">
             <Text className="text-red-500 font-isansregular">
@@ -155,7 +156,7 @@ export const FormField = ({
               color={"gray"}
             />
           </TouchableOpacity>
-        ) : type === "text" && field.value && clearBtn && editable ? (
+        ) : type !== "password" && field.value && clearBtn && editable ? (
           <TouchableOpacity
             onPress={handleRemoveField}
             className="absolute top-[50%] left-4"

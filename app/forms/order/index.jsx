@@ -2,34 +2,31 @@
 import { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { View, ScrollView } from "react-native";
-import { useUserStore } from "@/store";
-import Background from "@/components/Background";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { router } from "expo-router";
 import CustomButton from "@/components/CustomButton";
+import { router } from "expo-router";
+import Background from "@/components/Background";
 import RadioButtons from "@/components/RadioButtons";
-import { specialServiceOptions } from "@/data/specialServiceOptions";
+import { serviceOptions } from "@/data/serviceOptions";
+import { useUserStore } from "@/store";
 import { Title } from "@/components/Title";
 
-const NerkhnameStep4 = () => {
+const Index = () => {
   // CONSTS
-  const nerkhname = useUserStore((state) => state.nerkhname);
-  const setNerkhname = useUserStore((state) => state.setNerkhname);
+  const setOrder = useUserStore((state) => state.setOrder);
   const { watch, handleSubmit, control } = useForm();
   const form_data = watch();
 
   // HANDLERS
   const onSubmit = () => {
-    const data = { ...nerkhname, specialServices: form_data.specialServices };
-    setNerkhname(data);
-    router.push(`/forms/nerkhname/nerkhname-step-5`);
-    console.log("FORM DATA: ", form_data);
+    setOrder(form_data);
+    router.push(`/forms/order/order-step-1`);
   };
 
   // DEBUG
   useEffect(() => {
-    console.log("NERKHNAME Step 4: ", nerkhname);
-  }, [nerkhname]);
+    console.log("FORM DATA: ", form_data);
+  }, [form_data]);
 
   return (
     <Background>
@@ -44,26 +41,20 @@ const NerkhnameStep4 = () => {
           keyboardShouldPersistTaps="handled"
         >
           {/* HEADER SECTION */}
-          <Title
-            title={`${nerkhname?.servicetype?.label} : خدمات ویژه`}
-            progress={80}
-          />
+          <Title progress={15} title="نوع سرویس" home={false} />
 
           {/* FORM FIELDS */}
-
           <View className="w-full px-5 mt-10">
             <Controller
-              name="specialServices"
+              name="servicetype"
               control={control}
               render={({ field: { onChange, value } }) => (
                 <RadioButtons
-                  options={specialServiceOptions}
-                  title="نوع خدمات ویژه"
+                  options={serviceOptions}
                   onChange={onChange}
                   value={value}
-                  isMulti={true}
                   itemsContainerStyle={
-                    "flex-row-reverse w-full flex-wrap justify-between items-center gap-y-3"
+                    "flex-col w-full gap-y-5 items-center justify-center"
                   }
                 />
               )}
@@ -73,11 +64,15 @@ const NerkhnameStep4 = () => {
 
         {/* BOTTOM SECTION */}
         <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
-          <CustomButton title="ادامه" handlePress={handleSubmit(onSubmit)} />
+          <CustomButton
+            title="ادامه"
+            disabled={!form_data.servicetype}
+            handlePress={handleSubmit(onSubmit)}
+          />
         </View>
       </SafeAreaView>
     </Background>
   );
 };
 
-export default NerkhnameStep4;
+export default Index;

@@ -13,6 +13,7 @@ const initialState = {
   gheramatResult: {},
   nerkhname: [],
   ehrazFormData: {},
+  order: [],
 };
 
 export const useUserStore = create(
@@ -40,6 +41,7 @@ export const useUserStore = create(
     setGheramatResult: (gheramatResult) => set({ gheramatResult }),
 
     setNerkhname: (nerkhname) => set({ nerkhname }),
+    setOrder: (order) => set({ order }),
 
     setEhrazFormData: (ehrazFormData) => set({ ehrazFormData }),
 

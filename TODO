@@ -26,6 +26,20 @@ familyname = test1
 
  VALID MARSOOLE NUMBER = 986480325900184340067114
 
+
+GET PRICE
+
+{
+  "typecode": 11,
+  "servicetype": 1,
+  "parceltype": 1,
+  "sourcecode": 1,
+  "destcode": 51,
+  "weight": 100,
+  "spsparceltype": 0,
+  "boxsize": 2
+}
+
 Archive:
   ✔ centralize the dropdown component styles (dropdown helper) @done(24-11-15 03:25) @project(Component)
   ✔ create a hook for lookup data @done(24-11-16 17:44) @project(Component)

@@ -72,7 +72,7 @@ const RootLayout = () => {
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="forms/nerkhname" options={{ headerShown: false }} />
+        <Stack.Screen name="forms/order" options={{ headerShown: false }} />
         <Stack.Screen
           name="forms/new-complaint"
           options={{ headerShown: false }}
@@ -100,6 +100,7 @@ const RootLayout = () => {
         <Stack.Screen name="factor" options={{ headerShown: false }} />
         <Stack.Screen name="ehraz" options={{ headerShown: false }} />
         <Stack.Screen name="map" options={{ headerShown: false }} />
+        <Stack.Screen name="forms/nerkhname" options={{ headerShown: false }} />
       </Stack>
       <ToastProvider />
     </>

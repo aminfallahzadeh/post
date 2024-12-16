@@ -7,17 +7,17 @@ import { AntDesign } from "@expo/vector-icons";
 
 const { width } = Dimensions.get("screen");
 
-const images = {
-  "announce-5.png": require("../assets/images/announce-5.png"),
-  "announce-2.png": require("../assets/images/announce-2.png"),
-  "announce-3.png": require("../assets/images/announce-3.png"),
-  "announce-4.png": require("../assets/images/announce-4.png"),
-};
+// const images = {
+//   "announce-5.png": require("../assets/images/announce-5.png"),
+//   "announce-2.png": require("../assets/images/announce-2.png"),
+//   "announce-3.png": require("../assets/images/announce-3.png"),
+//   "announce-4.png": require("../assets/images/announce-4.png"),
+// };
 
 export const SliderItem = ({ slideItem }) => {
   return (
     <View style={styles.container}>
-      <Image source={images[slideItem.image]} style={styles.image} />
+      {/* <Image source={images[slideItem.image]} style={styles.image} />
       <LinearGradient
         colors={["transparent", "rgba(0,0,0,0.8)"]}
         style={styles.gradient}
@@ -31,7 +31,7 @@ export const SliderItem = ({ slideItem }) => {
           {slideItem.title}
         </Text>
         <AntDesign name="checkcircleo" size={20} color="orange" />
-      </View>
+      </View> */}
     </View>
   );
 };

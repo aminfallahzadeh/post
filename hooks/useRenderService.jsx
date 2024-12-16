@@ -1,10 +1,6 @@
-// REACT IMPORTS
+// IMPORTS
 import { useCallback } from "react";
-
-// NATIVE IMPORTS
 import { Pressable, Image, Text, StyleSheet } from "react-native";
-
-// EXPO
 import { AntDesign, FontAwesome, Feather } from "@expo/vector-icons";
 
 function useRenderService(handlePress) {

@@ -2,12 +2,10 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { View, Text, ScrollView, Animated } from "react-native";
 import { useFocusEffect } from "expo-router";
-import { showMessage } from "react-native-flash-message";
 import { Chase } from "react-native-animated-spinkit";
 import Background from "@/components/Background";
 import PostCertificateCard from "@/components/PostCertificateCard";
 import { getCertificate } from "@/api/gnaf";
-import { toastStyles } from "@/constants/styles";
 import * as SecureStore from "expo-secure-store";
 
 const MyGovahiView = () => {
@@ -26,13 +24,6 @@ const MyGovahiView = () => {
       const response = await getCertificate(mobile);
       console.log("CERTIFICATE LIST RESPONSE: ", response.data.itemList);
       setList(response.data.itemList);
-    } catch (error) {
-      console.log("CERTIFICATE LIST ERROR:", error.response);
-      showMessage({
-        message: error.response?.data?.message || error.message,
-        type: "danger",
-        titleStyle: toastStyles,
-      });
     } finally {
       setIsLoading(false);
     }

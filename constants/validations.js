@@ -149,9 +149,17 @@ export const postYafteValidation = {
 
 export const nerkhnameValidations = {
   weight: {
-    required: {
-      value: true,
-      message: REQUIRED,
+    other: {
+      max: {
+        value: 30_000,
+        message: "حداکثر ۳۰٫۰۰۰ گرم (۳۰ کیلو)",
+      },
+    },
+    underOneKilo: {
+      max: {
+        value: 999,
+        message: "حداکثر ۹۹۹ گرم (زیر یک کیلو)",
+      },
     },
   },
   parceltype: {
@@ -191,5 +199,26 @@ export const lastStreetRules = {
   maxLength: {
     value: 20,
     message: "حداکثر ۲۰ کاراکتر",
+  },
+};
+
+export const insurancePriceRules = {
+  naghd: {
+    max: {
+      value: 50_000_000,
+      message: "حداکثر ۵۰٫۰۰۰٫۰۰ ریال",
+    },
+  },
+  oragh: {
+    max: {
+      value: 5_000_000_000,
+      message: "حداکثر ۵٫۰۰۰٫۰۰۰٫۰۰۰ ریال",
+    },
+  },
+  sayer: {
+    max: {
+      value: 1_000_000_000,
+      message: "حداکثر ۱٫۰۰۰٫۰۰۰٫۰۰۰ ریال",
+    },
   },
 };
