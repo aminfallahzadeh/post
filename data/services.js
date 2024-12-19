@@ -18,6 +18,7 @@ export const allData = [
     title: "گواهی مکانی",
     icon: "govahiMakani",
     iconName: null,
+    url: "forms/postalcode-geo",
     nationalCodeRequired: false,
   },
   {

@@ -12,7 +12,13 @@ import Feather from "@expo/vector-icons/Feather";
 
 const { width, height } = Dimensions.get("screen");
 
-export const CustomModal = ({ visible, closeModal, title, description }) => {
+export const CustomModal = ({
+  visible,
+  closeModal,
+  title,
+  description,
+  onConfirm,
+}) => {
   return (
     <Modal
       visible={visible}
@@ -40,7 +46,7 @@ export const CustomModal = ({ visible, closeModal, title, description }) => {
 
           <View className="w-full items-center justify-center mt-5">
             <Pressable
-              onPress={closeModal}
+              onPress={onConfirm ? onConfirm : closeModal}
               className="bg-green-500 h-10 w-10 items-center justify-center rounded-full"
             >
               <Feather name="check" size={24} color="#00075a" />

@@ -13,17 +13,23 @@ export const parcelOptionsAll = [
 export const parcelOptions = {
   pishtaz: [
     { label: "پاکت", value: 1 },
-    { label: "جوف - پاکت", value: 2 },
+    { label: "جوف - پاکت", value: 14 },
     { label: "بسته زیر یک کیلو", value: 3 },
     { label: "بسته بالای یک کیلو (تا ۳۰ کیلو)", value: 4 },
   ],
   sefareshi: [
     { label: "پاکت", value: 1 },
-    { label: "جوف - پاکت", value: 2 },
+    { label: "جوف - پاکت", value: 15 },
     { label: "بسته زیر یک کیلو", value: 3 },
     { label: "بسته بالای یک کیلو (تا ۳۰ کیلو)", value: 4 },
     { label: "مطبوع", value: 5 },
     { label: "کیسه M", value: 6 },
   ],
   amanat: [{ label: "بسته بالای یک کیلو (تا ۳۰ کیلو)", value: 4 }],
+  vijhe: [
+    { label: "پاکت", value: 1 },
+    { label: "جوف - پاکت", value: 3 },
+    { label: "بسته زیر یک کیلو", value: 3 },
+    { label: "بسته بالای یک کیلو (تا ۳۰ کیلو)", value: 4 },
+  ],
 };

@@ -5,7 +5,7 @@ import { useFocusEffect, router } from "expo-router";
 import { Chase } from "react-native-animated-spinkit";
 import Background from "@/components/Background";
 import { useUserStore } from "@/store";
-import { getRequestPostYafte } from "@/api/request";
+import { getAllPostYafte } from "@/api/yafte";
 import { requestPayment } from "@/api/payment";
 import CustomButton from "@/components/CustomButton";
 import * as SecureStore from "expo-secure-store";
@@ -19,18 +19,23 @@ const MyPostYafteView = () => {
 
   // CONSTS
   const mobile = SecureStore.getItem("mobile");
+  const userData = useUserStore((state) => state.userData);
   const setFactor = useUserStore((state) => state.setFactor);
 
   const fetchData = useCallback(async () => {
     setIsLoading(true);
     try {
-      const response = await getRequestPostYafte(mobile);
+      const response = await getAllPostYafte({
+        nationalID: userData.nationalCode || "",
+        firstName: userData.name || "",
+        lastName: userData.lastName || "",
+      });
       console.log("POST YAFTE RESPONSE:", response.data);
       setData(response.data.itemList);
     } finally {
       setIsLoading(false);
     }
-  }, [mobile]);
+  }, [userData]);
 
   // HANDLERS
   const onSubmit = async (item) => {

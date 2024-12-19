@@ -51,4 +51,10 @@ export const specialServiceOptions = [
     disabled: true,
     type: "haghMaghar",
   },
+  {
+    id: 13,
+    label: "رستانت",
+    disabled: true,
+    type: "restant",
+  },
 ];

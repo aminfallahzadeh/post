@@ -235,7 +235,7 @@ const NerkhnameStep2 = () => {
                 {errors && (
                   <View className="absolute -top-5 left-0">
                     <Text className="text-red-500 font-isansregular">
-                      {errors?.city_id?.message}
+                      {errors?.provinceID?.message}
                     </Text>
                   </View>
                 )}
@@ -273,7 +273,7 @@ const NerkhnameStep2 = () => {
                 {errors && (
                   <View className="absolute -top-5 left-0">
                     <Text className="text-red-500 font-isansregular">
-                      {errors?.city_id?.message}
+                      {errors?.cityID?.message}
                     </Text>
                   </View>
                 )}

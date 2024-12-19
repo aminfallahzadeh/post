@@ -23,6 +23,7 @@ import { Title } from "@/components/Title";
 const NerkhNameStep1 = () => {
   // STATES
   const [weightRules, setWeightRules] = useState({});
+
   // CONSTS
   const order = useUserStore((state) => state.order);
   const setOrder = useUserStore((state) => state.setOrder);
@@ -105,6 +106,8 @@ const NerkhNameStep1 = () => {
                         ? parcelOptions.sefareshi
                         : order?.servicetype?.id === 27
                         ? parcelOptions.amanat
+                        : order?.servicetype?.id === 77
+                        ? parcelOptions.vijhe
                         : parcelOptions.pishtaz;
 
                     const selectedOption = options.find(
@@ -147,8 +150,14 @@ const NerkhNameStep1 = () => {
                 type={"text"}
                 keyboardType="default"
                 containerStyle="mt-5"
+                rules={{
+                  required: {
+                    value: form_data?.parceltype !== 1 ? true : false,
+                    message: "این فیلد اجباری است",
+                  },
+                }}
                 control={control}
-                name="Contents"
+                name="contetnts"
               />
 
               <View className="mt-5 relative">
