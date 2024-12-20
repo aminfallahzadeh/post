@@ -14,5 +14,6 @@ export const serviceOptions = [
 export const nerkhnameServiceOptions = [
   { label: "پیشتاز", value: 1 },
   { label: "سفارشی", value: 2 },
-  { label: "امانت", value: 3 },
+  { label: "ویژه", value: 3 },
+  { label: "امانت", value: 4 },
 ];

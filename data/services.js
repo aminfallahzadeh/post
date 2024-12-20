@@ -67,7 +67,7 @@ export const allData = [
     id: 17,
     title: "کالاهای ممنوعه",
     icon: "forbiddenThings",
-    url: "/",
+    url: "https://www.post.ir/post-information",
     nationalCodeRequired: false,
   },
 ];

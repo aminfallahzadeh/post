@@ -19,7 +19,7 @@ const TabsLayout = () => {
   const [menuVisible, setMenuVisible] = useState(false);
 
   // CONSTS
-  const animationValue = useRef(new Animated.Value(-width)).current;
+  const animationValue = useRef(new Animated.Value(width)).current;
 
   // TOGGLE MENU
   const toggleMenu = () => {
