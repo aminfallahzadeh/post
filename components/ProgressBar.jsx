@@ -5,7 +5,7 @@ export const ProgressBar = ({
   progress,
   style,
   bgColor = "bg-grey5",
-  color = "bg-primary",
+  color = "bg-secondary",
 }) => {
   return (
     <View className={`w-full h-[5px] ${bgColor} rounded relative ${style}`}>

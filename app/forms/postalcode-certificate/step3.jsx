@@ -1,24 +1,17 @@
 // IMPORTS
 import { useState, useEffect, useRef } from "react";
-import {
-  View,
-  Text,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Animated,
-} from "react-native";
+import { View, Text, ScrollView, StyleSheet, Animated } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useUserStore } from "@/store";
 import { requestPayment } from "@/api/payment";
 import { router } from "expo-router";
-import Feather from "@expo/vector-icons/Feather";
-import { ProgressBar, Background, Factor, CustomButton } from "@/components";
+import { Background, Factor, CustomButton } from "@/components";
 import { toastStyles } from "@/constants/styles";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import RNBounceable from "@freakycoder/react-native-bounceable";
 import { showMessage } from "react-native-flash-message";
 import * as SecureStore from "expo-secure-store";
+import { Title } from "@/components/Title";
 
 const Step3 = () => {
   // STATES
@@ -106,26 +99,7 @@ const Step3 = () => {
           keyboardShouldPersistTaps="handled"
         >
           {/* HEADER SECTION */}
-          <View
-            className="flex-col w-full bg-secondary z-10 justify-center items-center relative"
-            style={styles.headerContainer}
-          >
-            <View className="flex-row w-full justify-between items-center">
-              <Pressable
-                onPress={() => router.back()}
-                className="absolute left-4"
-              >
-                <Feather name="arrow-left" size={25} color="#333" />
-              </Pressable>
-              <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
-                گواهی کد پستی
-              </Text>
-            </View>
-
-            <View className="flex-col px-10 w-full pb-2">
-              <ProgressBar progress={100} />
-            </View>
-          </View>
+          <Title title={"گواهی کد پستی"} progress={100} home={true} />
 
           {/* RESULT FACTOR */}
           <View className="w-full px-5 mt-5">
@@ -179,8 +153,6 @@ const Step3 = () => {
         <View className="w-full z-10 px-4 bg-gray-100 py-4">
           <CustomButton
             title="پرداخت"
-            bgColor="bg-green-700"
-            titleColor="text-white"
             disabled={!checked}
             handlePress={onSubmit}
             isLoading={isLoading}

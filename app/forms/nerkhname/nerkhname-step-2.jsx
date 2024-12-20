@@ -95,60 +95,6 @@ const NerkhnameStep2 = () => {
                 </Text>
               </View>
 
-              <View className="mt-2 mb-2 w-full">
-                <LinearGradient
-                  colors={["transparent", "#000", "transparent"]}
-                  style={styles.gradientLineHorizontal}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                />
-              </View>
-
-              <View className="flex-row-reverse justify-between w-full items-center flex-wrap">
-                <Text className="font-isansdemibold text-grey2 text-[15px]">
-                  مبلغ پیامک
-                </Text>
-                <Text className="font-isansregular">
-                  {separateByThousand(nerkhname?.smsprice)}
-                </Text>
-              </View>
-
-              <View className="mt-2 mb-2 w-full">
-                <LinearGradient
-                  colors={["transparent", "#000", "transparent"]}
-                  style={styles.gradientLineHorizontal}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                />
-              </View>
-
-              <View className="flex-row-reverse justify-between w-full items-center flex-wrap">
-                <Text className="font-isansdemibold text-grey2 text-[15px]">
-                  مبلغ غیر استاندارد
-                </Text>
-                <Text className="font-isansregular">
-                  {separateByThousand(nerkhname?.nonstandardprice)}
-                </Text>
-              </View>
-
-              <View className="mt-2 mb-2 w-full">
-                <LinearGradient
-                  colors={["transparent", "#000", "transparent"]}
-                  style={styles.gradientLineHorizontal}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                />
-              </View>
-
-              <View className="flex-row-reverse justify-between w-full items-center flex-wrap">
-                <Text className="font-isansdemibold text-grey2 text-[15px]">
-                  مبلغ مقصد
-                </Text>
-                <Text className="font-isansregular">
-                  {separateByThousand(nerkhname?.sendplaceprice)}
-                </Text>
-              </View>
-
               <View className="w-full bg-primary h-[2px] mt-5 mb-5" />
 
               <View className="flex-row-reverse justify-between w-full items-center flex-wrap">

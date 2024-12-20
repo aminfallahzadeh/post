@@ -6,12 +6,12 @@ import { Feather } from "@expo/vector-icons";
 
 export const Title = ({ progress, title, home = true }) => {
   return (
-    <View className="flex-col w-full bg-secondary z-10 justify-center items-center relative">
+    <View className="flex-col w-full bg-primary z-10 justify-center items-center relative">
       <View className="flex-row w-full justify-between items-center">
         <Pressable onPress={() => router.back()} className="absolute left-4">
-          <Feather name="arrow-left" size={35} color="#333" />
+          <Feather name="arrow-left" size={35} color="#fff" />
         </Pressable>
-        <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
+        <Text className="text-white font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
           {title}
         </Text>
 
@@ -20,7 +20,7 @@ export const Title = ({ progress, title, home = true }) => {
             onPress={() => router.replace("/services")}
             className="absolute right-4"
           >
-            <Feather name="home" size={25} color="#333" />
+            <Feather name="home" size={25} color="#fff" />
           </Pressable>
         )}
       </View>

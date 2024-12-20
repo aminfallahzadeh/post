@@ -29,7 +29,8 @@ const NerkhnameStep4 = () => {
   // DEBUG
   useEffect(() => {
     console.log("NERKHNAME Step 4: ", order);
-  }, [order]);
+    console.log("FORM DATA: ", form_data);
+  }, [order, form_data]);
 
   return (
     <Background>

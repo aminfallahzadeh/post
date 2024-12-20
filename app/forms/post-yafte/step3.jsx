@@ -4,9 +4,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
 import CustomButton from "@/components/CustomButton";
-import ProgressBar from "@/components/ProgressBar";
 import Background from "@/components/Background";
 import { POST_YAFTE } from "@/constants/consts";
+import { Title } from "@/components/Title";
 
 export default function Step3() {
   return (
@@ -22,20 +22,7 @@ export default function Step3() {
           keyboardShouldPersistTaps="handled"
         >
           {/* HEADER SECTION */}
-          <View
-            className="flex-col w-full bg-secondary z-10 justify-center items-center relative"
-            style={styles.headerContainer}
-          >
-            <View className="flex-row w-full justify-between items-center">
-              <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
-                {POST_YAFTE}
-              </Text>
-            </View>
-
-            <View className="flex-col px-10 w-full pb-2">
-              <ProgressBar progress={100} />
-            </View>
-          </View>
+          <Title title={POST_YAFTE} progress={100} home={true} />
 
           <View
             className={

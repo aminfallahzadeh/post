@@ -6,7 +6,6 @@ import {
   Text,
   Keyboard,
   TouchableWithoutFeedback,
-  Pressable,
   TouchableOpacity,
   ScrollView,
   StyleSheet,
@@ -18,11 +17,11 @@ import { router } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
 import CustomButton from "@/components/CustomButton";
 import FormField from "@/components/FormField";
-import ProgressBar from "@/components/ProgressBar";
 import Background from "@/components/Background";
 import PostalCodeCard from "@/components/PostalCodeCard";
 import { postalCodeValidation } from "@/constants/validations";
 import { showMessage } from "react-native-flash-message";
+import { Title } from "@/components/Title";
 import { toastStyles } from "@/constants/styles";
 
 const Index = () => {
@@ -115,26 +114,7 @@ const Index = () => {
           keyboardShouldPersistTaps="handled"
         >
           {/* HEADER SECTION */}
-          <View
-            className="flex-col w-full bg-secondary z-10 justify-center items-center relative"
-            style={styles.headerContainer}
-          >
-            <View className="flex-row w-full justify-between items-center">
-              <Pressable
-                onPress={() => router.back()}
-                className="absolute left-4"
-              >
-                <Feather name="arrow-left" size={25} color="#333" />
-              </Pressable>
-              <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
-                گواهی کد پستی
-              </Text>
-            </View>
-
-            <View className="flex-col px-10 w-full pb-2">
-              <ProgressBar progress={33} />
-            </View>
-          </View>
+          <Title title={"گواهی کد پستی"} progress={33} home={false} />
 
           {/* FORM FIELDS */}
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

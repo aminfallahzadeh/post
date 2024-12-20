@@ -1,21 +1,14 @@
 // IMPORTS
 import { useState, useEffect, useRef } from "react";
-import {
-  View,
-  Text,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Animated,
-} from "react-native";
+import { View, Text, ScrollView, StyleSheet, Animated } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useUserStore } from "@/store";
 import { router } from "expo-router";
-import Feather from "@expo/vector-icons/Feather";
 import { requestPayment } from "@/api/payment";
-import { ProgressBar, Background, Factor, CustomButton } from "@/components";
+import { Background, Factor, CustomButton } from "@/components";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import RNBounceable from "@freakycoder/react-native-bounceable";
+import { Title } from "@/components/Title";
 import * as SecureStore from "expo-secure-store";
 
 const Step3 = () => {
@@ -88,26 +81,7 @@ const Step3 = () => {
           keyboardShouldPersistTaps="handled"
         >
           {/* HEADER SECTION */}
-          <View
-            className="flex-col w-full bg-secondary z-10 justify-center items-center relative"
-            style={styles.headerContainer}
-          >
-            <View className="flex-row w-full justify-between items-center">
-              <Pressable
-                onPress={() => router.back()}
-                className="absolute left-4"
-              >
-                <Feather name="arrow-left" size={25} color="#333" />
-              </Pressable>
-              <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
-                درخواست کد پستی
-              </Text>
-            </View>
-
-            <View className="flex-col px-10 w-full pb-2">
-              <ProgressBar progress={100} />
-            </View>
-          </View>
+          <Title title={"درخواست کد پستی"} progress={100} home={true} />
 
           {/* RESULT FACTOR */}
           <View className="w-full px-5 mt-5">
@@ -129,7 +103,6 @@ const Step3 = () => {
 
           <View className="flex-row justify-center items-center mt-5 px-4">
             <RNBounceable
-              style={styles.syntheticButton}
               onPress={() => {
                 if (bouncyCheckboxRef.current) {
                   bouncyCheckboxRef.current.onCheckboxPress();
@@ -176,23 +149,6 @@ const Step3 = () => {
 export default Step3;
 
 const styles = StyleSheet.create({
-  inputContainer: {
-    columnGap: 10,
-  },
-  headerContainer: {
-    shadowColor: "black",
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 10,
-    elevation: 3,
-    backgroundColor: "white",
-  },
-  disabledPlus: {
-    color: "gray",
-  },
-  postalCodesItemContainer: {
-    gap: 10,
-  },
   factorContainer: {
     width: "100%",
     marginTop: 20,

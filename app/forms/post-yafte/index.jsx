@@ -1,24 +1,17 @@
 // IMPORTS
 import { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  Pressable,
-  TouchableOpacity,
-  ScrollView,
-  StyleSheet,
-} from "react-native";
+import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useUserStore } from "@/store";
 import { getAllPostYafte } from "@/api/yafte";
 import { router } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
 import CustomButton from "@/components/CustomButton";
-import ProgressBar from "@/components/ProgressBar";
 import Background from "@/components/Background";
 import { PostYafteCard } from "@/components/PostYafteCard/PostYafteCard";
 import { POST_YAFTE, SELECT_ALL } from "@/constants/consts";
 import { Chase } from "react-native-animated-spinkit";
+import { Title } from "@/components/Title";
 
 const Index = () => {
   // STATES
@@ -97,26 +90,7 @@ const Index = () => {
           keyboardShouldPersistTaps="handled"
         >
           {/* HEADER SECTION */}
-          <View
-            className="flex-col w-full bg-secondary z-10 justify-center items-center relative"
-            style={styles.headerContainer}
-          >
-            <View className="flex-row w-full justify-between items-center">
-              <Pressable
-                onPress={() => router.back()}
-                className="absolute left-4"
-              >
-                <Feather name="arrow-left" size={25} color="#333" />
-              </Pressable>
-              <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
-                {POST_YAFTE}
-              </Text>
-            </View>
-
-            <View className="flex-col px-10 w-full pb-2">
-              <ProgressBar progress={33} />
-            </View>
-          </View>
+          <Title title={POST_YAFTE} progress={33} home={false} />
 
           {isLoading ? (
             <View className="w-full justify-center items-center">
@@ -170,23 +144,3 @@ const Index = () => {
 };
 
 export default Index;
-
-const styles = StyleSheet.create({
-  inputContainer: {
-    columnGap: 10,
-  },
-  headerContainer: {
-    shadowColor: "black",
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 10,
-    elevation: 3,
-    backgroundColor: "white",
-  },
-  disabledPlus: {
-    color: "gray",
-  },
-  postalCodesItemContainer: {
-    gap: 10,
-  },
-});

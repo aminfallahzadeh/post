@@ -5,9 +5,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  Text,
   View,
-  StyleSheet,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
@@ -109,7 +107,7 @@ const FollowOrder = () => {
 
                 {!barcode && (
                   <FormField
-                    placeholder="شماره پیگیری"
+                    placeholder="کد مرسوله"
                     keyboardType="numeric"
                     type={"text"}
                     containerStyle="mt-5"
@@ -119,30 +117,16 @@ const FollowOrder = () => {
                 )}
 
                 {/* RESPONSE CONTAINER */}
-                <Text className="text-primary font-isansbold text-[18px] w-full justify-normal items-center text-center mt-10">
-                  نتیجه جست و جو
-                </Text>
 
-                <View
-                  className={`w-full rounded-md mt-5 p-5 items-center ${
-                    !result ? "justify-center" : "justify-start"
-                  }`}
-                  style={styles.resultContainer}
-                >
-                  {isLoading ? (
-                    <Chase size={40} color="#164194" />
-                  ) : result ? (
-                    result.map((item, index) => (
-                      <OrderTrackCard key={index} item={item} />
-                    ))
-                  ) : (
-                    !barcode && (
-                      <Text className="text-grey4 font-isansregular text-[15px]">
-                        شماره پیگیری را وارد کرده و جست و جو کنید
-                      </Text>
-                    )
-                  )}
-                </View>
+                {isLoading ? (
+                  <View className="w-full mt-20 p-5 items-center justify-center">
+                    <Chase size={60} color="#164194" />
+                  </View>
+                ) : result ? (
+                  result.map((item, index) => (
+                    <OrderTrackCard key={index} item={item} />
+                  ))
+                ) : null}
               </View>
             </TouchableWithoutFeedback>
           </ScrollView>
@@ -164,23 +148,3 @@ const FollowOrder = () => {
 };
 
 export default FollowOrder;
-
-const styles = StyleSheet.create({
-  headerContainer: {
-    shadowColor: "black",
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 10,
-    elevation: 3,
-    backgroundColor: "white",
-  },
-  resultContainer: {
-    shadowColor: "black",
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 10,
-    elevation: 3,
-    backgroundColor: "white",
-    minHeight: 100,
-  },
-});

@@ -3,15 +3,11 @@ import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import {
   View,
-  Text,
   TouchableWithoutFeedback,
   Keyboard,
   ScrollView,
-  StyleSheet,
-  Pressable,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import ProgressBar from "@/components/ProgressBar";
 import FormField from "@/components/FormField";
 import CustomButton from "@/components/CustomButton";
 import Background from "@/components/Background";
@@ -29,13 +25,13 @@ import {
 } from "@/constants/styles";
 import { stepTwoEopValidation } from "@/constants/validations";
 import { router } from "expo-router";
-import Feather from "@expo/vector-icons/Feather";
 import { toastStyles } from "@/constants/styles";
 import {
   seriveTypeLookup,
   postalReagionLookup,
   complaintTypeLookup,
 } from "@/data/lookup.js";
+import { Title } from "@/components/Title";
 
 const Step2 = () => {
   // STATES
@@ -114,26 +110,7 @@ const Step2 = () => {
           keyboardShouldPersistTaps="handled"
         >
           {/* HEADER SECTION */}
-          <View
-            className="flex-col w-full bg-secondary z-10 justify-center items-center relative"
-            style={styles.headerContainer}
-          >
-            <View className="flex-row w-full justify-between items-center">
-              <Pressable
-                onPress={() => router.back()}
-                className="absolute left-4"
-              >
-                <Feather name="arrow-left" size={25} color="#333" />
-              </Pressable>
-              <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
-                ثبت شکایت
-              </Text>
-            </View>
-
-            <View className="flex-col px-10 w-full pb-2">
-              <ProgressBar progress={100} />
-            </View>
-          </View>
+          <Title title={"ثبت شکایت"} progress={100} home={true} />
 
           {/* FORM FIELDS */}
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -231,9 +208,7 @@ const Step2 = () => {
 
         <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
           <CustomButton
-            title="ثبت"
-            bgColor="bg-green-500"
-            titleColor="text-white"
+            title="ثبت شکایت"
             handlePress={handleSubmit(onSubmit)}
             isLoading={isLoading}
           />
@@ -244,14 +219,3 @@ const Step2 = () => {
 };
 
 export default Step2;
-
-const styles = StyleSheet.create({
-  headerContainer: {
-    shadowColor: "black",
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 10,
-    elevation: 3,
-    backgroundColor: "white",
-  },
-});

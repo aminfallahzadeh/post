@@ -133,6 +133,7 @@ const NerkhnameStep3 = () => {
                 placeholder="تلفن همراه"
                 type={"text"}
                 keyboardType="numeric"
+                rules={requiredRule}
                 containerStyle="mt-5"
                 control={control}
                 name="mobile"

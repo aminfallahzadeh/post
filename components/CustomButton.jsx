@@ -12,8 +12,8 @@ export const CustomButton = ({
   isLoading,
   disabled,
   height = "h-12",
-  bgColor = "bg-secondary",
-  titleColor = "text-gray-600",
+  bgColor = "bg-primary",
+  titleColor = "text-white",
 }) => {
   return (
     <TouchableOpacity

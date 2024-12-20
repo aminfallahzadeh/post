@@ -1,12 +1,9 @@
 import { useState } from "react";
 import {
   View,
-  Text,
   Keyboard,
   TouchableWithoutFeedback,
-  Pressable,
   ScrollView,
-  StyleSheet,
 } from "react-native";
 import { insertRequestBulk } from "@/api/request";
 import { useForm } from "react-hook-form";
@@ -15,11 +12,10 @@ import FormField from "@/components/FormField";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Background from "@/components/Background";
 import { router } from "expo-router";
-import Feather from "@expo/vector-icons/Feather";
-import ProgressBar from "@/components/ProgressBar";
 import { useUserStore } from "@/store";
 import { BuildingDetailInput } from "@/components/BuildingDetailInput";
 import * as SecureStore from "expo-secure-store";
+import { Title } from "@/components/Title";
 
 const Step2 = () => {
   // STATES
@@ -97,26 +93,7 @@ const Step2 = () => {
           keyboardShouldPersistTaps="handled"
         >
           {/* HEADER SECTION */}
-          <View
-            className="flex-col w-full bg-secondary z-10 justify-center items-center relative"
-            style={styles.headerContainer}
-          >
-            <View className="flex-row w-full justify-between items-center">
-              <Pressable
-                onPress={() => router.back()}
-                className="absolute left-4"
-              >
-                <Feather name="arrow-left" size={25} color="#333" />
-              </Pressable>
-              <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
-                درخواست کد پستی
-              </Text>
-            </View>
-
-            <View className="flex-col px-10 w-full pb-2">
-              <ProgressBar progress={66} />
-            </View>
-          </View>
+          <Title title={"درخواست کد پستی"} progress={66} home={true} />
 
           {/* FORM FIELDS */}
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -218,24 +195,3 @@ const Step2 = () => {
 };
 
 export default Step2;
-
-const styles = StyleSheet.create({
-  inputContainer: {
-    columnGap: 10,
-  },
-  headerContainer: {
-    shadowColor: "black",
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 10,
-    elevation: 3,
-    backgroundColor: "white",
-  },
-  disabledPlus: {
-    color: "gray",
-  },
-
-  postalCodesItemContainer: {
-    gap: 10,
-  },
-});

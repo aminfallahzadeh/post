@@ -29,7 +29,7 @@ export const parcelOptions = {
   vijhe: [
     { label: "پاکت", value: 1 },
     { label: "جوف - پاکت", value: 3 },
-    { label: "بسته زیر یک کیلو", value: 3 },
-    { label: "بسته بالای یک کیلو (تا ۳۰ کیلو)", value: 4 },
+    { label: "بسته زیر یک کیلو", value: 4 },
+    { label: "بسته بالای یک کیلو (تا ۳۰ کیلو)", value: 5 },
   ],
 };

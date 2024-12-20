@@ -1,8 +1,8 @@
 export const serviceOptions = [
-  { id: 11, label: "پست پیشتاز", disabled: false, type: "pishtaz" },
-  { id: 19, label: "پست سفارشی", disabled: false, type: "sefareshi" },
-  { id: 77, label: "پست ویژه", disabled: false, type: "vijhe" },
-  { id: 27, label: "پست امانت", disabled: false, type: "amanat" },
+  { id: 1, label: "پست پیشتاز", disabled: false, type: "pishtaz" },
+  { id: 2, label: "پست سفارشی", disabled: false, type: "sefareshi" },
+  { id: 3, label: "پست ویژه", disabled: false, type: "vijhe" },
+  { id: 4, label: "پست امانت", disabled: false, type: "amanat" },
   {
     id: 5,
     label: "پست اکسپرس (در حال توسعه)",

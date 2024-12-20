@@ -1,14 +1,7 @@
 // IMPORTS
-import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  Modal,
-  Pressable,
-} from "react-native";
+import { View, Text, StyleSheet, Dimensions, Modal } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import Feather from "@expo/vector-icons/Feather";
+import CustomButton from "./CustomButton";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -44,13 +37,12 @@ export const CustomModal = ({
             {description}
           </Text>
 
-          <View className="w-full items-center justify-center mt-5">
-            <Pressable
-              onPress={onConfirm ? onConfirm : closeModal}
-              className="bg-green-500 h-10 w-10 items-center justify-center rounded-full"
-            >
-              <Feather name="check" size={24} color="#00075a" />
-            </Pressable>
+          {/* BOTTOM SECTION */}
+          <View className="w-full z-10 px-4 py-4">
+            <CustomButton
+              title="تایید"
+              handlePress={onConfirm ? onConfirm : closeModal}
+            />
           </View>
         </View>
       </View>

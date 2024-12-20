@@ -1,11 +1,11 @@
 // IMPORTS
-import { View, Text, ScrollView, StyleSheet, Pressable } from "react-native";
+import { View, Text, ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
 import { Background, CustomButton } from "@/components";
-import ProgressBar from "@/components/ProgressBar";
 import { useUserStore } from "@/store";
+import { Title } from "@/components/Title";
 
 const Step2 = () => {
   // CONSTS
@@ -24,26 +24,7 @@ const Step2 = () => {
           keyboardShouldPersistTaps="handled"
         >
           {/* HEADER SECTION */}
-          <View
-            className="flex-col w-full bg-secondary z-10 justify-center items-center relative"
-            style={styles.headerContainer}
-          >
-            <View className="flex-row w-full justify-between items-center">
-              <Pressable
-                onPress={() => router.back()}
-                className="absolute left-4"
-              >
-                <Feather name="arrow-left" size={25} color="#333" />
-              </Pressable>
-              <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
-                درخواست غرامت
-              </Text>
-            </View>
-
-            <View className="flex-col px-10 w-full pb-2">
-              <ProgressBar progress={100} />
-            </View>
-          </View>
+          <Title title={"درخواست غرامت"} progress={100} home={true} />
 
           {/* RESULT */}
           <View className="w-full px-5">
@@ -60,9 +41,13 @@ const Step2 = () => {
                 درخواست شما با موفقیت ثبت شد
               </Text>
 
-              <View>
-                <Text>کد پیگیری :</Text>
-                <Text>{gheramatResult?.trackingId}</Text>
+              <View className="mt-5 flex-row-reverse justify-center items-center">
+                <Text className="text-grey2 font-isansregular text-[15px]">
+                  کد پیگیری :
+                </Text>
+                <Text className="text-grey2 font-isansbold text-[15px]">
+                  {gheramatResult?.trackingId}
+                </Text>
               </View>
             </View>
           </View>

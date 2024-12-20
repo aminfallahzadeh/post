@@ -6,17 +6,13 @@ import {
   Text,
   Keyboard,
   TouchableWithoutFeedback,
-  Pressable,
   ScrollView,
-  StyleSheet,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useUserStore } from "@/store";
 import { router } from "expo-router";
-import Feather from "@expo/vector-icons/Feather";
 import CustomButton from "@/components/CustomButton";
 import FormField from "@/components/FormField";
-import ProgressBar from "@/components/ProgressBar";
 import Background from "@/components/Background";
 import * as SecureStore from "expo-secure-store";
 import SelectInput from "@/components/SelectInput";
@@ -25,6 +21,7 @@ import { getProvince, getServiceType } from "@/api/gheramat";
 import { insertRequestGheramat } from "@/api/request";
 import { REQUIRED } from "@/constants/messages";
 import { LOADING_MESSAGE } from "@/constants/messages";
+import { Title } from "@/components/Title";
 
 const Index = () => {
   // STATES
@@ -110,26 +107,7 @@ const Index = () => {
           keyboardShouldPersistTaps="handled"
         >
           {/* HEADER SECTION */}
-          <View
-            className="flex-col w-full bg-secondary z-10 justify-center items-center relative"
-            style={styles.headerContainer}
-          >
-            <View className="flex-row w-full justify-between items-center">
-              <Pressable
-                onPress={() => router.back()}
-                className="absolute left-4"
-              >
-                <Feather name="arrow-left" size={25} color="#333" />
-              </Pressable>
-              <Text className="text-primary font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
-                درخواست غرامت
-              </Text>
-            </View>
-
-            <View className="flex-col px-10 w-full pb-2">
-              <ProgressBar progress={50} />
-            </View>
-          </View>
+          <Title title={"درخواست غرامت"} progress={50} home={false} />
 
           {/* FORM FIELDS */}
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -272,14 +250,3 @@ const Index = () => {
 };
 
 export default Index;
-
-const styles = StyleSheet.create({
-  headerContainer: {
-    shadowColor: "black",
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 10,
-    elevation: 3,
-    backgroundColor: "white",
-  },
-});

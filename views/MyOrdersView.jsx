@@ -5,8 +5,9 @@ import { useFocusEffect, router } from "expo-router";
 import { Chase } from "react-native-animated-spinkit";
 import Background from "@/components/Background";
 import CustomButton from "@/components/CustomButton";
-import { trackingOrderByNID, trackingOrder } from "@/api/tracking";
+import { trackingOrders, trackingOrder } from "@/api/tracking";
 import { useUserStore } from "@/store";
+import * as SecureStore from "expo-secure-store";
 
 const MyOrdersView = () => {
   // STATES
@@ -16,20 +17,21 @@ const MyOrdersView = () => {
   const fadeAnimRefs = useRef([]);
 
   // CONSTS
+  const mobile = SecureStore.getItem("mobile");
   const userData = useUserStore((state) => state.userData);
 
   const fetchData = useCallback(async () => {
     if (userData.nationalCode) {
       setIsLoading(true);
       try {
-        const response = await trackingOrderByNID(userData.nationalCode);
+        const response = await trackingOrders(mobile);
         console.log("TRACKING ORDER RESPONSE:", response.data);
         setData(response.data.itemList);
       } finally {
         setIsLoading(false);
       }
     }
-  }, [userData.nationalCode]);
+  }, [mobile, userData?.nationalCode]);
 
   // HANDLERS
   const onSubmit = async (barcode) => {
@@ -122,7 +124,7 @@ const MyOrdersView = () => {
 
                     <View className="flex-row-reverse justify-between items-center w-full mb-2">
                       <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm">
-                        بارکد پستی :
+                        {item.state === 2 ? "کد پیگیری" : "کد مرسوله"}
                       </Text>
                       <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm py-1">
                         {item.barcode}
@@ -138,14 +140,14 @@ const MyOrdersView = () => {
                       </Text>
                     </View>
 
-                    <CustomButton
-                      title="پیگیری"
-                      bgColor="bg-green-500"
-                      titleColor="text-white"
-                      height="h-10"
-                      isLoading={isOrderLoading}
-                      handlePress={() => onSubmit(item.barcode)}
-                    />
+                    {item.state !== 2 && (
+                      <CustomButton
+                        title="پیگیری"
+                        height="h-10"
+                        isLoading={isOrderLoading}
+                        handlePress={() => onSubmit(item.barcode)}
+                      />
+                    )}
                   </View>
                 </Animated.View>
               );

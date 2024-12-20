@@ -264,8 +264,6 @@ const EhrazStep2 = () => {
           <CustomButton
             title="ثبت درخواست"
             handlePress={handleSubmit(onSubmit)}
-            bgColor="bg-green-500"
-            titleColor="text-white"
             disabled={!confirmed}
             isLoading={isLoading}
           />
