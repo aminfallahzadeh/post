@@ -23,7 +23,7 @@ const TabsLayout = () => {
 
   // TOGGLE MENU
   const toggleMenu = () => {
-    const toValue = menuVisible ? -width : 0;
+    const toValue = menuVisible ? width : 0;
     Animated.timing(animationValue, {
       toValue,
       duration: 300,
@@ -37,9 +37,6 @@ const TabsLayout = () => {
     <>
       {/* TOP BAR */}
       <View style={styles.topBar} className="mt-10">
-        <TouchableOpacity onPress={toggleMenu}>
-          <Ionicons name="menu" size={28} color="#333" />
-        </TouchableOpacity>
         <Text
           style={styles.title}
           className="text-primary font-bold text-[20px] m-auto"
@@ -47,6 +44,10 @@ const TabsLayout = () => {
           POST
           <Text className="text-secondary">.IR</Text>
         </Text>
+
+        <TouchableOpacity onPress={toggleMenu}>
+          <Ionicons name="menu" size={28} color="#333" />
+        </TouchableOpacity>
       </View>
 
       {/* TAB LAYOUT */}
@@ -102,7 +103,7 @@ const styles = {
   menuOverlay: {
     position: "absolute",
     top: 0,
-    left: 0,
+    right: 0,
     width: width,
     height: height,
     backgroundColor: "#fff",
