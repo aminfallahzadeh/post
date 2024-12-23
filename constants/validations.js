@@ -155,6 +155,12 @@ export const nerkhnameValidations = {
         message: "حداکثر ۳۰٫۰۰۰ گرم (۳۰ کیلو)",
       },
     },
+    underTwoKilo: {
+      max: {
+        value: 1999,
+        message: "حداکثر ۱۹۹۹ گرم (زیر دو کیلو)",
+      },
+    },
     underOneKilo: {
       max: {
         value: 999,

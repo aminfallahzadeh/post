@@ -1,5 +1,5 @@
 // IMPORTS
-import { useEffect, useRef, useState, useReducer } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ScrollView,
   Animated,
@@ -18,31 +18,31 @@ import Service from "@/components/Service";
 import { router } from "expo-router";
 import Background from "@/components/Background";
 import CustomModal from "@/components/CustomModal";
-import useRenderService from "@/hooks/useRenderService";
-import { filtersData } from "@/data/filters";
+// import useRenderService from "@/hooks/useRenderService";
+// import { filtersData } from "@/data/filters";
 import { allData } from "@/data/services";
 import images from "@/constants/images";
 import * as SecureStore from "expo-secure-store";
 
 const width = Dimensions.get("window").width;
 
-const filterReducer = (state, actions) => {
-  switch (actions.type) {
-    case "ALL":
-      return "all";
-    case "FOLLOW_UP":
-      return "followup";
-    case "REQUEST":
-      return "request";
+// const filterReducer = (state, actions) => {
+//   switch (actions.type) {
+//     case "ALL":
+//       return "all";
+//     case "FOLLOW_UP":
+//       return "followup";
+//     case "REQUEST":
+//       return "request";
 
-    default:
-      return state;
-  }
-};
+//     default:
+//       return state;
+//   }
+// };
 const Services = () => {
   // FILTER STATE
-  const [selected, setSelected] = useState(filtersData[0]);
-  const [filteredItems, dispatch] = useReducer(filterReducer, "all");
+  //   const [selected, setSelected] = useState(filtersData[0]);
+  //   const [filteredItems, dispatch] = useReducer(filterReducer, "all");
   const [visible, setVisible] = useState(false);
 
   // ACCESS USER DATA
@@ -64,21 +64,21 @@ const Services = () => {
     console.log("expireTime ", SecureStore.getItem("expireTime"));
   }, []);
 
-  const handleOnFilterPress = (option, type) => {
-    setSelected(option);
-    dispatch({ type });
-  };
+  //   const handleOnFilterPress = (option, type) => {
+  //     setSelected(option);
+  //     dispatch({ type });
+  //   };
 
-  const handlePress = (item) => {
-    if (item.nationalCodeRequired && !userData.birthDate) {
-      setVisible(true);
-      return;
-    } else {
-      if (item.url) router.push(item.url);
-    }
-  };
+  //   const handlePress = (item) => {
+  //     if (item.nationalCodeRequired && !userData.birthDate) {
+  //       setVisible(true);
+  //       return;
+  //     } else {
+  //       if (item.url) router.push(item.url);
+  //     }
+  //   };
 
-  const renderServices = useRenderService(handlePress);
+  //   const renderServices = useRenderService(handlePress);
 
   useEffect(() => {
     console.log("USER DATA: ", userData);
@@ -179,7 +179,7 @@ const Services = () => {
               }}
             >
               <View
-                className="flex-row flex-wrap gap-y-4 justify-start px-2 "
+                className="flex-row flex-wrap gap-y-2 justify-start items-start px-2 "
                 style={{ transform: [{ scaleX: -1 }] }}
               >
                 {/* {allData.map((item) => renderServices(item))} */}

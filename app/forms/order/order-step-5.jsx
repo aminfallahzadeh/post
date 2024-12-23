@@ -24,7 +24,6 @@ import * as SecureStore from "expo-secure-store";
 const NerkhnameStep5 = () => {
   // STATES
   const [isLoading, setIsLoading] = useState(false);
-  const [visible, setVisible] = useState(false);
   const [resultModalVisible, setResultModalVisible] = useState(false);
 
   // CONSTS
@@ -44,62 +43,57 @@ const NerkhnameStep5 = () => {
 
   // HANDLERS
   const onSubmit = async () => {
-    if (order?.parceltype === 1 && !order?.contetnts) {
-      setVisible(true);
-      return;
-    } else {
-      setIsLoading(true);
-      try {
-        const response = await insertRequestPriceOrder({
-          mobile,
-          typecode:
-            order?.servicetype?.id === 1
-              ? 11
-              : order?.servicetype?.id === 2
-              ? 19
-              : order?.servicetype?.id === 4
-              ? 27
-              : 77,
-          servicetype: order?.servicetype?.id,
-          parceltype: order?.parceltype,
-          sourcecode: order?.sender?.cityID || "",
-          destcode: order?.receiver?.cityID || "",
-          sendername: order?.sender?.name || "",
-          receivername: order?.receiver?.name || "",
-          receiverpostalcode: order?.postalCode?.name || "",
-          senderpostalcode: order?.postalCode?.name || "",
-          weight: parseFloat(order?.weight) || 0,
-          senderid: order?.sender?.nationalCode || "",
-          receiverid: order?.receiver?.nationalCode || "",
-          sendermobile: order?.sender?.mobile || "",
-          receivermobile: order?.receiver?.mobile || "",
-          senderaddress: order?.sender?.address || "",
-          receiveraddress: order?.receiver?.address || "",
-          insurancetype: form_data.insurancetype || 1,
-          insuranceamount: form_data.insuranceamount || 0,
-          spsdestinationtype: 0,
-          spsreceivertimetype: 0,
-          spsparceltype:
-            order?.servicetype?.id !== 3
-              ? 0
-              : order?.parceltype === 1
-              ? 1
-              : order?.parceltype === 3
-              ? 3
-              : 2,
-          electworeceiptant: true,
-          iscot: checkSpecialService(order?.specialServices, 5),
-          smsservice: checkSpecialService(order?.specialServices, 8),
-          isnonstandard: true,
-          contetnts: order?.contetnts || "",
-          boxsize: order?.BoxSize || "0",
-        });
+    setIsLoading(true);
+    try {
+      const response = await insertRequestPriceOrder({
+        mobile,
+        typecode:
+          order?.servicetype?.id === 1
+            ? 11
+            : order?.servicetype?.id === 2
+            ? 19
+            : order?.servicetype?.id === 4
+            ? 27
+            : 77,
+        servicetype: order?.servicetype?.id,
+        parceltype: order?.parceltype,
+        sourcecode: order?.sender?.cityID || "",
+        destcode: order?.receiver?.cityID || "",
+        sendername: order?.sender?.name || "",
+        receivername: order?.receiver?.name || "",
+        receiverpostalcode: order?.postalCode?.name || "",
+        senderpostalcode: order?.postalCode?.name || "",
+        weight: parseFloat(order?.weight) || 0,
+        senderid: order?.sender?.nationalCode || "",
+        receiverid: order?.receiver?.nationalCode || "",
+        sendermobile: order?.sender?.mobile || "",
+        receivermobile: order?.receiver?.mobile || "",
+        senderaddress: order?.sender?.address || "",
+        receiveraddress: order?.receiver?.address || "",
+        insurancetype: form_data.insurancetype || 1,
+        insuranceamount: form_data.insuranceamount || 0,
+        spsdestinationtype: 0,
+        spsreceivertimetype: 0,
+        spsparceltype:
+          order?.servicetype?.id !== 3
+            ? 0
+            : order?.parceltype === 1
+            ? 1
+            : order?.parceltype === 3
+            ? 3
+            : 2,
+        electworeceiptant: true,
+        iscot: checkSpecialService(order?.specialServices, 5),
+        smsservice: checkSpecialService(order?.specialServices, 8),
+        isnonstandard: true,
+        contetnts: order?.contetnts || "",
+        boxsize: order?.BoxSize || "0",
+      });
 
-        console.log("INSERT REQUEST PRICE ORDER RESPONSE: ", response.data);
-        setResultModalVisible(true);
-      } finally {
-        setIsLoading(false);
-      }
+      console.log("INSERT REQUEST PRICE ORDER RESPONSE: ", response.data);
+      setResultModalVisible(true);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -119,13 +113,6 @@ const NerkhnameStep5 = () => {
           "درخواست شما ثبت شد. برای پیگیری به صفحه پست من مراجعه کنید"
         }
         onConfirm={() => router.replace("/")}
-      />
-      <CustomModal
-        visible={visible}
-        closeModal={() => setVisible(false)}
-        title={"توجه"}
-        description={"درصورت عادی بودن بیمه لطفا نوع مرسوله را وارد کنید "}
-        onConfirm={() => router.replace("/forms/order/order-step-1")}
       />
       <Background>
         <SafeAreaView className="h-full">
@@ -174,6 +161,22 @@ const NerkhnameStep5 = () => {
                     )}
                   />
                 </View>
+
+                <FormField
+                  placeholder="محتویات مرسوله"
+                  type={"text"}
+                  keyboardType="default"
+                  containerStyle="mt-5"
+                  rules={{
+                    required: {
+                      value: form_data?.insurancetype === 1 ? true : false,
+                      message: "این فیلد اجباری است",
+                    },
+                  }}
+                  control={control}
+                  name="contetnts"
+                />
+
                 <View className="flex-row-reverse justify-center items-center">
                   <View className="flex-1 ml-2">
                     <FormField

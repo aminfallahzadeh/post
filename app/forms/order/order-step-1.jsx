@@ -51,6 +51,8 @@ const NerkhNameStep1 = () => {
   useEffect(() => {
     if (form_data?.parceltype === 3) {
       setWeightRules(nerkhnameValidations.weight.underOneKilo);
+    } else if (form_data?.parceltype === 1) {
+      setWeightRules(nerkhnameValidations.weight.underTwoKilo);
     } else {
       setWeightRules(nerkhnameValidations.weight.other);
     }
@@ -102,11 +104,11 @@ const NerkhNameStep1 = () => {
                   rules={nerkhnameValidations.parceltype}
                   render={({ field: { onChange } }) => {
                     const options =
-                      order?.servicetype?.id === 19
+                      order?.servicetype?.id === 2
                         ? parcelOptions.sefareshi
-                        : order?.servicetype?.id === 27
+                        : order?.servicetype?.id === 4
                         ? parcelOptions.amanat
-                        : order?.servicetype?.id === 77
+                        : order?.servicetype?.id === 3
                         ? parcelOptions.vijhe
                         : parcelOptions.pishtaz;
 
@@ -144,21 +146,6 @@ const NerkhNameStep1 = () => {
                   گرم
                 </Text>
               </View>
-
-              <FormField
-                placeholder="محتویات مرسوله"
-                type={"text"}
-                keyboardType="default"
-                containerStyle="mt-5"
-                rules={{
-                  required: {
-                    value: form_data?.parceltype !== 1 ? true : false,
-                    message: "این فیلد اجباری است",
-                  },
-                }}
-                control={control}
-                name="contetnts"
-              />
 
               <View className="mt-5 relative">
                 {errors && (

@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   },
   serviceText: {
     color: "#000",
-    fontFamily: "IranSans-DemiBold",
+    fontFamily: "IranSans-Regular",
     minHeight: 35,
     textAlign: "center",
     fontSize: 12,
