@@ -70,7 +70,7 @@ const NerkhnameStep2 = () => {
 
               <View className="flex-row-reverse justify-between w-full items-center flex-wrap">
                 <Text className="font-isansdemibold text-grey2 text-[15px]">
-                  postfare
+                  کرایه پستی
                 </Text>
                 <Text className="font-isansregular">
                   {separateByThousand(nerkhname?.postfare)}

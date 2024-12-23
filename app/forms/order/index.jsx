@@ -1,5 +1,4 @@
 // IMPORTS
-import { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { View, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -22,11 +21,6 @@ const Index = () => {
     setOrder(form_data);
     router.push(`/forms/order/order-step-1`);
   };
-
-  // DEBUG
-  useEffect(() => {
-    console.log("FORM DATA: ", form_data);
-  }, [form_data]);
 
   return (
     <Background>

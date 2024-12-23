@@ -42,11 +42,6 @@ const NerkhNameStep1 = () => {
     router.push(`/forms/order/order-step-2`);
   };
 
-  // DEBUG
-  useEffect(() => {
-    console.log("data ", form_data);
-  }, [form_data]);
-
   // EFFECTS
   useEffect(() => {
     if (form_data?.parceltype === 3) {

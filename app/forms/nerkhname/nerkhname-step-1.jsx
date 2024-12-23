@@ -12,7 +12,6 @@ import { Title } from "@/components/Title";
 import FormField from "@/components/FormField";
 import SelectInput from "@/components/SelectInput";
 import { getPrice } from "@/api/order";
-import { nerkhnameServiceOptions } from "@/data/serviceOptions";
 import { parcelOptions } from "@/data/parcelOptions";
 import { boxsizeOptions } from "@/data/boxsizeOptions";
 import { getProvince, getCity } from "@/api/order";
@@ -99,7 +98,7 @@ const NerkhnameStep1 = () => {
     try {
       const response = await getPrice({
         typecode: 11,
-        servicetype: form_data.servicetype,
+        servicetype: nerkhname.servicetype.id,
         parceltype: form_data.parceltype,
         sourcecode: form_data.sourcecode,
         destcode: form_data.destcode,
@@ -109,7 +108,7 @@ const NerkhnameStep1 = () => {
       });
 
       console.log("PRICE RESPONSE: ", response.data);
-      await setNerkhname(response.data.itemList[0].data);
+      await setNerkhname({ ...nerkhname, ...response.data.itemList[0].data });
       router.push("forms/nerkhname/nerkhname-step-2");
     } finally {
       setIsLoading(false);
@@ -127,11 +126,6 @@ const NerkhnameStep1 = () => {
     }
   }, [form_data?.parceltype]);
 
-  // DEBUG
-  useEffect(() => {
-    console.log("FORM DATA: ", form_data);
-  }, [form_data]);
-
   return (
     <Background>
       <SafeAreaView className="h-full">
@@ -145,7 +139,11 @@ const NerkhnameStep1 = () => {
           keyboardShouldPersistTaps="handled"
         >
           {/* HEADER SECTION */}
-          <Title title="نرخ نامه" home={false} progress={50} />
+          <Title
+            title={`${nerkhname?.servicetype?.label} : نرخ نامه`}
+            home={false}
+            progress={50}
+          />
 
           {/* FORM FIELDS */}
           <View className="w-full px-5 mt-5">
@@ -219,14 +217,9 @@ const NerkhnameStep1 = () => {
               <Controller
                 name="boxsize"
                 control={control}
-                rules={requiredRule}
                 render={({ field: { onChange } }) => (
                   <SelectInput
-                    disabled={
-                      form_data?.parceltype === 1 || form_data?.parceltype === 2
-                        ? true
-                        : false
-                    }
+                    disabled={[1, 2].includes(form_data?.parceltype)}
                     placeholder="* سایز کارتن"
                     options={boxsizeOptions}
                     onValueChange={(val) => onChange(val)}

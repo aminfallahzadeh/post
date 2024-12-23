@@ -157,14 +157,14 @@ export const nerkhnameValidations = {
     },
     underTwoKilo: {
       max: {
-        value: 1999,
-        message: "حداکثر ۱۹۹۹ گرم (زیر دو کیلو)",
+        value: 2000,
+        message: "حداکثر ۲۰۰۰ گرم (زیر دو کیلو)",
       },
     },
     underOneKilo: {
       max: {
-        value: 999,
-        message: "حداکثر ۹۹۹ گرم (زیر یک کیلو)",
+        value: 1000,
+        message: "حداکثر ۱۰۰۰ گرم (زیر یک کیلو)",
       },
     },
   },

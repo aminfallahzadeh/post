@@ -16,8 +16,6 @@ import CustomButton from "@/components/CustomButton";
 import FormField from "@/components/FormField";
 import * as SecureStore from "expo-secure-store";
 import SelectInput from "@/components/SelectInput";
-import { originOptions } from "@/data/originOptions";
-import { destinationOptions } from "@/data/destinationOptions";
 import { Title } from "@/components/Title";
 import { requiredRule } from "@/constants/validations";
 import { LOADING_MESSAGE } from "@/constants/messages";
@@ -91,11 +89,6 @@ const NerkhnameStep2 = () => {
   useEffect(() => {
     fetchProvince();
   }, []);
-
-  // DEBUG
-  useEffect(() => {
-    console.log("NERKHNAME Step 2: ", order);
-  }, [order]);
 
   return (
     <Background>
@@ -175,61 +168,6 @@ const NerkhnameStep2 = () => {
                 rules={requiredRule}
                 name="postalCode"
               />
-
-              <View className="mt-5 relative">
-                {errors && (
-                  <View className="absolute -top-5 left-0">
-                    <Text className="text-red-500 font-isansregular">
-                      {errors?.origin?.message}
-                    </Text>
-                  </View>
-                )}
-
-                <Controller
-                  name="origin"
-                  control={control}
-                  render={({ field: { onChange } }) => (
-                    <SelectInput
-                      placeholder="مبدا"
-                      options={originOptions}
-                      onValueChange={(val) => onChange(val)}
-                      primaryColor="#164194"
-                      selectedValue={
-                        originOptions.find((c) => c.value === form_data?.origin)
-                          ?.value
-                      }
-                    />
-                  )}
-                />
-              </View>
-
-              <View className="mt-5 relative">
-                {errors && (
-                  <View className="absolute -top-5 left-0">
-                    <Text className="text-red-500 font-isansregular">
-                      {errors?.destination?.message}
-                    </Text>
-                  </View>
-                )}
-
-                <Controller
-                  name="destination"
-                  control={control}
-                  render={({ field: { onChange } }) => (
-                    <SelectInput
-                      placeholder="مقصد"
-                      options={destinationOptions}
-                      onValueChange={(val) => onChange(val)}
-                      primaryColor="#164194"
-                      selectedValue={
-                        destinationOptions.find(
-                          (c) => c.value === form_data?.destination
-                        )?.value
-                      }
-                    />
-                  )}
-                />
-              </View>
 
               <View className="mt-5 relative">
                 {errors && (

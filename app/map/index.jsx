@@ -2,7 +2,7 @@
 import { useRef } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "expo-router";
-import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
@@ -10,12 +10,16 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Title } from "@/components/Title";
 
 const Index = () => {
+  // STATES
   const mapRef = useRef(null);
+
+  // CONSTS
   const navigation = useNavigation();
 
+  // HANDLERS
   const focusMap = async () => {
-    // Request permissions to access location
     const { status } = await Location.requestForegroundPermissionsAsync();
+    // Request permissions to access location
     if (status !== "granted") {
       alert("دسترسی موقعیت یابی را فعال کنید");
       return;
