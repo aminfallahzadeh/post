@@ -35,7 +35,7 @@ const Index = () => {
           keyboardShouldPersistTaps="handled"
         >
           {/* HEADER SECTION */}
-          <Title progress={15} title="نوع سرویس" home={false} />
+          <Title progress={33} title="نوع سرویس" home={false} />
 
           {/* FORM FIELDS */}
           <View className="w-full px-5 mt-10">

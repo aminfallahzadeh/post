@@ -47,6 +47,11 @@ const selectSettings = (props) => ({
   listControls: {
     emptyListMessage: selectMessages.EMPTY_LIST,
   },
+  searchControls: {
+    textInputContainerStyle: {
+      transform: [{ scaleX: -1 }],
+    },
+  },
   listComponentStyles: {
     textAlign: "center",
     listEmptyComponentStyle: {
@@ -76,13 +81,6 @@ const SelectInput = (props) => {
   const settings = selectSettings(props);
 
   return <Dropdown {...settings} {...props} />;
-  //   return (
-  //     <Controller
-  //       render={({ field: { onChange } }) => (
-  //         <Dropdown {...settings} {...props} />
-  //       )}
-  //     />
-  //   );
 };
 
 export default SelectInput;

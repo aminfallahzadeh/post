@@ -134,8 +134,6 @@ const Step3 = () => {
         <View className="w-full z-10 px-4 bg-gray-100 py-4">
           <CustomButton
             title="پرداخت"
-            bgColor="bg-green-700"
-            titleColor="text-white"
             disabled={!checked}
             handlePress={onSubmit}
             isLoading={isLoading}

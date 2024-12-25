@@ -46,8 +46,6 @@ export const PostalCodeRequest = () => {
 
   useEffect(() => {
     fetchData("province");
-    fetchData("county");
-    fetchData("ruralCity", { village: "false" });
   }, [fetchData]);
 
   // HANDLERS
@@ -58,27 +56,27 @@ export const PostalCodeRequest = () => {
     setValue("ruralCityID", null);
     setValue("villageID", null);
 
-    if (!state.isUrban) {
-      fetchData("ruralCity", {
-        village: "false",
-        countyID: form_data.countyID,
-        provinceID: form_data.province_id,
-      });
-    } else {
-      fetchData("zone", {
-        countyID: form_data.countyID,
-        provinceID: form_data.province_id,
-      });
-      fetchData("ruralCity", {
-        village: "true",
-        countyID: form_data.countyID,
-        provinceID: form_data.province_id,
-      });
-      fetchData("village", {
-        countyID: form_data.countyID,
-        provinceID: form_data.province_id,
-      });
-    }
+    // if (!state.isUrban) {
+    //   fetchData("ruralCity", {
+    //     village: "false",
+    //     countyID: form_data.countyID,
+    //     provinceID: form_data.province_id,
+    //   });
+    // } else {
+    //   fetchData("zone", {
+    //     countyID: form_data.countyID,
+    //     provinceID: form_data.province_id,
+    //   });
+    //   fetchData("ruralCity", {
+    //     village: "true",
+    //     countyID: form_data.countyID,
+    //     provinceID: form_data.province_id,
+    //   });
+    //   fetchData("village", {
+    //     countyID: form_data.countyID,
+    //     provinceID: form_data.province_id,
+    //   });
+    // }
   };
 
   const onSubmit = async () => {
@@ -130,6 +128,11 @@ export const PostalCodeRequest = () => {
     setIsSubmitLoading(false);
   };
 
+  // DEBUG
+  useEffect(() => {
+    console.log("FORM_DATA:", form_data);
+  }, [form_data]);
+
   return (
     <Background>
       <SafeAreaView className="h-full">
@@ -160,10 +163,10 @@ export const PostalCodeRequest = () => {
                       disabled={state.isLoading.province}
                       options={state.options.province}
                       onValueChange={(val) => {
-                        setValue("countyID", null);
                         fetchData("county", { provinceID: val });
                         return onChange(val);
                       }}
+                      //   isSearchable={true}
                       primaryColor="#164194"
                       selectedValue={
                         state.options.province.find(
@@ -186,24 +189,22 @@ export const PostalCodeRequest = () => {
                       disabled={state.isLoading.county}
                       options={state.options.county}
                       onValueChange={(val) => {
-                        if (val) {
-                          const target = state.data.county.find(
-                            (c) => c.id === val
+                        if (state.isUrban) {
+                          fetchData(
+                            "ruralCity",
+                            {
+                              village: "false",
+                              countyID: val,
+                            },
+                            state.isUrban
                           );
-
-                          setValue("province_id", target.province_id);
-                        }
-
-                        state.isUrban &&
-                          fetchData("ruralCity", {
-                            village: "false",
+                          console.log("OPTIONS:", state.options.ruralCity);
+                          console.log("IS URBAN:", state.isUrban);
+                        } else {
+                          fetchData("zone", {
                             countyID: val,
                           });
-
-                        fetchData("zone", {
-                          countyID: val,
-                        });
-
+                        }
                         return onChange(val);
                       }}
                       primaryColor="#164194"
@@ -253,19 +254,7 @@ export const PostalCodeRequest = () => {
                           }
                           disabled={state.isLoading.ruralCity}
                           options={state.options.ruralCity}
-                          onValueChange={async (val) => {
-                            if (val) {
-                              const target = state.data.ruralCity.find(
-                                (c) => c.id === val
-                              );
-                              setValue("province_id", target.province_id);
-                              await fetchData("county", {
-                                id: target.county_id,
-                              });
-                              setValue("countyID", target.county_id);
-                            }
-                            return onChange(val);
-                          }}
+                          onValueChange={(val) => onChange(val)}
                           primaryColor="#164194"
                           selectedValue={
                             state.options.ruralCity.find(
@@ -310,13 +299,16 @@ export const PostalCodeRequest = () => {
                           placeholder={
                             state.isLoading.zone ? LOADING_MESSAGE : ZONE
                           }
-                          disabled={state.isLoading.zone}
                           options={state.options.zone}
                           onValueChange={(val) => {
-                            fetchData("rurlalCity", {
-                              village: "true",
-                              zoneID: val,
-                            });
+                            fetchData(
+                              "ruralCity",
+                              {
+                                village: "true",
+                                zoneID: val,
+                              },
+                              state.isUrban
+                            );
                             return onChange(val);
                           }}
                           primaryColor="#164194"
@@ -341,7 +333,12 @@ export const PostalCodeRequest = () => {
                           }
                           disabled={state.isLoading.ruralCity}
                           options={state.options.ruralCity}
-                          onValueChange={(val) => onChange(val)}
+                          onValueChange={(val) => {
+                            fetchData("village", {
+                              ruralID: val,
+                            });
+                            return onChange(val);
+                          }}
                           primaryColor="#164194"
                           selectedValue={
                             state.options.ruralCity.find(
@@ -367,8 +364,8 @@ export const PostalCodeRequest = () => {
                           onValueChange={(val) => onChange(val)}
                           primaryColor="#164194"
                           selectedValue={
-                            state.options.village.find(
-                              (c) => c.value === form_data?.zoneID
+                            state.options.village?.find(
+                              (c) => c.value === form_data?.villageID
                             )?.value
                           }
                         />

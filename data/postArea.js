@@ -1,6 +1,5 @@
 export const postAreaOptions = [
   { value: 11, label: "منطقه ۱۱ پستی تهران" },
-  { value: 12, label: "منطقه ۱۲ پستی تهران" },
   { value: 13, label: "منطقه ۱۳ پستی تهران" },
   { value: 14, label: "منطقه ۱۴ پستی تهران" },
   { value: 15, label: "منطقه ۱۵ پستی تهران" },

@@ -9,9 +9,9 @@ import {
   getVillage,
 } from "@/api/gnaf";
 
-export const useFetchData = (dispatch, setValue) =>
+export const useFetchData = (dispatch) =>
   useCallback(
-    async (type, params) => {
+    async (type, params, isUrban) => {
       dispatch({ type: "SET_LOADING", payload: { key: type, value: true } });
 
       try {
@@ -25,12 +25,19 @@ export const useFetchData = (dispatch, setValue) =>
 
         const response = await fetchers[type](params);
         const data = JSON.parse(response.data.noneobject).value;
+        console.log("PARSED DATA:", data);
 
         dispatch({
           type: "SET_OPTIONS",
           payload: {
             key: type,
-            value: optionsGenerator(data, "id", "name"),
+            // value: optionsGenerator(data, "id", "name"),
+            value:
+              type === "ruralCity"
+                ? isUrban
+                  ? optionsGenerator(data, "city_id", "name")
+                  : optionsGenerator(data, "rural_id", "name")
+                : optionsGenerator(data, "id", "name"),
           },
         });
 

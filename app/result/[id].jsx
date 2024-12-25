@@ -65,6 +65,11 @@ const PaymentResult = () => {
     }
   }, [isSuccess, handleGenerateCertificate]);
 
+  // DEBUG
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
   return (
     <Background>
       <SafeAreaView className="h-full">

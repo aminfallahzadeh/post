@@ -141,8 +141,8 @@ const NerkhnameStep1 = () => {
           {/* HEADER SECTION */}
           <Title
             title={`${nerkhname?.servicetype?.label} : نرخ نامه`}
-            home={false}
-            progress={50}
+            home={true}
+            progress={66}
           />
 
           {/* FORM FIELDS */}

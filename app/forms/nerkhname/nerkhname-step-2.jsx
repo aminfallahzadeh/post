@@ -26,7 +26,12 @@ const NerkhnameStep2 = () => {
           keyboardShouldPersistTaps="handled"
         >
           {/* HEADER SECTION */}
-          <Title title="نرخ نامه" home={true} progress={100} />
+          <Title
+            title={`${nerkhname?.servicetype?.label} : نرخ نامه`}
+            home={true}
+            progress={100}
+          />
+
           <View className="w-full px-5 mt-5">
             <View
               style={styles.container}

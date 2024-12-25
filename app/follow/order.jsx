@@ -16,11 +16,11 @@ import Background from "@/components/Background";
 import FormField from "@/components/FormField";
 import CustomButton from "@/components/CustomButton";
 import OrderTrackCard from "@/components/OrderTrackCard";
-import LottieView from "lottie-react-native";
+// import LottieView from "lottie-react-native";
 import { Chase } from "react-native-animated-spinkit";
 import { showMessage } from "react-native-flash-message";
 import { orderTrackingValidation } from "@/constants/validations";
-import searchLottie from "@/assets/animations/search-lottie.json";
+// import searchLottie from "@/assets/animations/search-lottie.json";
 import { toastStyles } from "@/constants/styles";
 import { Title } from "@/components/Title";
 
@@ -96,14 +96,14 @@ const FollowOrder = () => {
             {/* FORM FIELDS */}
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
               <View className="w-full px-4">
-                <View className="flex-col px-10 w-full">
+                {/* <View className="flex-col px-10 w-full">
                   <LottieView
                     source={searchLottie}
                     autoPlay
                     loop
                     className="w-full h-[150px] mt-[50px]"
                   />
-                </View>
+                </View> */}
 
                 {!barcode && (
                   <FormField
