@@ -9,7 +9,7 @@ export async function customerProfile(data) {
   return await axiosInstance.post("/Customer/CustomerProfile", data);
 }
 
-export function getNearestPostOffice({ lat, lng }) {
+export function getNearestPostOffice(lat, lng) {
   return axiosInstance.get(
     `/Customer/Get10NearstPostOffice?latitude=${lat}&longitude=${lng}`
   );

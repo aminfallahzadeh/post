@@ -266,7 +266,7 @@ export const PostalCodeRequest = () => {
                     />
                   </View>
 
-                  {form_data.ruralCityID && form_data.ruralCityID === 1051 && (
+                  {form_data.ruralCityID && form_data.ruralCityID === 16492 && (
                     <View className="mt-5">
                       <Controller
                         name="unit"

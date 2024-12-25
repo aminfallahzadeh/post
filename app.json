@@ -44,6 +44,12 @@
       "expo-router",
       "expo-secure-store",
       [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow post-ir to use your location."
+        }
+      ],
+      [
         "expo-build-properties",
         {
           "android": {
