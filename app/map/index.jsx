@@ -1,17 +1,10 @@
 // IMPORTS
 import { useEffect, useRef, useState, useCallback } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  PermissionsAndroid,
-} from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { getNearestPostOffice } from "@/api/customer";
-
 import { Title } from "@/components/Title";
 
 const Index = () => {
@@ -22,6 +15,7 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [selectedLocation, setSelectedLocation] = useState(null);
 
   // HANDLERS
   useEffect(() => {
@@ -60,7 +54,19 @@ const Index = () => {
     if (permission && location) {
       fetchLocations(location.coords.latitude, location.coords.longitude);
     }
+
+    return () => {
+      setNearLocs([]);
+    };
   }, [permission, fetchLocations, location]);
+
+  const handleMarkerPress = (item) => {
+    setSelectedLocation(item);
+  };
+
+  const closePopup = () => {
+    setSelectedLocation(null);
+  };
 
   //   const getPermissions = useCallback(async () => {
   //     const { status } = await Location.requestForegroundPermissionsAsync();
@@ -120,17 +126,50 @@ const Index = () => {
           }}
         >
           {nearLocs.length > 0 &&
-            nearLocs.map((item) => (
+            nearLocs.map((item, index) => (
               <Marker
-                key={item.id}
+                key={index}
                 pinColor="#fcd900"
                 coordinate={{
                   latitude: item.lat,
                   longitude: item._long,
                 }}
+                onPress={() => handleMarkerPress(item)}
               />
             ))}
         </MapView>
+
+        {/* Custom Popup */}
+        {selectedLocation && (
+          <View style={styles.popup}>
+            <Text
+              style={styles.popupTitle}
+              className="text-grey2 font-isansbold text-base"
+            >
+              {selectedLocation.name || "اطلاعات پیدا نشد"}
+            </Text>
+            <Text
+              style={styles.popupText}
+              className="text-grey2 font-isansregular text-base"
+            >
+              {selectedLocation.address || "اطلاعات پیدا نشد"}
+            </Text>
+
+            <Text
+              style={styles.popupText}
+              className="text-grey2 font-isansregular text-base mt-2"
+            >
+              {selectedLocation.postalCode || "اطلاعات پیدا نشد"}
+            </Text>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={closePopup}
+              className="text-base font-isansdemibold text-white"
+            >
+              <Text style={styles.closeButtonText}>بستن</Text>
+            </TouchableOpacity>
+          </View>
+        )}
 
         {/* Current Location Button */}
         {/* <TouchableOpacity style={styles.button} onPress={focusMap}>
@@ -170,6 +209,59 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     fontSize: 16,
+    fontWeight: "bold",
+  },
+  callout: {
+    padding: 10,
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  calloutTitle: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  calloutText: {
+    fontSize: 14,
+    marginTop: 5,
+  },
+  popup: {
+    position: "absolute",
+    bottom: 20,
+    left: 20,
+    right: 20,
+    padding: 15,
+    backgroundColor: "white",
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    alignItems: "center",
+  },
+  popupTitle: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  popupText: {
+    fontSize: 14,
+    textAlign: "center",
+    marginBottom: 10,
+  },
+  closeButton: {
+    backgroundColor: "#007AFF",
+    paddingHorizontal: 20,
+    paddingVertical: 8,
+    borderRadius: 5,
+  },
+  closeButtonText: {
+    color: "white",
     fontWeight: "bold",
   },
 });
