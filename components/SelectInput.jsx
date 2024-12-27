@@ -8,39 +8,40 @@ const selectSettings = (props) => ({
     color: props.disabled ? "#6a6a6a" : "#333",
     fontFamily: "IranSans-DemiBold",
     fontSize: 13,
-    transform: [{ scaleX: -1 }],
+    direction: "rtl",
+    marginRight: 10,
   },
   dropdownContainerStyle: {
-    marginBottom: 0,
     fontFamily: "IranSans-DemiBold",
-    innerHeight: 20,
+    direction: "rtl",
   },
   dropdownStyle: {
     borderColor: props.disabled ? "#e9e9e9" : "#b8b8b8",
     fontFamily: "IranSans-DemiBold",
-    transform: [{ scaleX: -1 }, { scaleY: 0.95 }],
     backgroundColor: "#fff",
+    direction: "rtl",
   },
   selectedItemStyle: {
     color: "#333",
     fontFamily: "IranSans-Regular",
-    transform: [{ scaleX: -1 }],
+    direction: "rtl",
+    paddingRight: 25,
   },
   checkboxControls: {
     checkboxLabelStyle: {
       fontFamily: "IranSans-DemiBold",
-      transform: [{ scaleX: -1 }],
       textAlign: "right",
+      direction: "rtl",
+      marginRight: 10,
     },
     checkboxStyle: {
-      transform: [{ scaleX: -1 }],
       borderRadius: 3,
     },
   },
   modalControls: {
     modalOptionsContainerStyle: {
       fontFamily: "IranSans-DemiBold",
-      transform: [{ scaleX: -1 }],
+      direction: "rtl",
       padding: 10,
     },
   },
@@ -48,16 +49,13 @@ const selectSettings = (props) => ({
     emptyListMessage: selectMessages.EMPTY_LIST,
   },
   searchControls: {
-    textInputContainerStyle: {
-      transform: [{ scaleX: -1 }],
-    },
+    textInputContainerStyle: {},
   },
   listComponentStyles: {
     textAlign: "center",
     listEmptyComponentStyle: {
-      color: "gray",
-      transform: [{ scaleX: -1 }],
       fontFamily: "IranSans-Bold",
+      direction: "rtl",
     },
     itemSeparatorStyle: {
       height: 1,

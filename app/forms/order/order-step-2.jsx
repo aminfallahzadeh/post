@@ -17,7 +17,7 @@ import FormField from "@/components/FormField";
 import * as SecureStore from "expo-secure-store";
 import SelectInput from "@/components/SelectInput";
 import { Title } from "@/components/Title";
-import { requiredRule } from "@/constants/validations";
+import { requiredRule, nationalCodeRule } from "@/constants/validations";
 import { LOADING_MESSAGE } from "@/constants/messages";
 import { getProvince, getCity } from "@/api/order";
 import { optionsGenerator } from "@/helpers/selectHelper";
@@ -155,7 +155,7 @@ const NerkhnameStep2 = () => {
                 keyboardType="numeric"
                 containerStyle="mt-5"
                 control={control}
-                rules={requiredRule}
+                rules={{ ...requiredRule, ...nationalCodeRule }}
                 name="nationalCode"
               />
 

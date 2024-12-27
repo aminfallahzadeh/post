@@ -51,6 +51,11 @@ const Index = () => {
     }
   }, []);
 
+  // DEBUG
+  useEffect(() => {
+    console.log("NEAR LOCATIONS: ", nearLocs);
+  }, [nearLocs]);
+
   useEffect(() => {
     if (permission && location) {
       fetchLocations(location.coords.latitude, location.coords.longitude);
@@ -118,6 +123,7 @@ const Index = () => {
             nearLocs.map((item) => (
               <Marker
                 key={item.id}
+                pinColor="#fcd900"
                 coordinate={{
                   latitude: item.lat,
                   longitude: item._long,

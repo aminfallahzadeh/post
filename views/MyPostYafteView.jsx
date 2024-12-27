@@ -93,7 +93,7 @@ const MyPostYafteView = () => {
     <Background>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View
-          style={{ transform: [{ scaleX: -1 }], rowGap: 10 }}
+          style={{ rowGap: 10 }}
           className="justify-normal items-center mt-5 px-10 h-full pb-32"
         >
           {isLoading ? (

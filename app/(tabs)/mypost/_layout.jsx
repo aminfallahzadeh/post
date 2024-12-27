@@ -7,13 +7,16 @@ import MyGheramatsView from "@/views/MyGheramatsView";
 import MuPostYafteView from "@/views/MyPostYafteView";
 import Background from "@/components/Background";
 import MyPostCodesView from "@/views/MyPostCodesView";
+import { Platform } from "react-native";
 
 const Tab = createMaterialTopTabNavigator();
 
 const tabLabelStyle = {
   fontSize: 15,
   fontFamily: "IranSans-DemiBold",
-  transform: [{ scaleX: -1 }],
+  //   direction: "rtl",
+  //   transform: Platform.OS === "android" ? [{ scaleX: -1 }] : "",
+  //   transform: [{ scaleX: -1 }],
 };
 
 function TopTabsLayout() {
@@ -23,10 +26,10 @@ function TopTabsLayout() {
         screenOptions={{
           headerShown: false,
           tabBarScrollEnabled: true,
-          tabBarIndicatorStyle: { backgroundColor: "#fcd900" },
+          //   tabBarIndicatorStyle: { backgroundColor: "#fcd900" },
         }}
         className="mt-24"
-        style={{ transform: [{ scaleX: -1 }] }}
+        // style={{ transform: [{ scaleX: -1 }], elevation: 0, shadowOpacity: 0 }}
       >
         <Tab.Screen
           name="Posts"

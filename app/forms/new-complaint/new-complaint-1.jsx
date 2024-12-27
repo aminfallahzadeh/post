@@ -33,7 +33,7 @@ import {
 } from "@/data/lookup.js";
 import { Title } from "@/components/Title";
 
-const Step2 = () => {
+const NewComplaintStep1 = () => {
   // STATES
   const [isLoading, setIsLoading] = useState(false);
 
@@ -218,4 +218,4 @@ const Step2 = () => {
   );
 };
 
-export default Step2;
+export default NewComplaintStep1;

@@ -17,6 +17,7 @@ import { useUserStore } from "@/store";
 import { BuildingDetailInput } from "@/components/BuildingDetailInput";
 import * as SecureStore from "expo-secure-store";
 import { Title } from "@/components/Title";
+import { requiredRule } from "@/constants/validations";
 
 const Step2 = () => {
   // STATES
@@ -100,9 +101,10 @@ const Step2 = () => {
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View className="w-full px-4">
               <FormField
-                placeholder="نام"
+                placeholder="* نام"
                 keyboardType="default"
                 containerStyle="mt-5"
+                rules={requiredRule}
                 type={"text"}
                 value={userData?.name || ""}
                 control={control}
@@ -110,9 +112,10 @@ const Step2 = () => {
               />
 
               <FormField
-                placeholder="نام خانوادگی"
+                placeholder="* نام خانوادگی"
                 keyboardType="default"
                 containerStyle="mt-5"
+                rules={requiredRule}
                 type={"text"}
                 control={control}
                 value={userData?.lastName || ""}
@@ -120,9 +123,10 @@ const Step2 = () => {
               />
 
               <FormField
-                placeholder="تلفن همراه"
+                placeholder="* تلفن همراه"
                 keyboardType="numeric"
                 containerStyle="mt-5"
+                rules={requiredRule}
                 type={"text"}
                 control={control}
                 editable={false}
@@ -153,9 +157,10 @@ const Step2 = () => {
               />
 
               <FormField
-                placeholder="نشانی"
+                placeholder="* نشانی"
                 keyboardType="default"
                 containerStyle="mt-5"
+                rules={requiredRule}
                 type={"text"}
                 control={control}
                 name="addressSub"
@@ -186,6 +191,7 @@ const Step2 = () => {
         <View className="w-full z-10 px-4 bg-gray-100 py-4">
           <CustomButton
             title="ادامه"
+            disabled={items.length === 0}
             handlePress={handleSubmit(onSubmit)}
             isLoading={isLoading}
           />

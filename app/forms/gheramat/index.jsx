@@ -21,6 +21,7 @@ import { getProvince, getServiceType } from "@/api/gheramat";
 import { insertRequestGheramat } from "@/api/request";
 import { REQUIRED } from "@/constants/messages";
 import { LOADING_MESSAGE } from "@/constants/messages";
+import { nationalCodeRule } from "@/constants/validations";
 import { Title } from "@/components/Title";
 
 const Index = () => {
@@ -135,6 +136,7 @@ const Index = () => {
               <FormField
                 placeholder="کد ملی"
                 type={"text"}
+                rules={nationalCodeRule}
                 value={userData?.nationalCode || "-"}
                 editable={false}
                 containerStyle="mt-5"

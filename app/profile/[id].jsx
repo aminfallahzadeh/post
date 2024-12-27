@@ -14,7 +14,7 @@ import { useUserStore } from "@/store";
 import { customerProfile } from "@/api/customer";
 import { showMessage } from "react-native-flash-message";
 import LottieView from "lottie-react-native";
-import Dropdown from "react-native-input-select";
+
 import { days, months, years } from "@/data/lookup";
 import userLottie from "@/assets/animations/user-lottie.json";
 import { toastConfig } from "@/config/toast-config";
@@ -22,20 +22,11 @@ import FormField from "@/components/FormField";
 import CustomButton from "@/components/CustomButton";
 import Background from "@/components/Background";
 import useGetUserData from "@/hooks/useGetUserData";
-import { userDataValidations } from "@/constants/validations";
+import { userDataValidations, nationalCodeRule } from "@/constants/validations";
 import { Title } from "@/components/Title";
 import * as SecureStore from "expo-secure-store";
-
-// ASSETS
+import SelectInput from "@/components/SelectInput";
 import { toastStyles } from "@/constants/styles";
-import {
-  selectPlaceholderStyle,
-  selectContainerStyle,
-  selectDropdownStyle,
-  selectItemStyle,
-  modalControls,
-  checkboxControls,
-} from "@/constants/styles";
 
 const UserProfile = () => {
   // STATES
@@ -149,6 +140,7 @@ const UserProfile = () => {
                 placeholder="کد ملی"
                 keyboardType="numeric"
                 type={"text"}
+                rules={nationalCodeRule}
                 control={control}
                 containerStyle="mt-5"
                 name="nationalCode"
@@ -166,21 +158,14 @@ const UserProfile = () => {
                     name="day"
                     control={control}
                     render={({ field: { onChange } }) => (
-                      <Dropdown
+                      <SelectInput
                         placeholder="روز"
                         options={days}
                         selectedValue={
                           days.find((c) => c.value === form_data?.day)?.value
                         }
                         onValueChange={(val) => onChange(val)}
-                        primaryColor={"#164194"}
-                        placeholderStyle={selectPlaceholderStyle}
-                        dropdownContainerStyle={selectContainerStyle}
-                        dropdownStyle={selectDropdownStyle}
-                        selectedItemStyle={selectItemStyle}
-                        checkboxControls={checkboxControls}
-                        modalControls={modalControls}
-                        dropdownIconStyle={{ right: 10, top: 28 }}
+                        primaryColor="#164194"
                       />
                     )}
                   />
@@ -191,7 +176,7 @@ const UserProfile = () => {
                     name="month"
                     control={control}
                     render={({ field: { onChange } }) => (
-                      <Dropdown
+                      <SelectInput
                         placeholder="ماه"
                         options={months}
                         selectedValue={
@@ -200,13 +185,6 @@ const UserProfile = () => {
                         }
                         onValueChange={(val) => onChange(val)}
                         primaryColor={"#164194"}
-                        placeholderStyle={selectPlaceholderStyle}
-                        dropdownContainerStyle={selectContainerStyle}
-                        dropdownStyle={selectDropdownStyle}
-                        selectedItemStyle={selectItemStyle}
-                        checkboxControls={checkboxControls}
-                        modalControls={modalControls}
-                        dropdownIconStyle={{ right: 10, top: 28 }}
                       />
                     )}
                   />
@@ -217,7 +195,7 @@ const UserProfile = () => {
                     name="year"
                     control={control}
                     render={({ field: { onChange } }) => (
-                      <Dropdown
+                      <SelectInput
                         placeholder="سال"
                         options={years}
                         selectedValue={
@@ -225,13 +203,6 @@ const UserProfile = () => {
                         }
                         onValueChange={(val) => onChange(val)}
                         primaryColor={"#164194"}
-                        placeholderStyle={selectPlaceholderStyle}
-                        dropdownContainerStyle={selectContainerStyle}
-                        dropdownStyle={selectDropdownStyle}
-                        selectedItemStyle={selectItemStyle}
-                        checkboxControls={checkboxControls}
-                        modalControls={modalControls}
-                        dropdownIconStyle={{ right: 10, top: 28 }}
                       />
                     )}
                   />

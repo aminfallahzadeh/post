@@ -16,7 +16,7 @@ import CustomButton from "@/components/CustomButton";
 import FormField from "@/components/FormField";
 import { Title } from "@/components/Title";
 import SelectInput from "@/components/SelectInput";
-import { requiredRule } from "@/constants/validations";
+import { requiredRule, nationalCodeRule } from "@/constants/validations";
 import { LOADING_MESSAGE } from "@/constants/messages";
 import { getProvince, getCity } from "@/api/order";
 import { optionsGenerator } from "@/helpers/selectHelper";
@@ -154,6 +154,7 @@ const NerkhnameStep3 = () => {
                 keyboardType="numeric"
                 containerStyle="mt-5"
                 control={control}
+                rules={nationalCodeRule}
                 name="nationalCode"
               />
 

@@ -28,6 +28,7 @@ import {
 } from "@/constants/consts";
 import { LOADING_MESSAGE } from "@/constants/messages";
 import { postAreaOptions } from "@/data/postArea";
+import { requiredRule } from "@/constants/validations";
 import { Title } from "@/components/Title";
 
 export const PostalCodeRequest = () => {
@@ -36,7 +37,13 @@ export const PostalCodeRequest = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   // CONSTS
-  const { control, watch, handleSubmit, setValue } = useForm();
+  const {
+    control,
+    watch,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm();
   const form_data = watch();
   const fetchData = useFetchData(dispatch);
   const setUserAddress = useUserStore((state) => state.setUserAddress);
@@ -151,10 +158,19 @@ export const PostalCodeRequest = () => {
           {/* FORM FIELDS */}
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View className="w-full px-5">
-              <View className="mt-5">
+              <View className="mt-5 relative">
+                {errors && (
+                  <View className="absolute -top-5 left-0">
+                    <Text className="text-red-500 font-isansregular">
+                      {errors?.province_id?.message}
+                    </Text>
+                  </View>
+                )}
+
                 <Controller
                   name="province_id"
                   control={control}
+                  rules={requiredRule}
                   render={({ field: { onChange } }) => (
                     <SelectInput
                       placeholder={
@@ -177,10 +193,19 @@ export const PostalCodeRequest = () => {
                   )}
                 />
               </View>
-              <View className="mt-5">
+              <View className="mt-5 relative">
+                {errors && (
+                  <View className="absolute -top-5 left-0">
+                    <Text className="text-red-500 font-isansregular">
+                      {errors?.countyID?.message}
+                    </Text>
+                  </View>
+                )}
+
                 <Controller
                   name="countyID"
                   control={control}
+                  rules={requiredRule}
                   render={({ field: { onChange } }) => (
                     <SelectInput
                       placeholder={
@@ -243,10 +268,19 @@ export const PostalCodeRequest = () => {
 
               {state.isUrban ? (
                 <>
-                  <View className="mt-5">
+                  <View className="mt-5 relative">
+                    {errors && (
+                      <View className="absolute -top-5 left-0">
+                        <Text className="text-red-500 font-isansregular">
+                          {errors?.ruralCityID?.message}
+                        </Text>
+                      </View>
+                    )}
+
                     <Controller
                       name="ruralCityID"
                       control={control}
+                      rules={requiredRule}
                       render={({ field: { onChange } }) => (
                         <SelectInput
                           placeholder={
@@ -267,10 +301,19 @@ export const PostalCodeRequest = () => {
                   </View>
 
                   {form_data.ruralCityID && form_data.ruralCityID === 16492 && (
-                    <View className="mt-5">
+                    <View className="mt-5 relative">
+                      {errors && (
+                        <View className="absolute -top-5 left-0">
+                          <Text className="text-red-500 font-isansregular">
+                            {errors?.unit?.message}
+                          </Text>
+                        </View>
+                      )}
+
                       <Controller
                         name="unit"
                         control={control}
+                        rules={requiredRule}
                         render={({ field: { onChange } }) => (
                           <SelectInput
                             placeholder={POST_AREA}

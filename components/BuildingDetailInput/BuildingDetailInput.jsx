@@ -1,5 +1,5 @@
 // IMPORTS
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import CustomButton from "@/components/CustomButton";
 import Feather from "@expo/vector-icons/Feather";
@@ -45,7 +45,7 @@ export const BuildingDetailInput = ({ items, setItems, onDeleteItem }) => {
     >
       <View className="w-full relative">
         <Text className="text-gray-400 font-isansdemibold text-sm absolute -top-4 right-2 bg-white rounded-md px-2">
-          واحدها
+          * واحدها
         </Text>
 
         {addMode && (

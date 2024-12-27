@@ -228,3 +228,10 @@ export const insurancePriceRules = {
     },
   },
 };
+
+// NATIONAL CODE RULES
+export const nationalCodeRule = {
+  validate: (value) => {
+    return nationalCodeChecker(value) || "کد ملی معتبر نیست";
+  },
+};
