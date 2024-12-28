@@ -40,6 +40,9 @@ GET PRICE
   "boxsize": 2
 }
 
+
+BUILD COMMAND = eas build -p android --profile preview --local
+
 Archive:
   ✔ centralize the dropdown component styles (dropdown helper) @done(24-11-15 03:25) @project(Component)
   ✔ create a hook for lookup data @done(24-11-16 17:44) @project(Component)
