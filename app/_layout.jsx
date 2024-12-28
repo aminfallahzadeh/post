@@ -122,6 +122,12 @@ import { I18nManager } from "react-native";
 I18nManager.allowRTL(false);
 I18nManager.forceRTL(false);
 
+try {
+  I18nManager.allowRTL(false);
+} catch (e) {
+  console.log(e);
+}
+
 SplashScreen.preventAutoHideAsync();
 
 const RootLayout = () => {

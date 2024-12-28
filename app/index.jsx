@@ -10,6 +10,17 @@ import { Chase } from "react-native-animated-spinkit";
 import { isLoginValid } from "@/utils/authUtils";
 import useGetUserData from "@/hooks/useGetUserData";
 import * as SecureStore from "expo-secure-store";
+import { I18nManager } from "react-native";
+
+// Lock the layout direction to LTR
+I18nManager.allowRTL(false);
+I18nManager.forceRTL(false);
+
+try {
+  I18nManager.allowRTL(false);
+} catch (e) {
+  console.log(e);
+}
 
 const Index = () => {
   // STATES
