@@ -97,21 +97,19 @@ const NerkhnameStep1 = () => {
     setIsLoading(true);
     try {
       const response = await getPrice({
-        typecode:
-          nerkhname.servicetype.id === 1
+        typecode: nerkhname.servicetype.id === 1
             ? 11
             : nerkhname.servicetype.id === 2
             ? 19
             : nerkhname.servicetype.id === 4
             ? 19 //سرویس امانت همان سرویس سفارشی هست فقط برای 2 کیلو به بالا می باشد
             : 77,
-        servicetype:
-          nerkhname.servicetype.id === 4 ? 2 : nerkhname.servicetype.id, //سرویس امانت همان سرویس سفارشی هست فقط برای 2 کیلو به بالا می باشد
+        servicetype: nerkhname.servicetype.id === 4 ? 2 : nerkhname.servicetype.id, //سرویس امانت همان سرویس سفارشی هست فقط برای 2 کیلو به بالا می باشد
         parceltype: form_data.parceltype,
         sourcecode: form_data.sourcecode,
         destcode: form_data.destcode,
         weight: parseFloat(form_data.weight) || 0,
-        // spsparceltype: 0,
+        //spsparceltype: 0,
         boxsize: form_data.boxsize === undefined ? 1 : form_data.boxsize,
       });
 
@@ -172,10 +170,10 @@ const NerkhnameStep1 = () => {
                   const options =
                     setNerkhname?.servicetype?.id === 2
                       ? parcelOptions.sefareshi
-                      : setNerkhname?.servicetype?.id === 4
-                      ? parcelOptions.amanat
                       : setNerkhname?.servicetype?.id === 3
                       ? parcelOptions.vijhe
+					  : setNerkhname?.servicetype?.id === 4
+                      ? parcelOptions.amanat
                       : parcelOptions.pishtaz;
 
                   const selectedOption = options.find(
@@ -227,7 +225,7 @@ const NerkhnameStep1 = () => {
                 control={control}
                 render={({ field: { onChange } }) => (
                   <SelectInput
-                    disabled={[1, 14, 3, 15, 3].includes(form_data?.parceltype)}
+                    disabled={[1, 14,3,15,3].includes(form_data?.parceltype)}
                     placeholder="* سایز کارتن"
                     options={boxsizeOptions}
                     onValueChange={(val) => onChange(val)}
