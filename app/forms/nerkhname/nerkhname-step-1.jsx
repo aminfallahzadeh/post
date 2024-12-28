@@ -97,14 +97,22 @@ const NerkhnameStep1 = () => {
     setIsLoading(true);
     try {
       const response = await getPrice({
-        typecode: 11,
-        servicetype: nerkhname.servicetype.id,
+        typecode:
+          nerkhname.servicetype.id === 1
+            ? 11
+            : nerkhname.servicetype.id === 2
+            ? 19
+            : nerkhname.servicetype.id === 4
+            ? 19 //سرویس امانت همان سرویس سفارشی هست فقط برای 2 کیلو به بالا می باشد
+            : 77,
+        servicetype:
+          nerkhname.servicetype.id === 4 ? 2 : nerkhname.servicetype.id, //سرویس امانت همان سرویس سفارشی هست فقط برای 2 کیلو به بالا می باشد
         parceltype: form_data.parceltype,
         sourcecode: form_data.sourcecode,
         destcode: form_data.destcode,
         weight: parseFloat(form_data.weight) || 0,
-        spsparceltype: 0,
-        boxsize: form_data.boxsize,
+        // spsparceltype: 0,
+        boxsize: form_data.boxsize === undefined ? 1 : form_data.boxsize,
       });
 
       console.log("PRICE RESPONSE: ", response.data);
@@ -219,7 +227,7 @@ const NerkhnameStep1 = () => {
                 control={control}
                 render={({ field: { onChange } }) => (
                   <SelectInput
-                    disabled={[1, 2].includes(form_data?.parceltype)}
+                    disabled={[1, 14, 3, 15, 3].includes(form_data?.parceltype)}
                     placeholder="* سایز کارتن"
                     options={boxsizeOptions}
                     onValueChange={(val) => onChange(val)}
