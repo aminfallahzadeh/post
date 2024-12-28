@@ -26,11 +26,16 @@
       }
     },
     "android": {
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDMxvfpF17Kv8QE4DM3kLGb8QyNgyWKS-I"
+        }
+      },
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/logo-post.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.amindevtech.postir",
+      "package": "com.melli.postir",
       "permissions": ["ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION"]
     },
     "web": {
