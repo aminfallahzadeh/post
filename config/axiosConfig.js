@@ -7,7 +7,7 @@ import { logout } from "@/api/auth";
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
-  timeout: 50000,
+  timeout: 50_000,
   withCredentials: true,
 });
 
