@@ -1,12 +1,12 @@
 // IMPORTS
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
-import { BASE_URL, MAIN_URL } from "@/constants/apiRoutes";
+import { BASE_URL, MAIN_URL, BASE_URL_HTTPS } from "@/constants/apiRoutes";
 import { toastConfig } from "./toast-config";
 import { logout } from "@/api/auth";
 
 const axiosInstance = axios.create({
-  baseURL: BASE_URL,
+  baseURL: BASE_URL_HTTPS,
   timeout: 50_000,
   withCredentials: true,
 });
@@ -123,7 +123,7 @@ axiosInstance.interceptors.response.use(
       return new Promise((resolve, reject) => {
         // GET NEW ACCESS TOKEN
         axios
-          .post(`${BASE_URL}/Customer/RefreshToken`, { refreshToken })
+          .post(`${BASE_URL_HTTPS}/Customer/RefreshToken`, { refreshToken })
           .then(async ({ data }) => {
             // DEBUGGING: REFRESH TOKEN RESPONSE
             console.log("Refresh token response:", data);
