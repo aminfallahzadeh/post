@@ -33,7 +33,7 @@ const NerkhnameStep2 = () => {
   const order = useUserStore((state) => state.order);
   const userData = useUserStore((state) => state.userData);
   const setOrder = useUserStore((state) => state.setOrder);
-  const mobile = SecureStore.getItem("mobile");
+  const sendermobile = SecureStore.getItem("mobile");
   const {
     watch,
     handleSubmit,
@@ -41,16 +41,16 @@ const NerkhnameStep2 = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      mobile,
-      nationalCode: userData?.nationalCode,
+      ...order,
+      sendermobile,
+      senderid: userData?.nationalCode,
     },
   });
   const form_data = watch();
 
   // HANDLERS
   const onSubmit = () => {
-    const data = { ...order, sender: { ...form_data } };
-    setOrder(data);
+    setOrder({ ...order, ...form_data });
     router.push(`/forms/order/order-step-3`);
   };
 
@@ -117,7 +117,7 @@ const NerkhnameStep2 = () => {
                 containerStyle="mt-10"
                 control={control}
                 rules={requiredRule}
-                name="name"
+                name="sendername"
               />
 
               <FormField
@@ -127,7 +127,7 @@ const NerkhnameStep2 = () => {
                 containerStyle="mt-5"
                 control={control}
                 rules={requiredRule}
-                name="lastName"
+                name="senderLastname"
               />
 
               <FormField
@@ -137,7 +137,7 @@ const NerkhnameStep2 = () => {
                 containerStyle="mt-5"
                 control={control}
                 rules={requiredRule}
-                name="mobile"
+                name="sendermobile"
               />
 
               <FormField
@@ -146,7 +146,7 @@ const NerkhnameStep2 = () => {
                 keyboardType="numeric"
                 containerStyle="mt-5"
                 control={control}
-                name="phone"
+                name="senderPhone"
               />
 
               <FormField
@@ -156,7 +156,7 @@ const NerkhnameStep2 = () => {
                 containerStyle="mt-5"
                 control={control}
                 rules={{ ...requiredRule, ...nationalCodeRule }}
-                name="nationalCode"
+                name="senderid"
               />
 
               <FormField
@@ -166,20 +166,20 @@ const NerkhnameStep2 = () => {
                 containerStyle="mt-5"
                 control={control}
                 rules={requiredRule}
-                name="postalCode"
+                name="senderpostalcode"
               />
 
               <View className="mt-5 relative">
                 {errors && (
                   <View className="absolute -top-5 left-0">
                     <Text className="text-red-500 font-isansregular">
-                      {errors?.provinceID?.message}
+                      {errors?.senderProvinceID?.message}
                     </Text>
                   </View>
                 )}
 
                 <Controller
-                  name="provinceID"
+                  name="senderProvinceID"
                   control={control}
                   rules={requiredRule}
                   render={({ field: { onChange } }) => (
@@ -199,7 +199,7 @@ const NerkhnameStep2 = () => {
                       primaryColor="#164194"
                       selectedValue={
                         provinceOptions.find(
-                          (c) => c.value === form_data?.provinceID
+                          (c) => c.value === form_data?.senderProvinceID
                         )?.value
                       }
                     />
@@ -211,13 +211,13 @@ const NerkhnameStep2 = () => {
                 {errors && (
                   <View className="absolute -top-5 left-0">
                     <Text className="text-red-500 font-isansregular">
-                      {errors?.cityID?.message}
+                      {errors?.sourcecode?.message}
                     </Text>
                   </View>
                 )}
 
                 <Controller
-                  name="cityID"
+                  name="sourcecode"
                   control={control}
                   rules={requiredRule}
                   render={({ field: { onChange } }) => (
@@ -227,8 +227,9 @@ const NerkhnameStep2 = () => {
                       onValueChange={(val) => onChange(val)}
                       primaryColor="#164194"
                       selectedValue={
-                        cityOptions.find((c) => c.value === form_data?.cityID)
-                          ?.value
+                        cityOptions.find(
+                          (c) => c.value === form_data?.sourcecode
+                        )?.value
                       }
                     />
                   )}
@@ -249,7 +250,7 @@ const NerkhnameStep2 = () => {
                   paddingTop: 20,
                 }}
                 control={control}
-                name="address"
+                name="senderaddress"
               />
             </View>
           </TouchableWithoutFeedback>

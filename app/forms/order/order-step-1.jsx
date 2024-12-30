@@ -33,13 +33,16 @@ const NerkhNameStep1 = () => {
     control,
     formState: { errors },
     unregister,
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      ...order,
+    },
+  });
   const form_data = watch();
 
   // HANDLERS
   const onSubmit = () => {
-    const data = { ...order, ...form_data };
-    setOrder(data);
+    setOrder({ ...order, ...form_data });
     router.push(`/forms/order/order-step-2`);
   };
 
@@ -68,8 +71,8 @@ const NerkhNameStep1 = () => {
       form_data?.parceltype &&
       [1, 14, 3, 15].includes(form_data.parceltype)
     ) {
-      console.log("Unregistering BoxSize");
-      unregister("BoxSize");
+      console.log("Unregistering boxsize");
+      unregister("boxsize");
     }
   }, [form_data?.parceltype, unregister]);
 
@@ -167,13 +170,13 @@ const NerkhNameStep1 = () => {
                   {errors && (
                     <View className="absolute -top-5 left-0">
                       <Text className="text-red-500 font-isansregular">
-                        {errors?.BoxSize?.message}
+                        {errors?.boxsize?.message}
                       </Text>
                     </View>
                   )}
 
                   <Controller
-                    name="BoxSize"
+                    name="boxsize"
                     control={control}
                     render={({ field: { onChange } }) => (
                       <SelectInput
@@ -183,7 +186,7 @@ const NerkhNameStep1 = () => {
                         primaryColor="#164194"
                         selectedValue={
                           boxsizeOptions.find(
-                            (c) => c.value === form_data?.BoxSize
+                            (c) => c.value === form_data?.boxsize
                           )?.value
                         }
                       />

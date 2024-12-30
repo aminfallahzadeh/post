@@ -37,7 +37,11 @@ const NerkhnameStep5 = () => {
     control,
     formState: { errors },
     unregister,
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      ...order,
+    },
+  });
   const form_data = watch();
 
   // helper
@@ -59,19 +63,19 @@ const NerkhnameStep5 = () => {
             : 77,
         servicetype: order?.servicetype?.id,
         parceltype: order?.parceltype,
-        sourcecode: order?.sender?.cityID || "",
-        destcode: order?.receiver?.cityID || "",
-        sendername: order?.sender?.name || "",
-        receivername: order?.receiver?.name || "",
-        receiverpostalcode: order?.postalCode?.name || "",
-        senderpostalcode: order?.postalCode?.name || "",
+        sourcecode: order?.sourcecode || "",
+        destcode: order?.destcode || "",
+        sendername: order?.sendername || "",
+        receivername: order?.receivername || "",
+        receiverpostalcode: order?.receiverpostalcode || "",
+        senderpostalcode: order?.senderpostalcode || "",
+        senderid: order?.senderid || "",
+        receiverid: order?.receiverid || "",
+        sendermobile: order?.sendermobile || "",
+        receivermobile: order?.receivermobile || "",
+        senderaddress: order?.senderaddress || "",
+        receiveraddress: order?.receiveraddress || "",
         weight: parseFloat(order?.weight) || 0,
-        senderid: order?.sender?.nationalCode || "",
-        receiverid: order?.receiver?.nationalCode || "",
-        sendermobile: order?.sender?.mobile || "",
-        receivermobile: order?.receiver?.mobile || "",
-        senderaddress: order?.sender?.address || "",
-        receiveraddress: order?.receiver?.address || "",
         insurancetype: form_data.insurancetype || 1,
         insuranceamount: form_data.insuranceamount || 0,
         spsdestinationtype: 0,
@@ -85,11 +89,15 @@ const NerkhnameStep5 = () => {
             ? 3
             : 2,
         electworeceiptant: true,
-        iscot: checkSpecialService(order?.specialServices, 5),
-        smsservice: checkSpecialService(order?.specialServices, 8),
+        iscot: order?.specialServices
+          ? checkSpecialService(order?.specialServices, 5)
+          : false,
+        smsservice: order?.specialServices
+          ? checkSpecialService(order?.specialServices, 8)
+          : false,
         isnonstandard: true,
         contetnts: order?.contetnts || "",
-        boxsize: order?.BoxSize || 0,
+        boxsize: order?.boxsize || 0,
       });
 
       console.log("INSERT REQUEST PRICE ORDER RESPONSE: ", response.data);

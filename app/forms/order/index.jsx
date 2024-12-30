@@ -13,12 +13,13 @@ import { Title } from "@/components/Title";
 const Index = () => {
   // CONSTS
   const setOrder = useUserStore((state) => state.setOrder);
+  const order = useUserStore((state) => state.order);
   const { watch, handleSubmit, control } = useForm();
   const form_data = watch();
 
   // HANDLERS
   const onSubmit = () => {
-    setOrder(form_data);
+    setOrder({ ...order, ...form_data });
     router.push(`/forms/order/order-step-1`);
   };
 

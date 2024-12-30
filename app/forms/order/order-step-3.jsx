@@ -36,13 +36,16 @@ const NerkhnameStep3 = () => {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      ...order,
+    },
+  });
   const form_data = watch();
 
   // HANDLERS
   const onSubmit = () => {
-    const data = { ...order, receiver: { ...form_data } };
-    setOrder(data);
+    setOrder({ ...order, ...form_data });
     router.push(`/forms/order/order-step-4`);
     console.log("FORM DATA: ", form_data);
   };
@@ -85,8 +88,9 @@ const NerkhnameStep3 = () => {
 
   // DEBUG
   useEffect(() => {
-    console.log("NERKHNAME Step 3: ", order);
-  }, [order]);
+    console.log("NERKHNAME Step 4: ", order);
+    console.log("FORM DATA: ", form_data);
+  }, [order, form_data]);
 
   return (
     <Background>
@@ -116,7 +120,7 @@ const NerkhnameStep3 = () => {
                 containerStyle="mt-10"
                 control={control}
                 rules={requiredRule}
-                name="name"
+                name="receivername"
               />
 
               <FormField
@@ -126,7 +130,7 @@ const NerkhnameStep3 = () => {
                 containerStyle="mt-5"
                 control={control}
                 rules={requiredRule}
-                name="lastName"
+                name="receiverLastname"
               />
 
               <FormField
@@ -136,7 +140,7 @@ const NerkhnameStep3 = () => {
                 rules={requiredRule}
                 containerStyle="mt-5"
                 control={control}
-                name="mobile"
+                name="receivermobile"
               />
 
               <FormField
@@ -145,7 +149,7 @@ const NerkhnameStep3 = () => {
                 keyboardType="numeric"
                 containerStyle="mt-5"
                 control={control}
-                name="phone"
+                name="receiverPhone"
               />
 
               <FormField
@@ -155,7 +159,7 @@ const NerkhnameStep3 = () => {
                 containerStyle="mt-5"
                 control={control}
                 rules={nationalCodeRule}
-                name="nationalCode"
+                name="receiverid"
               />
 
               <FormField
@@ -164,19 +168,19 @@ const NerkhnameStep3 = () => {
                 keyboardType="numeric"
                 containerStyle="mt-5"
                 control={control}
-                name="postalCode"
+                name="receiverpostalcode"
               />
               <View className="mt-5 relative">
                 {errors && (
                   <View className="absolute -top-5 left-0">
                     <Text className="text-red-500 font-isansregular">
-                      {errors?.provinceID?.message}
+                      {errors?.receiverProvinceID?.message}
                     </Text>
                   </View>
                 )}
 
                 <Controller
-                  name="provinceID"
+                  name="receiverProvinceID"
                   control={control}
                   rules={requiredRule}
                   render={({ field: { onChange } }) => (
@@ -196,7 +200,7 @@ const NerkhnameStep3 = () => {
                       primaryColor="#164194"
                       selectedValue={
                         provinceOptions.find(
-                          (c) => c.value === form_data?.provinceID
+                          (c) => c.value === form_data?.receiverProvinceID
                         )?.value
                       }
                     />
@@ -208,13 +212,13 @@ const NerkhnameStep3 = () => {
                 {errors && (
                   <View className="absolute -top-5 left-0">
                     <Text className="text-red-500 font-isansregular">
-                      {errors?.cityID?.message}
+                      {errors?.destcode?.message}
                     </Text>
                   </View>
                 )}
 
                 <Controller
-                  name="cityID"
+                  name="destcode"
                   control={control}
                   rules={requiredRule}
                   render={({ field: { onChange } }) => (
@@ -224,7 +228,7 @@ const NerkhnameStep3 = () => {
                       onValueChange={(val) => onChange(val)}
                       primaryColor="#164194"
                       selectedValue={
-                        cityOptions.find((c) => c.value === form_data?.cityID)
+                        cityOptions.find((c) => c.value === form_data?.destcode)
                           ?.value
                       }
                     />
@@ -246,7 +250,7 @@ const NerkhnameStep3 = () => {
                   paddingTop: 20,
                 }}
                 control={control}
-                name="address"
+                name="receiveraddress"
               />
             </View>
           </TouchableWithoutFeedback>

@@ -38,7 +38,11 @@ const NerkhnameStep1 = () => {
     control,
     formState: { errors },
     unregister,
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      ...nerkhname,
+    },
+  });
   const form_data = watch();
 
   // HANDLERS

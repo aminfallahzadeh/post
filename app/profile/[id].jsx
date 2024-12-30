@@ -13,10 +13,7 @@ import { useLocalSearchParams, router } from "expo-router";
 import { useUserStore } from "@/store";
 import { customerProfile } from "@/api/customer";
 import { showMessage } from "react-native-flash-message";
-import LottieView from "lottie-react-native";
-
 import { days, months, years } from "@/data/lookup";
-import userLottie from "@/assets/animations/user-lottie.json";
 import { toastConfig } from "@/config/toast-config";
 import FormField from "@/components/FormField";
 import CustomButton from "@/components/CustomButton";
@@ -112,13 +109,6 @@ const UserProfile = () => {
 
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View className="w-full px-4 pt-5">
-              <LottieView
-                source={userLottie}
-                autoPlay
-                loop
-                className="w-full h-[150px] mt-[50px]"
-              />
-
               <FormField
                 placeholder="نام"
                 keyboardType="default"

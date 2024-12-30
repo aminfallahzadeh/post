@@ -15,12 +15,16 @@ const NerkhnameStep4 = () => {
   // CONSTS
   const order = useUserStore((state) => state.order);
   const setOrder = useUserStore((state) => state.setOrder);
-  const { watch, handleSubmit, control } = useForm();
+  const { watch, handleSubmit, control } = useForm({
+    defaultValues: {
+      ...order.sender,
+    },
+  });
   const form_data = watch();
 
   // HANDLERS
   const onSubmit = () => {
-    const data = { ...order, specialServices: form_data.specialServices };
+    const data = { ...order, ...form_data };
     setOrder(data);
     router.push(`/forms/order/order-step-5`);
     console.log("FORM DATA: ", form_data);
