@@ -20,6 +20,7 @@ import FormField from "@/components/FormField";
 import { Title } from "@/components/Title";
 import { CustomModal } from "@/components/CustomModal";
 import * as SecureStore from "expo-secure-store";
+import { requiredRule } from "@/constants/validations";
 
 const NerkhnameStep5 = () => {
   // STATES
@@ -35,6 +36,7 @@ const NerkhnameStep5 = () => {
     handleSubmit,
     control,
     formState: { errors },
+    unregister,
   } = useForm();
   const form_data = watch();
 
@@ -87,7 +89,7 @@ const NerkhnameStep5 = () => {
         smsservice: checkSpecialService(order?.specialServices, 8),
         isnonstandard: true,
         contetnts: order?.contetnts || "",
-        boxsize: order?.BoxSize || "0",
+        boxsize: order?.BoxSize || 0,
       });
 
       console.log("INSERT REQUEST PRICE ORDER RESPONSE: ", response.data);
@@ -102,6 +104,12 @@ const NerkhnameStep5 = () => {
     console.log("NERKHNAME Step 5: ", order);
     console.log("FORM DATA: ", form_data);
   }, [order, form_data]);
+
+  useEffect(() => {
+    if (form_data?.insurancetype && form_data?.insurancetype === 1) {
+      unregister("insuranceamount");
+    }
+  }, [form_data?.insurancetype, unregister]);
 
   return (
     <>
@@ -177,26 +185,25 @@ const NerkhnameStep5 = () => {
                   name="contetnts"
                 />
 
-                <View className="flex-row-reverse justify-center items-center">
-                  <View className="flex-1 ml-2">
-                    <FormField
-                      placeholder="مبلغ اظهار شده"
-                      type={"number"}
-                      keyboardType="numeric"
-                      rules={{
-                        required: form_data.insurancetype === 1 ? false : true,
-                        message: "این فیلد اجباری است",
-                      }}
-                      containerStyle="mt-5"
-                      editable={form_data.insurancetype === 1 ? false : true}
-                      control={control}
-                      name="insuranceamount"
-                    />
+                {form_data.insurancetype !== 1 && (
+                  <View className="flex-row-reverse justify-center items-center">
+                    <View className="flex-1 ml-2">
+                      <FormField
+                        placeholder="مبلغ اظهار شده"
+                        type={"number"}
+                        keyboardType="numeric"
+                        rules={requiredRule}
+                        containerStyle="mt-5"
+                        // editable={form_data.insurancetype === 1 ? false : true}
+                        control={control}
+                        name="insuranceamount"
+                      />
+                    </View>
+                    <Text className="flex-3 self-center text-primary text-xl font-isansbold text-center rounded-lg pt-5">
+                      ریال
+                    </Text>
                   </View>
-                  <Text className="flex-3 self-center text-primary text-xl font-isansbold text-center rounded-lg pt-5">
-                    ریال
-                  </Text>
-                </View>
+                )}
               </View>
             </TouchableWithoutFeedback>
           </ScrollView>

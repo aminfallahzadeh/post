@@ -37,6 +37,7 @@ const NerkhnameStep1 = () => {
     handleSubmit,
     control,
     formState: { errors },
+    unregister,
   } = useForm();
   const form_data = watch();
 
@@ -98,6 +99,20 @@ const NerkhnameStep1 = () => {
     console.log("NERKHNAME:", nerkhname);
   }, [nerkhname]);
 
+  useEffect(() => {
+    console.log("FORM DATA Step 1: ", form_data);
+  }, [form_data]);
+
+  useEffect(() => {
+    if (
+      form_data?.parceltype &&
+      [1, 14, 3, 15].includes(form_data.parceltype)
+    ) {
+      console.log("Unregistering BoxSize");
+      unregister("boxsize");
+    }
+  }, [form_data?.parceltype, unregister]);
+
   const onSubmit = async () => {
     setIsLoading(true);
     try {
@@ -117,7 +132,8 @@ const NerkhnameStep1 = () => {
         destcode: form_data.destcode,
         weight: parseFloat(form_data.weight) || 0,
         //spsparceltype: 0,
-        boxsize: form_data.boxsize === undefined ? 1 : form_data.boxsize,
+        // boxsize: form_data.boxsize === undefined ? 1 : form_data.boxsize,
+        boxsize: form_data.boxsize || 0,
       });
 
       console.log("PRICE RESPONSE: ", response.data);
@@ -218,33 +234,35 @@ const NerkhnameStep1 = () => {
               </Text>
             </View>
 
-            <View className="mt-5 relative">
-              {errors && (
-                <View className="absolute -top-5 left-0">
-                  <Text className="text-red-500 font-isansregular">
-                    {errors?.boxsize?.message}
-                  </Text>
-                </View>
-              )}
-
-              <Controller
-                name="boxsize"
-                control={control}
-                render={({ field: { onChange } }) => (
-                  <SelectInput
-                    disabled={[1, 14, 3, 15, 3].includes(form_data?.parceltype)}
-                    placeholder="* سایز کارتن"
-                    options={boxsizeOptions}
-                    onValueChange={(val) => onChange(val)}
-                    primaryColor="#164194"
-                    selectedValue={
-                      boxsizeOptions.find((c) => c.value === form_data?.boxsize)
-                        ?.value
-                    }
-                  />
+            {![1, 14, 3, 15].includes(form_data?.parceltype) && (
+              <View className="mt-5 relative">
+                {errors && (
+                  <View className="absolute -top-5 left-0">
+                    <Text className="text-red-500 font-isansregular">
+                      {errors?.boxsize?.message}
+                    </Text>
+                  </View>
                 )}
-              />
-            </View>
+
+                <Controller
+                  name="boxsize"
+                  control={control}
+                  render={({ field: { onChange } }) => (
+                    <SelectInput
+                      placeholder="* سایز کارتن"
+                      options={boxsizeOptions}
+                      onValueChange={(val) => onChange(val)}
+                      primaryColor="#164194"
+                      selectedValue={
+                        boxsizeOptions.find(
+                          (c) => c.value === form_data?.boxsize
+                        )?.value
+                      }
+                    />
+                  )}
+                />
+              </View>
+            )}
 
             <View className="flex-row-reverse justify-between items-center mt-5">
               <View className="flex-1 ml-2">
