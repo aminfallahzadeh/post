@@ -1,11 +1,5 @@
 // IMPORTS
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Animated,
-} from "react-native";
+import { View, Text, TextInput, Animated, Pressable } from "react-native";
 import { useState, useEffect } from "react";
 import { useController } from "react-hook-form";
 import Feather from "@expo/vector-icons/Feather";
@@ -90,9 +84,9 @@ export const FormField = ({
       )}
 
       <View
-        className={`w-full ${height} px-4 border rounded-md items-center relative ${
+        className={`w-full ${height} px-4 border rounded-sm items-center relative ${
           editable ? "bg-white" : "bg-gray-300"
-        } border-gray-300`}
+        } border-gray-500`}
       >
         {/* Animated Placeholder */}
 
@@ -143,7 +137,7 @@ export const FormField = ({
         />
 
         {type === "password" ? (
-          <TouchableOpacity
+          <Pressable
             onPress={handleShowPassword}
             className="absolute top-[50%] left-4"
             style={{
@@ -155,9 +149,9 @@ export const FormField = ({
               size={24}
               color={"gray"}
             />
-          </TouchableOpacity>
+          </Pressable>
         ) : type !== "password" && field.value && clearBtn && editable ? (
-          <TouchableOpacity
+          <Pressable
             onPress={handleRemoveField}
             className="absolute top-[50%] left-4"
             style={{
@@ -169,7 +163,7 @@ export const FormField = ({
               size={animate ? 24 : 20}
               color={"#AFB4C0"}
             />
-          </TouchableOpacity>
+          </Pressable>
         ) : null}
       </View>
     </View>

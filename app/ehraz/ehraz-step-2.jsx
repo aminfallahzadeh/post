@@ -30,20 +30,12 @@ const EhrazStep2 = () => {
   const [confirmed, setConfirmed] = useState(false);
   const bouncyCheckboxRef = useRef(null);
   const confirmedCheckboxRef = useRef(null);
-  const [address, setAddress] = useState("");
 
   // CONSTS
   const ehrazFormData = useUserStore((state) => state.ehrazFormData);
   const setFactor = useUserStore((state) => state.setFactor);
   const mobile = SecureStore.getItem("mobile");
-  const {
-    watch,
-    handleSubmit,
-    control,
-    trigger,
-    setValue,
-    formState: { errors },
-  } = useForm({
+  const { watch, handleSubmit, control, trigger, setValue } = useForm({
     defaultValues: {
       lastStreet: "",
       buildingNumber: "",
@@ -51,7 +43,7 @@ const EhrazStep2 = () => {
       unit: "",
     },
   });
-  const postalCode = watch("postalCode");
+  const postCode = watch("postCode");
 
   // HANDLERS
   const handleCheckboxPress = () => {
@@ -71,23 +63,41 @@ const EhrazStep2 = () => {
     const data = [
       {
         clientRowID: 0,
-        postCode: postalCode,
+        postCode,
       },
     ];
     const response = await addressByPostCode(data);
 
-    const result = response?.data?.itemList[0].data[0].result;
-    const address = `استان ${result?.province} - شهرستان ${result?.localityName} - بخش ${result?.zone} - شهر ${result?.townShip} - خیابان ${result?.street} - خیابان ${result?.street2} - پلاک ${result?.houseNumber} - ساختمان ${result?.buildingName} - ${result?.description} - طبقه ${result?.floor} - واحد ${result?.sideFloor}`;
-    setValue("address", address);
-  }, [postalCode, setValue]);
+    if (response.data.itemList[0].resMsg === "موفق") {
+      const result = response?.data?.itemList[0].data[0].result;
+      const address = `استان ${result?.province} - شهرستان ${result?.localityName} - بخش ${result?.zone} - شهر ${result?.townShip} - خیابان ${result?.street} - خیابان ${result?.street2} - پلاک ${result?.houseNumber} - ساختمان ${result?.buildingName} - ${result?.description} - طبقه ${result?.floor} - واحد ${result?.sideFloor}`;
+      setValue("address", address);
+    } else {
+      setValue("address", response.data.itemList[0].resMsg);
+    }
+  }, [postCode, setValue]);
 
   const onSubmit = async (data) => {
     setIsLoading(true);
     try {
-      const { postalCode, lastStreet, buildingNumber, floor, unit } = data;
+      const { postCode, lastStreet, buildingNumber, floor, unit } = data;
+      const {
+        firstName,
+        lastName,
+        applicantType,
+        gender,
+        nationalCodeOrId,
+        addressStatus,
+      } = ehrazFormData;
       const response = await insertRequestEhraz({
-        ...ehrazFormData,
-        postalCode,
+        // ...ehrazFormData,
+        firstName,
+        lastName,
+        applicantType,
+        gender,
+        nationalCodeOrId,
+        addressStatus,
+        postalCode: postCode,
         lastStreet,
         buildingNumber,
         floor,
@@ -106,15 +116,21 @@ const EhrazStep2 = () => {
   useEffect(() => {
     const validateAndFetch = async () => {
       const isValid = await trigger("postCode");
+      console.log("IS VALID: ", isValid);
       if (isValid) {
         fetchAddress();
       }
     };
 
-    if (postalCode) {
+    if (postCode) {
       validateAndFetch();
     }
-  }, [postalCode, trigger, fetchAddress]);
+  }, [postCode, trigger, fetchAddress]);
+
+  // DEBUG
+  useEffect(() => {
+    console.log(postCode);
+  }, [postCode]);
 
   return (
     <Background>
@@ -140,7 +156,7 @@ const EhrazStep2 = () => {
                 keyboardType="numeric"
                 control={control}
                 rules={postCodeRules}
-                name="postalCode"
+                name="postCode"
               />
 
               <FormField

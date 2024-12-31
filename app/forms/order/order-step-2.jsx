@@ -39,11 +39,16 @@ const NerkhnameStep2 = () => {
     handleSubmit,
     control,
     formState: { errors },
+    setValue,
   } = useForm({
     defaultValues: {
       ...order,
       sendermobile,
       senderid: userData?.nationalCode,
+      sendername: order.firstName ? order.sendername : userData?.name,
+      senderLastname: order.lastName
+        ? order.senderLastname
+        : userData?.lastName,
     },
   });
   const form_data = watch();
@@ -182,26 +187,27 @@ const NerkhnameStep2 = () => {
                   name="senderProvinceID"
                   control={control}
                   rules={requiredRule}
-                  render={({ field: { onChange } }) => (
+                  render={({ field: { onChange, value } }) => (
                     <SelectInput
                       placeholder={
                         isProvinceLoading ? LOADING_MESSAGE : "* استان"
                       }
                       options={provinceOptions}
-                      onValueChange={(val) => {
+                      search={true}
+                      onChange={(val) => {
                         if (val) {
-                          fetchCity(val);
+                          fetchCity(val.value);
                         } else {
                           setCityOptions([]);
                         }
-                        return onChange(val);
+                        return onChange(val.value);
                       }}
-                      primaryColor="#164194"
-                      selectedValue={
-                        provinceOptions.find(
-                          (c) => c.value === form_data?.senderProvinceID
-                        )?.value
-                      }
+                      value={value}
+                      onClear={() => {
+                        setValue("senderProvinceID", null);
+                        setValue("sourcecode", null);
+                        setCityOptions([]);
+                      }}
                     />
                   )}
                 />
@@ -220,17 +226,14 @@ const NerkhnameStep2 = () => {
                   name="sourcecode"
                   control={control}
                   rules={requiredRule}
-                  render={({ field: { onChange } }) => (
+                  render={({ field: { onChange, value } }) => (
                     <SelectInput
+                      search={true}
                       placeholder={isCityLoading ? LOADING_MESSAGE : "* شهر"}
                       options={cityOptions}
-                      onValueChange={(val) => onChange(val)}
-                      primaryColor="#164194"
-                      selectedValue={
-                        cityOptions.find(
-                          (c) => c.value === form_data?.sourcecode
-                        )?.value
-                      }
+                      onChange={(val) => onChange(val.value)}
+                      value={value}
+                      onClear={() => setValue("sourcecode", null)}
                     />
                   )}
                 />

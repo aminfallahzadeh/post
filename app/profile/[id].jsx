@@ -147,15 +147,13 @@ const UserProfile = () => {
                   <Controller
                     name="day"
                     control={control}
-                    render={({ field: { onChange } }) => (
+                    render={({ field: { onChange, value } }) => (
                       <SelectInput
                         placeholder="روز"
                         options={days}
-                        selectedValue={
-                          days.find((c) => c.value === form_data?.day)?.value
-                        }
-                        onValueChange={(val) => onChange(val)}
-                        primaryColor="#164194"
+                        value={value}
+                        onChange={(val) => onChange(val.value)}
+                        onClear={() => setValue("day", null)}
                       />
                     )}
                   />
@@ -165,16 +163,13 @@ const UserProfile = () => {
                   <Controller
                     name="month"
                     control={control}
-                    render={({ field: { onChange } }) => (
+                    render={({ field: { onChange, value } }) => (
                       <SelectInput
                         placeholder="ماه"
                         options={months}
-                        selectedValue={
-                          months.find((c) => c.value === form_data?.month)
-                            ?.value
-                        }
-                        onValueChange={(val) => onChange(val)}
-                        primaryColor={"#164194"}
+                        value={value}
+                        onChange={(val) => onChange(val.value)}
+                        onClear={() => setValue("month", null)}
                       />
                     )}
                   />
@@ -184,15 +179,13 @@ const UserProfile = () => {
                   <Controller
                     name="year"
                     control={control}
-                    render={({ field: { onChange } }) => (
+                    render={({ field: { onChange, value } }) => (
                       <SelectInput
                         placeholder="سال"
                         options={years}
-                        selectedValue={
-                          years.find((c) => c.value === form_data?.year)?.value
-                        }
-                        onValueChange={(val) => onChange(val)}
-                        primaryColor={"#164194"}
+                        value={value}
+                        onChange={(val) => onChange(val.value)}
+                        onClear={() => setValue("year", null)}
                       />
                     )}
                   />

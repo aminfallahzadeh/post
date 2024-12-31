@@ -38,6 +38,8 @@ const NerkhnameStep1 = () => {
     control,
     formState: { errors },
     unregister,
+    setValue,
+    reset,
   } = useForm({
     defaultValues: {
       ...nerkhname,
@@ -135,14 +137,14 @@ const NerkhnameStep1 = () => {
         sourcecode: form_data.sourcecode,
         destcode: form_data.destcode,
         weight: parseFloat(form_data.weight) || 0,
-        //spsparceltype: 0,
         // boxsize: form_data.boxsize === undefined ? 1 : form_data.boxsize,
-        boxsize: form_data.boxsize || 0,
+        boxsize: form_data.boxsize || 1,
       });
 
       console.log("PRICE RESPONSE: ", response.data);
       await setNerkhname({ ...nerkhname, ...response.data.itemList[0].data });
       router.push("forms/nerkhname/nerkhname-step-2");
+      reset();
     } finally {
       setIsLoading(false);
     }
@@ -193,7 +195,7 @@ const NerkhnameStep1 = () => {
                 name="parceltype"
                 control={control}
                 rules={nerkhnameValidations.parceltype}
-                render={({ field: { onChange } }) => {
+                render={({ field: { onChange, value } }) => {
                   const options =
                     nerkhname?.servicetype?.id === 2
                       ? parcelOptions.sefareshi
@@ -203,17 +205,13 @@ const NerkhnameStep1 = () => {
                       ? parcelOptions.vijhe
                       : parcelOptions.pishtaz;
 
-                  const selectedOption = options.find(
-                    (option) => option.value === form_data?.parceltype
-                  );
-
                   return (
                     <SelectInput
                       placeholder="* نوع مرسوله"
                       options={options}
-                      onValueChange={(val) => onChange(val)}
-                      primaryColor="#164194"
-                      selectedValue={selectedOption?.value}
+                      onChange={(val) => onChange(val.value)}
+                      value={value}
+                      onClear={() => setValue("parceltype", null)}
                     />
                   );
                 }}
@@ -251,17 +249,14 @@ const NerkhnameStep1 = () => {
                 <Controller
                   name="boxsize"
                   control={control}
-                  render={({ field: { onChange } }) => (
+                  render={({ field: { onChange, value } }) => (
                     <SelectInput
                       placeholder="* سایز کارتن"
                       options={boxsizeOptions}
-                      onValueChange={(val) => onChange(val)}
+                      onChange={(val) => onChange(val.value)}
                       primaryColor="#164194"
-                      selectedValue={
-                        boxsizeOptions.find(
-                          (c) => c.value === form_data?.boxsize
-                        )?.value
-                      }
+                      value={value}
+                      onClear={() => setValue("boxsize", null)}
                     />
                   )}
                 />
@@ -273,30 +268,29 @@ const NerkhnameStep1 = () => {
                 <Controller
                   name="provinceIDSource"
                   control={control}
-                  render={({ field: { onChange } }) => {
-                    const selectedOption = provinceOptions.find(
-                      (c) => c.value === form_data?.provinceIDSource
-                    );
-
-                    return (
-                      <SelectInput
-                        placeholder={
-                          isProvinceLoading ? LOADING_MESSAGE : "* استان"
+                  render={({ field: { onChange, value } }) => (
+                    <SelectInput
+                      placeholder={
+                        isProvinceLoading ? LOADING_MESSAGE : "* استان"
+                      }
+                      search={true}
+                      options={provinceOptions}
+                      onChange={(val) => {
+                        if (val) {
+                          fetchCity(val.value);
+                        } else {
+                          setSourceCityOptions([]);
                         }
-                        options={provinceOptions}
-                        onValueChange={(val) => {
-                          if (val) {
-                            fetchCity(val);
-                          } else {
-                            setSourceCityOptions([]);
-                          }
-                          return onChange(val);
-                        }}
-                        primaryColor="#164194"
-                        selectedValue={selectedOption?.value}
-                      />
-                    );
-                  }}
+                        return onChange(val.value);
+                      }}
+                      value={value}
+                      onClear={() => {
+                        setValue("provinceIDSource", null);
+                        setValue("sourcecode", null);
+                        setSourceCityOptions([]);
+                      }}
+                    />
+                  )}
                 />
               </View>
 
@@ -313,21 +307,16 @@ const NerkhnameStep1 = () => {
                   name="sourcecode"
                   control={control}
                   rules={requiredRule}
-                  render={({ field: { onChange } }) => {
-                    const selectedOption = sourceCityOptions.find(
-                      (c) => c.value === form_data?.sourcecode
-                    );
-
-                    return (
-                      <SelectInput
-                        placeholder={isCityLoading ? LOADING_MESSAGE : "* شهر"}
-                        options={sourceCityOptions}
-                        primaryColor="#164194"
-                        onValueChange={(val) => onChange(val)}
-                        selectedValue={selectedOption?.value}
-                      />
-                    );
-                  }}
+                  render={({ field: { onChange, value } }) => (
+                    <SelectInput
+                      placeholder={isCityLoading ? LOADING_MESSAGE : "* شهر"}
+                      options={sourceCityOptions}
+                      search={true}
+                      onChange={(val) => onChange(val.value)}
+                      value={value}
+                      onClear={() => setValue("sourcecode", null)}
+                    />
+                  )}
                 />
               </View>
             </View>
@@ -337,30 +326,29 @@ const NerkhnameStep1 = () => {
                 <Controller
                   name="provinceIDDest"
                   control={control}
-                  render={({ field: { onChange } }) => {
-                    const selectedOption = provinceOptions.find(
-                      (c) => c.value === form_data?.provinceIDDest
-                    );
-
-                    return (
-                      <SelectInput
-                        placeholder={
-                          isProvinceLoading ? LOADING_MESSAGE : "* استان مقصد"
+                  render={({ field: { onChange, value } }) => (
+                    <SelectInput
+                      placeholder={
+                        isProvinceLoading ? LOADING_MESSAGE : "* استان مقصد"
+                      }
+                      options={provinceOptions}
+                      search={true}
+                      onChange={(val) => {
+                        if (val) {
+                          fetchDestCity(val.value);
+                        } else {
+                          setDestCityOptions([]);
                         }
-                        options={provinceOptions}
-                        onValueChange={(val) => {
-                          if (val) {
-                            fetchDestCity(val);
-                          } else {
-                            setDestCityOptions([]);
-                          }
-                          return onChange(val);
-                        }}
-                        primaryColor="#164194"
-                        selectedValue={selectedOption?.value}
-                      />
-                    );
-                  }}
+                        return onChange(val.value);
+                      }}
+                      value={value}
+                      onClear={() => {
+                        setValue("provinceIDDest", null);
+                        setValue("destcode", null);
+                        setDestCityOptions([]);
+                      }}
+                    />
+                  )}
                 />
               </View>
 
@@ -377,23 +365,18 @@ const NerkhnameStep1 = () => {
                   name="destcode"
                   control={control}
                   rules={requiredRule}
-                  render={({ field: { onChange } }) => {
-                    const selectedOption = destCityOptions.find(
-                      (c) => c.value === form_data?.destcode
-                    );
-
-                    return (
-                      <SelectInput
-                        placeholder={
-                          isDestCityLoading ? LOADING_MESSAGE : "* شهر مقصد"
-                        }
-                        options={destCityOptions}
-                        onValueChange={(val) => onChange(val)}
-                        primaryColor="#164194"
-                        selectedValue={selectedOption?.value}
-                      />
-                    );
-                  }}
+                  render={({ field: { onChange, value } }) => (
+                    <SelectInput
+                      placeholder={
+                        isDestCityLoading ? LOADING_MESSAGE : "* شهر مقصد"
+                      }
+                      options={destCityOptions}
+                      onChange={(val) => onChange(val.value)}
+                      value={value}
+                      search={true}
+                      onClear={() => setValue("destcode", null)}
+                    />
+                  )}
                 />
               </View>
             </View>

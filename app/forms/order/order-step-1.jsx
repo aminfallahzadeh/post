@@ -33,6 +33,7 @@ const NerkhNameStep1 = () => {
     control,
     formState: { errors },
     unregister,
+    setValue,
   } = useForm({
     defaultValues: {
       ...order,
@@ -120,7 +121,7 @@ const NerkhNameStep1 = () => {
                   name="parceltype"
                   control={control}
                   rules={nerkhnameValidations.parceltype}
-                  render={({ field: { onChange } }) => {
+                  render={({ field: { onChange, value } }) => {
                     const options =
                       order?.servicetype?.id === 2
                         ? parcelOptions.sefareshi
@@ -130,17 +131,13 @@ const NerkhNameStep1 = () => {
                         ? parcelOptions.vijhe
                         : parcelOptions.pishtaz;
 
-                    const selectedOption = options.find(
-                      (option) => option.value === form_data?.parceltype
-                    );
-
                     return (
                       <SelectInput
                         placeholder="* نوع مرسوله"
                         options={options}
-                        onValueChange={(val) => onChange(val)}
-                        primaryColor="#164194"
-                        selectedValue={selectedOption?.value}
+                        onChange={(val) => onChange(val.value)}
+                        value={value}
+                        onClear={() => setValue("parceltype", null)}
                       />
                     );
                   }}
@@ -178,17 +175,13 @@ const NerkhNameStep1 = () => {
                   <Controller
                     name="boxsize"
                     control={control}
-                    render={({ field: { onChange } }) => (
+                    render={({ field: { onChange, value } }) => (
                       <SelectInput
                         placeholder="* سایز کارتن"
                         options={boxsizeOptions}
-                        onValueChange={(val) => onChange(val)}
-                        primaryColor="#164194"
-                        selectedValue={
-                          boxsizeOptions.find(
-                            (c) => c.value === form_data?.boxsize
-                          )?.value
-                        }
+                        onChange={(val) => onChange(val.value)}
+                        value={value}
+                        onClear={() => setValue("boxsize", null)}
                       />
                     )}
                   />

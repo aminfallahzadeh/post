@@ -36,6 +36,7 @@ const NerkhnameStep3 = () => {
     handleSubmit,
     control,
     formState: { errors },
+    setValue,
   } = useForm({
     defaultValues: {
       ...order,
@@ -183,26 +184,27 @@ const NerkhnameStep3 = () => {
                   name="receiverProvinceID"
                   control={control}
                   rules={requiredRule}
-                  render={({ field: { onChange } }) => (
+                  render={({ field: { onChange, value } }) => (
                     <SelectInput
                       placeholder={
                         isProvinceLoading ? LOADING_MESSAGE : "* استان"
                       }
                       options={provinceOptions}
-                      onValueChange={(val) => {
+                      search={true}
+                      onChange={(val) => {
                         if (val) {
-                          fetchCity(val);
+                          fetchCity(val.value);
                         } else {
                           setCityOptions([]);
                         }
-                        return onChange(val);
+                        return onChange(val.value);
                       }}
-                      primaryColor="#164194"
-                      selectedValue={
-                        provinceOptions.find(
-                          (c) => c.value === form_data?.receiverProvinceID
-                        )?.value
-                      }
+                      value={value}
+                      onClear={() => {
+                        setValue("receiverProvinceID", null);
+                        setValue("destcode", null);
+                        setCityOptions([]);
+                      }}
                     />
                   )}
                 />
@@ -221,16 +223,14 @@ const NerkhnameStep3 = () => {
                   name="destcode"
                   control={control}
                   rules={requiredRule}
-                  render={({ field: { onChange } }) => (
+                  render={({ field: { onChange, value } }) => (
                     <SelectInput
                       placeholder={isCityLoading ? LOADING_MESSAGE : "* شهر"}
                       options={cityOptions}
-                      onValueChange={(val) => onChange(val)}
-                      primaryColor="#164194"
-                      selectedValue={
-                        cityOptions.find((c) => c.value === form_data?.destcode)
-                          ?.value
-                      }
+                      search={true}
+                      onChange={(val) => onChange(val.value)}
+                      value={value}
+                      onClear={() => setValue("destcode", null)}
                     />
                   )}
                 />

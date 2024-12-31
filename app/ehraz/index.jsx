@@ -34,6 +34,7 @@ const Index = () => {
     handleSubmit,
     control,
     formState: { errors },
+    setValue,
   } = useForm({
     defaultValues: {
       firstName: userData.name,
@@ -47,6 +48,11 @@ const Index = () => {
     setEhrazFormData(data);
     router.push("/ehraz/ehraz-step-2");
   };
+
+  // DEBUG
+  useEffect(() => {
+    console.log(form_data);
+  }, [form_data]);
 
   return (
     <Background>
@@ -66,7 +72,7 @@ const Index = () => {
           {/* FORM FIELDS */}
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View className="w-full px-5">
-              <View className="mt-5 relative">
+              <View className="relative mt-5">
                 {errors && (
                   <View className="absolute -top-5 left-0">
                     <Text className="text-red-500 font-isansregular">
@@ -79,23 +85,19 @@ const Index = () => {
                   name="applicantType"
                   control={control}
                   rules={requiredRule}
-                  render={({ field: { onChange } }) => (
+                  render={({ field: { onChange, value } }) => (
                     <SelectInput
                       placeholder="* نوع شخصیت"
                       options={applicantTypeOptions}
-                      onValueChange={(val) => onChange(val)}
-                      primaryColor="#164194"
-                      selectedValue={
-                        applicantTypeOptions.find(
-                          (c) => c.value === form_data?.applicantType
-                        )?.value
-                      }
+                      onChange={(val) => onChange(val.value)}
+                      value={value}
+                      onClear={() => setValue("applicantType", null)}
                     />
                   )}
                 />
               </View>
 
-              <View className="mt-5 relative">
+              <View className="relative mt-5">
                 {errors && (
                   <View className="absolute -top-5 left-0">
                     <Text className="text-red-500 font-isansregular">
@@ -108,16 +110,13 @@ const Index = () => {
                   name="gender"
                   control={control}
                   rules={requiredRule}
-                  render={({ field: { onChange } }) => (
+                  render={({ field: { onChange, value } }) => (
                     <SelectInput
                       placeholder="* جنسیت"
                       options={genderOptions}
-                      onValueChange={(val) => onChange(val)}
-                      primaryColor="#164194"
-                      selectedValue={
-                        genderOptions.find((c) => c.value === form_data?.gender)
-                          ?.value
-                      }
+                      onChange={(val) => onChange(val.value)}
+                      value={value}
+                      onClear={() => setValue("gender", null)}
                     />
                   )}
                 />
@@ -126,8 +125,8 @@ const Index = () => {
               <FormField
                 placeholder="نام"
                 type={"text"}
-                containerStyle="mt-5"
                 keyboardType="default"
+                containerStyle="mt-5"
                 rules={requiredRule}
                 control={control}
                 name="firstName"
@@ -166,17 +165,13 @@ const Index = () => {
                   name="addressStatus"
                   control={control}
                   rules={requiredRule}
-                  render={({ field: { onChange } }) => (
+                  render={({ field: { onChange, value } }) => (
                     <SelectInput
                       placeholder="وضعیت نشانی"
                       options={addressStatusOptions}
-                      onValueChange={(val) => onChange(val)}
-                      primaryColor="#164194"
-                      selectedValue={
-                        addressStatusOptions.find(
-                          (c) => c.value === form_data?.addressStatus
-                        )?.value
-                      }
+                      onChange={(val) => onChange(val.value)}
+                      value={value}
+                      onClear={() => setValue("addressStatus", null)}
                     />
                   )}
                 />

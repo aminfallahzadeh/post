@@ -39,6 +39,7 @@ const NerkhnameStep5 = () => {
     formState: { errors },
     unregister,
     reset,
+    setValue,
   } = useForm({
     defaultValues: {
       ...order,
@@ -79,7 +80,7 @@ const NerkhnameStep5 = () => {
         receiveraddress: order?.receiveraddress || "",
         weight: parseFloat(order?.weight) || 0,
         insurancetype: form_data.insurancetype || 1,
-        insuranceamount: form_data.insuranceamount || 0,
+        insuranceamount: parseFloat(form_data.insuranceamount) || 0,
         spsdestinationtype: 0,
         spsreceivertimetype: 0,
         spsparceltype:
@@ -99,7 +100,7 @@ const NerkhnameStep5 = () => {
           : false,
         isnonstandard: true,
         contetnts: order?.contetnts || "",
-        boxsize: order?.boxsize || 0,
+        boxsize: order?.boxsize || 1,
       });
 
       console.log("INSERT REQUEST PRICE ORDER RESPONSE: ", response.data);
@@ -166,17 +167,13 @@ const NerkhnameStep5 = () => {
                   <Controller
                     name="insurancetype"
                     control={control}
-                    render={({ field: { onChange } }) => (
+                    render={({ field: { onChange, value } }) => (
                       <SelectInput
                         placeholder="* نوع بیمه"
                         options={insuranceOptions}
-                        onValueChange={(val) => onChange(val)}
-                        primaryColor="#164194"
-                        selectedValue={
-                          insuranceOptions.find(
-                            (c) => c.value === form_data?.insurancetype
-                          )?.value
-                        }
+                        value={value}
+                        onChange={(val) => onChange(val.value)}
+                        onClear={() => setValue("insurancetype", null)}
                       />
                     )}
                   />
