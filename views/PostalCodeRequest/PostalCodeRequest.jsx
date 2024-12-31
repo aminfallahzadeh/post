@@ -171,24 +171,19 @@ export const PostalCodeRequest = () => {
                   name="province_id"
                   control={control}
                   rules={requiredRule}
-                  render={({ field: { onChange } }) => (
+                  render={({ field: { onChange, value } }) => (
                     <SelectInput
                       placeholder={
                         state.isLoading.province ? LOADING_MESSAGE : PROVINCE
                       }
                       disabled={state.isLoading.province}
                       options={state.options.province}
-                      onValueChange={(val) => {
-                        fetchData("county", { provinceID: val });
-                        return onChange(val);
+                      onChange={(val) => {
+                        fetchData("county", { provinceID: val.value });
+                        return onChange(val.value);
                       }}
-                      //   isSearchable={true}
-                      primaryColor="#164194"
-                      selectedValue={
-                        state.options.province.find(
-                          (c) => c.value === form_data?.province_id
-                        )?.value
-                      }
+                      value={value}
+                      search={true}
                     />
                   )}
                 />
@@ -206,38 +201,32 @@ export const PostalCodeRequest = () => {
                   name="countyID"
                   control={control}
                   rules={requiredRule}
-                  render={({ field: { onChange } }) => (
+                  render={({ field: { onChange, value } }) => (
                     <SelectInput
                       placeholder={
                         state.isLoading.county ? LOADING_MESSAGE : COUNTY
                       }
                       disabled={state.isLoading.county}
                       options={state.options.county}
-                      onValueChange={(val) => {
+                      onChange={(val) => {
                         if (state.isUrban) {
                           fetchData(
                             "ruralCity",
                             {
                               village: "false",
-                              countyID: val,
+                              countyID: val.value,
                             },
                             state.isUrban
                           );
-                          console.log("OPTIONS:", state.options.ruralCity);
-                          console.log("IS URBAN:", state.isUrban);
                         } else {
                           fetchData("zone", {
-                            countyID: val,
+                            countyID: val.value,
                           });
                         }
-                        return onChange(val);
+                        return onChange(val.value);
                       }}
-                      primaryColor="#164194"
-                      selectedValue={
-                        state.options.county.find(
-                          (c) => c.value === form_data?.countyID
-                        )?.value
-                      }
+                      value={value}
+                      search={true}
                     />
                   )}
                 />
@@ -281,20 +270,16 @@ export const PostalCodeRequest = () => {
                       name="ruralCityID"
                       control={control}
                       rules={requiredRule}
-                      render={({ field: { onChange } }) => (
+                      render={({ field: { onChange, value } }) => (
                         <SelectInput
                           placeholder={
                             state.isLoading.ruralCity ? LOADING_MESSAGE : CITY
                           }
                           disabled={state.isLoading.ruralCity}
                           options={state.options.ruralCity}
-                          onValueChange={(val) => onChange(val)}
-                          primaryColor="#164194"
-                          selectedValue={
-                            state.options.ruralCity.find(
-                              (c) => c.value === form_data?.ruralCityID
-                            )?.value
-                          }
+                          onChange={(val) => onChange(val.value)}
+                          value={value}
+                          search={true}
                         />
                       )}
                     />
@@ -314,17 +299,12 @@ export const PostalCodeRequest = () => {
                         name="unit"
                         control={control}
                         rules={requiredRule}
-                        render={({ field: { onChange } }) => (
+                        render={({ field: { onChange, value } }) => (
                           <SelectInput
                             placeholder={POST_AREA}
                             options={postAreaOptions}
-                            onValueChange={(val) => onChange(val)}
-                            primaryColor="#164194"
-                            selectedValue={
-                              postAreaOptions.find(
-                                (c) => c.value === form_data?.unit
-                              )?.value
-                            }
+                            onChange={(val) => onChange(val.value)}
+                            value={value}
                           />
                         )}
                       />
@@ -337,29 +317,25 @@ export const PostalCodeRequest = () => {
                     <Controller
                       name="zoneID"
                       control={control}
-                      render={({ field: { onChange } }) => (
+                      render={({ field: { onChange, value } }) => (
                         <SelectInput
                           placeholder={
                             state.isLoading.zone ? LOADING_MESSAGE : ZONE
                           }
                           options={state.options.zone}
-                          onValueChange={(val) => {
+                          onChange={(val) => {
                             fetchData(
                               "ruralCity",
                               {
                                 village: "true",
-                                zoneID: val,
+                                zoneID: val.value,
                               },
                               state.isUrban
                             );
-                            return onChange(val);
+                            return onChange(val.value);
                           }}
-                          primaryColor="#164194"
-                          selectedValue={
-                            state.options.zone.find(
-                              (c) => c.value === form_data?.zoneID
-                            )?.value
-                          }
+                          value={value}
+                          search={true}
                         />
                       )}
                     />
@@ -397,20 +373,15 @@ export const PostalCodeRequest = () => {
                     <Controller
                       name="villageID"
                       control={control}
-                      render={({ field: { onChange } }) => (
+                      render={({ field: { onChange, value } }) => (
                         <SelectInput
                           placeholder={
                             state.isLoading.village ? LOADING_MESSAGE : VILLAGE
                           }
                           disabled={state.isLoading.village}
                           options={state.options.village}
-                          onValueChange={(val) => onChange(val)}
-                          primaryColor="#164194"
-                          selectedValue={
-                            state.options.village?.find(
-                              (c) => c.value === form_data?.villageID
-                            )?.value
-                          }
+                          onChange={(val) => onChange(val.value)}
+                          value={value}
                         />
                       )}
                     />

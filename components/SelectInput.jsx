@@ -1,6 +1,6 @@
 // IMPORTS
 // import Dropdown from "react-native-input-select";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Text, View, Pressable } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import Feather from "@expo/vector-icons/Feather";
@@ -133,7 +133,8 @@ const SelectInput = (props) => {
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
         renderRightIcon={() =>
-          props.value && (
+          props.value &&
+          props.onClear && (
             <Pressable onPress={props.onClear}>
               <Feather name="x-circle" size={25} color={"#AFB4C0"} />
             </Pressable>

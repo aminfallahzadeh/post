@@ -21,7 +21,7 @@ import { getProvince, getServiceType } from "@/api/gheramat";
 import { insertRequestGheramat } from "@/api/request";
 import { REQUIRED } from "@/constants/messages";
 import { LOADING_MESSAGE } from "@/constants/messages";
-import { nationalCodeRule } from "@/constants/validations";
+import { nationalCodeRule, requiredRule } from "@/constants/validations";
 import { Title } from "@/components/Title";
 
 const Index = () => {
@@ -41,6 +41,8 @@ const Index = () => {
     handleSubmit,
     watch,
     formState: { errors },
+    setValue,
+    reset,
   } = useForm();
   const form_data = watch();
 
@@ -84,6 +86,7 @@ const Index = () => {
       console.log("GHERAMAT RESPONSE: ", response.data);
       setGheramatResult(response.data.itemList[0]);
       router.push("forms/gheramat/step2");
+      reset();
     } finally {
       setIsLoading(false);
     }
@@ -155,9 +158,10 @@ const Index = () => {
               />
 
               <FormField
-                placeholder="شماره مرسوله"
+                placeholder="* شماره مرسوله"
                 keyboardType="numeric"
                 type={"text"}
+                rules={requiredRule}
                 containerStyle="mt-5"
                 control={control}
                 name="parcellno"
@@ -181,19 +185,15 @@ const Index = () => {
                       message: REQUIRED,
                     },
                   }}
-                  render={({ field: { onChange } }) => (
+                  render={({ field: { onChange, value } }) => (
                     <SelectInput
                       placeholder={
                         isServiceLoading ? LOADING_MESSAGE : "* نوع سرویس"
                       }
                       options={serviceOptions}
-                      onValueChange={(val) => onChange(val)}
-                      primaryColor="#164194"
-                      selectedValue={
-                        serviceOptions.find(
-                          (c) => c.value === form_data?.serviceKind
-                        )?.value
-                      }
+                      onChange={(val) => onChange(val.value)}
+                      value={value}
+                      onClear={() => setValue("serviceKind", null)}
                     />
                   )}
                 />
@@ -217,19 +217,16 @@ const Index = () => {
                       message: REQUIRED,
                     },
                   }}
-                  render={({ field: { onChange } }) => (
+                  render={({ field: { onChange, value } }) => (
                     <SelectInput
                       placeholder={
                         isProvinceLoading ? LOADING_MESSAGE : "* شهر"
                       }
                       options={provinceOptions}
-                      onValueChange={(val) => onChange(val)}
-                      primaryColor="#164194"
-                      selectedValue={
-                        provinceOptions.find(
-                          (c) => c.value === form_data?.province
-                        )?.value
-                      }
+                      onChange={(val) => onChange(val.value)}
+                      value={value}
+                      onClear={() => setValue("province", null)}
+                      search={true}
                     />
                   )}
                 />

@@ -40,6 +40,8 @@ const Step2 = () => {
     handleSubmit,
     watch,
     formState: { errors },
+    setValue,
+    reset,
   } = useForm();
   const form_data = watch();
 
@@ -85,6 +87,7 @@ const Step2 = () => {
       });
       console.log("POST YAFTE RESPONSE: ", response.data);
       router.replace("/forms/post-yafte/step3");
+      reset();
     } finally {
       setIsLoading(false);
     }
@@ -166,22 +169,23 @@ const Step2 = () => {
                       message: REQUIRED,
                     },
                   }}
-                  render={({ field: { onChange } }) => (
+                  render={({ field: { onChange, value } }) => (
                     <SelectInput
                       placeholder={
                         isProvinceLoading ? LOADING_MESSAGE : "* استان"
                       }
                       options={provinceOptions}
-                      onValueChange={(val) => {
-                        fetchCity(val);
-                        return onChange(val);
+                      onChange={(val) => {
+                        fetchCity(val.value);
+                        return onChange(val.value);
                       }}
-                      primaryColor="#164194"
-                      selectedValue={
-                        provinceOptions.find(
-                          (c) => c.value === form_data?.state_id
-                        )?.value
-                      }
+                      value={value}
+                      search={true}
+                      onClear={() => {
+                        setValue("state_id", null);
+                        setValue("city_id", null);
+                        setCityOptions([]);
+                      }}
                     />
                   )}
                 />
@@ -205,16 +209,14 @@ const Step2 = () => {
                       message: REQUIRED,
                     },
                   }}
-                  render={({ field: { onChange } }) => (
+                  render={({ field: { onChange, value } }) => (
                     <SelectInput
                       placeholder={isCityLoading ? LOADING_MESSAGE : "* شهر"}
                       options={cityOptions}
-                      onValueChange={(val) => onChange(val)}
-                      primaryColor="#164194"
-                      selectedValue={
-                        cityOptions.find((c) => c.value === form_data?.city_id)
-                          ?.value
-                      }
+                      onChange={(val) => onChange(val.value)}
+                      value={value}
+                      onClear={() => setValue("city_id", null)}
+                      search={true}
                     />
                   )}
                 />
