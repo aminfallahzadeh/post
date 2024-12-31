@@ -4,11 +4,11 @@
     "slug": "post-ir",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/logo-post.png",
+    "icon": "./assets/images/splash-logo-post.png",
     "scheme": "postapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/splash-logo-post.png",
       "backgroundColor": "#ffffff"
     },
     "androidStatusBar": {
@@ -32,7 +32,7 @@
         }
       },
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/logo-post.png",
+        "foregroundImage": "./assets/images/splash-logo-post.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.postir.app",
@@ -41,7 +41,7 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/logo-post.png"
+      "favicon": "./assets/images/splash-logo-post.png"
     },
     "plugins": [
       "expo-router",
