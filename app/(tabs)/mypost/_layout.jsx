@@ -1,105 +1,83 @@
 // IMPORTS
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import MyOrdersView from "@/views/MyOrdersView";
-import MyComplaintsView from "@/views/MyComplaintsView";
-import MyGovahiView from "@/views/MyGovahiView";
-import MyGheramatsView from "@/views/MyGheramatsView";
-import MuPostYafteView from "@/views/MyPostYafteView";
+import { withLayoutContext } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Background from "@/components/Background";
-import MyPostCodesView from "@/views/MyPostCodesView";
-import { Platform } from "react-native";
 
-const Tab = createMaterialTopTabNavigator();
+const { Navigator } = createMaterialTopTabNavigator();
+
+const MaterialTopTabs = withLayoutContext(Navigator);
 
 const tabLabelStyle = {
-  fontSize: 15,
+  fontSize: 14,
   fontFamily: "IranSans-DemiBold",
-  //   direction: "rtl",
-  //   transform: Platform.OS === "android" ? [{ scaleX: -1 }] : "",
-  //   transform: [{ scaleX: -1 }],
 };
 
-function TopTabsLayout() {
+const TabsLayout = () => {
   return (
     <Background>
-      <Tab.Navigator
-        screenOptions={{
-          headerShown: false,
-          tabBarScrollEnabled: true,
-          //   tabBarIndicatorStyle: { backgroundColor: "#fcd900" },
-        }}
-        className="mt-24"
-        // style={{ transform: [{ scaleX: -1 }], elevation: 0, shadowOpacity: 0 }}
-      >
-        <Tab.Screen
-          name="Posts"
-          component={MyOrdersView}
-          options={{
-            tabBarLabel: "سفارش",
+      <SafeAreaView className="h-full mt-10">
+        <MaterialTopTabs
+          screenOptions={{
+            tabBarScrollEnabled: true,
+            lazy: true,
             tabBarLabelStyle: tabLabelStyle,
             tabBarItemStyle: {
               width: 100,
+
+              transform: [{ scaleX: -1 }],
             },
           }}
-        />
-        <Tab.Screen
-          name="Govahi"
-          component={MyGovahiView}
-          options={{
-            tabBarLabel: "گواهی",
-            tabBarLabelStyle: tabLabelStyle,
-            tabBarItemStyle: {
-              width: 100,
-            },
+          style={{
+            transform: [{ scaleX: -1 }],
+
+            elevation: 0,
+            shadowOpacity: 0,
           }}
-        />
-        <Tab.Screen
-          name="Gheramat"
-          component={MyGheramatsView}
-          options={{
-            tabBarLabel: "غرامت",
-            tabBarLabelStyle: tabLabelStyle,
-            tabBarItemStyle: {
-              width: 100,
-            },
-          }}
-        />
-        <Tab.Screen
-          name="Complaints"
-          component={MyComplaintsView}
-          options={{
-            tabBarLabel: "شکایت",
-            tabBarLabelStyle: tabLabelStyle,
-            tabBarItemStyle: {
-              width: 100,
-            },
-          }}
-        />
-        <Tab.Screen
-          name="PostCode"
-          component={MyPostCodesView}
-          options={{
-            tabBarLabel: "کد پستی",
-            tabBarLabelStyle: tabLabelStyle,
-            tabBarItemStyle: {
-              width: 100,
-            },
-          }}
-        />
-        <Tab.Screen
-          name="PostYafte"
-          component={MuPostYafteView}
-          options={{
-            tabBarLabel: "پست یافته",
-            tabBarLabelStyle: tabLabelStyle,
-            tabBarItemStyle: {
-              width: 100,
-            },
-          }}
-        />
-      </Tab.Navigator>
+        >
+          <MaterialTopTabs.Screen
+            name="index"
+            options={{
+              title: "سفارش",
+            }}
+          />
+          <MaterialTopTabs.Screen
+            name="my-govahi"
+            options={{
+              title: "گواهی",
+            }}
+          />
+          <MaterialTopTabs.Screen
+            name="my-gheramat"
+            options={{
+              title: "غرامت",
+            }}
+          />
+
+          <MaterialTopTabs.Screen
+            name="my-complaint"
+            options={{
+              title: "شکایت",
+            }}
+          />
+
+          <MaterialTopTabs.Screen
+            name="my-postcode"
+            options={{
+              title: "کد پستی",
+            }}
+          />
+
+          <MaterialTopTabs.Screen
+            name="my-yafte"
+            options={{
+              title: "پست یافته",
+            }}
+          />
+        </MaterialTopTabs>
+      </SafeAreaView>
     </Background>
   );
-}
+};
 
-export default TopTabsLayout;
+export default TabsLayout;

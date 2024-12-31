@@ -4,43 +4,58 @@ import { View, Text, ScrollView } from "react-native";
 import { router } from "expo-router";
 import { Chase } from "react-native-animated-spinkit";
 import Background from "@/components/Background";
-import CustomButton from "@/components/CustomButton";
-import { trackingOrders, trackingOrder } from "@/api/tracking";
 import { useUserStore } from "@/store";
+import { getRequestPostYafte } from "@/api/request";
+import { requestPayment } from "@/api/payment";
+import CustomButton from "@/components/CustomButton";
 import * as SecureStore from "expo-secure-store";
 
-const Index = () => {
+const MyYafte = () => {
   // STATES
   const [isLoading, setIsLoading] = useState(false);
-  const [isOrderLoading, setIsOrderLoading] = useState(false);
+  const [isRequestLoading, setIsRequestLoading] = useState(false);
   const [data, setData] = useState([]);
 
   // CONSTS
   const mobile = SecureStore.getItem("mobile");
-  const userData = useUserStore((state) => state.userData);
+  const setFactor = useUserStore((state) => state.setFactor);
 
   const fetchData = useCallback(async () => {
-    if (userData.nationalCode) {
-      setIsLoading(true);
-      try {
-        const response = await trackingOrders(mobile);
-        console.log("TRACKING ORDER RESPONSE:", response.data);
-        setData(response.data.itemList);
-      } finally {
-        setIsLoading(false);
-      }
+    setIsLoading(true);
+    try {
+      const response = await getRequestPostYafte(mobile);
+      console.log("POST YAFTE RESPONSE:", response.data);
+      setData(response.data.itemList);
+    } finally {
+      setIsLoading(false);
     }
-  }, [mobile, userData?.nationalCode]);
+  }, [mobile]);
 
   // HANDLERS
-  const onSubmit = async (barcode) => {
-    setIsOrderLoading(true);
+  const onSubmit = async (item) => {
+    setIsRequestLoading(true);
     try {
-      const response = await trackingOrder(barcode);
-      console.log("TRACKING ORDER RESPONSE:", response.data);
-      router.push(`/follow/order?barcode=${barcode}`);
+      const response = await requestPayment({
+        clientOrderID: "",
+        mobile,
+        paymentTypeID: "",
+        postUnitID: 0,
+        income: item.amount,
+        tax: item.tax,
+        escrow: item.escrow,
+        callBackUrl: "",
+        additionalData: "",
+        requestID: item.id,
+      });
+      console.log("REQUEST PAYMENT RESPONSE:", response.data);
+      console.log(response.data.itemList[0].data.paymentUrl);
+      setFactor({
+        ...item,
+        paymentUrl: response.data.itemList[0].data.paymentUrl,
+      });
+      router.push(`/factor/${item.id}`);
     } finally {
-      setIsOrderLoading(false);
+      setIsRequestLoading(false);
     }
   };
 
@@ -54,60 +69,47 @@ const Index = () => {
         <View
           style={{
             rowGap: 10,
-            // transform: Platform.OS === "android" ? [{ scaleX: -1 }] : "",
             transform: [{ scaleX: -1 }],
           }}
           className="justify-normal items-center mt-5 px-10 h-full pb-32"
         >
           {isLoading ? (
             <Chase size={50} color="#164194" className="mt-20" />
-          ) : !userData.nationalCode ? (
-            <Text className="font-isansdemibold text-grey2 text-[30px] mt-20">
-              کد ملی را ثبت کنید
-            </Text>
           ) : data.length === 0 ? (
             <Text className="font-isansdemibold text-grey2 text-[30px] mt-20">
               موردی یافت نشد!
             </Text>
           ) : (
             data.map((item, index) => (
-              <View key={index} className="w-full">
+              <View className="w-full" key={index}>
                 <View className="bg-white rounded-md px-5 py-2 w-full">
                   <View className="flex-row-reverse justify-between items-center w-full mb-2">
                     <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm">
-                      نوع پیگیری :
+                      وضعیت :
                     </Text>
                     <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm py-1">
-                      {item.stateName}
+                      {item.statusCodeDesc}
                     </Text>
                   </View>
 
                   <View className="flex-row-reverse justify-between items-center w-full mb-2">
                     <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm">
-                      {item.state === 2 ? "کد پیگیری" : "کد مرسوله"}
+                      شماره پیگیری :
                     </Text>
                     <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm py-1">
-                      {item.barcode}
+                      {item.trackingID}
                     </Text>
                   </View>
 
-                  <View className="flex-row-reverse justify-between items-center w-full mb-2">
-                    <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm">
-                      تاریخ صدور :
-                    </Text>
-                    <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm py-1">
-                      {item.issueDateShamsi}
-                    </Text>
-                  </View>
-
-                  {item.state !== 2 && (
-                    <CustomButton
-                      title="پیگیری"
-                      height="h-10"
-                      isLoading={isOrderLoading}
-                      handlePress={() => onSubmit(item.barcode)}
-                    />
-                  )}
+                  <CustomButton
+                    title="پرداخت"
+                    bgColor="bg-blue-500"
+                    titleColor="text-white"
+                    height="h-10"
+                    disabled={!item.canPay}
+                    isLoading={isRequestLoading}
+                    handlePress={() => onSubmit(item)}
+                  />
                 </View>
               </View>
             ))
@@ -118,4 +120,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default MyYafte;

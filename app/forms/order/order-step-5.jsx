@@ -30,6 +30,7 @@ const NerkhnameStep5 = () => {
   // CONSTS
   const mobile = SecureStore.getItem("mobile");
   const order = useUserStore((state) => state.order);
+  const setOrder = useUserStore((state) => state.setOrder);
 
   const {
     watch,
@@ -37,6 +38,7 @@ const NerkhnameStep5 = () => {
     control,
     formState: { errors },
     unregister,
+    reset,
   } = useForm({
     defaultValues: {
       ...order,
@@ -102,6 +104,8 @@ const NerkhnameStep5 = () => {
 
       console.log("INSERT REQUEST PRICE ORDER RESPONSE: ", response.data);
       setResultModalVisible(true);
+      reset();
+      setOrder([]);
     } finally {
       setIsLoading(false);
     }

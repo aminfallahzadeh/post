@@ -52,13 +52,6 @@ const TabsLayout = () => {
 
       {/* TAB LAYOUT */}
       <Tabs tabBar={(props) => <TabBar {...props} />}>
-        {/* <Tabs.Screen
-          name="followup"
-          options={{
-            headerShown: false,
-            tabBarLabel: "پیگیری",
-          }}
-        /> */}
         <Tabs.Screen
           name="services"
           options={{ headerShown: false, tabBarLabel: "خدمات" }}

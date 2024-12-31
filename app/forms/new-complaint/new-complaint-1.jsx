@@ -26,6 +26,7 @@ import {
 import { stepTwoEopValidation } from "@/constants/validations";
 import { router } from "expo-router";
 import { toastStyles } from "@/constants/styles";
+import { CustomModal } from "@/components/CustomModal";
 import {
   serviceTypeLookup,
   postalRegionLookup,
@@ -36,6 +37,7 @@ import { Title } from "@/components/Title";
 const NewComplaintStep1 = () => {
   // STATES
   const [isLoading, setIsLoading] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   // CONSTS
   const complaintData = useUserStore((state) => state.complaintFormData);
@@ -90,7 +92,7 @@ const NewComplaintStep1 = () => {
         titleStyle: toastStyles,
       });
       reset();
-      router.replace("/services");
+      setVisible(true);
       removeComplaintData();
     } finally {
       setIsLoading(false);
@@ -98,123 +100,134 @@ const NewComplaintStep1 = () => {
   };
 
   return (
-    <Background>
-      <SafeAreaView className="h-full">
-        <ScrollView
-          contentContainerStyle={{
-            flexGrow: 1,
-            paddingBottom: 90,
-          }}
-          showsVerticalScrollIndicator={false}
-          stickyHeaderIndices={[0]}
-          keyboardShouldPersistTaps="handled"
-        >
-          {/* HEADER SECTION */}
-          <Title title={"ثبت شکایت"} progress={100} home={true} />
+    <>
+      <CustomModal
+        visible={visible}
+        closeModal={() => setVisible(false)}
+        title={"توجه"}
+        description={
+          "درخواست شما ثبت شد. برای پیگیری به صفحه پست من مراجعه کنید"
+        }
+        onConfirm={() => router.replace("/")}
+      />
+      <Background>
+        <SafeAreaView className="h-full">
+          <ScrollView
+            contentContainerStyle={{
+              flexGrow: 1,
+              paddingBottom: 90,
+            }}
+            showsVerticalScrollIndicator={false}
+            stickyHeaderIndices={[0]}
+            keyboardShouldPersistTaps="handled"
+          >
+            {/* HEADER SECTION */}
+            <Title title={"ثبت شکایت"} progress={100} home={true} />
 
-          {/* FORM FIELDS */}
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <View className="w-full px-4">
-              <FormField
-                placeholder="شماره سریال بسته پستی"
-                keyboardType="numeric"
-                type={"text"}
-                control={control}
-                containerStyle="mt-5"
-                name="serialNo"
-              />
-              <View className="mt-5">
-                <Controller
-                  name="complaintType"
+            {/* FORM FIELDS */}
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+              <View className="w-full px-4">
+                <FormField
+                  placeholder="شماره سریال بسته پستی"
+                  keyboardType="numeric"
+                  type={"text"}
                   control={control}
-                  render={({ field: { onChange } }) => (
-                    <Dropdown
-                      placeholder="نوع شکایت"
-                      options={complaintTypeLookup}
-                      onValueChange={(val) => onChange(val)}
-                      selectedValue={
-                        complaintTypeLookup.find(
-                          (c) => c.value === form_data?.complaintType
-                        )?.value
-                      }
-                      primaryColor={"#164194"}
-                      placeholderStyle={selectPlaceholderStyle}
-                      dropdownContainerStyle={selectContainerStyle}
-                      dropdownStyle={selectDropdownStyle}
-                      selectedItemStyle={selectItemStyle}
-                      checkboxControls={checkboxControls}
-                      modalControls={modalControls}
-                    />
-                  )}
+                  containerStyle="mt-5"
+                  name="serialNo"
                 />
+                <View className="mt-5">
+                  <Controller
+                    name="complaintType"
+                    control={control}
+                    render={({ field: { onChange } }) => (
+                      <Dropdown
+                        placeholder="نوع شکایت"
+                        options={complaintTypeLookup}
+                        onValueChange={(val) => onChange(val)}
+                        selectedValue={
+                          complaintTypeLookup.find(
+                            (c) => c.value === form_data?.complaintType
+                          )?.value
+                        }
+                        primaryColor={"#164194"}
+                        placeholderStyle={selectPlaceholderStyle}
+                        dropdownContainerStyle={selectContainerStyle}
+                        dropdownStyle={selectDropdownStyle}
+                        selectedItemStyle={selectItemStyle}
+                        checkboxControls={checkboxControls}
+                        modalControls={modalControls}
+                      />
+                    )}
+                  />
+                </View>
+
+                <View className="mt-5">
+                  <Controller
+                    name="serviceId"
+                    control={control}
+                    render={({ field: { onChange } }) => (
+                      <Dropdown
+                        placeholder="نوع سرویس"
+                        options={serviceTypeLookup}
+                        selectedValue={
+                          serviceTypeLookup.find(
+                            (c) => c.value === form_data?.serviceId
+                          )?.value
+                        }
+                        onValueChange={(val) => onChange(val)}
+                        primaryColor={"#164194"}
+                        placeholderStyle={selectPlaceholderStyle}
+                        dropdownContainerStyle={selectContainerStyle}
+                        dropdownStyle={selectDropdownStyle}
+                        selectedItemStyle={selectItemStyle}
+                        checkboxControls={checkboxControls}
+                        modalControls={modalControls}
+                      />
+                    )}
+                  />
+                </View>
+
+                <View className="mt-5">
+                  <Controller
+                    name="to_org_id"
+                    control={control}
+                    render={({ field: { onChange } }) => (
+                      <Dropdown
+                        placeholder="واحد پستی"
+                        options={postalRegionLookup}
+                        selectedValue={
+                          postalRegionLookup.find(
+                            (c) => c.value === form_data?.to_org_id
+                          )?.value
+                        }
+                        onValueChange={(val) => onChange(val)}
+                        primaryColor={"#164194"}
+                        placeholderStyle={selectPlaceholderStyle}
+                        dropdownContainerStyle={selectContainerStyle}
+                        dropdownStyle={selectDropdownStyle}
+                        selectedItemStyle={selectItemStyle}
+                        checkboxControls={checkboxControls}
+                        modalControls={modalControls}
+                      />
+                    )}
+                  />
+                </View>
               </View>
+            </TouchableWithoutFeedback>
+          </ScrollView>
 
-              <View className="mt-5">
-                <Controller
-                  name="serviceId"
-                  control={control}
-                  render={({ field: { onChange } }) => (
-                    <Dropdown
-                      placeholder="نوع سرویس"
-                      options={serviceTypeLookup}
-                      selectedValue={
-                        serviceTypeLookup.find(
-                          (c) => c.value === form_data?.serviceId
-                        )?.value
-                      }
-                      onValueChange={(val) => onChange(val)}
-                      primaryColor={"#164194"}
-                      placeholderStyle={selectPlaceholderStyle}
-                      dropdownContainerStyle={selectContainerStyle}
-                      dropdownStyle={selectDropdownStyle}
-                      selectedItemStyle={selectItemStyle}
-                      checkboxControls={checkboxControls}
-                      modalControls={modalControls}
-                    />
-                  )}
-                />
-              </View>
+          {/* BOTTOM SECTION */}
 
-              <View className="mt-5">
-                <Controller
-                  name="to_org_id"
-                  control={control}
-                  render={({ field: { onChange } }) => (
-                    <Dropdown
-                      placeholder="واحد پستی"
-                      options={postalRegionLookup}
-                      selectedValue={
-                        postalRegionLookup.find(
-                          (c) => c.value === form_data?.to_org_id
-                        )?.value
-                      }
-                      onValueChange={(val) => onChange(val)}
-                      primaryColor={"#164194"}
-                      placeholderStyle={selectPlaceholderStyle}
-                      dropdownContainerStyle={selectContainerStyle}
-                      dropdownStyle={selectDropdownStyle}
-                      selectedItemStyle={selectItemStyle}
-                      checkboxControls={checkboxControls}
-                      modalControls={modalControls}
-                    />
-                  )}
-                />
-              </View>
-            </View>
-          </TouchableWithoutFeedback>
-        </ScrollView>
-
-        {/* BOTTOM SECTION */}
-
-        <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
-          <CustomButton
-            title="ثبت شکایت"
-            handlePress={handleSubmit(onSubmit)}
-            isLoading={isLoading}
-          />
-        </View>
-      </SafeAreaView>
-    </Background>
+          <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
+            <CustomButton
+              title="ثبت شکایت"
+              handlePress={handleSubmit(onSubmit)}
+              isLoading={isLoading}
+            />
+          </View>
+        </SafeAreaView>
+      </Background>
+    </>
   );
 };
 
