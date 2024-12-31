@@ -14,7 +14,7 @@ export const complaintTypeLookup = [
   { label: "عدم راهنمایی و اطلاع رسانی", value: 110 },
 ];
 
-export const seriveTypeLookup = [
+export const serviceTypeLookup = [
   { label: "امانت", value: 51 },
   { label: "پست ویژه", value: 53 },
   { label: "پیشتاز", value: 55 },
@@ -23,7 +23,7 @@ export const seriveTypeLookup = [
   { label: "سایر", value: 106 },
 ];
 
-export const postalReagionLookup = [
+export const postalRegionLookup = [
   { label: "منطقه پستی جنوب غرب تهران (منطقه ۱۳)", value: 15 },
   { label: "منطقه پستی شمال غرب تهران (منطقه ۱۴)", value: 19 },
   { label: "منطقه پستی شمال تهران (مناطق ۱۵ و ۱۹)", value: 21 },

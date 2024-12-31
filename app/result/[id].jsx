@@ -144,8 +144,11 @@ const PaymentResult = () => {
             ) : type === "NewPostCode" ? (
               <View className="mt-10 w-full justify-center items-center">
                 <Text className="text-grey2 text-lg font-isansbold">
-                  شماره پیگیری شما : {data?.Data?.TrackingCode_ForAll}
+                  برای پیگیری به صفحه پست من مراجعه کنید
                 </Text>
+                {/* <Text className="text-grey2 text-lg font-isansbold">
+                  شماره پیگیری شما : {data?.Data?.TrackingCode_ForAll}
+                </Text> */}
               </View>
             ) : null)}
 

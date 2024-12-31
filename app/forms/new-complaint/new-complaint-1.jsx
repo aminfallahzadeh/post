@@ -27,8 +27,8 @@ import { stepTwoEopValidation } from "@/constants/validations";
 import { router } from "expo-router";
 import { toastStyles } from "@/constants/styles";
 import {
-  seriveTypeLookup,
-  postalReagionLookup,
+  serviceTypeLookup,
+  postalRegionLookup,
   complaintTypeLookup,
 } from "@/data/lookup.js";
 import { Title } from "@/components/Title";
@@ -156,9 +156,9 @@ const NewComplaintStep1 = () => {
                   render={({ field: { onChange } }) => (
                     <Dropdown
                       placeholder="نوع سرویس"
-                      options={seriveTypeLookup}
+                      options={serviceTypeLookup}
                       selectedValue={
-                        seriveTypeLookup.find(
+                        serviceTypeLookup.find(
                           (c) => c.value === form_data?.serviceId
                         )?.value
                       }
@@ -182,9 +182,9 @@ const NewComplaintStep1 = () => {
                   render={({ field: { onChange } }) => (
                     <Dropdown
                       placeholder="واحد پستی"
-                      options={postalReagionLookup}
+                      options={postalRegionLookup}
                       selectedValue={
-                        postalReagionLookup.find(
+                        postalRegionLookup.find(
                           (c) => c.value === form_data?.to_org_id
                         )?.value
                       }

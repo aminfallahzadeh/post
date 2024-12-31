@@ -160,13 +160,18 @@ const RootLayout = () => {
       const success = parsedUrl.searchParams.get("success");
       const type = parsedUrl.searchParams.get("type");
 
-      if (requestID && success) {
-        // Navigate to the dynamic route with both parameters
-        router.push({
-          pathname: `/result/${requestID}`,
-          params: { success, type },
-        });
-      }
+      router.push({
+        pathname: `/result/${requestID}`,
+        params: { success, type },
+      });
+
+      //   if (requestID && success) {
+      //     // Navigate to the dynamic route with both parameters
+      //     router.push({
+      //       pathname: `/result/${requestID}`,
+      //       params: { success, type },
+      //     });
+      //   }
     };
 
     // Add the event listener for handling URLs

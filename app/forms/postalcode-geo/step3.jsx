@@ -9,6 +9,7 @@ import { Background, Factor, CustomButton } from "@/components";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import RNBounceable from "@freakycoder/react-native-bounceable";
 import { Title } from "@/components/Title";
+import * as SecureStore from "expo-secure-store";
 
 const Step3 = () => {
   // STATES
@@ -20,7 +21,7 @@ const Step3 = () => {
 
   // CONSTS
   const factor = useUserStore((state) => state.factor);
-  const mobile = useUserStore((state) => state.mobile);
+  const mobile = SecureStore.getItem("mobile");
 
   // ANIMATION
   useEffect(() => {
