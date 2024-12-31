@@ -6,7 +6,7 @@ import { toastConfig } from "./toast-config";
 import { logout } from "@/api/auth";
 
 const axiosInstance = axios.create({
-  baseURL: BASE_URL,
+  baseURL: MAIN_URL,
   timeout: 50_000,
   withCredentials: true,
 });
@@ -123,7 +123,7 @@ axiosInstance.interceptors.response.use(
       return new Promise((resolve, reject) => {
         // GET NEW ACCESS TOKEN
         axios
-          .post(`${BASE_URL}/Customer/RefreshToken`, { refreshToken })
+          .post(`${MAIN_URL}/Customer/RefreshToken`, { refreshToken })
           .then(async ({ data }) => {
             // DEBUGGING: REFRESH TOKEN RESPONSE
             console.log("Refresh token response:", data);

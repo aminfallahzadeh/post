@@ -6,6 +6,9 @@ import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from "expo-location";
 import { getNearestPostOffice } from "@/api/customer";
 import { Title } from "@/components/Title";
+import { Chase } from "react-native-animated-spinkit";
+import Background from "@/components/Background";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
 const Index = () => {
   // STATES
@@ -77,107 +80,129 @@ const Index = () => {
   //     }
   //   }, []);
 
-  //   const focusMap = async () => {
-  //     if (!permission) {
-  //       return;
-  //       //   getPermissions();
-  //     }
+  const focusMap = async () => {
+    if (!permission) {
+      return;
+      //   getPermissions();
+    }
 
-  //     // Animate the map to the user's location
-  //     mapRef.current.animateToRegion(
-  //       {
-  //         latitude: location.coords.latitude,
-  //         longitude: location.coords.longitude,
-  //         latitudeDelta: 0.01,
-  //         longitudeDelta: 0.01,
-  //       },
-  //       1000
-  //     );
-  //   };
+    // Animate the map to the user's location
+    mapRef.current.animateToRegion(
+      {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
+      },
+      1000
+    );
+  };
 
   //   useEffect(() => {
   //     if (!permission) {
   //       getPermissions();
   //     }
   //   }, [permission, getPermissions]);
+  //   region={{
+  //     latitude: 35.6892,
+  //     longitude: 51.389,
+  //     latitudeDelta: 0.1,
+  //     longitudeDelta: 0.1,
+  //   }}
+  //   initialRegion={{
+  //     latitude: 35.6892,
+  //     longitude: 51.389,
+  //     latitudeDelta: 0.1,
+  //     longitudeDelta: 0.1,
+  //   }}
 
   return (
-    <SafeAreaView className="h-full">
-      {/* HEADER SECTION */}
-      <Title title="مراکز پستی" home={true} />
+    <Background>
+      <SafeAreaView className="h-full">
+        {/* HEADER SECTION */}
+        <Title title="مراکز پستی" home={true} />
 
-      <View style={styles.container}>
-        <MapView
-          style={styles.map}
-          ref={mapRef}
-          showsMyLocationButton
-          showsUserLocation
-          region={{
-            latitude: 35.6892,
-            longitude: 51.389,
-            latitudeDelta: 0.1,
-            longitudeDelta: 0.1,
-          }}
-          initialRegion={{
-            latitude: 35.6892,
-            longitude: 51.389,
-            latitudeDelta: 0.1,
-            longitudeDelta: 0.1,
-          }}
-        >
-          {nearLocs.length > 0 &&
-            nearLocs.map((item, index) => (
-              <Marker
-                key={index}
-                pinColor="#fcd900"
-                provider={PROVIDER_GOOGLE}
-                coordinate={{
-                  latitude: item.lat,
-                  longitude: item._long,
-                }}
-                onPress={() => handleMarkerPress(item)}
+        {location ? (
+          <View style={styles.container}>
+            <MapView
+              style={styles.map}
+              ref={mapRef}
+              showsMyLocationButton={false}
+              showsUserLocation
+              initialRegion={{
+                latitude: location?.coords.latitude,
+                longitude: location?.coords.longitude,
+                latitudeDelta: 0.1,
+                longitudeDelta: 0.1,
+              }}
+              region={{
+                latitude: location?.coords.latitude,
+                longitude: location?.coords.longitude,
+                latitudeDelta: 0.1,
+                longitudeDelta: 0.1,
+              }}
+            >
+              {nearLocs.length > 0 &&
+                nearLocs.map((item, index) => (
+                  <Marker
+                    key={index}
+                    pinColor="#fcd900"
+                    provider={PROVIDER_GOOGLE}
+                    coordinate={{
+                      latitude: item.lat,
+                      longitude: item._long,
+                    }}
+                    onPress={() => handleMarkerPress(item)}
+                  />
+                ))}
+            </MapView>
+
+            {selectedLocation && (
+              <View style={styles.popup}>
+                <Text
+                  style={styles.popupTitle}
+                  className="text-grey2 font-isansbold text-base"
+                >
+                  {selectedLocation.name || "اطلاعات پیدا نشد"}
+                </Text>
+                <Text
+                  style={styles.popupText}
+                  className="text-grey2 font-isansregular text-base"
+                >
+                  {selectedLocation.address || "اطلاعات پیدا نشد"}
+                </Text>
+
+                <Text
+                  style={styles.popupText}
+                  className="text-grey2 font-isansregular text-base mt-2"
+                >
+                  {selectedLocation.postalCode || "اطلاعات پیدا نشد"}
+                </Text>
+                <TouchableOpacity
+                  style={styles.closeButton}
+                  onPress={closePopup}
+                  className="text-base font-isansdemibold text-white"
+                >
+                  <Text style={styles.closeButtonText}>بستن</Text>
+                </TouchableOpacity>
+              </View>
+            )}
+
+            <TouchableOpacity style={styles.button} onPress={focusMap}>
+              <FontAwesome6
+                name="location-crosshairs"
+                size={24}
+                color="yellow"
               />
-            ))}
-        </MapView>
-
-        {/* Custom Popup */}
-        {selectedLocation && (
-          <View style={styles.popup}>
-            <Text
-              style={styles.popupTitle}
-              className="text-grey2 font-isansbold text-base"
-            >
-              {selectedLocation.name || "اطلاعات پیدا نشد"}
-            </Text>
-            <Text
-              style={styles.popupText}
-              className="text-grey2 font-isansregular text-base"
-            >
-              {selectedLocation.address || "اطلاعات پیدا نشد"}
-            </Text>
-
-            <Text
-              style={styles.popupText}
-              className="text-grey2 font-isansregular text-base mt-2"
-            >
-              {selectedLocation.postalCode || "اطلاعات پیدا نشد"}
-            </Text>
-            <TouchableOpacity
-              style={styles.closeButton}
-              onPress={closePopup}
-              className="text-base font-isansdemibold text-white"
-            >
-              <Text style={styles.closeButtonText}>بستن</Text>
             </TouchableOpacity>
           </View>
+        ) : (
+          <View className="w-full items-center justify-center h-full">
+            <Chase size={50} color="#164194" className="mt-20" />
+          </View>
         )}
-
-        {/* Current Location Button */}
-        {/* <TouchableOpacity style={styles.button} onPress={focusMap}>
-          <MaterialIcons name="my-location" size={24} color="yellow" />
-        </TouchableOpacity> */}
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </Background>
   );
 };
 
@@ -193,7 +218,7 @@ const styles = StyleSheet.create({
   },
   button: {
     position: "absolute",
-    bottom: 20,
+    top: 20,
     right: 20,
     backgroundColor: "#007AFF",
     padding: 10,
@@ -211,24 +236,6 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
-  },
-  callout: {
-    padding: 10,
-    backgroundColor: "#fff",
-    borderRadius: 8,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  calloutTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  calloutText: {
-    fontSize: 14,
-    marginTop: 5,
   },
   popup: {
     position: "absolute",
@@ -266,54 +273,3 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
-
-// import { useState, useEffect } from "react";
-// import { Platform, Text, View, StyleSheet } from "react-native";
-
-// import * as Location from "expo-location";
-
-// export default function App() {
-//   const [location, setLocation] = useState(null);
-//   const [errorMsg, setErrorMsg] = useState(null);
-
-//   useEffect(() => {
-//     async function getCurrentLocation() {
-//       let { status } = await Location.requestForegroundPermissionsAsync();
-//       if (status !== "granted") {
-//         setErrorMsg("Permission to access location was denied");
-//         return;
-//       }
-
-//       let location = await Location.getCurrentPositionAsync({});
-//       setLocation(location);
-//     }
-
-//     getCurrentLocation();
-//   }, [setErrorMsg, setLocation]);
-
-//   let text = "Waiting...";
-//   if (errorMsg) {
-//     text = errorMsg;
-//   } else if (location) {
-//     text = JSON.stringify(location);
-//   }
-
-//   return (
-//     <View style={styles.container}>
-//       <Text style={styles.paragraph}>{text}</Text>
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     alignItems: "center",
-//     justifyContent: "center",
-//     padding: 20,
-//   },
-//   paragraph: {
-//     fontSize: 18,
-//     textAlign: "center",
-//   },
-// });

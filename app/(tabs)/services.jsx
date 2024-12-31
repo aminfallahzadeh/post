@@ -120,7 +120,7 @@ const Services = () => {
                   onPress={() => router.push("follow")}
                   style={styles.heroTextContainer}
                 >
-                  <View className="flex-row justify-center items-center bg-primary px-2 py-1 rounded-md">
+                  <View className="flex-row justify-center items-center bg-primary px-10 py-1 rounded-md border border-[#fcdb00]">
                     <Text className="text-white font-isansbold text-lg text-center">
                       پیگیری مرسوله
                     </Text>
@@ -252,12 +252,14 @@ const styles = StyleSheet.create({
 
   heroImage: {
     width,
+    height: 300,
+    marginTop: 30,
     // height: height / 5,
   },
 
   heroTextContainer: {
     position: "absolute",
-    bottom: 40,
+    bottom: 10,
     // backgroundColor: "#fcd900",
     // backgroundColor: "rgba(252, 217, 0, 0.7)",
     paddingHorizontal: 20,

@@ -1,15 +1,11 @@
-// REACT IMPORTS
+// IMPORTS
 import { useEffect, useState } from "react";
-
-// NATIVE IMPORTS
 import { View, StyleSheet } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
-
-// COMPONETNS
 import TabBarButton from "./TabBarButton";
 
 export const TabBar = ({ state, descriptors, navigation }) => {
@@ -43,7 +39,7 @@ export const TabBar = ({ state, descriptors, navigation }) => {
   return (
     <View
       onLayout={onTabbarLayout}
-      className="flex-row absolute bottom-[50px] justify-between items-center bg-white mx-[80px] py-[10px] before:rounded-[35px]"
+      className="flex-row absolute bottom-[20px] justify-between items-center bg-white mx-[80px] py-[10px] before:rounded-[35px]"
       style={styles.shadow}
     >
       <Animated.View
