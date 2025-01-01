@@ -23,7 +23,7 @@ import { insertRequestEhraz } from "@/api/request";
 import * as SecureStore from "expo-secure-store";
 import { lastStreetRules } from "@/constants/validations";
 
-const EhrazStep2 = () => {
+const EhrazStep1 = () => {
   // STATES
   const [isLoading, setIsLoading] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -107,7 +107,7 @@ const EhrazStep2 = () => {
 
       console.log("INSERT EHRAZ RESPONSE: ", response.data);
       setFactor(response.data.itemList[0]);
-      router.push("ehraz/ehraz-step-3");
+      router.push("ehraz/ehraz-step-2");
     } finally {
       setIsLoading(false);
     }
@@ -151,9 +151,9 @@ const EhrazStep2 = () => {
             <View className="w-full px-5">
               <FormField
                 placeholder="کد پستی"
-                type={"text"}
-                containerStyle="mt-10"
                 keyboardType="numeric"
+                inputMode="numeric"
+                containerStyle="mt-10"
                 control={control}
                 rules={postCodeRules}
                 name="postCode"
@@ -218,9 +218,9 @@ const EhrazStep2 = () => {
                 <View className="flex-1 ml-2">
                   <FormField
                     placeholder="پلاک"
-                    type={"text"}
-                    containerStyle="mt-5"
                     keyboardType="numeric"
+                    inputMode="numeric"
+                    containerStyle="mt-5"
                     editable={checked}
                     control={control}
                     name="buildingNumber"
@@ -229,10 +229,10 @@ const EhrazStep2 = () => {
                 <View className="flex-1 ml-2">
                   <FormField
                     placeholder="طبقه"
-                    type={"text"}
+                    keyboardType="numeric"
+                    inputMode="numeric"
                     containerStyle="mt-5"
                     editable={checked}
-                    keyboardType="numeric"
                     control={control}
                     name="floor"
                   />
@@ -240,9 +240,9 @@ const EhrazStep2 = () => {
                 <View className="flex-1 ml-2">
                   <FormField
                     placeholder="واحد"
-                    type={"text"}
-                    containerStyle="mt-5"
                     keyboardType="numeric"
+                    inputMode="numeric"
+                    containerStyle="mt-5"
                     editable={checked}
                     control={control}
                     name="unit"
@@ -289,4 +289,4 @@ const EhrazStep2 = () => {
   );
 };
 
-export default EhrazStep2;
+export default EhrazStep1;

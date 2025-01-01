@@ -1,6 +1,6 @@
 // IMPORTS
 import { useEffect, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
   View,
   Text,
@@ -17,12 +17,12 @@ import { days, months, years } from "@/data/lookup";
 import { toastConfig } from "@/config/toast-config";
 import FormField from "@/components/FormField";
 import CustomButton from "@/components/CustomButton";
+import CustomSelect from "@/components/CustomSelect";
 import Background from "@/components/Background";
 import useGetUserData from "@/hooks/useGetUserData";
 import { userDataValidations, nationalCodeRule } from "@/constants/validations";
 import { Title } from "@/components/Title";
 import * as SecureStore from "expo-secure-store";
-import SelectInput from "@/components/SelectInput";
 import { toastStyles } from "@/constants/styles";
 
 const UserProfile = () => {
@@ -33,7 +33,14 @@ const UserProfile = () => {
   const { id } = useLocalSearchParams();
   const mobile = SecureStore.getItem("mobile");
   const userData = useUserStore((state) => state.userData);
-  const { control, handleSubmit, watch, setValue, reset } = useForm();
+  const {
+    control,
+    handleSubmit,
+    watch,
+    setValue,
+    reset,
+    formState: { errors },
+  } = useForm();
   const form_data = watch();
 
   // ACCESS HOOK FUNCTIONS
@@ -86,7 +93,7 @@ const UserProfile = () => {
 
       console.log("Customer profile response", response);
       toastConfig.success(response.data.message);
-      router.replace("/services");
+      router.replace("/");
     } finally {
       setIsLoading(false);
     }
@@ -111,8 +118,6 @@ const UserProfile = () => {
             <View className="w-full px-4 pt-5">
               <FormField
                 placeholder="نام"
-                keyboardType="default"
-                type={"text"}
                 control={control}
                 containerStyle="mt-5"
                 name="name"
@@ -120,8 +125,6 @@ const UserProfile = () => {
 
               <FormField
                 placeholder="نام خانوادگی"
-                keyboardType="default"
-                type={"text"}
                 control={control}
                 containerStyle="mt-5"
                 name="lastName"
@@ -129,7 +132,7 @@ const UserProfile = () => {
               <FormField
                 placeholder="کد ملی"
                 keyboardType="numeric"
-                type={"text"}
+                inputMode="numeric"
                 rules={nationalCodeRule}
                 control={control}
                 containerStyle="mt-5"
@@ -144,50 +147,35 @@ const UserProfile = () => {
 
               <View className="flex-row-reverse justify-between items-center mt-5">
                 <View className="flex-1 ml-2">
-                  <Controller
+                  <CustomSelect
                     name="day"
                     control={control}
-                    render={({ field: { onChange, value } }) => (
-                      <SelectInput
-                        placeholder="روز"
-                        options={days}
-                        value={value}
-                        onChange={(val) => onChange(val.value)}
-                        onClear={() => setValue("day", null)}
-                      />
-                    )}
+                    data={days}
+                    label="روز"
+                    errors={errors}
+                    setValue={setValue}
                   />
                 </View>
 
                 <View className="flex-1 mr-2 ml-2">
-                  <Controller
+                  <CustomSelect
                     name="month"
                     control={control}
-                    render={({ field: { onChange, value } }) => (
-                      <SelectInput
-                        placeholder="ماه"
-                        options={months}
-                        value={value}
-                        onChange={(val) => onChange(val.value)}
-                        onClear={() => setValue("month", null)}
-                      />
-                    )}
+                    data={months}
+                    label="ماه"
+                    errors={errors}
+                    setValue={setValue}
                   />
                 </View>
 
                 <View className="flex-1 mr-2">
-                  <Controller
+                  <CustomSelect
                     name="year"
                     control={control}
-                    render={({ field: { onChange, value } }) => (
-                      <SelectInput
-                        placeholder="سال"
-                        options={years}
-                        value={value}
-                        onChange={(val) => onChange(val.value)}
-                        onClear={() => setValue("year", null)}
-                      />
-                    )}
+                    data={years}
+                    label="سال"
+                    errors={errors}
+                    setValue={setValue}
                   />
                 </View>
               </View>

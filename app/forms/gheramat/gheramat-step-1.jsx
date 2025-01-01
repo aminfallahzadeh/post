@@ -7,7 +7,7 @@ import { Background, CustomButton } from "@/components";
 import { useUserStore } from "@/store";
 import { Title } from "@/components/Title";
 
-const Step2 = () => {
+const GheramatStep1 = () => {
   // CONSTS
   const gheramatResult = useUserStore((state) => state.gheramatResult);
 
@@ -57,7 +57,7 @@ const Step2 = () => {
         <View className="w-full z-10 px-4 bg-gray-100 py-4">
           <CustomButton
             title="بازگشت"
-            handlePress={() => router.replace("/services")}
+            handlePress={() => router.replace("/")}
           />
         </View>
       </SafeAreaView>
@@ -65,7 +65,7 @@ const Step2 = () => {
   );
 };
 
-export default Step2;
+export default GheramatStep1;
 
 const styles = StyleSheet.create({
   headerContainer: {

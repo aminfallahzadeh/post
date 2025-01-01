@@ -20,7 +20,8 @@ export const FormField = ({
   control,
   rules,
   animate = true,
-
+  keyboardType = "default",
+  inputMode = "text",
   ...props
 }) => {
   // STATES
@@ -86,7 +87,7 @@ export const FormField = ({
       <View
         className={`w-full ${height} px-4 border rounded-sm items-center relative ${
           editable ? "bg-white" : "bg-gray-300"
-        } border-gray-500`}
+        } ${isFocused ? "border-secondary" : "border-primary"}`}
       >
         {/* Animated Placeholder */}
 
@@ -133,7 +134,10 @@ export const FormField = ({
           secureTextEntry={type === "password" && !showPassword}
           maxLength={max}
           editable={editable}
-          {...props}
+          keyboardType={keyboardType}
+          autoCorrect={false}
+          inputMode={inputMode}
+          //   {...props}
         />
 
         {type === "password" ? (

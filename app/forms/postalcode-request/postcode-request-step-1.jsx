@@ -76,7 +76,7 @@ const Step2 = () => {
       });
       console.log("FINAL RESPONSE:", response.data);
       setFactor(response.data.itemList[0]);
-      router.push("forms/postalcode-request/step3");
+      router.push("forms/postalcode-request/postcode-request-step-2");
     } finally {
       setIsLoading(false);
     }
@@ -125,9 +125,9 @@ const Step2 = () => {
               <FormField
                 placeholder="* تلفن همراه"
                 keyboardType="numeric"
+                inputMode="numeric"
                 containerStyle="mt-5"
                 rules={requiredRule}
-                type={"text"}
                 control={control}
                 editable={false}
                 value={mobile || " "}

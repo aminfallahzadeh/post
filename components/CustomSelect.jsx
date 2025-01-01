@@ -1,0 +1,170 @@
+// IMPORTS
+import { useState } from "react";
+import { Controller } from "react-hook-form";
+import { Text, View, Pressable } from "react-native";
+import { Dropdown } from "react-native-element-dropdown";
+import Feather from "@expo/vector-icons/Feather";
+import { StyleSheet } from "react-native";
+import { LOADING_MESSAGE } from "@/constants/messages";
+
+const CustomSelect = ({
+  name,
+  label,
+  control,
+  errors,
+  rules,
+  data,
+  disabled,
+  search,
+  onValueChange,
+  setValue,
+  onClear,
+  isLoading,
+}) => {
+  // STATES
+  const [isFocus, setIsFocus] = useState(false);
+
+  const renderLabel = (value) => {
+    if (value || isFocus) {
+      return (
+        <Text style={[styles.label, isFocus && { color: "#183f97" }]}>
+          {label}
+        </Text>
+      );
+    }
+    return null;
+  };
+
+  return (
+    <View className="relative">
+      {errors && (
+        <View className="absolute -top-5 left-0">
+          <Text className="text-red-500 font-isansregular">
+            {errors?.[name]?.message}
+          </Text>
+        </View>
+      )}
+
+      <Controller
+        name={name}
+        control={control}
+        rules={rules}
+        render={({ field: { onChange, value } }) => (
+          <View style={styles.container}>
+            {renderLabel(value)}
+
+            <Dropdown
+              style={[
+                styles.dropdown,
+                {
+                  borderColor:
+                    disabled || data.length === 0 ? "#e9e9e9" : "#183f97",
+                },
+                isFocus && { borderColor: "#fcd900" },
+              ]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={data}
+              search={search}
+              onChange={(val) => {
+                onValueChange?.(val.value);
+                onChange(val.value);
+              }}
+              mode="modal"
+              flatListProps={{
+                style: {
+                  maxHeight: 500,
+                },
+              }}
+              labelField="label"
+              valueField="value"
+              disable={disabled || isLoading || data.length === 0}
+              itemTextStyle={{ fontFamily: "IranSans-Regular" }}
+              placeholder={
+                value || isFocus ? "" : isLoading ? LOADING_MESSAGE : label
+              }
+              searchPlaceholder="جستجو..."
+              onFocus={() => setIsFocus(true)}
+              onBlur={() => setIsFocus(false)}
+              value={value}
+              renderRightIcon={() =>
+                value &&
+                setValue && (
+                  <Pressable
+                    onPress={() => {
+                      onClear?.();
+                      setValue(name, null);
+                    }}
+                  >
+                    <Feather name="x-circle" size={25} color={"#AFB4C0"} />
+                  </Pressable>
+                )
+              }
+              renderLeftIcon={() => (
+                <Feather
+                  name="chevron-down"
+                  size={20}
+                  color={disabled ? "#AFB4C0" : "#6b7280"}
+                />
+              )}
+            />
+          </View>
+        )}
+      />
+    </View>
+  );
+};
+
+export default CustomSelect;
+
+const styles = StyleSheet.create({
+  container: {
+    fontFamily: "IranSans-Regular",
+    direction: "rtl",
+  },
+  dropdown: {
+    height: 55,
+    fontFamily: "IranSans-Regular",
+    borderColor: "#183f97",
+    borderWidth: 1,
+    borderRadius: 2,
+    paddingHorizontal: 8,
+    padding: 10,
+    backgroundColor: "white",
+  },
+  icon: {
+    marginRight: 5,
+  },
+  label: {
+    position: "absolute",
+    backgroundColor: "white",
+    borderRadius: 10,
+    right: 10,
+    top: -10,
+    zIndex: 999,
+    paddingHorizontal: 8,
+    fontFamily: "IranSans-DemiBold",
+    fontSize: 14,
+    color: "#AFB4C0",
+  },
+  placeholderStyle: {
+    fontSize: 13,
+    fontFamily: "IranSans-DemiBold",
+    color: "#AFB4C0",
+  },
+  selectedTextStyle: {
+    fontSize: 14,
+    fontFamily: "IranSans-Regular",
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+    textAlign: "right",
+  },
+});

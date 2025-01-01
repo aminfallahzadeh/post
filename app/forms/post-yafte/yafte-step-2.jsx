@@ -8,7 +8,7 @@ import Background from "@/components/Background";
 import { POST_YAFTE } from "@/constants/consts";
 import { Title } from "@/components/Title";
 
-export default function Step3() {
+export default function YafteStep2() {
   return (
     <Background>
       <SafeAreaView className="h-full">
@@ -46,7 +46,7 @@ export default function Step3() {
         <View className="w-full z-10 px-4 bg-gray-100 py-4">
           <CustomButton
             title="بازگشت"
-            handlePress={() => router.replace("/services")}
+            handlePress={() => router.replace("/")}
           />
         </View>
       </SafeAreaView>

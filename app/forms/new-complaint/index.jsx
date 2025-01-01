@@ -15,10 +15,8 @@ import CustomButton from "@/components/CustomButton";
 import FormField from "@/components/FormField";
 import Background from "@/components/Background";
 import { showMessage } from "react-native-flash-message";
-import LottieView from "lottie-react-native";
 import { toastStyles } from "@/constants/styles";
 import { nationalCodeRule } from "@/constants/validations";
-import judgeLottie from "@/assets/animations/judge-lottie.json";
 import * as SecureStore from "expo-secure-store";
 import CustomModal from "@/components/CustomModal";
 import { Title } from "@/components/Title";
@@ -67,7 +65,7 @@ const Index = () => {
     <>
       <CustomModal
         visible={visible}
-        closeModal={() => router.replace("/services")}
+        closeModal={() => router.replace("/")}
         title="توجه"
         description="شماره ملی شما ثبت نشده است. لطفا از پروفایل کاربری اقدام به ثبت شماره ملی نمایید."
       />
@@ -88,13 +86,6 @@ const Index = () => {
             {/* FORM FIELDS */}
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
               <View className="w-full px-4">
-                <LottieView
-                  source={judgeLottie}
-                  autoPlay
-                  loop
-                  className="w-full h-[100px] mt-[50px]"
-                />
-
                 <FormField
                   placeholder="شماره موبایل"
                   keyboardType="default"

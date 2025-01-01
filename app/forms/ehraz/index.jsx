@@ -1,18 +1,17 @@
 // IMPORTS
 import { useEffect } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
   View,
   Keyboard,
   ScrollView,
-  Text,
   TouchableWithoutFeedback,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "@/components/CustomButton";
 import { router } from "expo-router";
 import Background from "@/components/Background";
-import SelectInput from "@/components/SelectInput";
+import CustomSelect from "@/components/CustomSelect";
 import { useUserStore } from "@/store";
 import { Title } from "@/components/Title";
 import FormField from "@/components/FormField";
@@ -46,7 +45,7 @@ const Index = () => {
 
   const onSubmit = (data) => {
     setEhrazFormData(data);
-    router.push("/ehraz/ehraz-step-2");
+    router.push("/ehraz/ehraz-step-1");
   };
 
   // DEBUG
@@ -72,59 +71,32 @@ const Index = () => {
           {/* FORM FIELDS */}
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View className="w-full px-5">
-              <View className="relative mt-5">
-                {errors && (
-                  <View className="absolute -top-5 left-0">
-                    <Text className="text-red-500 font-isansregular">
-                      {errors?.applicantType?.message}
-                    </Text>
-                  </View>
-                )}
-
-                <Controller
+              <View className="mt-5">
+                <CustomSelect
                   name="applicantType"
                   control={control}
                   rules={requiredRule}
-                  render={({ field: { onChange, value } }) => (
-                    <SelectInput
-                      placeholder="* نوع شخصیت"
-                      options={applicantTypeOptions}
-                      onChange={(val) => onChange(val.value)}
-                      value={value}
-                      onClear={() => setValue("applicantType", null)}
-                    />
-                  )}
+                  data={applicantTypeOptions}
+                  label="* نوع شخصیت"
+                  errors={errors}
+                  setValue={setValue}
                 />
               </View>
 
-              <View className="relative mt-5">
-                {errors && (
-                  <View className="absolute -top-5 left-0">
-                    <Text className="text-red-500 font-isansregular">
-                      {errors?.gender?.message}
-                    </Text>
-                  </View>
-                )}
-
-                <Controller
+              <View className="mt-5">
+                <CustomSelect
                   name="gender"
                   control={control}
                   rules={requiredRule}
-                  render={({ field: { onChange, value } }) => (
-                    <SelectInput
-                      placeholder="* جنسیت"
-                      options={genderOptions}
-                      onChange={(val) => onChange(val.value)}
-                      value={value}
-                      onClear={() => setValue("gender", null)}
-                    />
-                  )}
+                  data={genderOptions}
+                  label="* جنسیت"
+                  errors={errors}
+                  setValue={setValue}
                 />
               </View>
 
               <FormField
                 placeholder="نام"
-                type={"text"}
                 keyboardType="default"
                 containerStyle="mt-5"
                 rules={requiredRule}
@@ -134,9 +106,8 @@ const Index = () => {
 
               <FormField
                 placeholder="نام خانوادگی"
-                type={"text"}
-                containerStyle="mt-5"
                 keyboardType="default"
+                containerStyle="mt-5"
                 rules={requiredRule}
                 control={control}
                 name="lastName"
@@ -144,36 +115,23 @@ const Index = () => {
 
               <FormField
                 placeholder="شماره ملی"
-                type={"text"}
-                containerStyle="mt-5"
                 keyboardType="numeric"
+                inputMode="numeric"
+                containerStyle="mt-5"
                 rules={requiredRule}
                 control={control}
                 name="nationalCodeOrId"
               />
 
-              <View className="mt-5 relative">
-                {errors && (
-                  <View className="absolute -top-5 left-0">
-                    <Text className="text-red-500 font-isansregular">
-                      {errors?.addressStatus?.message}
-                    </Text>
-                  </View>
-                )}
-
-                <Controller
+              <View className="mt-5">
+                <CustomSelect
                   name="addressStatus"
                   control={control}
                   rules={requiredRule}
-                  render={({ field: { onChange, value } }) => (
-                    <SelectInput
-                      placeholder="وضعیت نشانی"
-                      options={addressStatusOptions}
-                      onChange={(val) => onChange(val.value)}
-                      value={value}
-                      onClear={() => setValue("addressStatus", null)}
-                    />
-                  )}
+                  data={addressStatusOptions}
+                  label="* وضعیت نشانی"
+                  errors={errors}
+                  setValue={setValue}
                 />
               </View>
             </View>

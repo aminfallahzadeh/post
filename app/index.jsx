@@ -46,7 +46,7 @@ const Index = () => {
 
       if (isValid) {
         await fetchCustomerData(mobile);
-        router.replace("/services");
+        router.replace("/(tabs)");
       } else {
         setLoading(false);
       }

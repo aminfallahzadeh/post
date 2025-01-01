@@ -1,6 +1,6 @@
 // IMPORTS
 import { useEffect, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
   View,
   Text,
@@ -13,13 +13,14 @@ import { useUserStore } from "@/store";
 import Background from "@/components/Background";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "@/components/CustomButton";
-import SelectInput from "@/components/SelectInput";
+import { convertToEnglishNumber } from "@/helpers/numberHelper";
 import { insuranceOptions } from "@/data/insuranceOptions";
 import { insertRequestPriceOrder } from "@/api/request";
 import FormField from "@/components/FormField";
 import { Title } from "@/components/Title";
 import { CustomModal } from "@/components/CustomModal";
 import * as SecureStore from "expo-secure-store";
+import CustomSelect from "@/components/CustomSelect";
 import { requiredRule } from "@/constants/validations";
 
 const NerkhnameStep5 = () => {
@@ -78,7 +79,7 @@ const NerkhnameStep5 = () => {
         receivermobile: order?.receivermobile || "",
         senderaddress: order?.senderaddress || "",
         receiveraddress: order?.receiveraddress || "",
-        weight: parseFloat(order?.weight) || 0,
+        weight: parseFloat(convertToEnglishNumber(order?.weight)) || 0,
         insurancetype: form_data.insurancetype || 1,
         insuranceamount: parseFloat(form_data.insuranceamount) || 0,
         spsdestinationtype: 0,
@@ -155,27 +156,15 @@ const NerkhnameStep5 = () => {
             {/* FORM FIELDS */}
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
               <View className="w-full px-5">
-                <View className="mt-10 relative">
-                  {errors && (
-                    <View className="absolute -top-5 left-0">
-                      <Text className="text-red-500 font-isansregular">
-                        {errors?.insurancetype?.message}
-                      </Text>
-                    </View>
-                  )}
-
-                  <Controller
+                <View className="mt-5">
+                  <CustomSelect
                     name="insurancetype"
                     control={control}
-                    render={({ field: { onChange, value } }) => (
-                      <SelectInput
-                        placeholder="* نوع بیمه"
-                        options={insuranceOptions}
-                        value={value}
-                        onChange={(val) => onChange(val.value)}
-                        onClear={() => setValue("insurancetype", null)}
-                      />
-                    )}
+                    rules={requiredRule}
+                    data={insuranceOptions}
+                    label="* نوع بیمه"
+                    errors={errors}
+                    setValue={setValue}
                   />
                 </View>
 
@@ -199,8 +188,8 @@ const NerkhnameStep5 = () => {
                     <View className="flex-1 ml-2">
                       <FormField
                         placeholder="مبلغ اظهار شده"
-                        type={"number"}
                         keyboardType="numeric"
+                        inputMode="numeric"
                         rules={requiredRule}
                         containerStyle="mt-5"
                         // editable={form_data.insurancetype === 1 ? false : true}

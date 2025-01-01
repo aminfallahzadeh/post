@@ -13,7 +13,7 @@ import { showMessage } from "react-native-flash-message";
 import * as SecureStore from "expo-secure-store";
 import { Title } from "@/components/Title";
 
-const Step3 = () => {
+const CertificateStep3 = () => {
   // STATES
   const [isLoading, setIsLoading] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -163,7 +163,7 @@ const Step3 = () => {
   );
 };
 
-export default Step3;
+export default CertificateStep3;
 
 const styles = StyleSheet.create({
   inputContainer: {

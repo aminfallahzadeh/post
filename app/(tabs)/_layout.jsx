@@ -9,8 +9,9 @@ import {
 import { Tabs } from "expo-router";
 import { useState, useRef } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import TabBar from "@/components/TabBar";
+// import TabBar from "@/components/TabBar";
 import SettingsMenu from "@/views/SettingsMenu";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -51,14 +52,65 @@ const TabsLayout = () => {
       </View>
 
       {/* TAB LAYOUT */}
-      <Tabs tabBar={(props) => <TabBar {...props} />}>
+      {/* <Tabs tabBar={(props) => <TabBar {...props} />}> */}
+      <Tabs
+        screenOptions={{
+          headerShown: false,
+          tabBarActiveTintColor: "#164194",
+          tabBarInactiveTintColor: "#333",
+          tabBarHideOnKeyboard: true,
+          tabBarStyle: {
+            height: 65,
+          },
+        }}
+      >
         <Tabs.Screen
-          name="services"
-          options={{ headerShown: false, tabBarLabel: "خدمات" }}
+          name="index"
+          options={{
+            tabBarLabel: ({ focused }) => (
+              <Text
+                style={{
+                  color: focused ? "#164194" : "#787A8D",
+                  fontFamily: "IranSans-DemiBold",
+                  fontSize: 14,
+                  marginTop: 5,
+                }}
+              >
+                خانه
+              </Text>
+            ),
+            tabBarIcon: ({ color, focused }) => (
+              <MaterialCommunityIcons
+                name="hand-coin-outline"
+                size={focused ? 28 : 24}
+                color={color}
+              />
+            ),
+          }}
         />
         <Tabs.Screen
           name="mypost"
-          options={{ headerShown: false, tabBarLabel: "پست من" }}
+          options={{
+            tabBarLabel: ({ focused }) => (
+              <Text
+                style={{
+                  color: focused ? "#164194" : "#787A8D",
+                  fontFamily: "IranSans-DemiBold",
+                  fontSize: 14,
+                  marginTop: 5,
+                }}
+              >
+                پست من
+              </Text>
+            ),
+            tabBarIcon: ({ color, focused }) => (
+              <MaterialCommunityIcons
+                name="package-variant"
+                size={focused ? 28 : 24}
+                color={color}
+              />
+            ),
+          }}
         />
       </Tabs>
 

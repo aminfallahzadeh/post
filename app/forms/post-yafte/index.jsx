@@ -60,7 +60,7 @@ const Index = () => {
   const onSubmit = async () => {
     await setFoundDocIds(selectedItems);
 
-    router.push("forms/post-yafte/step2");
+    router.push("forms/post-yafte/yafte-step-1");
   };
 
   // EFFECT

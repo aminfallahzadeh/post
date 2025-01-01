@@ -16,7 +16,7 @@ import { SELECT_ALL } from "@/constants/consts";
 import * as SecureStore from "expo-secure-store";
 import { Title } from "@/components/Title";
 
-const Step2 = () => {
+const CertificateStep2 = () => {
   // STATES
   const [isLoading, setIsLoading] = useState(false);
   const addressByPostCode = useUserStore((state) => state.addressByPostCode);
@@ -74,7 +74,7 @@ const Step2 = () => {
       });
       console.log("INSERT REQUEST CERTIFICATE RESPONSE: ", response.data);
       setFactor(response.data.itemList[0]);
-      router.push("forms/postalcode-certificate/step3");
+      router.push("forms/postalcode-certificate/certificate-step-2");
     } catch (error) {
       console.log("INSERT REQUEST CERTIFICATE ERROR: ", error.response);
       showMessage({
@@ -144,4 +144,4 @@ const Step2 = () => {
   );
 };
 
-export default Step2;
+export default CertificateStep2;

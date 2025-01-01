@@ -99,6 +99,7 @@ const Login = () => {
               handleChange={setPhoneNumber}
               containerStyle="mt-20"
               keyboardType="numeric"
+              inputMode="numeric"
               max={11}
               type="text"
               control={control}

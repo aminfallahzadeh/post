@@ -13,7 +13,7 @@ import RNBounceable from "@freakycoder/react-native-bounceable";
 import { showMessage } from "react-native-flash-message";
 import * as SecureStore from "expo-secure-store";
 
-const EhrazStep3 = () => {
+const EhrazStep2 = () => {
   // STATES
   const [isLoading, setIsLoading] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -163,7 +163,7 @@ const EhrazStep3 = () => {
   );
 };
 
-export default EhrazStep3;
+export default EhrazStep2;
 
 const styles = StyleSheet.create({
   inputContainer: {

@@ -3,7 +3,7 @@ import { useEffect, useReducer, useState } from "react";
 import { reducer, initialState } from "./reducer";
 import { useFetchData } from "./useFetchData";
 import { useUserStore } from "@/store";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
   View,
   Text,
@@ -14,8 +14,8 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import CustomButton from "@/components/CustomButton";
+import CustomSelect from "@/components/CustomSelect";
 import Background from "@/components/Background";
-import SelectInput from "@/components/SelectInput";
 import SwitchInput from "@/components/SwitchInput";
 import {
   PROVINCE,
@@ -26,7 +26,6 @@ import {
   VILLAGE,
   POST_AREA,
 } from "@/constants/consts";
-import { LOADING_MESSAGE } from "@/constants/messages";
 import { postAreaOptions } from "@/data/postArea";
 import { requiredRule } from "@/constants/validations";
 import { Title } from "@/components/Title";
@@ -62,28 +61,6 @@ export const PostalCodeRequest = () => {
     setValue("zoneID", null);
     setValue("ruralCityID", null);
     setValue("villageID", null);
-
-    // if (!state.isUrban) {
-    //   fetchData("ruralCity", {
-    //     village: "false",
-    //     countyID: form_data.countyID,
-    //     provinceID: form_data.province_id,
-    //   });
-    // } else {
-    //   fetchData("zone", {
-    //     countyID: form_data.countyID,
-    //     provinceID: form_data.province_id,
-    //   });
-    //   fetchData("ruralCity", {
-    //     village: "true",
-    //     countyID: form_data.countyID,
-    //     provinceID: form_data.province_id,
-    //   });
-    //   fetchData("village", {
-    //     countyID: form_data.countyID,
-    //     provinceID: form_data.province_id,
-    //   });
-    // }
   };
 
   const onSubmit = async () => {
@@ -131,7 +108,7 @@ export const PostalCodeRequest = () => {
     const resultNotUrban = main + restNotUrban;
 
     await setUserAddress(state.isUrban ? resultUrban : resultNotUrban);
-    router.push("forms/postalcode-request/step2");
+    router.push("forms/postalcode-request/postcode-request-step-1");
     setIsSubmitLoading(false);
   };
 
@@ -158,77 +135,50 @@ export const PostalCodeRequest = () => {
           {/* FORM FIELDS */}
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View className="w-full px-5">
-              <View className="mt-5 relative">
-                {errors && (
-                  <View className="absolute -top-5 left-0">
-                    <Text className="text-red-500 font-isansregular">
-                      {errors?.province_id?.message}
-                    </Text>
-                  </View>
-                )}
-
-                <Controller
+              <View className="mt-5">
+                <CustomSelect
                   name="province_id"
                   control={control}
                   rules={requiredRule}
-                  render={({ field: { onChange, value } }) => (
-                    <SelectInput
-                      placeholder={
-                        state.isLoading.province ? LOADING_MESSAGE : PROVINCE
-                      }
-                      disabled={state.isLoading.province}
-                      options={state.options.province}
-                      onChange={(val) => {
-                        fetchData("county", { provinceID: val.value });
-                        return onChange(val.value);
-                      }}
-                      value={value}
-                      search={true}
-                    />
-                  )}
+                  data={state.options.province}
+                  label={PROVINCE}
+                  errors={errors}
+                  //   setValue={setValue}
+                  search={true}
+                  onValueChange={(val) => {
+                    fetchData("county", { provinceID: val });
+                  }}
+                  isLoading={state.isLoading.province}
                 />
               </View>
-              <View className="mt-5 relative">
-                {errors && (
-                  <View className="absolute -top-5 left-0">
-                    <Text className="text-red-500 font-isansregular">
-                      {errors?.countyID?.message}
-                    </Text>
-                  </View>
-                )}
 
-                <Controller
+              <View className="mt-5">
+                <CustomSelect
                   name="countyID"
                   control={control}
                   rules={requiredRule}
-                  render={({ field: { onChange, value } }) => (
-                    <SelectInput
-                      placeholder={
-                        state.isLoading.county ? LOADING_MESSAGE : COUNTY
-                      }
-                      disabled={state.isLoading.county}
-                      options={state.options.county}
-                      onChange={(val) => {
-                        if (state.isUrban) {
-                          fetchData(
-                            "ruralCity",
-                            {
-                              village: "false",
-                              countyID: val.value,
-                            },
-                            state.isUrban
-                          );
-                        } else {
-                          fetchData("zone", {
-                            countyID: val.value,
-                          });
-                        }
-                        return onChange(val.value);
-                      }}
-                      value={value}
-                      search={true}
-                    />
-                  )}
+                  data={state.options.county}
+                  label={COUNTY}
+                  errors={errors}
+                  //   setValue={setValue}
+                  search={true}
+                  onValueChange={(val) => {
+                    if (state.isUrban) {
+                      fetchData(
+                        "ruralCity",
+                        {
+                          village: "false",
+                          countyID: val,
+                        },
+                        state.isUrban
+                      );
+                    } else {
+                      fetchData("zone", {
+                        countyID: val,
+                      });
+                    }
+                  }}
+                  isLoading={state.isLoading.county}
                 />
               </View>
 
@@ -257,56 +207,31 @@ export const PostalCodeRequest = () => {
 
               {state.isUrban ? (
                 <>
-                  <View className="mt-5 relative">
-                    {errors && (
-                      <View className="absolute -top-5 left-0">
-                        <Text className="text-red-500 font-isansregular">
-                          {errors?.ruralCityID?.message}
-                        </Text>
-                      </View>
-                    )}
-
-                    <Controller
+                  <View className="mt-5">
+                    <CustomSelect
                       name="ruralCityID"
                       control={control}
                       rules={requiredRule}
-                      render={({ field: { onChange, value } }) => (
-                        <SelectInput
-                          placeholder={
-                            state.isLoading.ruralCity ? LOADING_MESSAGE : CITY
-                          }
-                          disabled={state.isLoading.ruralCity}
-                          options={state.options.ruralCity}
-                          onChange={(val) => onChange(val.value)}
-                          value={value}
-                          search={true}
-                        />
-                      )}
+                      data={state.options.ruralCity}
+                      label={CITY}
+                      errors={errors}
+                      //   setValue={setValue}
+                      search={true}
+                      isLoading={state.isLoading.ruralCity}
                     />
                   </View>
 
                   {form_data.ruralCityID && form_data.ruralCityID === 16492 && (
-                    <View className="mt-5 relative">
-                      {errors && (
-                        <View className="absolute -top-5 left-0">
-                          <Text className="text-red-500 font-isansregular">
-                            {errors?.unit?.message}
-                          </Text>
-                        </View>
-                      )}
-
-                      <Controller
+                    <View className="mt-5">
+                      <CustomSelect
                         name="unit"
                         control={control}
                         rules={requiredRule}
-                        render={({ field: { onChange, value } }) => (
-                          <SelectInput
-                            placeholder={POST_AREA}
-                            options={postAreaOptions}
-                            onChange={(val) => onChange(val.value)}
-                            value={value}
-                          />
-                        )}
+                        data={postAreaOptions}
+                        label={POST_AREA}
+                        errors={errors}
+                        //   setValue={setValue}
+                        search={true}
                       />
                     </View>
                   )}
@@ -314,76 +239,59 @@ export const PostalCodeRequest = () => {
               ) : (
                 <>
                   <View className="mt-5">
-                    <Controller
+                    <CustomSelect
                       name="zoneID"
                       control={control}
-                      render={({ field: { onChange, value } }) => (
-                        <SelectInput
-                          placeholder={
-                            state.isLoading.zone ? LOADING_MESSAGE : ZONE
-                          }
-                          options={state.options.zone}
-                          onChange={(val) => {
-                            fetchData(
-                              "ruralCity",
-                              {
-                                village: "true",
-                                zoneID: val.value,
-                              },
-                              state.isUrban
-                            );
-                            return onChange(val.value);
-                          }}
-                          value={value}
-                          search={true}
-                        />
-                      )}
+                      rules={requiredRule}
+                      data={state.options.zone}
+                      label={ZONE}
+                      errors={errors}
+                      //   setValue={setValue}
+                      search={true}
+                      isLoading={state.isLoading.zone}
+                      onValueChange={(val) => {
+                        fetchData(
+                          "ruralCity",
+                          {
+                            village: "true",
+                            zoneID: val,
+                          },
+                          state.isUrban
+                        );
+                      }}
                     />
                   </View>
 
                   <View className="mt-5">
-                    <Controller
+                    <CustomSelect
                       name="ruralCityID"
                       control={control}
-                      render={({ field: { onChange } }) => (
-                        <SelectInput
-                          placeholder={
-                            state.isLoading.ruralCity ? LOADING_MESSAGE : DEH
-                          }
-                          disabled={state.isLoading.ruralCity}
-                          options={state.options.ruralCity}
-                          onValueChange={(val) => {
-                            fetchData("village", {
-                              ruralID: val,
-                            });
-                            return onChange(val);
-                          }}
-                          primaryColor="#164194"
-                          selectedValue={
-                            state.options.ruralCity.find(
-                              (c) => c.value === form_data?.ruralCityID
-                            )?.value
-                          }
-                        />
-                      )}
+                      rules={requiredRule}
+                      data={state.options.ruralCity}
+                      label={DEH}
+                      errors={errors}
+                      //   setValue={setValue}
+                      search={true}
+                      isLoading={state.isLoading.ruralCity}
+                      onValueChange={(val) => {
+                        fetchData("village", {
+                          ruralID: val,
+                        });
+                      }}
                     />
                   </View>
 
                   <View className="mt-5">
-                    <Controller
+                    <CustomSelect
                       name="villageID"
                       control={control}
-                      render={({ field: { onChange, value } }) => (
-                        <SelectInput
-                          placeholder={
-                            state.isLoading.village ? LOADING_MESSAGE : VILLAGE
-                          }
-                          disabled={state.isLoading.village}
-                          options={state.options.village}
-                          onChange={(val) => onChange(val.value)}
-                          value={value}
-                        />
-                      )}
+                      rules={requiredRule}
+                      data={state.options.village}
+                      label={VILLAGE}
+                      errors={errors}
+                      //   setValue={setValue}
+                      search={true}
+                      isLoading={state.isLoading.village}
                     />
                   </View>
                 </>

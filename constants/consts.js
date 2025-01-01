@@ -13,3 +13,16 @@ export const POST_CODE_CERTIFICATE = "گواهی کد پستی";
 
 // OTHER
 export const SELECT_ALL = "انتخاب همه";
+
+export const PERSIAN_NUMBERS = [
+  /۰/g,
+  /۱/g,
+  /۲/g,
+  /۳/g,
+  /۴/g,
+  /۵/g,
+  /۶/g,
+  /۷/g,
+  /۸/g,
+  /۹/g,
+];

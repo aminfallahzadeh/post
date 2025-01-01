@@ -1,23 +1,21 @@
 // IMPORTS
 import { useEffect, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
   View,
   ScrollView,
   TouchableWithoutFeedback,
   Keyboard,
-  Text,
 } from "react-native";
 import { useUserStore } from "@/store";
 import Background from "@/components/Background";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import CustomButton from "@/components/CustomButton";
+import CustomSelect from "@/components/CustomSelect";
 import FormField from "@/components/FormField";
 import { Title } from "@/components/Title";
-import SelectInput from "@/components/SelectInput";
 import { requiredRule, nationalCodeRule } from "@/constants/validations";
-import { LOADING_MESSAGE } from "@/constants/messages";
 import { getProvince, getCity } from "@/api/order";
 import { optionsGenerator } from "@/helpers/selectHelper";
 
@@ -136,8 +134,8 @@ const NerkhnameStep3 = () => {
 
               <FormField
                 placeholder="تلفن همراه"
-                type={"text"}
                 keyboardType="numeric"
+                inputMode="numeric"
                 rules={requiredRule}
                 containerStyle="mt-5"
                 control={control}
@@ -146,8 +144,8 @@ const NerkhnameStep3 = () => {
 
               <FormField
                 placeholder="تلفن ثابت"
-                type={"text"}
                 keyboardType="numeric"
+                inputMode="numeric"
                 containerStyle="mt-5"
                 control={control}
                 name="receiverPhone"
@@ -155,8 +153,8 @@ const NerkhnameStep3 = () => {
 
               <FormField
                 placeholder="کد ملی"
-                type={"text"}
                 keyboardType="numeric"
+                inputMode="numeric"
                 containerStyle="mt-5"
                 control={control}
                 rules={nationalCodeRule}
@@ -165,74 +163,49 @@ const NerkhnameStep3 = () => {
 
               <FormField
                 placeholder="کد پستی"
-                type={"text"}
                 keyboardType="numeric"
+                inputMode="numeric"
                 containerStyle="mt-5"
                 control={control}
                 name="receiverpostalcode"
               />
-              <View className="mt-5 relative">
-                {errors && (
-                  <View className="absolute -top-5 left-0">
-                    <Text className="text-red-500 font-isansregular">
-                      {errors?.receiverProvinceID?.message}
-                    </Text>
-                  </View>
-                )}
 
-                <Controller
+              <View className="mt-5">
+                <CustomSelect
                   name="receiverProvinceID"
                   control={control}
                   rules={requiredRule}
-                  render={({ field: { onChange, value } }) => (
-                    <SelectInput
-                      placeholder={
-                        isProvinceLoading ? LOADING_MESSAGE : "* استان"
-                      }
-                      options={provinceOptions}
-                      search={true}
-                      onChange={(val) => {
-                        if (val) {
-                          fetchCity(val.value);
-                        } else {
-                          setCityOptions([]);
-                        }
-                        return onChange(val.value);
-                      }}
-                      value={value}
-                      onClear={() => {
-                        setValue("receiverProvinceID", null);
-                        setValue("destcode", null);
-                        setCityOptions([]);
-                      }}
-                    />
-                  )}
+                  data={provinceOptions}
+                  label="* استان"
+                  errors={errors}
+                  setValue={setValue}
+                  isLoading={isProvinceLoading}
+                  onValueChange={(val) => {
+                    if (val) {
+                      console.log(val);
+                      fetchCity(val);
+                    } else {
+                      setCityOptions([]);
+                    }
+                  }}
+                  onClear={() => {
+                    setValue("receiverProvinceID", null);
+                    setValue("destcode", null);
+                    setCityOptions([]);
+                  }}
                 />
               </View>
 
-              <View className="mt-5 relative">
-                {errors && (
-                  <View className="absolute -top-5 left-0">
-                    <Text className="text-red-500 font-isansregular">
-                      {errors?.destcode?.message}
-                    </Text>
-                  </View>
-                )}
-
-                <Controller
+              <View className="mt-5">
+                <CustomSelect
                   name="destcode"
                   control={control}
                   rules={requiredRule}
-                  render={({ field: { onChange, value } }) => (
-                    <SelectInput
-                      placeholder={isCityLoading ? LOADING_MESSAGE : "* شهر"}
-                      options={cityOptions}
-                      search={true}
-                      onChange={(val) => onChange(val.value)}
-                      value={value}
-                      onClear={() => setValue("destcode", null)}
-                    />
-                  )}
+                  data={cityOptions}
+                  label="* شهر"
+                  errors={errors}
+                  setValue={setValue}
+                  isLoading={isCityLoading}
                 />
               </View>
 

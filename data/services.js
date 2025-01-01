@@ -52,7 +52,7 @@ export const allData = [
   {
     id: 24,
     title: "احراز نشانی",
-    url: "ehraz",
+    url: "forms/ehraz",
     icon: "ehraz",
     nationalCodeRequired: false,
   },

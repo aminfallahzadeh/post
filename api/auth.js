@@ -19,7 +19,7 @@ export async function login(data) {
     response?.data?.itemList[0].refreshToken,
     expiryDate
   );
-  router.replace("/services");
+  router.replace("/(tabs)");
 }
 
 export async function logout() {

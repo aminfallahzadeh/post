@@ -1,6 +1,6 @@
 // IMPORTS
 import { useEffect, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
   View,
   TouchableWithoutFeedback,
@@ -13,17 +13,9 @@ import CustomButton from "@/components/CustomButton";
 import Background from "@/components/Background";
 import { useUserStore } from "@/store";
 import { newEop } from "@/api/eop";
-import Dropdown from "react-native-input-select";
+import CustomSelect from "@/components/CustomSelect";
 import { showMessage } from "react-native-flash-message";
-import {
-  selectPlaceholderStyle,
-  selectContainerStyle,
-  selectDropdownStyle,
-  selectItemStyle,
-  modalControls,
-  checkboxControls,
-} from "@/constants/styles";
-import { stepTwoEopValidation } from "@/constants/validations";
+import { stepTwoEopValidation, requiredRule } from "@/constants/validations";
 import { router } from "expo-router";
 import { toastStyles } from "@/constants/styles";
 import { CustomModal } from "@/components/CustomModal";
@@ -44,7 +36,14 @@ const NewComplaintStep1 = () => {
   const removeComplaintData = useUserStore(
     (state) => state.removeComplaintData
   );
-  const { control, handleSubmit, watch, reset } = useForm();
+  const {
+    control,
+    handleSubmit,
+    watch,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm();
   const form_data = watch();
 
   // EFFECTS
@@ -82,7 +81,7 @@ const NewComplaintStep1 = () => {
         titleStyle: toastStyles,
       });
       reset();
-      router.replace("/services");
+      router.replace("/");
       removeComplaintData();
     } catch (error) {
       console.log("Complain error: ", error.response);
@@ -130,94 +129,52 @@ const NewComplaintStep1 = () => {
                 <FormField
                   placeholder="شماره سریال بسته پستی"
                   keyboardType="numeric"
-                  type={"text"}
+                  inputMode="numeric"
                   control={control}
                   containerStyle="mt-5"
                   name="serialNo"
                 />
+
                 <View className="mt-5">
-                  <Controller
+                  <CustomSelect
                     name="complaintType"
                     control={control}
-                    render={({ field: { onChange } }) => (
-                      <Dropdown
-                        placeholder="نوع شکایت"
-                        options={complaintTypeLookup}
-                        onValueChange={(val) => onChange(val)}
-                        selectedValue={
-                          complaintTypeLookup.find(
-                            (c) => c.value === form_data?.complaintType
-                          )?.value
-                        }
-                        primaryColor={"#164194"}
-                        placeholderStyle={selectPlaceholderStyle}
-                        dropdownContainerStyle={selectContainerStyle}
-                        dropdownStyle={selectDropdownStyle}
-                        selectedItemStyle={selectItemStyle}
-                        checkboxControls={checkboxControls}
-                        modalControls={modalControls}
-                      />
-                    )}
+                    rules={requiredRule}
+                    data={complaintTypeLookup}
+                    label="* نوع شکایت"
+                    errors={errors}
+                    setValue={setValue}
                   />
                 </View>
 
                 <View className="mt-5">
-                  <Controller
+                  <CustomSelect
                     name="serviceId"
                     control={control}
-                    render={({ field: { onChange } }) => (
-                      <Dropdown
-                        placeholder="نوع سرویس"
-                        options={serviceTypeLookup}
-                        selectedValue={
-                          serviceTypeLookup.find(
-                            (c) => c.value === form_data?.serviceId
-                          )?.value
-                        }
-                        onValueChange={(val) => onChange(val)}
-                        primaryColor={"#164194"}
-                        placeholderStyle={selectPlaceholderStyle}
-                        dropdownContainerStyle={selectContainerStyle}
-                        dropdownStyle={selectDropdownStyle}
-                        selectedItemStyle={selectItemStyle}
-                        checkboxControls={checkboxControls}
-                        modalControls={modalControls}
-                      />
-                    )}
+                    rules={requiredRule}
+                    data={serviceTypeLookup}
+                    label="* نوع سرویس"
+                    errors={errors}
+                    setValue={setValue}
                   />
                 </View>
 
                 <View className="mt-5">
-                  <Controller
+                  <CustomSelect
                     name="to_org_id"
                     control={control}
-                    render={({ field: { onChange } }) => (
-                      <Dropdown
-                        placeholder="واحد پستی"
-                        options={postalRegionLookup}
-                        selectedValue={
-                          postalRegionLookup.find(
-                            (c) => c.value === form_data?.to_org_id
-                          )?.value
-                        }
-                        onValueChange={(val) => onChange(val)}
-                        primaryColor={"#164194"}
-                        placeholderStyle={selectPlaceholderStyle}
-                        dropdownContainerStyle={selectContainerStyle}
-                        dropdownStyle={selectDropdownStyle}
-                        selectedItemStyle={selectItemStyle}
-                        checkboxControls={checkboxControls}
-                        modalControls={modalControls}
-                      />
-                    )}
+                    rules={requiredRule}
+                    data={postalRegionLookup}
+                    label="* واحد پستی"
+                    errors={errors}
+                    setValue={setValue}
                   />
                 </View>
               </View>
             </TouchableWithoutFeedback>
           </ScrollView>
 
-          {/* BOTTOM SECTION */}
-
+          {/* Submit Section */}
           <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
             <CustomButton
               title="ثبت شکایت"

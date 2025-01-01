@@ -1,6 +1,6 @@
 // IMPORTS
 import { useEffect, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { View, ScrollView, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "@/components/CustomButton";
@@ -10,13 +10,12 @@ import { requiredRule, nerkhnameValidations } from "@/constants/validations";
 import { useUserStore } from "@/store";
 import { Title } from "@/components/Title";
 import FormField from "@/components/FormField";
-import SelectInput from "@/components/SelectInput";
+import CustomSelect from "@/components/CustomSelect";
 import { getPrice } from "@/api/order";
 import { parcelOptions } from "@/data/parcelOptions";
 import { boxsizeOptions } from "@/data/boxsizeOptions";
 import { getProvince, getCity } from "@/api/order";
 import { optionsGenerator } from "@/helpers/selectHelper";
-import { LOADING_MESSAGE } from "@/constants/messages";
 
 const NerkhnameStep1 = () => {
   // STATES
@@ -182,39 +181,23 @@ const NerkhnameStep1 = () => {
 
           {/* FORM FIELDS */}
           <View className="w-full px-5 mt-5">
-            <View className="mt-5 relative">
-              {errors && (
-                <View className="absolute -top-5 left-0">
-                  <Text className="text-red-500 font-isansregular">
-                    {errors?.parceltype?.message}
-                  </Text>
-                </View>
-              )}
-
-              <Controller
+            <View className="mt-5">
+              <CustomSelect
                 name="parceltype"
                 control={control}
                 rules={nerkhnameValidations.parceltype}
-                render={({ field: { onChange, value } }) => {
-                  const options =
-                    nerkhname?.servicetype?.id === 2
-                      ? parcelOptions.sefareshi
-                      : nerkhname?.servicetype?.id === 4
-                      ? parcelOptions.amanat
-                      : nerkhname?.servicetype?.id === 3
-                      ? parcelOptions.vijhe
-                      : parcelOptions.pishtaz;
-
-                  return (
-                    <SelectInput
-                      placeholder="* نوع مرسوله"
-                      options={options}
-                      onChange={(val) => onChange(val.value)}
-                      value={value}
-                      onClear={() => setValue("parceltype", null)}
-                    />
-                  );
-                }}
+                data={
+                  nerkhname?.servicetype?.id === 2
+                    ? parcelOptions.sefareshi
+                    : nerkhname?.servicetype?.id === 4
+                    ? parcelOptions.amanat
+                    : nerkhname?.servicetype?.id === 3
+                    ? parcelOptions.vijhe
+                    : parcelOptions.pishtaz
+                }
+                label="* نوع مرسوله"
+                errors={errors}
+                setValue={setValue}
               />
             </View>
 
@@ -222,8 +205,8 @@ const NerkhnameStep1 = () => {
               <View className="flex-1 ml-2">
                 <FormField
                   placeholder="وزن مرسوله"
-                  type={"number"}
                   keyboardType="numeric"
+                  inputMode="numeric"
                   containerStyle="mt-5"
                   control={control}
                   rules={{ ...requiredRule, ...weightRules }}
@@ -237,146 +220,95 @@ const NerkhnameStep1 = () => {
             </View>
 
             {![1, 14, 3, 15].includes(form_data?.parceltype) && (
-              <View className="mt-5 relative">
-                {errors && (
-                  <View className="absolute -top-5 left-0">
-                    <Text className="text-red-500 font-isansregular">
-                      {errors?.boxsize?.message}
-                    </Text>
-                  </View>
-                )}
-
-                <Controller
+              <View className="mt-5">
+                <CustomSelect
                   name="boxsize"
                   control={control}
-                  render={({ field: { onChange, value } }) => (
-                    <SelectInput
-                      placeholder="* سایز کارتن"
-                      options={boxsizeOptions}
-                      onChange={(val) => onChange(val.value)}
-                      primaryColor="#164194"
-                      value={value}
-                      onClear={() => setValue("boxsize", null)}
-                    />
-                  )}
+                  rules={requiredRule}
+                  data={boxsizeOptions}
+                  label="* سایز کارتن"
+                  errors={errors}
+                  setValue={setValue}
                 />
               </View>
             )}
 
             <View className="flex-row-reverse justify-between items-center mt-5">
               <View className="flex-1 ml-2">
-                <Controller
+                <CustomSelect
                   name="provinceIDSource"
                   control={control}
-                  render={({ field: { onChange, value } }) => (
-                    <SelectInput
-                      placeholder={
-                        isProvinceLoading ? LOADING_MESSAGE : "* استان"
-                      }
-                      search={true}
-                      options={provinceOptions}
-                      onChange={(val) => {
-                        if (val) {
-                          fetchCity(val.value);
-                        } else {
-                          setSourceCityOptions([]);
-                        }
-                        return onChange(val.value);
-                      }}
-                      value={value}
-                      onClear={() => {
-                        setValue("provinceIDSource", null);
-                        setValue("sourcecode", null);
-                        setSourceCityOptions([]);
-                      }}
-                    />
-                  )}
+                  rules={requiredRule}
+                  data={provinceOptions}
+                  label="* استان مبدا"
+                  errors={errors}
+                  setValue={setValue}
+                  isLoading={isProvinceLoading}
+                  onValueChange={(val) => {
+                    if (val) {
+                      fetchCity(val);
+                    } else {
+                      setSourceCityOptions([]);
+                    }
+                  }}
+                  onClear={() => {
+                    setValue("senderProvinceID", null);
+                    setValue("sourcecode", null);
+                    setSourceCityOptions([]);
+                  }}
                 />
               </View>
 
-              <View className="flex-1 ml-2">
-                {errors && (
-                  <View className="absolute -top-5 left-0">
-                    <Text className="text-red-500 font-isansregular">
-                      {errors?.sourcecode?.message}
-                    </Text>
-                  </View>
-                )}
-
-                <Controller
+              <View className="flex-1 mr-2">
+                <CustomSelect
                   name="sourcecode"
                   control={control}
                   rules={requiredRule}
-                  render={({ field: { onChange, value } }) => (
-                    <SelectInput
-                      placeholder={isCityLoading ? LOADING_MESSAGE : "* شهر"}
-                      options={sourceCityOptions}
-                      search={true}
-                      onChange={(val) => onChange(val.value)}
-                      value={value}
-                      onClear={() => setValue("sourcecode", null)}
-                    />
-                  )}
+                  data={sourceCityOptions}
+                  label="* شهر مبدا"
+                  errors={errors}
+                  setValue={setValue}
+                  isLoading={isCityLoading}
                 />
               </View>
             </View>
 
             <View className="flex-row-reverse justify-between items-center mt-5">
               <View className="flex-1 ml-2">
-                <Controller
+                <CustomSelect
                   name="provinceIDDest"
                   control={control}
-                  render={({ field: { onChange, value } }) => (
-                    <SelectInput
-                      placeholder={
-                        isProvinceLoading ? LOADING_MESSAGE : "* استان مقصد"
-                      }
-                      options={provinceOptions}
-                      search={true}
-                      onChange={(val) => {
-                        if (val) {
-                          fetchDestCity(val.value);
-                        } else {
-                          setDestCityOptions([]);
-                        }
-                        return onChange(val.value);
-                      }}
-                      value={value}
-                      onClear={() => {
-                        setValue("provinceIDDest", null);
-                        setValue("destcode", null);
-                        setDestCityOptions([]);
-                      }}
-                    />
-                  )}
+                  rules={requiredRule}
+                  data={provinceOptions}
+                  label="* استان مقصد"
+                  errors={errors}
+                  setValue={setValue}
+                  isLoading={isProvinceLoading}
+                  onValueChange={(val) => {
+                    if (val) {
+                      fetchDestCity(val);
+                    } else {
+                      setDestCityOptions([]);
+                    }
+                  }}
+                  onClear={() => {
+                    setValue("senderProvinceID", null);
+                    setValue("sourcecode", null);
+                    setDestCityOptions([]);
+                  }}
                 />
               </View>
 
-              <View className="flex-1 ml-2">
-                {errors && (
-                  <View className="absolute -top-5 left-0">
-                    <Text className="text-red-500 font-isansregular">
-                      {errors?.destcode?.message}
-                    </Text>
-                  </View>
-                )}
-
-                <Controller
+              <View className="flex-1 mr-2">
+                <CustomSelect
                   name="destcode"
                   control={control}
                   rules={requiredRule}
-                  render={({ field: { onChange, value } }) => (
-                    <SelectInput
-                      placeholder={
-                        isDestCityLoading ? LOADING_MESSAGE : "* شهر مقصد"
-                      }
-                      options={destCityOptions}
-                      onChange={(val) => onChange(val.value)}
-                      value={value}
-                      search={true}
-                      onClear={() => setValue("destcode", null)}
-                    />
-                  )}
+                  data={destCityOptions}
+                  label="* شهر مقصد"
+                  errors={errors}
+                  setValue={setValue}
+                  isLoading={isDestCityLoading}
                 />
               </View>
             </View>

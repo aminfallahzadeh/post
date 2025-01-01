@@ -1,14 +1,13 @@
 // IMPORTS
 import { useState, useEffect } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
   View,
-  Text,
   Keyboard,
   TouchableWithoutFeedback,
   ScrollView,
 } from "react-native";
-import SelectInput from "@/components/SelectInput";
+import CustomSelect from "@/components/CustomSelect";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { insertRequestPostYafte } from "@/api/request";
 import { router } from "expo-router";
@@ -17,14 +16,14 @@ import FormField from "@/components/FormField";
 import Background from "@/components/Background";
 import { useUserStore } from "@/store";
 import { POST_YAFTE } from "@/constants/consts";
-import { REQUIRED, LOADING_MESSAGE } from "@/constants/messages";
+import { requiredRule } from "@/constants/validations";
 import { postYafteValidation } from "@/constants/validations";
 import { getYafteProvince, getYafteCity } from "@/api/yafte";
 import { optionsGenerator } from "@/helpers/selectHelper";
 import * as SecureStore from "expo-secure-store";
 import { Title } from "@/components/Title";
 
-const Step2 = () => {
+const YafteStep1 = () => {
   // STATES
   const mobile = SecureStore.getItem("mobile");
   const [isLoading, setIsLoading] = useState(false);
@@ -86,7 +85,7 @@ const Step2 = () => {
         id: "",
       });
       console.log("POST YAFTE RESPONSE: ", response.data);
-      router.replace("/forms/post-yafte/step3");
+      router.replace("/forms/post-yafte/yafte-step-2");
       reset();
     } finally {
       setIsLoading(false);
@@ -144,81 +143,44 @@ const Step2 = () => {
               <FormField
                 placeholder="* کد پستی"
                 keyboardType="numeric"
-                type={"text"}
+                inputMode="numeric"
                 rules={postYafteValidation.postCode}
                 containerStyle="mt-5"
                 control={control}
                 name="postCode"
               />
 
-              <View className="mt-5 relative">
-                {errors && (
-                  <View className="absolute -top-5 left-0">
-                    <Text className="text-red-500 font-isansregular">
-                      {errors?.state_id?.message}
-                    </Text>
-                  </View>
-                )}
-
-                <Controller
+              <View className="mt-5">
+                <CustomSelect
                   name="state_id"
                   control={control}
-                  rules={{
-                    required: {
-                      value: true,
-                      message: REQUIRED,
-                    },
+                  rules={requiredRule}
+                  data={provinceOptions}
+                  label="* استان"
+                  errors={errors}
+                  setValue={setValue}
+                  isLoading={isProvinceLoading}
+                  onValueChange={(val) => {
+                    fetchCity(val);
                   }}
-                  render={({ field: { onChange, value } }) => (
-                    <SelectInput
-                      placeholder={
-                        isProvinceLoading ? LOADING_MESSAGE : "* استان"
-                      }
-                      options={provinceOptions}
-                      onChange={(val) => {
-                        fetchCity(val.value);
-                        return onChange(val.value);
-                      }}
-                      value={value}
-                      search={true}
-                      onClear={() => {
-                        setValue("state_id", null);
-                        setValue("city_id", null);
-                        setCityOptions([]);
-                      }}
-                    />
-                  )}
+                  onClear={() => {
+                    setValue("state_id", null);
+                    setValue("city_id", null);
+                    setCityOptions([]);
+                  }}
                 />
               </View>
 
-              <View className="mt-5 relative">
-                {errors && (
-                  <View className="absolute -top-5 left-0">
-                    <Text className="text-red-500 font-isansregular">
-                      {errors?.city_id?.message}
-                    </Text>
-                  </View>
-                )}
-
-                <Controller
+              <View className="mt-5">
+                <CustomSelect
                   name="city_id"
                   control={control}
-                  rules={{
-                    required: {
-                      value: true,
-                      message: REQUIRED,
-                    },
-                  }}
-                  render={({ field: { onChange, value } }) => (
-                    <SelectInput
-                      placeholder={isCityLoading ? LOADING_MESSAGE : "* شهر"}
-                      options={cityOptions}
-                      onChange={(val) => onChange(val.value)}
-                      value={value}
-                      onClear={() => setValue("city_id", null)}
-                      search={true}
-                    />
-                  )}
+                  rules={requiredRule}
+                  data={cityOptions}
+                  label="* شهر"
+                  errors={errors}
+                  setValue={setValue}
+                  isLoading={isCityLoading}
                 />
               </View>
             </View>
@@ -238,4 +200,4 @@ const Step2 = () => {
   );
 };
 
-export default Step2;
+export default YafteStep1;

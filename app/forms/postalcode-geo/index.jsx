@@ -88,7 +88,7 @@ const Index = () => {
       const response = await addressByPostCode(data);
       console.log("POSTAL CODES RESPONSE: ", response.data.itemList[0].data);
       await setAddressByPostCode(response.data.itemList[0].data);
-      router.push("forms/postalcode-geo/step2");
+      router.push("forms/postalcode-geo/geo-step-1");
     } catch (error) {
       console.log("POSTAL CODE ERRORS: ", error.response);
       showMessage({
@@ -126,7 +126,7 @@ const Index = () => {
                 <FormField
                   placeholder="کد پستی"
                   keyboardType="numeric"
-                  type={"text"}
+                  inputMode="numeric"
                   containerStyle="w-full"
                   control={control}
                   name="postalCode"

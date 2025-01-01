@@ -164,14 +164,6 @@ const RootLayout = () => {
         pathname: `/result/${requestID}`,
         params: { success, type },
       });
-
-      //   if (requestID && success) {
-      //     // Navigate to the dynamic route with both parameters
-      //     router.push({
-      //       pathname: `/result/${requestID}`,
-      //       params: { success, type },
-      //     });
-      //   }
     };
 
     // Add the event listener for handling URLs
@@ -205,7 +197,7 @@ const RootLayout = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen name="profile" options={{ headerShown: false }} />
-        <Stack.Screen name="follow" options={{ headerShown: false }} />
+        <Stack.Screen name="forms/follow" options={{ headerShown: false }} />
         <Stack.Screen
           name="forms/postalcode-certificate"
           options={{ headerShown: false }}
@@ -225,7 +217,7 @@ const RootLayout = () => {
         <Stack.Screen name="forms/gheramat" options={{ headerShown: false }} />
         <Stack.Screen name="result" options={{ headerShown: false }} />
         <Stack.Screen name="factor" options={{ headerShown: false }} />
-        <Stack.Screen name="ehraz" options={{ headerShown: false }} />
+        <Stack.Screen name="forms/ehraz" options={{ headerShown: false }} />
         <Stack.Screen name="map" options={{ headerShown: false }} />
         <Stack.Screen name="forms/nerkhname" options={{ headerShown: false }} />
       </Stack>

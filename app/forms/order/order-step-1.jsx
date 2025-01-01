@@ -1,6 +1,6 @@
 // IMPORTS
 import { useEffect, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
   View,
   Text,
@@ -13,8 +13,8 @@ import Background from "@/components/Background";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import CustomButton from "@/components/CustomButton";
+import CustomSelect from "@/components/CustomSelect";
 import FormField from "@/components/FormField";
-import SelectInput from "@/components/SelectInput";
 import { parcelOptions } from "@/data/parcelOptions";
 import { boxsizeOptions } from "@/data/boxsizeOptions";
 import { nerkhnameValidations, requiredRule } from "@/constants/validations";
@@ -108,39 +108,23 @@ const NerkhNameStep1 = () => {
                 name="number"
               />
 
-              <View className="mt-5 relative">
-                {errors && (
-                  <View className="absolute -top-5 left-0">
-                    <Text className="text-red-500 font-isansregular">
-                      {errors?.parceltype?.message}
-                    </Text>
-                  </View>
-                )}
-
-                <Controller
+              <View className="mt-5">
+                <CustomSelect
                   name="parceltype"
                   control={control}
                   rules={nerkhnameValidations.parceltype}
-                  render={({ field: { onChange, value } }) => {
-                    const options =
-                      order?.servicetype?.id === 2
-                        ? parcelOptions.sefareshi
-                        : order?.servicetype?.id === 4
-                        ? parcelOptions.amanat
-                        : order?.servicetype?.id === 3
-                        ? parcelOptions.vijhe
-                        : parcelOptions.pishtaz;
-
-                    return (
-                      <SelectInput
-                        placeholder="* نوع مرسوله"
-                        options={options}
-                        onChange={(val) => onChange(val.value)}
-                        value={value}
-                        onClear={() => setValue("parceltype", null)}
-                      />
-                    );
-                  }}
+                  data={
+                    order?.servicetype?.id === 2
+                      ? parcelOptions.sefareshi
+                      : order?.servicetype?.id === 4
+                      ? parcelOptions.amanat
+                      : order?.servicetype?.id === 3
+                      ? parcelOptions.vijhe
+                      : parcelOptions.pishtaz
+                  }
+                  label="* نوع مرسوله"
+                  errors={errors}
+                  setValue={setValue}
                 />
               </View>
 
@@ -148,8 +132,8 @@ const NerkhNameStep1 = () => {
                 <View className="flex-1 ml-2">
                   <FormField
                     placeholder="وزن مرسوله"
-                    type={"number"}
                     keyboardType="numeric"
+                    inputMode="numeric"
                     containerStyle="mt-5"
                     control={control}
                     rules={{ ...requiredRule, ...weightRules }}
@@ -163,27 +147,15 @@ const NerkhNameStep1 = () => {
               </View>
 
               {![1, 14, 3, 15].includes(form_data?.parceltype) && (
-                <View className="mt-5 relative">
-                  {errors && (
-                    <View className="absolute -top-5 left-0">
-                      <Text className="text-red-500 font-isansregular">
-                        {errors?.boxsize?.message}
-                      </Text>
-                    </View>
-                  )}
-
-                  <Controller
+                <View className="mt-5">
+                  <CustomSelect
                     name="boxsize"
                     control={control}
-                    render={({ field: { onChange, value } }) => (
-                      <SelectInput
-                        placeholder="* سایز کارتن"
-                        options={boxsizeOptions}
-                        onChange={(val) => onChange(val.value)}
-                        value={value}
-                        onClear={() => setValue("boxsize", null)}
-                      />
-                    )}
+                    rules={requiredRule}
+                    data={boxsizeOptions}
+                    label="* سایز کارتن"
+                    errors={errors}
+                    setValue={setValue}
                   />
                 </View>
               )}

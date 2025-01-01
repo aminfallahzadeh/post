@@ -175,7 +175,7 @@ const PaymentResult = () => {
           <CustomButton
             title="بازگشت"
             isLoading={isLoading}
-            handlePress={() => router.replace("/services")}
+            handlePress={() => router.replace("/")}
           />
         </View>
       </SafeAreaView>
