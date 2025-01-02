@@ -52,7 +52,6 @@ const CustomSelect = ({
         render={({ field: { onChange, value } }) => (
           <View style={styles.container}>
             {renderLabel(value)}
-
             <Dropdown
               style={[
                 styles.dropdown,
@@ -79,6 +78,7 @@ const CustomSelect = ({
                 },
               }}
               labelField="label"
+              activeColor="#fcd900"
               valueField="value"
               disable={disabled || isLoading || data.length === 0}
               itemTextStyle={{ fontFamily: "IranSans-Regular" }}
@@ -123,16 +123,17 @@ const styles = StyleSheet.create({
   container: {
     fontFamily: "IranSans-Regular",
     direction: "rtl",
+    height: 55,
   },
   dropdown: {
     height: 55,
+    direction: "rtl",
     fontFamily: "IranSans-Regular",
     borderColor: "#183f97",
     borderWidth: 1,
     borderRadius: 2,
     paddingHorizontal: 8,
-    padding: 10,
-    backgroundColor: "white",
+    backgroundColor: "#fff",
   },
   icon: {
     marginRight: 5,
@@ -153,10 +154,14 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontFamily: "IranSans-DemiBold",
     color: "#AFB4C0",
+    height: 55,
+    paddingTop: 15,
   },
   selectedTextStyle: {
     fontSize: 14,
     fontFamily: "IranSans-Regular",
+    height: 55,
+    paddingTop: 15,
   },
   iconStyle: {
     width: 20,

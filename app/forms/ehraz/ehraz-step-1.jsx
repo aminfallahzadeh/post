@@ -107,7 +107,7 @@ const EhrazStep1 = () => {
 
       console.log("INSERT EHRAZ RESPONSE: ", response.data);
       setFactor(response.data.itemList[0]);
-      router.push("ehraz/ehraz-step-2");
+      router.push("forms/ehraz/ehraz-step-2");
     } finally {
       setIsLoading(false);
     }

@@ -179,6 +179,7 @@ const NerkhnameStep2 = () => {
                   data={provinceOptions}
                   label="* استان"
                   errors={errors}
+                  search={true}
                   setValue={setValue}
                   isLoading={isProvinceLoading}
                   onValueChange={(val) => {
@@ -216,6 +217,7 @@ const NerkhnameStep2 = () => {
                 rules={requiredRule}
                 keyboardType="default"
                 containerStyle="mt-5"
+                search={true}
                 height="h-32 align-top"
                 inputStyle={{
                   textAlignVertical: "top",

@@ -233,84 +233,84 @@ const NerkhnameStep1 = () => {
               </View>
             )}
 
-            <View className="flex-row-reverse justify-between items-center mt-5">
-              <View className="flex-1 ml-2">
-                <CustomSelect
-                  name="provinceIDSource"
-                  control={control}
-                  rules={requiredRule}
-                  data={provinceOptions}
-                  label="* استان مبدا"
-                  errors={errors}
-                  setValue={setValue}
-                  isLoading={isProvinceLoading}
-                  onValueChange={(val) => {
-                    if (val) {
-                      fetchCity(val);
-                    } else {
-                      setSourceCityOptions([]);
-                    }
-                  }}
-                  onClear={() => {
-                    setValue("senderProvinceID", null);
-                    setValue("sourcecode", null);
+            <View className="mt-5">
+              <CustomSelect
+                name="provinceIDSource"
+                control={control}
+                rules={requiredRule}
+                data={provinceOptions}
+                label="* استان مبدا"
+                errors={errors}
+                search={true}
+                setValue={setValue}
+                isLoading={isProvinceLoading}
+                onValueChange={(val) => {
+                  if (val) {
+                    fetchCity(val);
+                  } else {
                     setSourceCityOptions([]);
-                  }}
-                />
-              </View>
-
-              <View className="flex-1 mr-2">
-                <CustomSelect
-                  name="sourcecode"
-                  control={control}
-                  rules={requiredRule}
-                  data={sourceCityOptions}
-                  label="* شهر مبدا"
-                  errors={errors}
-                  setValue={setValue}
-                  isLoading={isCityLoading}
-                />
-              </View>
+                  }
+                }}
+                onClear={() => {
+                  setValue("senderProvinceID", null);
+                  setValue("sourcecode", null);
+                  setSourceCityOptions([]);
+                }}
+              />
             </View>
 
-            <View className="flex-row-reverse justify-between items-center mt-5">
-              <View className="flex-1 ml-2">
-                <CustomSelect
-                  name="provinceIDDest"
-                  control={control}
-                  rules={requiredRule}
-                  data={provinceOptions}
-                  label="* استان مقصد"
-                  errors={errors}
-                  setValue={setValue}
-                  isLoading={isProvinceLoading}
-                  onValueChange={(val) => {
-                    if (val) {
-                      fetchDestCity(val);
-                    } else {
-                      setDestCityOptions([]);
-                    }
-                  }}
-                  onClear={() => {
-                    setValue("senderProvinceID", null);
-                    setValue("sourcecode", null);
-                    setDestCityOptions([]);
-                  }}
-                />
-              </View>
+            <View className="mt-5">
+              <CustomSelect
+                name="sourcecode"
+                control={control}
+                rules={requiredRule}
+                data={sourceCityOptions}
+                label="* شهر مبدا"
+                errors={errors}
+                search={true}
+                setValue={setValue}
+                isLoading={isCityLoading}
+              />
+            </View>
 
-              <View className="flex-1 mr-2">
-                <CustomSelect
-                  name="destcode"
-                  control={control}
-                  rules={requiredRule}
-                  data={destCityOptions}
-                  label="* شهر مقصد"
-                  errors={errors}
-                  setValue={setValue}
-                  isLoading={isDestCityLoading}
-                />
-              </View>
+            <View className="mt-5">
+              <CustomSelect
+                name="provinceIDDest"
+                control={control}
+                rules={requiredRule}
+                data={provinceOptions}
+                label="* استان مقصد"
+                errors={errors}
+                search={true}
+                setValue={setValue}
+                isLoading={isProvinceLoading}
+                onValueChange={(val) => {
+                  if (val) {
+                    fetchDestCity(val);
+                  } else {
+                    setDestCityOptions([]);
+                  }
+                }}
+                onClear={() => {
+                  setValue("senderProvinceID", null);
+                  setValue("destcode", null);
+                  setDestCityOptions([]);
+                }}
+              />
+            </View>
+
+            <View className="mt-5">
+              <CustomSelect
+                name="destcode"
+                control={control}
+                rules={requiredRule}
+                data={destCityOptions}
+                search={true}
+                label="* شهر مقصد"
+                errors={errors}
+                setValue={setValue}
+                isLoading={isDestCityLoading}
+              />
             </View>
           </View>
         </ScrollView>

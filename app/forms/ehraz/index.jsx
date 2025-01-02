@@ -45,7 +45,7 @@ const Index = () => {
 
   const onSubmit = (data) => {
     setEhrazFormData(data);
-    router.push("/ehraz/ehraz-step-1");
+    router.push("forms/ehraz/ehraz-step-1");
   };
 
   // DEBUG

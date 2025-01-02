@@ -179,6 +179,7 @@ const NerkhnameStep3 = () => {
                   label="* استان"
                   errors={errors}
                   setValue={setValue}
+                  search={true}
                   isLoading={isProvinceLoading}
                   onValueChange={(val) => {
                     if (val) {
@@ -203,6 +204,7 @@ const NerkhnameStep3 = () => {
                   rules={requiredRule}
                   data={cityOptions}
                   label="* شهر"
+                  search={true}
                   errors={errors}
                   setValue={setValue}
                   isLoading={isCityLoading}
