@@ -16,7 +16,7 @@ const tabLabelStyle = {
 const TabsLayout = () => {
   return (
     <Background>
-      <SafeAreaView className="h-full mt-10">
+      <SafeAreaView className="h-full">
         <MaterialTopTabs
           screenOptions={{
             tabBarScrollEnabled: true,

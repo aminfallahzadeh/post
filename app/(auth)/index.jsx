@@ -13,6 +13,9 @@ import Background from "@/components/Background";
 import { mobilePhoneValidation } from "@/constants/validations";
 import * as SecureStore from "expo-secure-store";
 
+// TEST
+import { URL } from "@/config/axiosConfig";
+
 const Login = () => {
   // STATES
   const [isLoading, setIsLoading] = useState(false);
@@ -113,6 +116,11 @@ const Login = () => {
               handlePress={handleSubmit(onSubmit)}
               isLoading={isLoading}
             />
+
+            {/* TEST */}
+            <View className="mt-5">
+              <Text>{URL}</Text>
+            </View>
           </View>
         </ScrollView>
       </SafeAreaView>

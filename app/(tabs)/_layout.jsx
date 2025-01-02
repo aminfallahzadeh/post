@@ -10,6 +10,8 @@ import { Tabs } from "expo-router";
 import { useState, useRef } from "react";
 import { Ionicons } from "@expo/vector-icons";
 // import TabBar from "@/components/TabBar";
+import { SafeAreaView } from "react-native-safe-area-context";
+
 import SettingsMenu from "@/views/SettingsMenu";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -37,19 +39,21 @@ const TabsLayout = () => {
   return (
     <>
       {/* TOP BAR */}
-      <View style={styles.topBar} className="mt-10">
-        <Text
-          style={styles.title}
-          className="text-primary font-bold text-[20px] m-auto"
-        >
-          POST
-          <Text className="text-secondary">.IR</Text>
-        </Text>
+      <SafeAreaView>
+        <View style={styles.topBar}>
+          <Text
+            style={styles.title}
+            className="text-primary font-bold text-[20px]"
+          >
+            POST
+            <Text className="text-secondary">.IR</Text>
+          </Text>
 
-        <TouchableOpacity onPress={toggleMenu}>
-          <Ionicons name="menu" size={28} color="#333" />
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity onPress={toggleMenu}>
+            <Ionicons name="menu" size={35} color="#333" />
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
 
       {/* TAB LAYOUT */}
       {/* <Tabs tabBar={(props) => <TabBar {...props} />}> */}
@@ -136,14 +140,11 @@ const styles = {
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 16,
-    paddingVertical: 10,
     backgroundColor: "transparent",
     shadowOpacity: 0.1,
     shadowRadius: 10,
     shadowOffset: { height: 2, width: 0 },
-    position: "absolute",
-    zIndex: 1,
-    // top: StatusBar.currentHeight + 20,
+    marginTop: 10,
   },
   menuOverlay: {
     position: "absolute",
