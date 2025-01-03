@@ -5,7 +5,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useLocalSearchParams, router } from "expo-router";
 import { Background } from "@/components";
 import { Title } from "@/components/Title";
-import * as Linking from "expo-linking";
 
 const Index = () => {
   // CONSTS
@@ -13,7 +12,9 @@ const Index = () => {
 
   // EFFECTS
   useEffect(() => {
-    router.push(url);
+    if (url) {
+      router.push(url);
+    }
   }, [url]);
 
   return (
@@ -23,9 +24,15 @@ const Index = () => {
         <Title title="در انتظار پرداخت" home={false} back={false} />
 
         <View className="w-full h-full justify-center items-center">
-          <Text className="text-center font-isansbold text-lg">
-            لطفا پرداخت خود را انجام دهید...
-          </Text>
+          {url ? (
+            <Text className="text-center font-isansbold text-lg">
+              لطفا پرداخت خود را انجام دهید...
+            </Text>
+          ) : (
+            <Text className="text-center font-isansbold text-lg">
+              خطا در ورود به درگاه بانک!
+            </Text>
+          )}
         </View>
       </SafeAreaView>
     </Background>
