@@ -21,6 +21,7 @@ const Step3 = () => {
 
   // CONSTS
   const factor = useUserStore((state) => state.factor);
+  const setFactor = useUserStore((state) => state.setFactor);
   const mobile = SecureStore.getItem("mobile");
 
   // ANIMATION
@@ -67,7 +68,12 @@ const Step3 = () => {
       };
 
       const response = await requestPayment(data);
-      router.push(response.data.itemList[0].data.paymentUrl);
+      //   router.push(response.data.itemList[0].data.paymentUrl);
+      setFactor([]);
+      router.replace({
+        pathname: "/waiting",
+        params: { url: response.data.itemList[0].data.paymentUrl },
+      });
     } finally {
       setIsLoading(false);
     }
@@ -139,8 +145,6 @@ const Step3 = () => {
         <View className="w-full z-10 px-4 bg-gray-100 py-4">
           <CustomButton
             title="پرداخت"
-            bgColor="bg-green-700"
-            titleColor="text-white"
             disabled={!checked}
             handlePress={onSubmit}
             isLoading={isLoading}

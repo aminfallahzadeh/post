@@ -12,12 +12,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useUserStore } from "@/store";
 import { router } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
-import { requestPayment } from "@/api/payment";
 import { Background, CustomButton } from "@/components";
 import { FactorPostYafte } from "@/components/FactorPostYafte";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import RNBounceable from "@freakycoder/react-native-bounceable";
-import * as SecureStore from "expo-secure-store";
 
 const FactorResult = () => {
   // STATES
@@ -27,7 +25,7 @@ const FactorResult = () => {
 
   // CONSTS
   const factor = useUserStore((state) => state.factor);
-  const mobile = SecureStore.getItem("mobile");
+  const setFactor = useUserStore((state) => state.setFactor);
 
   // SLIDE AND FADE-IN ANIMATION
   const slideAnim = useRef(new Animated.Value(50)).current;
@@ -56,11 +54,15 @@ const FactorResult = () => {
 
   // HANDLE SUBMIT
   const onSubmit = () => {
-    router.push(factor.paymentUrl);
+    setFactor([]);
+    router.replace({
+      pathname: "/waiting",
+      params: { url: factor.paymentUrl },
+    });
   };
 
   useEffect(() => {
-    console.log("FACTORR:", factor);
+    console.log("FACTOR:", factor);
   }, [factor]);
 
   return (
@@ -138,8 +140,6 @@ const FactorResult = () => {
         <View className="w-full z-10 px-4 bg-gray-100 py-4">
           <CustomButton
             title="پرداخت"
-            bgColor="bg-green-700"
-            titleColor="text-white"
             disabled={!checked}
             handlePress={onSubmit}
             isLoading={isLoading}

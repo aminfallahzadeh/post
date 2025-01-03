@@ -5,13 +5,14 @@ import {
   TouchableOpacity,
   Animated,
   Dimensions,
+  Image,
 } from "react-native";
 import { Tabs } from "expo-router";
 import { useState, useRef } from "react";
 import { Ionicons } from "@expo/vector-icons";
 // import TabBar from "@/components/TabBar";
 import { SafeAreaView } from "react-native-safe-area-context";
-
+import assistant from "@/assets/images/assistant.jpg";
 import SettingsMenu from "@/views/SettingsMenu";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -127,6 +128,12 @@ const TabsLayout = () => {
       >
         <SettingsMenu closeHandler={toggleMenu} />
       </Animated.View>
+
+      <Image
+        source={assistant}
+        className="w-32 absolute bottom-10 left-0"
+        resizeMode="contain"
+      />
     </>
   );
 };

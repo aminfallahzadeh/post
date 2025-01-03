@@ -72,7 +72,6 @@ const CertificateStep3 = () => {
         "REQUEST PAYMENT RESPONSE: ",
         response.data.itemList[0].data.paymentUrl
       );
-      //   router.push(response.data.itemList[0].data.paymentUrl);
       setFactor([]);
       router.replace({
         pathname: "/waiting",

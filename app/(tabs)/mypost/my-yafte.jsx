@@ -103,8 +103,6 @@ const MyYafte = () => {
 
                   <CustomButton
                     title="پرداخت"
-                    bgColor="bg-blue-500"
-                    titleColor="text-white"
                     height="h-10"
                     disabled={!item.canPay}
                     isLoading={isRequestLoading}
