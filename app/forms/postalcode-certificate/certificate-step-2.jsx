@@ -6,10 +6,8 @@ import { useUserStore } from "@/store";
 import { requestPayment } from "@/api/payment";
 import { router } from "expo-router";
 import { Background, Factor, CustomButton } from "@/components";
-import { toastStyles } from "@/constants/styles";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import RNBounceable from "@freakycoder/react-native-bounceable";
-import { showMessage } from "react-native-flash-message";
 import * as SecureStore from "expo-secure-store";
 import { Title } from "@/components/Title";
 
@@ -23,6 +21,7 @@ const CertificateStep3 = () => {
 
   // CONSTS
   const factor = useUserStore((state) => state.factor);
+  const setFactor = useUserStore((state) => state.setFactor);
   const mobile = SecureStore.getItem("mobile");
 
   // ANIMATION
@@ -73,13 +72,11 @@ const CertificateStep3 = () => {
         "REQUEST PAYMENT RESPONSE: ",
         response.data.itemList[0].data.paymentUrl
       );
-      router.push(response.data.itemList[0].data.paymentUrl);
-    } catch (error) {
-      console.log("REQUEST PAYMENT ERROR: ", error.response);
-      showMessage({
-        message: error.response?.data?.message || error.message,
-        type: "danger",
-        titleStyle: toastStyles,
+      //   router.push(response.data.itemList[0].data.paymentUrl);
+      setFactor([]);
+      router.replace({
+        pathname: "/waiting",
+        params: { url: response.data.itemList[0].data.paymentUrl },
       });
     } finally {
       setIsLoading(false);

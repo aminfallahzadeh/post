@@ -4,13 +4,16 @@ import { Pressable, View, Text } from "react-native";
 import ProgressBar from "../ProgressBar";
 import { Feather } from "@expo/vector-icons";
 
-export const Title = ({ progress, title, home = true }) => {
+export const Title = ({ progress, title, home = true, back = true }) => {
   return (
     <View className="flex-col w-full bg-primary z-10 justify-center items-center relative">
       <View className="flex-row w-full justify-between items-center">
-        <Pressable onPress={() => router.back()} className="absolute left-4">
-          <Feather name="arrow-left" size={35} color="#fff" />
-        </Pressable>
+        {back && (
+          <Pressable onPress={() => router.back()} className="absolute left-4">
+            <Feather name="arrow-left" size={35} color="#fff" />
+          </Pressable>
+        )}
+
         <Text className="text-white font-isansbold text-center text-[20px] py-2 mr-auto ml-auto">
           {title}
         </Text>

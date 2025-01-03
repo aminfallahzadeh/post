@@ -10,9 +10,8 @@ import Background from "@/components/Background";
 import AddressCard from "@/components/AddressCard";
 import CustomButton from "@/components/CustomButton";
 import { postalCodeListValidation } from "@/constants/validations";
-import { toastStyles } from "@/constants/styles";
-import { showMessage } from "react-native-flash-message";
 import { SELECT_ALL } from "@/constants/consts";
+import { toastConfig } from "@/config/toast-config";
 import * as SecureStore from "expo-secure-store";
 import { Title } from "@/components/Title";
 
@@ -56,11 +55,7 @@ const CertificateStep2 = () => {
     const validations = postalCodeListValidation(selectedItems);
     for (let validation of validations) {
       if (validation.check) {
-        showMessage({
-          message: validation.message,
-          type: "warning",
-          titleStyle: toastStyles,
-        });
+        toastConfig.warning(validation.message);
         return;
       }
     }
@@ -75,13 +70,6 @@ const CertificateStep2 = () => {
       console.log("INSERT REQUEST CERTIFICATE RESPONSE: ", response.data);
       setFactor(response.data.itemList[0]);
       router.push("forms/postalcode-certificate/certificate-step-2");
-    } catch (error) {
-      console.log("INSERT REQUEST CERTIFICATE ERROR: ", error.response);
-      showMessage({
-        message: error.response?.data?.message || error.message,
-        type: "danger",
-        titleStyle: toastStyles,
-      });
     } finally {
       setIsLoading(false);
     }

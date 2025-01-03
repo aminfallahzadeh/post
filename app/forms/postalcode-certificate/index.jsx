@@ -19,11 +19,7 @@ import CustomButton from "@/components/CustomButton";
 import FormField from "@/components/FormField";
 import Background from "@/components/Background";
 import PostalCodeCard from "@/components/PostalCodeCard";
-import {
-  postalCodeValidation,
-  requiredRule,
-  postCodeRule,
-} from "@/constants/validations";
+import { postalCodeValidation } from "@/constants/validations";
 import { Title } from "@/components/Title";
 import { toastConfig } from "@/config/toast-config";
 import { Chase } from "react-native-animated-spinkit";
@@ -135,7 +131,6 @@ const Index = () => {
                   keyboardType="numeric"
                   inputMode="numeric"
                   containerStyle="w-full"
-                  rules={{ ...requiredRule, postCodeRule }}
                   control={control}
                   name="postalCode"
                   max={10}
