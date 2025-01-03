@@ -118,9 +118,9 @@ const Login = () => {
             />
 
             {/* TEST */}
-            <View className="mt-5">
+            {/* <View className="mt-5">
               <Text>{URL}</Text>
-            </View>
+            </View> */}
           </View>
         </ScrollView>
       </SafeAreaView>

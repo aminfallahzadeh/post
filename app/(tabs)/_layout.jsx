@@ -129,11 +129,11 @@ const TabsLayout = () => {
         <SettingsMenu closeHandler={toggleMenu} />
       </Animated.View>
 
-      <Image
+      {/* <Image
         source={assistant}
         className="w-32 absolute bottom-10 left-0"
         resizeMode="contain"
-      />
+      /> */}
     </>
   );
 };
