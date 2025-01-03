@@ -15,7 +15,11 @@ import CustomButton from "@/components/CustomButton";
 import CustomSelect from "@/components/CustomSelect";
 import FormField from "@/components/FormField";
 import { Title } from "@/components/Title";
-import { requiredRule, nationalCodeRule } from "@/constants/validations";
+import {
+  requiredRule,
+  nationalCodeRule,
+  postCodeRule,
+} from "@/constants/validations";
 import { getProvince, getCity } from "@/api/order";
 import { optionsGenerator } from "@/helpers/selectHelper";
 
@@ -165,6 +169,7 @@ const NerkhnameStep3 = () => {
                 placeholder="کد پستی"
                 keyboardType="numeric"
                 inputMode="numeric"
+                rules={postCodeRule}
                 containerStyle="mt-5"
                 control={control}
                 name="receiverpostalcode"

@@ -17,7 +17,7 @@ import { useUserStore } from "@/store";
 import { BuildingDetailInput } from "@/components/BuildingDetailInput";
 import * as SecureStore from "expo-secure-store";
 import { Title } from "@/components/Title";
-import { requiredRule } from "@/constants/validations";
+import { requiredRule, postCodeRule } from "@/constants/validations";
 
 const Step2 = () => {
   // STATES
@@ -171,6 +171,7 @@ const Step2 = () => {
                 placeholder="نزدیکترین کد پستی"
                 keyboardType="numeric"
                 containerStyle="mt-5"
+                rules={postCodeRule}
                 type={"text"}
                 control={control}
                 name="nearestPostCode"

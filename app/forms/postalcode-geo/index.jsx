@@ -6,12 +6,12 @@ import {
   Text,
   Keyboard,
   TouchableWithoutFeedback,
-  TouchableOpacity,
+  Pressable,
   ScrollView,
   StyleSheet,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { addressByPostCode } from "@/api/gnaf";
+import { addressByPostCode, validatePostCode } from "@/api/gnaf";
 import { useUserStore } from "@/store";
 import { router } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
@@ -19,16 +19,21 @@ import CustomButton from "@/components/CustomButton";
 import FormField from "@/components/FormField";
 import Background from "@/components/Background";
 import PostalCodeCard from "@/components/PostalCodeCard";
-import { postalCodeValidation } from "@/constants/validations";
-import { showMessage } from "react-native-flash-message";
-import { toastStyles } from "@/constants/styles";
+import {
+  postalCodeValidation,
+  requiredRule,
+  postCodeRule,
+} from "@/constants/validations";
 import { Title } from "@/components/Title";
+import { toastConfig } from "@/config/toast-config";
+import { Chase } from "react-native-animated-spinkit";
 
 const Index = () => {
   // STATES
   const [postalCodes, setPostalCodes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [plusDisabled, setPlusDisabled] = useState(true);
+  const [isValidating, setIsValidating] = useState(false);
 
   // CONSTS
   const { control, handleSubmit, watch, setValue } = useForm();
@@ -47,31 +52,38 @@ const Index = () => {
   }, [form_data.postalCode, plusDisabled]);
 
   // HANDLERS
-  const addPostalCodeHandler = () => {
+  const addPostalCodeHandler = async () => {
     const validations = postalCodeValidation(form_data);
 
     for (let validation of validations) {
       if (validation.check) {
-        showMessage({
-          message: validation.message,
-          type: "warning",
-          titleStyle: toastStyles,
-        });
-
+        toastConfig.warning(validation.message);
         return;
       }
     }
 
     if (postalCodes.includes(form_data.postalCode)) {
-      showMessage({
-        message: "این کد پستی قبلا اضافه شده است",
-        type: "warning",
-        titleStyle: toastStyles,
-      });
+      toastConfig.warning("این کد پستی قبلا اضافه شده است");
       return;
     }
-    setPostalCodes([...postalCodes, form_data.postalCode]);
-    setValue("postalCode", "");
+    setIsValidating(true);
+    try {
+      const data = [{ clientRowID: 1, postCode: form_data.postalCode }];
+      const response = await validatePostCode(data);
+      console.log(
+        "VALIDATE POSTAL CODE RESPONSE: ",
+        response.data.itemList[0].value
+      );
+
+      if (response.data.itemList[0].value) {
+        setPostalCodes([...postalCodes, form_data.postalCode]);
+        setValue("postalCode", "");
+      } else {
+        toastConfig.warning("کد پستی معتبر نیست");
+      }
+    } finally {
+      setIsValidating(false);
+    }
   };
 
   const removePostalCodeHandler = (postalCode) => {
@@ -89,13 +101,6 @@ const Index = () => {
       console.log("POSTAL CODES RESPONSE: ", response.data.itemList[0].data);
       await setAddressByPostCode(response.data.itemList[0].data);
       router.push("forms/postalcode-geo/geo-step-1");
-    } catch (error) {
-      console.log("POSTAL CODE ERRORS: ", error.response);
-      showMessage({
-        message: error.response?.data?.message || error.message,
-        type: "danger",
-        titleStyle: toastStyles,
-      });
     } finally {
       setIsLoading(false);
     }
@@ -124,24 +129,33 @@ const Index = () => {
                 style={styles.inputContainer}
               >
                 <FormField
-                  placeholder="کد پستی"
+                  placeholder="* کد پستی"
                   keyboardType="numeric"
                   inputMode="numeric"
                   containerStyle="w-full"
+                  rules={{ ...requiredRule, postCodeRule }}
                   control={control}
                   name="postalCode"
                   max={10}
+                  editable={!isValidating}
                 />
-                <TouchableOpacity
-                  disabled={plusDisabled}
-                  onPress={addPostalCodeHandler}
-                >
-                  <Feather
-                    name="plus"
-                    size={24}
-                    color={`${plusDisabled ? "gray" : "green"}`}
-                  />
-                </TouchableOpacity>
+
+                {isValidating ? (
+                  <View>
+                    <Chase size={35} color="green" />
+                  </View>
+                ) : (
+                  <Pressable
+                    disabled={plusDisabled || isValidating}
+                    onPress={addPostalCodeHandler}
+                  >
+                    <Feather
+                      name="plus"
+                      size={24}
+                      color={`${plusDisabled ? "gray" : "green"}`}
+                    />
+                  </Pressable>
+                )}
               </View>
 
               <View className="w-full mt-20 justify-center items-center">
@@ -187,7 +201,8 @@ const Index = () => {
           <CustomButton
             title="ادامه"
             handlePress={handleSubmit(onSubmit)}
-            isLoading={isLoading}
+            isLoading={isLoading || isValidating}
+            disabled={postalCodes.length === 0}
           />
         </View>
       </SafeAreaView>

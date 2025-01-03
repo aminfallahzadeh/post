@@ -22,7 +22,8 @@
       },
       "supportsTablet": true,
       "config": {
-        "usesNonExemptEncryption": false
+        "usesNonExemptEncryption": false,
+        "googleMapsApiKey": "AIzaSyDMxvfpF17Kv8QE4DM3kLGb8QyNgyWKS-I"
       }
     },
     "android": {

@@ -1,5 +1,6 @@
 // IMPORTS
 import { nationalCodeChecker } from "@/utils/nationalCodeChecker";
+import { validatePostalCode } from "@/utils/postalCodeChecker";
 import { mobilePhoneErrors, REQUIRED, POSTCODE_INVALID } from "./messages";
 
 export const userDataValidations = (form_data) => [
@@ -182,21 +183,6 @@ export const nerkhnameValidations = {
   },
 };
 
-export const postCodeRules = {
-  minLength: {
-    value: 10,
-    message: POSTCODE_INVALID,
-  },
-  maxLength: {
-    value: 10,
-    message: POSTCODE_INVALID,
-  },
-  required: {
-    value: true,
-    message: REQUIRED,
-  },
-};
-
 export const lastStreetRules = {
   pattern: {
     value: /^[\u0600-\u06FF\s]+$/,
@@ -233,5 +219,13 @@ export const insurancePriceRules = {
 export const nationalCodeRule = {
   validate: (value) => {
     return nationalCodeChecker(value) || "کد ملی معتبر نیست";
+  },
+};
+
+// POSTAL CODE RULES
+
+export const postCodeRule = {
+  validate: (value) => {
+    return validatePostalCode(value) || "کد پستی معتبر نیست";
   },
 };

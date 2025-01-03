@@ -114,3 +114,9 @@ export function getVillage({
 
   return axiosInstance.get(url);
 }
+
+export function validatePostCode(data) {
+  return axiosInstance.post("GNAF/ValidatePostCode", {
+    postCodes: data,
+  });
+}

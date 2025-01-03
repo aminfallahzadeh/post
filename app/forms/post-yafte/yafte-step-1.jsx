@@ -16,8 +16,11 @@ import FormField from "@/components/FormField";
 import Background from "@/components/Background";
 import { useUserStore } from "@/store";
 import { POST_YAFTE } from "@/constants/consts";
-import { requiredRule } from "@/constants/validations";
-import { postYafteValidation } from "@/constants/validations";
+import {
+  postYafteValidation,
+  postCodeRule,
+  requiredRule,
+} from "@/constants/validations";
 import { getYafteProvince, getYafteCity } from "@/api/yafte";
 import { optionsGenerator } from "@/helpers/selectHelper";
 import * as SecureStore from "expo-secure-store";
@@ -144,7 +147,7 @@ const YafteStep1 = () => {
                 placeholder="* کد پستی"
                 keyboardType="numeric"
                 inputMode="numeric"
-                rules={postYafteValidation.postCode}
+                rules={{ ...requiredRule, ...postCodeRule }}
                 containerStyle="mt-5"
                 control={control}
                 name="postCode"
