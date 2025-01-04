@@ -66,6 +66,7 @@ const CertificateStep2 = () => {
       const response = await insertRequestCertification({
         mobile,
         title,
+        counter: selectedItems.length,
       });
       console.log("INSERT REQUEST CERTIFICATE RESPONSE: ", response.data);
       setFactor(response.data.itemList[0]);

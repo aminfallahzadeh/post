@@ -1,12 +1,7 @@
 // IMPORTS
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import {
-  View,
-  TouchableWithoutFeedback,
-  Keyboard,
-  ScrollView,
-} from "react-native";
+import { View, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FormField from "@/components/FormField";
 import CustomButton from "@/components/CustomButton";
@@ -124,54 +119,52 @@ const NewComplaintStep1 = () => {
             <Title title={"ثبت شکایت"} progress={100} home={true} />
 
             {/* FORM FIELDS */}
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-              <View className="w-full px-4">
-                <FormField
-                  placeholder="شماره سریال بسته پستی"
-                  keyboardType="numeric"
-                  inputMode="numeric"
+            <View className="w-full px-4">
+              <FormField
+                placeholder="شماره سریال بسته پستی"
+                keyboardType="numeric"
+                inputMode="numeric"
+                control={control}
+                containerStyle="mt-5"
+                name="serialNo"
+              />
+
+              <View className="mt-5">
+                <CustomSelect
+                  name="complaintType"
                   control={control}
-                  containerStyle="mt-5"
-                  name="serialNo"
+                  rules={requiredRule}
+                  data={complaintTypeLookup}
+                  label="* نوع شکایت"
+                  errors={errors}
+                  setValue={setValue}
                 />
-
-                <View className="mt-5">
-                  <CustomSelect
-                    name="complaintType"
-                    control={control}
-                    rules={requiredRule}
-                    data={complaintTypeLookup}
-                    label="* نوع شکایت"
-                    errors={errors}
-                    setValue={setValue}
-                  />
-                </View>
-
-                <View className="mt-5">
-                  <CustomSelect
-                    name="serviceId"
-                    control={control}
-                    rules={requiredRule}
-                    data={serviceTypeLookup}
-                    label="* نوع سرویس"
-                    errors={errors}
-                    setValue={setValue}
-                  />
-                </View>
-
-                <View className="mt-5">
-                  <CustomSelect
-                    name="to_org_id"
-                    control={control}
-                    rules={requiredRule}
-                    data={postalRegionLookup}
-                    label="* واحد پستی"
-                    errors={errors}
-                    setValue={setValue}
-                  />
-                </View>
               </View>
-            </TouchableWithoutFeedback>
+
+              <View className="mt-5">
+                <CustomSelect
+                  name="serviceId"
+                  control={control}
+                  rules={requiredRule}
+                  data={serviceTypeLookup}
+                  label="* نوع سرویس"
+                  errors={errors}
+                  setValue={setValue}
+                />
+              </View>
+
+              <View className="mt-5">
+                <CustomSelect
+                  name="to_org_id"
+                  control={control}
+                  rules={requiredRule}
+                  data={postalRegionLookup}
+                  label="* واحد پستی"
+                  errors={errors}
+                  setValue={setValue}
+                />
+              </View>
+            </View>
           </ScrollView>
 
           {/* Submit Section */}

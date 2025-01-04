@@ -1,14 +1,7 @@
 // IMPORTS
 import { useState, useEffect, useCallback } from "react";
 import { useForm } from "react-hook-form";
-import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  View,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { orderTracking } from "@/api/traking";
 import { useLocalSearchParams } from "expo-router";
@@ -92,32 +85,30 @@ const FollowOrder = () => {
             <Title title={"پیگیری مرسوله"} home={false} />
 
             {/* FORM FIELDS */}
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-              <View className="w-full px-4">
-                {!barcode && (
-                  <FormField
-                    placeholder="کد مرسوله"
-                    keyboardType="numeric"
-                    inputMode="numeric"
-                    containerStyle="mt-5"
-                    control={control}
-                    name="barcode"
-                  />
-                )}
+            <View className="w-full px-4">
+              {!barcode && (
+                <FormField
+                  placeholder="کد مرسوله"
+                  keyboardType="numeric"
+                  inputMode="numeric"
+                  containerStyle="mt-5"
+                  control={control}
+                  name="barcode"
+                />
+              )}
 
-                {/* RESPONSE CONTAINER */}
+              {/* RESPONSE CONTAINER */}
 
-                {isLoading ? (
-                  <View className="w-full mt-20 p-5 items-center justify-center">
-                    <Chase size={60} color="#164194" />
-                  </View>
-                ) : result ? (
-                  result.map((item, index) => (
-                    <OrderTrackCard key={index} item={item} />
-                  ))
-                ) : null}
-              </View>
-            </TouchableWithoutFeedback>
+              {isLoading ? (
+                <View className="w-full mt-20 p-5 items-center justify-center">
+                  <Chase size={60} color="#164194" />
+                </View>
+              ) : result ? (
+                result.map((item, index) => (
+                  <OrderTrackCard key={index} item={item} />
+                ))
+              ) : null}
+            </View>
           </ScrollView>
 
           {/* BOTTOM SECTION */}

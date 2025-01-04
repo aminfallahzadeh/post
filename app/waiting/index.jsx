@@ -13,7 +13,8 @@ const Index = () => {
   // EFFECTS
   useEffect(() => {
     if (url) {
-      router.push(url);
+      //   router.push(url);
+      console.log(url);
     }
   }, [url]);
 

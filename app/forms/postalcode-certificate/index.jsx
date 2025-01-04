@@ -1,15 +1,7 @@
 // IMPORTS
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import {
-  View,
-  Text,
-  Keyboard,
-  TouchableWithoutFeedback,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-} from "react-native";
+import { View, Text, Pressable, ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { addressByPostCode, validatePostCode } from "@/api/gnaf";
 import { useUserStore } from "@/store";
@@ -120,77 +112,71 @@ const Index = () => {
           <Title title={"گواهی کد پستی"} progress={33} home={false} />
 
           {/* FORM FIELDS */}
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <View className="w-full px-5">
-              <View
-                className="w-full flex-row-reverse px-10 justify-between items-center mt-10"
-                style={styles.inputContainer}
-              >
-                <FormField
-                  placeholder="* کد پستی"
-                  keyboardType="numeric"
-                  inputMode="numeric"
-                  containerStyle="w-full"
-                  control={control}
-                  name="postalCode"
-                  max={10}
-                  editable={!isValidating}
-                />
+          <View className="w-full px-5">
+            <View
+              className="w-full flex-row-reverse px-10 justify-between items-center mt-10"
+              style={styles.inputContainer}
+            >
+              <FormField
+                placeholder="* کد پستی"
+                keyboardType="numeric"
+                inputMode="numeric"
+                containerStyle="w-full"
+                control={control}
+                name="postalCode"
+                max={10}
+                editable={!isValidating}
+              />
 
-                {isValidating ? (
-                  <View>
-                    <Chase size={35} color="green" />
-                  </View>
+              {isValidating ? (
+                <View>
+                  <Chase size={35} color="#164194" />
+                </View>
+              ) : (
+                <Pressable
+                  disabled={plusDisabled || isValidating}
+                  onPress={addPostalCodeHandler}
+                >
+                  <Feather
+                    name="plus"
+                    size={24}
+                    color={`${plusDisabled ? "gray" : "#164194"}`}
+                  />
+                </Pressable>
+              )}
+            </View>
+
+            <View className="w-full mt-20 justify-center items-center">
+              <Text className="text-primary font-isansbold text-[18px]">
+                لیست کد پستی های شما
+              </Text>
+              <View
+                className={`w-full rounded-md mt-5 p-5 items-center ${
+                  postalCodes.length === 0 ? "justify-center" : "justify-start"
+                }`}
+                style={styles.postalCodeContainers}
+              >
+                {postalCodes.length === 0 ? (
+                  <Text className="text-grey4 font-isansregular text-[15px]">
+                    لطفا کد پستی خود را اضافه کنید
+                  </Text>
                 ) : (
-                  <Pressable
-                    disabled={plusDisabled || isValidating}
-                    onPress={addPostalCodeHandler}
+                  <View
+                    className="w-full flex-row-reverse flex-wrap"
+                    style={styles.postalCodesItemContainer}
                   >
-                    <Feather
-                      name="plus"
-                      size={24}
-                      color={`${plusDisabled ? "gray" : "green"}`}
-                    />
-                  </Pressable>
+                    {postalCodes.map((postalCode, index) => (
+                      <PostalCodeCard
+                        key={index}
+                        postalCode={postalCode}
+                        handlePress={() => removePostalCodeHandler(postalCode)}
+                      />
+                    ))}
+                  </View>
                 )}
               </View>
-
-              <View className="w-full mt-20 justify-center items-center">
-                <Text className="text-primary font-isansbold text-[18px]">
-                  لیست کد پستی های شما
-                </Text>
-                <View
-                  className={`w-full rounded-md mt-5 p-5 items-center ${
-                    postalCodes.length === 0
-                      ? "justify-center"
-                      : "justify-start"
-                  }`}
-                  style={styles.postalCodeContainers}
-                >
-                  {postalCodes.length === 0 ? (
-                    <Text className="text-grey4 font-isansregular text-[15px]">
-                      لطفا کد پستی خود را اضافه کنید
-                    </Text>
-                  ) : (
-                    <View
-                      className="w-full flex-row-reverse flex-wrap"
-                      style={styles.postalCodesItemContainer}
-                    >
-                      {postalCodes.map((postalCode, index) => (
-                        <PostalCodeCard
-                          key={index}
-                          postalCode={postalCode}
-                          handlePress={() =>
-                            removePostalCodeHandler(postalCode)
-                          }
-                        />
-                      ))}
-                    </View>
-                  )}
-                </View>
-              </View>
             </View>
-          </TouchableWithoutFeedback>
+          </View>
         </ScrollView>
 
         {/* BOTTOM SECTION */}

@@ -1,12 +1,7 @@
 // IMPORTS
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import {
-  View,
-  ScrollView,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native";
+import { View, ScrollView } from "react-native";
 import { useUserStore } from "@/store";
 import Background from "@/components/Background";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -114,126 +109,124 @@ const NerkhnameStep3 = () => {
           />
 
           {/* FORM FIELDS */}
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <View className="w-full px-5">
-              <FormField
-                placeholder="* نام"
-                type={"text"}
-                keyboardType="default"
-                containerStyle="mt-10"
+          <View className="w-full px-5">
+            <FormField
+              placeholder="* نام"
+              type={"text"}
+              keyboardType="default"
+              containerStyle="mt-10"
+              control={control}
+              rules={requiredRule}
+              name="receivername"
+            />
+
+            <FormField
+              placeholder="* نام خانوادگی"
+              type={"text"}
+              keyboardType="default"
+              containerStyle="mt-5"
+              control={control}
+              rules={requiredRule}
+              name="receiverLastname"
+            />
+
+            <FormField
+              placeholder="تلفن همراه"
+              keyboardType="numeric"
+              inputMode="numeric"
+              rules={requiredRule}
+              containerStyle="mt-5"
+              control={control}
+              name="receivermobile"
+            />
+
+            <FormField
+              placeholder="تلفن ثابت"
+              keyboardType="numeric"
+              inputMode="numeric"
+              containerStyle="mt-5"
+              control={control}
+              name="receiverPhone"
+            />
+
+            <FormField
+              placeholder="کد ملی"
+              keyboardType="numeric"
+              inputMode="numeric"
+              containerStyle="mt-5"
+              control={control}
+              rules={nationalCodeRule}
+              name="receiverid"
+            />
+
+            <FormField
+              placeholder="کد پستی"
+              keyboardType="numeric"
+              inputMode="numeric"
+              rules={postCodeRule}
+              containerStyle="mt-5"
+              control={control}
+              name="receiverpostalcode"
+            />
+
+            <View className="mt-5">
+              <CustomSelect
+                name="receiverProvinceID"
                 control={control}
                 rules={requiredRule}
-                name="receivername"
-              />
-
-              <FormField
-                placeholder="* نام خانوادگی"
-                type={"text"}
-                keyboardType="default"
-                containerStyle="mt-5"
-                control={control}
-                rules={requiredRule}
-                name="receiverLastname"
-              />
-
-              <FormField
-                placeholder="تلفن همراه"
-                keyboardType="numeric"
-                inputMode="numeric"
-                rules={requiredRule}
-                containerStyle="mt-5"
-                control={control}
-                name="receivermobile"
-              />
-
-              <FormField
-                placeholder="تلفن ثابت"
-                keyboardType="numeric"
-                inputMode="numeric"
-                containerStyle="mt-5"
-                control={control}
-                name="receiverPhone"
-              />
-
-              <FormField
-                placeholder="کد ملی"
-                keyboardType="numeric"
-                inputMode="numeric"
-                containerStyle="mt-5"
-                control={control}
-                rules={nationalCodeRule}
-                name="receiverid"
-              />
-
-              <FormField
-                placeholder="کد پستی"
-                keyboardType="numeric"
-                inputMode="numeric"
-                rules={postCodeRule}
-                containerStyle="mt-5"
-                control={control}
-                name="receiverpostalcode"
-              />
-
-              <View className="mt-5">
-                <CustomSelect
-                  name="receiverProvinceID"
-                  control={control}
-                  rules={requiredRule}
-                  data={provinceOptions}
-                  label="* استان"
-                  errors={errors}
-                  setValue={setValue}
-                  search={true}
-                  isLoading={isProvinceLoading}
-                  onValueChange={(val) => {
-                    if (val) {
-                      console.log(val);
-                      fetchCity(val);
-                    } else {
-                      setCityOptions([]);
-                    }
-                  }}
-                  onClear={() => {
-                    setValue("receiverProvinceID", null);
-                    setValue("destcode", null);
+                data={provinceOptions}
+                label="* استان"
+                errors={errors}
+                setValue={setValue}
+                search={true}
+                isLoading={isProvinceLoading}
+                onValueChange={(val) => {
+                  if (val) {
+                    console.log(val);
+                    fetchCity(val);
+                  } else {
                     setCityOptions([]);
-                  }}
-                />
-              </View>
-
-              <View className="mt-5">
-                <CustomSelect
-                  name="destcode"
-                  control={control}
-                  rules={requiredRule}
-                  data={cityOptions}
-                  label="* شهر"
-                  search={true}
-                  errors={errors}
-                  setValue={setValue}
-                  isLoading={isCityLoading}
-                />
-              </View>
-
-              <FormField
-                placeholder="* آدرس"
-                type={"text"}
-                multiline={true}
-                rules={requiredRule}
-                keyboardType="default"
-                containerStyle="mt-5"
-                height="h-32 align-top"
-                inputStyle={{
-                  textAlignVertical: "top",
-                  textAlign: "right",
-                  paddingTop: 20,
+                  }
                 }}
-                control={control}
-                name="receiveraddress"
+                onClear={() => {
+                  setValue("receiverProvinceID", null);
+                  setValue("destcode", null);
+                  setCityOptions([]);
+                }}
               />
             </View>
-          </TouchableWithoutFeedback>
+
+            <View className="mt-5">
+              <CustomSelect
+                name="destcode"
+                control={control}
+                rules={requiredRule}
+                data={cityOptions}
+                label="* شهر"
+                search={true}
+                errors={errors}
+                setValue={setValue}
+                isLoading={isCityLoading}
+              />
+            </View>
+
+            <FormField
+              placeholder="* آدرس"
+              type={"text"}
+              multiline={true}
+              rules={requiredRule}
+              keyboardType="default"
+              containerStyle="mt-5"
+              height="h-32 align-top"
+              inputStyle={{
+                textAlignVertical: "top",
+                textAlign: "right",
+                paddingTop: 20,
+              }}
+              control={control}
+              name="receiveraddress"
+            />
+          </View>
         </ScrollView>
 
         {/* BOTTOM SECTION */}

@@ -36,7 +36,7 @@ const Index = () => {
             <CustomCarousel />
 
             <Pressable onPress={() => router.push("forms/follow")}>
-              <View className="flex-row justify-center items-center bg-primary py-1 border border-[#fcdb00]">
+              <View className="flex-row justify-center items-center bg-primary py-1 border-t border-b border-[#fcdb00]">
                 <Text className="text-white font-isansbold text-lg text-center">
                   پیگیری مرسوله
                 </Text>

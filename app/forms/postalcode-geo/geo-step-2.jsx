@@ -21,7 +21,6 @@ const Step3 = () => {
 
   // CONSTS
   const factor = useUserStore((state) => state.factor);
-  const setFactor = useUserStore((state) => state.setFactor);
   const mobile = SecureStore.getItem("mobile");
 
   // ANIMATION
@@ -131,6 +130,7 @@ const Step3 = () => {
                 خرید موافق هستم
               </Text>
             </RNBounceable>
+
             <View>
               <BouncyCheckbox
                 ref={bouncyCheckboxRef}

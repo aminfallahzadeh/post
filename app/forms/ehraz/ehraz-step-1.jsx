@@ -1,13 +1,7 @@
 // IMPORTS
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useForm } from "react-hook-form";
-import {
-  View,
-  Keyboard,
-  ScrollView,
-  Text,
-  TouchableWithoutFeedback,
-} from "react-native";
+import { View, ScrollView, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "@/components/CustomButton";
 import { addressByPostCode } from "@/api/gnaf";
@@ -16,7 +10,7 @@ import Background from "@/components/Background";
 import { useUserStore } from "@/store";
 import { Title } from "@/components/Title";
 import FormField from "@/components/FormField";
-import { postCodeRules } from "@/constants/validations";
+import { postCodeRule } from "@/constants/validations";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import RNBounceable from "@freakycoder/react-native-bounceable";
 import { insertRequestEhraz } from "@/api/request";
@@ -147,132 +141,130 @@ const EhrazStep1 = () => {
           {/* HEADER SECTION */}
           <Title progress={66} title="احراز نشانی" />
           {/* FORM FIELDS */}
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <View className="w-full px-5">
-              <FormField
-                placeholder="کد پستی"
-                keyboardType="numeric"
-                inputMode="numeric"
-                containerStyle="mt-10"
-                control={control}
-                rules={postCodeRules}
-                name="postCode"
-              />
+          <View className="w-full px-5">
+            <FormField
+              placeholder="کد پستی"
+              keyboardType="numeric"
+              inputMode="numeric"
+              containerStyle="mt-10"
+              control={control}
+              rules={postCodeRule}
+              name="postCode"
+            />
 
-              <FormField
-                placeholder="آدرس"
-                type={"text"}
-                containerStyle="mt-5"
-                multiline={true}
-                editable={false}
-                control={control}
-                height={"h-28"}
-                inputStyle={{
-                  textAlignVertical: "top",
-                  textAlign: "right",
-                  paddingTop: 15,
+            <FormField
+              placeholder="آدرس"
+              type={"text"}
+              containerStyle="mt-5"
+              multiline={true}
+              editable={false}
+              control={control}
+              height={"h-28"}
+              inputStyle={{
+                textAlignVertical: "top",
+                textAlign: "right",
+                paddingTop: 15,
+              }}
+              name="address"
+            />
+
+            <View className="flex-row justify-center items-center mt-5">
+              <RNBounceable
+                onPress={() => {
+                  if (bouncyCheckboxRef.current) {
+                    bouncyCheckboxRef.current.onCheckboxPress();
+                  }
                 }}
-                name="address"
-              />
-
-              <View className="flex-row justify-center items-center mt-5">
-                <RNBounceable
-                  onPress={() => {
-                    if (bouncyCheckboxRef.current) {
-                      bouncyCheckboxRef.current.onCheckboxPress();
-                    }
-                  }}
-                >
-                  <Text className="text-red-900 font-isansregular text-right px-3">
-                    در صورت نقص در هریک از اجزای نشانی نمایش داده شده. لطفا
-                    اطلاعات تکمیلی زیر را وارد نمایید
-                  </Text>
-                </RNBounceable>
-                <View>
-                  <BouncyCheckbox
-                    ref={bouncyCheckboxRef}
-                    onPress={handleCheckboxPress}
-                    fillColor="#ff0000"
-                  />
-                </View>
-              </View>
-
-              <FormField
-                placeholder="معبر آخر"
-                type={"text"}
-                containerStyle="mt-5"
-                multiline={true}
-                editable={checked}
-                control={control}
-                height={"h-28"}
-                rules={lastStreetRules}
-                inputStyle={{
-                  textAlignVertical: "top",
-                  textAlign: "right",
-                  paddingTop: 15,
-                }}
-                name="lastStreet"
-              />
-
-              <View className="flex-row-reverse justify-between items-center">
-                <View className="flex-1 ml-2">
-                  <FormField
-                    placeholder="پلاک"
-                    keyboardType="numeric"
-                    inputMode="numeric"
-                    containerStyle="mt-5"
-                    editable={checked}
-                    control={control}
-                    name="buildingNumber"
-                  />
-                </View>
-                <View className="flex-1 ml-2">
-                  <FormField
-                    placeholder="طبقه"
-                    keyboardType="numeric"
-                    inputMode="numeric"
-                    containerStyle="mt-5"
-                    editable={checked}
-                    control={control}
-                    name="floor"
-                  />
-                </View>
-                <View className="flex-1 ml-2">
-                  <FormField
-                    placeholder="واحد"
-                    keyboardType="numeric"
-                    inputMode="numeric"
-                    containerStyle="mt-5"
-                    editable={checked}
-                    control={control}
-                    name="unit"
-                  />
-                </View>
-              </View>
-
-              <View className="flex-row justify-center items-center mt-5">
-                <RNBounceable
-                  onPress={() => {
-                    if (confirmedCheckboxRef.current) {
-                      confirmedCheckboxRef.current.onCheckboxPress();
-                    }
-                  }}
-                >
-                  <Text className="text-grey2 font-isansregular text-right px-3">
-                    مسئولیت صحت اطلاعات وارد شده بعهده متقاضی می باشد. مدارک
-                    مربوطه توسط نامه رسان در مکان مشتری کنترل می شود.
-                  </Text>
-                </RNBounceable>
-                <View>
-                  <BouncyCheckbox
-                    ref={confirmedCheckboxRef}
-                    onPress={handleConfirmedCheckboxPress}
-                    fillColor="#ff7800"
-                  />
-                </View>
+              >
+                <Text className="text-red-900 font-isansregular text-right px-3">
+                  در صورت نقص در هریک از اجزای نشانی نمایش داده شده. لطفا
+                  اطلاعات تکمیلی زیر را وارد نمایید
+                </Text>
+              </RNBounceable>
+              <View>
+                <BouncyCheckbox
+                  ref={bouncyCheckboxRef}
+                  onPress={handleCheckboxPress}
+                  fillColor="#ff0000"
+                />
               </View>
             </View>
-          </TouchableWithoutFeedback>
+
+            <FormField
+              placeholder="معبر آخر"
+              type={"text"}
+              containerStyle="mt-5"
+              multiline={true}
+              editable={checked}
+              control={control}
+              height={"h-28"}
+              rules={lastStreetRules}
+              inputStyle={{
+                textAlignVertical: "top",
+                textAlign: "right",
+                paddingTop: 15,
+              }}
+              name="lastStreet"
+            />
+
+            <View className="flex-row-reverse justify-between items-center">
+              <View className="flex-1 ml-2">
+                <FormField
+                  placeholder="پلاک"
+                  keyboardType="numeric"
+                  inputMode="numeric"
+                  containerStyle="mt-5"
+                  editable={checked}
+                  control={control}
+                  name="buildingNumber"
+                />
+              </View>
+              <View className="flex-1 ml-2">
+                <FormField
+                  placeholder="طبقه"
+                  keyboardType="numeric"
+                  inputMode="numeric"
+                  containerStyle="mt-5"
+                  editable={checked}
+                  control={control}
+                  name="floor"
+                />
+              </View>
+              <View className="flex-1 ml-2">
+                <FormField
+                  placeholder="واحد"
+                  keyboardType="numeric"
+                  inputMode="numeric"
+                  containerStyle="mt-5"
+                  editable={checked}
+                  control={control}
+                  name="unit"
+                />
+              </View>
+            </View>
+
+            <View className="flex-row justify-center items-center mt-5">
+              <RNBounceable
+                onPress={() => {
+                  if (confirmedCheckboxRef.current) {
+                    confirmedCheckboxRef.current.onCheckboxPress();
+                  }
+                }}
+              >
+                <Text className="text-grey2 font-isansregular text-right px-3">
+                  مسئولیت صحت اطلاعات وارد شده بعهده متقاضی می باشد. مدارک
+                  مربوطه توسط نامه رسان در مکان مشتری کنترل می شود.
+                </Text>
+              </RNBounceable>
+              <View>
+                <BouncyCheckbox
+                  ref={confirmedCheckboxRef}
+                  onPress={handleConfirmedCheckboxPress}
+                  fillColor="#ff7800"
+                />
+              </View>
+            </View>
+          </View>
         </ScrollView>
 
         {/* BOTTOM SECTION */}

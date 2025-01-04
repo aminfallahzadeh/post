@@ -1,12 +1,7 @@
 // IMPORTS
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import {
-  View,
-  Keyboard,
-  TouchableWithoutFeedback,
-  ScrollView,
-} from "react-native";
+import { View, ScrollView } from "react-native";
 import CustomSelect from "@/components/CustomSelect";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { insertRequestPostYafte } from "@/api/request";
@@ -116,78 +111,76 @@ const YafteStep1 = () => {
           <Title title={POST_YAFTE} progress={66} home={true} />
 
           {/* FORM FIELDS */}
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <View className="w-full px-5">
-              <FormField
-                placeholder="تلفن همراه"
-                editable={false}
-                type={"text"}
-                containerStyle="mt-10"
-                control={control}
-                value={mobile || " "}
-                name="mobile"
-              />
+          <View className="w-full px-5">
+            <FormField
+              placeholder="تلفن همراه"
+              editable={false}
+              type={"text"}
+              containerStyle="mt-10"
+              control={control}
+              value={mobile || " "}
+              name="mobile"
+            />
 
-              <FormField
-                placeholder="* آدرس"
-                multiline={true}
-                keyboardType="default"
-                type={"text"}
-                containerStyle="mt-5"
-                rules={postYafteValidation.address}
-                height={"h-40"}
-                inputStyle={{
-                  textAlignVertical: "top",
+            <FormField
+              placeholder="* آدرس"
+              multiline={true}
+              keyboardType="default"
+              type={"text"}
+              containerStyle="mt-5"
+              rules={postYafteValidation.address}
+              height={"h-40"}
+              inputStyle={{
+                textAlignVertical: "top",
+              }}
+              control={control}
+              name="address"
+            />
+
+            <FormField
+              placeholder="* کد پستی"
+              keyboardType="numeric"
+              inputMode="numeric"
+              rules={{ ...requiredRule, ...postCodeRule }}
+              containerStyle="mt-5"
+              control={control}
+              name="postCode"
+            />
+
+            <View className="mt-5">
+              <CustomSelect
+                name="state_id"
+                control={control}
+                rules={requiredRule}
+                data={provinceOptions}
+                label="* استان"
+                errors={errors}
+                setValue={setValue}
+                isLoading={isProvinceLoading}
+                onValueChange={(val) => {
+                  fetchCity(val);
                 }}
-                control={control}
-                name="address"
+                onClear={() => {
+                  setValue("state_id", null);
+                  setValue("city_id", null);
+                  setCityOptions([]);
+                }}
               />
-
-              <FormField
-                placeholder="* کد پستی"
-                keyboardType="numeric"
-                inputMode="numeric"
-                rules={{ ...requiredRule, ...postCodeRule }}
-                containerStyle="mt-5"
-                control={control}
-                name="postCode"
-              />
-
-              <View className="mt-5">
-                <CustomSelect
-                  name="state_id"
-                  control={control}
-                  rules={requiredRule}
-                  data={provinceOptions}
-                  label="* استان"
-                  errors={errors}
-                  setValue={setValue}
-                  isLoading={isProvinceLoading}
-                  onValueChange={(val) => {
-                    fetchCity(val);
-                  }}
-                  onClear={() => {
-                    setValue("state_id", null);
-                    setValue("city_id", null);
-                    setCityOptions([]);
-                  }}
-                />
-              </View>
-
-              <View className="mt-5">
-                <CustomSelect
-                  name="city_id"
-                  control={control}
-                  rules={requiredRule}
-                  data={cityOptions}
-                  label="* شهر"
-                  errors={errors}
-                  setValue={setValue}
-                  isLoading={isCityLoading}
-                />
-              </View>
             </View>
-          </TouchableWithoutFeedback>
+
+            <View className="mt-5">
+              <CustomSelect
+                name="city_id"
+                control={control}
+                rules={requiredRule}
+                data={cityOptions}
+                label="* شهر"
+                errors={errors}
+                setValue={setValue}
+                isLoading={isCityLoading}
+              />
+            </View>
+          </View>
         </ScrollView>
 
         {/* BOTTOM SECTION */}

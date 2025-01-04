@@ -1,12 +1,7 @@
 // IMPORTS
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import {
-  View,
-  Keyboard,
-  TouchableWithoutFeedback,
-  ScrollView,
-} from "react-native";
+import { View, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useUserStore } from "@/store";
 import { stepOneEopValidations } from "@/constants/validations";
@@ -84,75 +79,73 @@ const Index = () => {
             <Title title={"ثبت شکایت"} progress={50} home={false} />
 
             {/* FORM FIELDS */}
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-              <View className="w-full px-4">
-                <FormField
-                  placeholder="شماره موبایل"
-                  keyboardType="default"
-                  type={"text"}
-                  editable={false}
-                  value={mobile || "-"}
-                  style={{ color: "#666666" }}
-                  containerStyle="mt-5"
-                  control={control}
-                  name="mobile"
-                />
+            <View className="w-full px-4">
+              <FormField
+                placeholder="شماره موبایل"
+                keyboardType="default"
+                type={"text"}
+                editable={false}
+                value={mobile || "-"}
+                style={{ color: "#666666" }}
+                containerStyle="mt-5"
+                control={control}
+                name="mobile"
+              />
 
-                <FormField
-                  placeholder="نام"
-                  keyboardType="default"
-                  containerStyle="mt-5"
-                  type={"text"}
-                  value={userData?.name || "-"}
-                  editable={false}
-                  style={{ color: "#666666" }}
-                  control={control}
-                  name="name"
-                />
+              <FormField
+                placeholder="نام"
+                keyboardType="default"
+                containerStyle="mt-5"
+                type={"text"}
+                value={userData?.name || "-"}
+                editable={false}
+                style={{ color: "#666666" }}
+                control={control}
+                name="name"
+              />
 
-                <FormField
-                  placeholder="نام خانوادگی"
-                  keyboardType="default"
-                  containerStyle="mt-5"
-                  type={"text"}
-                  control={control}
-                  editable={false}
-                  style={{ color: "#666666" }}
-                  value={userData?.lastName || "-"}
-                  name="lastname"
-                />
+              <FormField
+                placeholder="نام خانوادگی"
+                keyboardType="default"
+                containerStyle="mt-5"
+                type={"text"}
+                control={control}
+                editable={false}
+                style={{ color: "#666666" }}
+                value={userData?.lastName || "-"}
+                name="lastname"
+              />
 
-                <FormField
-                  placeholder="کد ملی"
-                  keyboardType="default"
-                  type={"text"}
-                  control={control}
-                  rules={nationalCodeRule}
-                  containerStyle="mt-5"
-                  editable={false}
-                  style={{ color: "#666666" }}
-                  value={userData?.nationalCode || "-"}
-                  name="nationalCode"
-                />
+              <FormField
+                placeholder="کد ملی"
+                keyboardType="default"
+                type={"text"}
+                control={control}
+                rules={nationalCodeRule}
+                containerStyle="mt-5"
+                editable={false}
+                style={{ color: "#666666" }}
+                value={userData?.nationalCode || "-"}
+                name="nationalCode"
+              />
 
-                <FormField
-                  placeholder="عنوان شکایت"
-                  keyboardType="default"
-                  type={"text"}
-                  height={"h-[100px]"}
-                  containerStyle="mt-5"
-                  max={800}
-                  multiline
-                  inputStyle={{
-                    textAlignVertical: "top",
-                    textAlign: "right",
-                    paddingTop: 10,
-                  }}
-                  control={control}
-                  name="title"
-                />
-              </View>
-            </TouchableWithoutFeedback>
+              <FormField
+                placeholder="عنوان شکایت"
+                keyboardType="default"
+                type={"text"}
+                height={"h-[100px]"}
+                containerStyle="mt-5"
+                max={800}
+                multiline
+                inputStyle={{
+                  textAlignVertical: "top",
+                  textAlign: "right",
+                  paddingTop: 10,
+                }}
+                control={control}
+                name="title"
+              />
+            </View>
           </ScrollView>
 
           {/* BOTTOM SECTION */}

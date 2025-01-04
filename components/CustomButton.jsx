@@ -11,7 +11,7 @@ export const CustomButton = ({
   textStyles,
   isLoading,
   disabled,
-  height = "h-12",
+  height = "h-14",
   bgColor = "bg-primary",
   titleColor = "text-white",
 }) => {
@@ -19,7 +19,7 @@ export const CustomButton = ({
     <TouchableOpacity
       onPress={handlePress}
       activeOpacity={0.7}
-      className={`${bgColor} rounded-sm ${height} justify-center items-center ${containerStyles} ${
+      className={`${bgColor} rounded-lg ${height} justify-center items-center ${containerStyles} ${
         isLoading ? "opacity-50" : ""
       }`}
       style={{ opacity: disabled || isLoading ? 0.5 : 1 }}

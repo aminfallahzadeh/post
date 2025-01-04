@@ -15,6 +15,7 @@ const CertificateStep3 = () => {
   // STATES
   const [isLoading, setIsLoading] = useState(false);
   const [checked, setChecked] = useState(false);
+  const [cancelButton, setCancelButton] = useState(false);
   const bouncyCheckboxRef = useRef(null);
   const slideAnim = useRef(new Animated.Value(50)).current;
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -73,10 +74,13 @@ const CertificateStep3 = () => {
         response.data.itemList[0].data.paymentUrl
       );
       router.push(response.data.itemList[0].data.paymentUrl);
+      setCancelButton(true);
       //   setFactor([]);
       //   router.replace({
       //     pathname: "/waiting",
-      //     params: { url: response.data.itemList[0].data.paymentUrl },
+      //     params: {
+      //       url: encodeURIComponent(response.data.itemList[0].data.paymentUrl),
+      //     },
       //   });
     } finally {
       setIsLoading(false);
@@ -131,7 +135,7 @@ const CertificateStep3 = () => {
                   style={{ color: "blue" }}
                   onPress={() => console.log("Navigate to Terms")}
                 >
-                  شرایط{" "}
+                  شرایط
                 </Text>
                 خرید موافق هستم
               </Text>
@@ -148,12 +152,21 @@ const CertificateStep3 = () => {
 
         {/* BOTTOM SECTION */}
         <View className="w-full z-10 px-4 bg-gray-100 py-4">
-          <CustomButton
-            title="پرداخت"
-            disabled={!checked}
-            handlePress={onSubmit}
-            isLoading={isLoading}
-          />
+          {cancelButton ? (
+            <CustomButton
+              title="انصراف"
+              bgColor="bg-red-500"
+              titleColor="text-white"
+              handlePress={() => router.replace("/")}
+            />
+          ) : (
+            <CustomButton
+              title="پرداخت"
+              disabled={!checked}
+              handlePress={onSubmit}
+              isLoading={isLoading}
+            />
+          )}
         </View>
       </SafeAreaView>
     </Background>

@@ -1,13 +1,7 @@
 // IMPORTS
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import {
-  View,
-  Text,
-  TouchableWithoutFeedback,
-  Keyboard,
-  ScrollView,
-} from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useLocalSearchParams, router } from "expo-router";
 import { useUserStore } from "@/store";
@@ -114,73 +108,71 @@ const UserProfile = () => {
           {/* HEADER SECTION */}
           <Title title={"پروفایل کاربر"} progress={false} home={true} />
 
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <View className="w-full px-4 pt-5">
-              <FormField
-                placeholder="نام"
-                control={control}
-                containerStyle="mt-5"
-                name="name"
-              />
+          <View className="w-full px-4 pt-5">
+            <FormField
+              placeholder="نام"
+              control={control}
+              containerStyle="mt-5"
+              name="name"
+            />
 
-              <FormField
-                placeholder="نام خانوادگی"
-                control={control}
-                containerStyle="mt-5"
-                name="lastName"
-              />
-              <FormField
-                placeholder="کد ملی"
-                keyboardType="numeric"
-                inputMode="numeric"
-                rules={nationalCodeRule}
-                control={control}
-                containerStyle="mt-5"
-                name="nationalCode"
-              />
+            <FormField
+              placeholder="نام خانوادگی"
+              control={control}
+              containerStyle="mt-5"
+              name="lastName"
+            />
+            <FormField
+              placeholder="کد ملی"
+              keyboardType="numeric"
+              inputMode="numeric"
+              rules={nationalCodeRule}
+              control={control}
+              containerStyle="mt-5"
+              name="nationalCode"
+            />
 
-              <View className="mt-5">
-                <Text className="text-base text-gray2 font-isansmedium w-full text-right px-2">
-                  تاریخ تولد :
-                </Text>
+            <View className="mt-5">
+              <Text className="text-base text-gray2 font-isansmedium w-full text-right px-2">
+                تاریخ تولد :
+              </Text>
+            </View>
+
+            <View className="flex-row-reverse justify-between items-center mt-5">
+              <View className="flex-1 ml-2">
+                <CustomSelect
+                  name="day"
+                  control={control}
+                  data={days}
+                  label="روز"
+                  errors={errors}
+                  setValue={setValue}
+                />
               </View>
 
-              <View className="flex-row-reverse justify-between items-center mt-5">
-                <View className="flex-1 ml-2">
-                  <CustomSelect
-                    name="day"
-                    control={control}
-                    data={days}
-                    label="روز"
-                    errors={errors}
-                    setValue={setValue}
-                  />
-                </View>
+              <View className="flex-1 mr-2 ml-2">
+                <CustomSelect
+                  name="month"
+                  control={control}
+                  data={months}
+                  label="ماه"
+                  errors={errors}
+                  setValue={setValue}
+                />
+              </View>
 
-                <View className="flex-1 mr-2 ml-2">
-                  <CustomSelect
-                    name="month"
-                    control={control}
-                    data={months}
-                    label="ماه"
-                    errors={errors}
-                    setValue={setValue}
-                  />
-                </View>
-
-                <View className="flex-1 mr-2">
-                  <CustomSelect
-                    name="year"
-                    control={control}
-                    data={years}
-                    label="سال"
-                    errors={errors}
-                    setValue={setValue}
-                  />
-                </View>
+              <View className="flex-1 mr-2">
+                <CustomSelect
+                  name="year"
+                  control={control}
+                  data={years}
+                  label="سال"
+                  errors={errors}
+                  setValue={setValue}
+                />
               </View>
             </View>
-          </TouchableWithoutFeedback>
+          </View>
         </ScrollView>
 
         {/* BOTTOM SECTION */}

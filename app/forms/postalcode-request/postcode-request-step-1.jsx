@@ -1,11 +1,6 @@
 // IMPORTS
 import { useState } from "react";
-import {
-  View,
-  Keyboard,
-  TouchableWithoutFeedback,
-  ScrollView,
-} from "react-native";
+import { View, ScrollView } from "react-native";
 import { insertRequestBulk } from "@/api/request";
 import { useForm } from "react-hook-form";
 import CustomButton from "@/components/CustomButton";
@@ -98,94 +93,92 @@ const Step2 = () => {
           <Title title={"درخواست کد پستی"} progress={66} home={true} />
 
           {/* FORM FIELDS */}
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <View className="w-full px-4">
-              <FormField
-                placeholder="* نام"
-                keyboardType="default"
-                containerStyle="mt-5"
-                rules={requiredRule}
-                type={"text"}
-                value={userData?.name || ""}
-                control={control}
-                name="name"
-              />
+          <View className="w-full px-4">
+            <FormField
+              placeholder="* نام"
+              keyboardType="default"
+              containerStyle="mt-5"
+              rules={requiredRule}
+              type={"text"}
+              value={userData?.name || ""}
+              control={control}
+              name="name"
+            />
 
-              <FormField
-                placeholder="* نام خانوادگی"
-                keyboardType="default"
-                containerStyle="mt-5"
-                rules={requiredRule}
-                type={"text"}
-                control={control}
-                value={userData?.lastName || ""}
-                name="lastname"
-              />
+            <FormField
+              placeholder="* نام خانوادگی"
+              keyboardType="default"
+              containerStyle="mt-5"
+              rules={requiredRule}
+              type={"text"}
+              control={control}
+              value={userData?.lastName || ""}
+              name="lastname"
+            />
 
-              <FormField
-                placeholder="* تلفن همراه"
-                keyboardType="numeric"
-                inputMode="numeric"
-                containerStyle="mt-5"
-                rules={requiredRule}
-                control={control}
-                editable={false}
-                value={mobile || " "}
-                name="mobile"
-              />
+            <FormField
+              placeholder="* تلفن همراه"
+              keyboardType="numeric"
+              inputMode="numeric"
+              containerStyle="mt-5"
+              rules={requiredRule}
+              control={control}
+              editable={false}
+              value={mobile || " "}
+              name="mobile"
+            />
 
-              <FormField
-                placeholder="شماره تلفن ثابت"
-                keyboardType="numeric"
-                containerStyle="mt-5"
-                type={"text"}
-                control={control}
-                name="tel"
-              />
+            <FormField
+              placeholder="شماره تلفن ثابت"
+              keyboardType="numeric"
+              containerStyle="mt-5"
+              type={"text"}
+              control={control}
+              name="tel"
+            />
 
-              <FormField
-                placeholder="موقعیت"
-                keyboardType="default"
-                containerStyle="mt-5"
-                type={"text"}
-                value={userAddress || ""}
-                control={control}
-                name="addressMain"
-                editable={false}
-                height="h-24"
-                multiline={true}
-              />
+            <FormField
+              placeholder="موقعیت"
+              keyboardType="default"
+              containerStyle="mt-5"
+              type={"text"}
+              value={userAddress || ""}
+              control={control}
+              name="addressMain"
+              editable={false}
+              height="h-24"
+              multiline={true}
+            />
 
-              <FormField
-                placeholder="* نشانی"
-                keyboardType="default"
-                containerStyle="mt-5"
-                rules={requiredRule}
-                type={"text"}
-                control={control}
-                name="addressSub"
-                multiline={true}
-              />
+            <FormField
+              placeholder="* نشانی"
+              keyboardType="default"
+              containerStyle="mt-5"
+              rules={requiredRule}
+              type={"text"}
+              control={control}
+              name="addressSub"
+              multiline={true}
+            />
 
-              <FormField
-                placeholder="نزدیکترین کد پستی"
-                keyboardType="numeric"
-                containerStyle="mt-5"
-                rules={postCodeRule}
-                type={"text"}
-                control={control}
-                name="nearestPostCode"
-              />
+            <FormField
+              placeholder="نزدیکترین کد پستی"
+              keyboardType="numeric"
+              containerStyle="mt-5"
+              rules={postCodeRule}
+              type={"text"}
+              control={control}
+              name="nearestPostCode"
+            />
 
-              <View className="mt-5">
-                <BuildingDetailInput
-                  items={items}
-                  setItems={setItems}
-                  onDeleteItem={deleteBuildingTypeHandler}
-                />
-              </View>
+            <View className="mt-5">
+              <BuildingDetailInput
+                items={items}
+                setItems={setItems}
+                onDeleteItem={deleteBuildingTypeHandler}
+              />
             </View>
-          </TouchableWithoutFeedback>
+          </View>
         </ScrollView>
 
         {/* BOTTOM SECTION */}

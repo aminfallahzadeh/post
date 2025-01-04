@@ -1,12 +1,7 @@
 // IMPORTS
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import {
-  View,
-  Keyboard,
-  ScrollView,
-  TouchableWithoutFeedback,
-} from "react-native";
+import { View, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "@/components/CustomButton";
 import { router } from "expo-router";
@@ -69,73 +64,71 @@ const Index = () => {
           <Title progress={33} title="احراز نشانی" home={false} />
 
           {/* FORM FIELDS */}
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <View className="w-full px-5">
-              <View className="mt-5">
-                <CustomSelect
-                  name="applicantType"
-                  control={control}
-                  rules={requiredRule}
-                  data={applicantTypeOptions}
-                  label="* نوع شخصیت"
-                  errors={errors}
-                  setValue={setValue}
-                />
-              </View>
-
-              <View className="mt-5">
-                <CustomSelect
-                  name="gender"
-                  control={control}
-                  rules={requiredRule}
-                  data={genderOptions}
-                  label="* جنسیت"
-                  errors={errors}
-                  setValue={setValue}
-                />
-              </View>
-
-              <FormField
-                placeholder="نام"
-                keyboardType="default"
-                containerStyle="mt-5"
-                rules={requiredRule}
+          <View className="w-full px-5">
+            <View className="mt-5">
+              <CustomSelect
+                name="applicantType"
                 control={control}
-                name="firstName"
-              />
-
-              <FormField
-                placeholder="نام خانوادگی"
-                keyboardType="default"
-                containerStyle="mt-5"
                 rules={requiredRule}
-                control={control}
-                name="lastName"
+                data={applicantTypeOptions}
+                label="* نوع شخصیت"
+                errors={errors}
+                setValue={setValue}
               />
-
-              <FormField
-                placeholder="شماره ملی"
-                keyboardType="numeric"
-                inputMode="numeric"
-                containerStyle="mt-5"
-                rules={requiredRule}
-                control={control}
-                name="nationalCodeOrId"
-              />
-
-              <View className="mt-5">
-                <CustomSelect
-                  name="addressStatus"
-                  control={control}
-                  rules={requiredRule}
-                  data={addressStatusOptions}
-                  label="* وضعیت نشانی"
-                  errors={errors}
-                  setValue={setValue}
-                />
-              </View>
             </View>
-          </TouchableWithoutFeedback>
+
+            <View className="mt-5">
+              <CustomSelect
+                name="gender"
+                control={control}
+                rules={requiredRule}
+                data={genderOptions}
+                label="* جنسیت"
+                errors={errors}
+                setValue={setValue}
+              />
+            </View>
+
+            <FormField
+              placeholder="نام"
+              keyboardType="default"
+              containerStyle="mt-5"
+              rules={requiredRule}
+              control={control}
+              name="firstName"
+            />
+
+            <FormField
+              placeholder="نام خانوادگی"
+              keyboardType="default"
+              containerStyle="mt-5"
+              rules={requiredRule}
+              control={control}
+              name="lastName"
+            />
+
+            <FormField
+              placeholder="شماره ملی"
+              keyboardType="numeric"
+              inputMode="numeric"
+              containerStyle="mt-5"
+              rules={requiredRule}
+              control={control}
+              name="nationalCodeOrId"
+            />
+
+            <View className="mt-5">
+              <CustomSelect
+                name="addressStatus"
+                control={control}
+                rules={requiredRule}
+                data={addressStatusOptions}
+                label="* وضعیت نشانی"
+                errors={errors}
+                setValue={setValue}
+              />
+            </View>
+          </View>
         </ScrollView>
 
         {/* BOTTOM SECTION */}

@@ -65,6 +65,9 @@ const CustomSelect = ({
               selectedTextStyle={styles.selectedTextStyle}
               inputSearchStyle={styles.inputSearchStyle}
               iconStyle={styles.iconStyle}
+              containerStyle={{
+                borderRadius: 7,
+              }}
               data={data}
               search={search}
               onChange={(val) => {
@@ -123,15 +126,15 @@ const styles = StyleSheet.create({
   container: {
     fontFamily: "IranSans-Regular",
     direction: "rtl",
-    height: 55,
+    height: 58,
   },
   dropdown: {
-    height: 55,
+    height: 58,
     direction: "rtl",
     fontFamily: "IranSans-Regular",
     borderColor: "#183f97",
     borderWidth: 1,
-    borderRadius: 2,
+    borderRadius: 7,
     paddingHorizontal: 8,
     backgroundColor: "#fff",
   },

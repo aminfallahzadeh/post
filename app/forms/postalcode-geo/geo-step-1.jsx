@@ -72,6 +72,7 @@ const Step2 = () => {
       const response = await insertRequestCertificationGeo({
         mobile,
         title,
+        counter: selectedItems.length,
       });
       console.log("INSERT REQUEST CERTIFICATE RESPONSE: ", response.data);
       setFactor(response.data.itemList[0]);

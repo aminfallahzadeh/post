@@ -85,7 +85,7 @@ export const FormField = ({
       )}
 
       <View
-        className={`w-full ${height} px-4 border rounded-sm items-center relative ${
+        className={`w-full ${height} px-4 border rounded-lg items-center relative ${
           editable ? "bg-white" : "bg-gray-300"
         } ${isFocused ? "border-secondary" : "border-primary"}`}
       >

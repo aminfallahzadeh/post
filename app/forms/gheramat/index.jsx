@@ -1,12 +1,7 @@
 // IMPORTS
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import {
-  View,
-  Keyboard,
-  TouchableWithoutFeedback,
-  ScrollView,
-} from "react-native";
+import { View, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useUserStore } from "@/store";
 import { router } from "expo-router";
@@ -111,84 +106,82 @@ const Index = () => {
           <Title title={"درخواست غرامت"} progress={50} home={false} />
 
           {/* FORM FIELDS */}
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <View className="w-full px-4">
-              <FormField
-                placeholder="نام"
-                value={userData?.name || "-"}
-                editable={false}
-                containerStyle="mt-5"
-                control={control}
-                name="name"
-              />
+          <View className="w-full px-4">
+            <FormField
+              placeholder="نام"
+              value={userData?.name || "-"}
+              editable={false}
+              containerStyle="mt-5"
+              control={control}
+              name="name"
+            />
 
-              <FormField
-                placeholder="نام خانوادگی"
-                value={userData?.lastName || "-"}
-                editable={false}
-                containerStyle="mt-5"
-                control={control}
-                name="lastname"
-              />
+            <FormField
+              placeholder="نام خانوادگی"
+              value={userData?.lastName || "-"}
+              editable={false}
+              containerStyle="mt-5"
+              control={control}
+              name="lastname"
+            />
 
-              <FormField
-                placeholder="کد ملی"
-                type={"text"}
-                rules={nationalCodeRule}
-                value={userData?.nationalCode || "-"}
-                editable={false}
-                containerStyle="mt-5"
-                control={control}
-                name="nationalCode"
-              />
+            <FormField
+              placeholder="کد ملی"
+              type={"text"}
+              rules={nationalCodeRule}
+              value={userData?.nationalCode || "-"}
+              editable={false}
+              containerStyle="mt-5"
+              control={control}
+              name="nationalCode"
+            />
 
-              <FormField
-                placeholder="تلفن"
-                value={mobile || "-"}
-                editable={false}
-                containerStyle="mt-5"
-                control={control}
-                name="mobile"
-              />
+            <FormField
+              placeholder="تلفن"
+              value={mobile || "-"}
+              editable={false}
+              containerStyle="mt-5"
+              control={control}
+              name="mobile"
+            />
 
-              <FormField
-                placeholder="* شماره مرسوله"
-                keyboardType="numeric"
-                inputMode="numeric"
+            <FormField
+              placeholder="* شماره مرسوله"
+              keyboardType="numeric"
+              inputMode="numeric"
+              rules={requiredRule}
+              containerStyle="mt-5"
+              control={control}
+              name="parcellno"
+            />
+
+            <View className="mt-5">
+              <CustomSelect
+                name="serviceKind"
+                control={control}
                 rules={requiredRule}
-                containerStyle="mt-5"
-                control={control}
-                name="parcellno"
+                data={serviceOptions}
+                label="* نوع سرویس"
+                errors={errors}
+                setValue={setValue}
+                isLoading={isServiceLoading}
               />
-
-              <View className="mt-5">
-                <CustomSelect
-                  name="serviceKind"
-                  control={control}
-                  rules={requiredRule}
-                  data={serviceOptions}
-                  label="* نوع سرویس"
-                  errors={errors}
-                  setValue={setValue}
-                  isLoading={isServiceLoading}
-                />
-              </View>
-
-              <View className="mt-5">
-                <CustomSelect
-                  name="province"
-                  control={control}
-                  rules={requiredRule}
-                  data={provinceOptions}
-                  label="* شهر"
-                  errors={errors}
-                  search={true}
-                  setValue={setValue}
-                  isLoading={isProvinceLoading}
-                />
-              </View>
             </View>
-          </TouchableWithoutFeedback>
+
+            <View className="mt-5">
+              <CustomSelect
+                name="province"
+                control={control}
+                rules={requiredRule}
+                data={provinceOptions}
+                label="* شهر"
+                errors={errors}
+                search={true}
+                setValue={setValue}
+                isLoading={isProvinceLoading}
+              />
+            </View>
+          </View>
         </ScrollView>
 
         {/* BOTTOM SECTION */}

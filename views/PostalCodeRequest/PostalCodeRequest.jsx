@@ -4,13 +4,7 @@ import { reducer, initialState } from "./reducer";
 import { useFetchData } from "./useFetchData";
 import { useUserStore } from "@/store";
 import { useForm } from "react-hook-form";
-import {
-  View,
-  Text,
-  Keyboard,
-  TouchableWithoutFeedback,
-  ScrollView,
-} from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import CustomButton from "@/components/CustomButton";
@@ -133,171 +127,169 @@ export const PostalCodeRequest = () => {
           <Title title={"درخواست کد پستی"} progress={33} home={false} />
 
           {/* FORM FIELDS */}
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <View className="w-full px-5">
-              <View className="mt-5">
-                <CustomSelect
-                  name="province_id"
-                  control={control}
-                  rules={requiredRule}
-                  data={state.options.province}
-                  label={PROVINCE}
-                  errors={errors}
-                  //   setValue={setValue}
-                  search={true}
-                  onValueChange={(val) => {
-                    fetchData("county", { provinceID: val });
-                  }}
-                  isLoading={state.isLoading.province}
-                />
-              </View>
+          <View className="w-full px-5">
+            <View className="mt-5">
+              <CustomSelect
+                name="province_id"
+                control={control}
+                rules={requiredRule}
+                data={state.options.province}
+                label={PROVINCE}
+                errors={errors}
+                //   setValue={setValue}
+                search={true}
+                onValueChange={(val) => {
+                  fetchData("county", { provinceID: val });
+                }}
+                isLoading={state.isLoading.province}
+              />
+            </View>
 
-              <View className="mt-5">
-                <CustomSelect
-                  name="countyID"
-                  control={control}
-                  rules={requiredRule}
-                  data={state.options.county}
-                  label={COUNTY}
-                  errors={errors}
-                  //   setValue={setValue}
-                  search={true}
-                  onValueChange={(val) => {
-                    if (state.isUrban) {
+            <View className="mt-5">
+              <CustomSelect
+                name="countyID"
+                control={control}
+                rules={requiredRule}
+                data={state.options.county}
+                label={COUNTY}
+                errors={errors}
+                //   setValue={setValue}
+                search={true}
+                onValueChange={(val) => {
+                  if (state.isUrban) {
+                    fetchData(
+                      "ruralCity",
+                      {
+                        village: "false",
+                        countyID: val,
+                      },
+                      state.isUrban
+                    );
+                  } else {
+                    fetchData("zone", {
+                      countyID: val,
+                    });
+                  }
+                }}
+                isLoading={state.isLoading.county}
+              />
+            </View>
+
+            <View className="mt-5 flex-row-reverse items-center justify-start ">
+              <Text
+                className={`text-center self-center font-isansdemibold text-lg ${
+                  state.isUrban ? "text-primary" : "text-gray-400"
+                }`}
+              >
+                شهری
+              </Text>
+
+              <SwitchInput
+                onValueChange={changeModeHandler}
+                value={state.isUrban}
+              />
+
+              <Text
+                className={`text-center self-center font-isansdemibold text-lg ${
+                  !state.isUrban ? "text-primary" : "text-gray-400"
+                }`}
+              >
+                روستایی
+              </Text>
+            </View>
+
+            {state.isUrban ? (
+              <>
+                <View className="mt-5">
+                  <CustomSelect
+                    name="ruralCityID"
+                    control={control}
+                    rules={requiredRule}
+                    data={state.options.ruralCity}
+                    label={CITY}
+                    errors={errors}
+                    //   setValue={setValue}
+                    search={true}
+                    isLoading={state.isLoading.ruralCity}
+                  />
+                </View>
+
+                {form_data.ruralCityID && form_data.ruralCityID === 16492 && (
+                  <View className="mt-5">
+                    <CustomSelect
+                      name="unit"
+                      control={control}
+                      rules={requiredRule}
+                      data={postAreaOptions}
+                      label={POST_AREA}
+                      errors={errors}
+                      //   setValue={setValue}
+                      search={false}
+                    />
+                  </View>
+                )}
+              </>
+            ) : (
+              <>
+                <View className="mt-5">
+                  <CustomSelect
+                    name="zoneID"
+                    control={control}
+                    rules={requiredRule}
+                    data={state.options.zone}
+                    label={ZONE}
+                    errors={errors}
+                    //   setValue={setValue}
+                    search={true}
+                    isLoading={state.isLoading.zone}
+                    onValueChange={(val) => {
                       fetchData(
                         "ruralCity",
                         {
-                          village: "false",
-                          countyID: val,
+                          village: "true",
+                          zoneID: val,
                         },
                         state.isUrban
                       );
-                    } else {
-                      fetchData("zone", {
-                        countyID: val,
+                    }}
+                  />
+                </View>
+
+                <View className="mt-5">
+                  <CustomSelect
+                    name="ruralCityID"
+                    control={control}
+                    rules={requiredRule}
+                    data={state.options.ruralCity}
+                    label={DEH}
+                    errors={errors}
+                    //   setValue={setValue}
+                    search={true}
+                    isLoading={state.isLoading.ruralCity}
+                    onValueChange={(val) => {
+                      fetchData("village", {
+                        ruralID: val,
                       });
-                    }
-                  }}
-                  isLoading={state.isLoading.county}
-                />
-              </View>
+                    }}
+                  />
+                </View>
 
-              <View className="mt-5 flex-row-reverse items-center justify-start ">
-                <Text
-                  className={`text-center self-center font-isansdemibold text-lg ${
-                    state.isUrban ? "text-primary" : "text-gray-400"
-                  }`}
-                >
-                  شهری
-                </Text>
-
-                <SwitchInput
-                  onValueChange={changeModeHandler}
-                  value={state.isUrban}
-                />
-
-                <Text
-                  className={`text-center self-center font-isansdemibold text-lg ${
-                    !state.isUrban ? "text-primary" : "text-gray-400"
-                  }`}
-                >
-                  روستایی
-                </Text>
-              </View>
-
-              {state.isUrban ? (
-                <>
-                  <View className="mt-5">
-                    <CustomSelect
-                      name="ruralCityID"
-                      control={control}
-                      rules={requiredRule}
-                      data={state.options.ruralCity}
-                      label={CITY}
-                      errors={errors}
-                      //   setValue={setValue}
-                      search={true}
-                      isLoading={state.isLoading.ruralCity}
-                    />
-                  </View>
-
-                  {form_data.ruralCityID && form_data.ruralCityID === 16492 && (
-                    <View className="mt-5">
-                      <CustomSelect
-                        name="unit"
-                        control={control}
-                        rules={requiredRule}
-                        data={postAreaOptions}
-                        label={POST_AREA}
-                        errors={errors}
-                        //   setValue={setValue}
-                        search={true}
-                      />
-                    </View>
-                  )}
-                </>
-              ) : (
-                <>
-                  <View className="mt-5">
-                    <CustomSelect
-                      name="zoneID"
-                      control={control}
-                      rules={requiredRule}
-                      data={state.options.zone}
-                      label={ZONE}
-                      errors={errors}
-                      //   setValue={setValue}
-                      search={true}
-                      isLoading={state.isLoading.zone}
-                      onValueChange={(val) => {
-                        fetchData(
-                          "ruralCity",
-                          {
-                            village: "true",
-                            zoneID: val,
-                          },
-                          state.isUrban
-                        );
-                      }}
-                    />
-                  </View>
-
-                  <View className="mt-5">
-                    <CustomSelect
-                      name="ruralCityID"
-                      control={control}
-                      rules={requiredRule}
-                      data={state.options.ruralCity}
-                      label={DEH}
-                      errors={errors}
-                      //   setValue={setValue}
-                      search={true}
-                      isLoading={state.isLoading.ruralCity}
-                      onValueChange={(val) => {
-                        fetchData("village", {
-                          ruralID: val,
-                        });
-                      }}
-                    />
-                  </View>
-
-                  <View className="mt-5">
-                    <CustomSelect
-                      name="villageID"
-                      control={control}
-                      rules={requiredRule}
-                      data={state.options.village}
-                      label={VILLAGE}
-                      errors={errors}
-                      //   setValue={setValue}
-                      search={true}
-                      isLoading={state.isLoading.village}
-                    />
-                  </View>
-                </>
-              )}
-            </View>
-          </TouchableWithoutFeedback>
+                <View className="mt-5">
+                  <CustomSelect
+                    name="villageID"
+                    control={control}
+                    rules={requiredRule}
+                    data={state.options.village}
+                    label={VILLAGE}
+                    errors={errors}
+                    //   setValue={setValue}
+                    search={true}
+                    isLoading={state.isLoading.village}
+                  />
+                </View>
+              </>
+            )}
+          </View>
         </ScrollView>
 
         {/* BOTTOM SECTION */}
