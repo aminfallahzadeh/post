@@ -54,11 +54,12 @@ const FactorResult = () => {
 
   // HANDLE SUBMIT
   const onSubmit = () => {
-    setFactor([]);
-    router.replace({
-      pathname: "/waiting",
-      params: { url: factor.paymentUrl },
-    });
+    router.push(factor.paymentUrl);
+    // setFactor([]);
+    // router.replace({
+    //   pathname: "/waiting",
+    //   params: { url: factor.paymentUrl },
+    // });
   };
 
   useEffect(() => {

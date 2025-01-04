@@ -68,12 +68,12 @@ const Step3 = () => {
       };
 
       const response = await requestPayment(data);
-      //   router.push(response.data.itemList[0].data.paymentUrl);
-      setFactor([]);
-      router.replace({
-        pathname: "/waiting",
-        params: { url: response.data.itemList[0].data.paymentUrl },
-      });
+      router.push(response.data.itemList[0].data.paymentUrl);
+      //   setFactor([]);
+      //   router.replace({
+      //     pathname: "/waiting",
+      //     params: { url: response.data.itemList[0].data.paymentUrl },
+      //   });
     } finally {
       setIsLoading(false);
     }
