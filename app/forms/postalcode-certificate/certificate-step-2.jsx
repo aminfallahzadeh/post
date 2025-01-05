@@ -60,7 +60,7 @@ const CertificateStep3 = () => {
         mobile,
         paymentTypeID: "2",
         postUnitID: 2,
-        income: factor.amount + factor.tax,
+        income: factor.payment,
         tax: factor.tax,
         escrow: 0,
         callBackUrl: "",

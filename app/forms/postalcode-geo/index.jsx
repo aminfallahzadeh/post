@@ -128,7 +128,7 @@ const Index = () => {
 
               {isValidating ? (
                 <View>
-                  <Chase size={35} color="green" />
+                  <Chase size={35} color="#164194" />
                 </View>
               ) : (
                 <Pressable
@@ -138,7 +138,7 @@ const Index = () => {
                   <Feather
                     name="plus"
                     size={24}
-                    color={`${plusDisabled ? "gray" : "green"}`}
+                    color={`${plusDisabled ? "gray" : "#164194"}`}
                   />
                 </Pressable>
               )}

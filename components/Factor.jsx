@@ -113,7 +113,7 @@ export const Factor = ({ data }) => {
           جمع کل
         </Text>
         <Text className="font-isansregular">
-          {separateByThousand(data.tax + data.amount)} ریال
+          {separateByThousand(data.payment)} ریال
         </Text>
       </View>
     </View>
