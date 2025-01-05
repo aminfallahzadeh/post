@@ -59,7 +59,6 @@ const CustomSelect = ({
                   borderColor:
                     disabled || data.length === 0 ? "#e9e9e9" : "#183f97",
                 },
-                isFocus && { borderColor: "#fcd900" },
               ]}
               placeholderStyle={styles.placeholderStyle}
               selectedTextStyle={styles.selectedTextStyle}
