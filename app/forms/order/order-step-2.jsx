@@ -1,7 +1,7 @@
 // IMPORTS
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
 import { useUserStore } from "@/store";
 import Background from "@/components/Background";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -97,8 +97,9 @@ const NerkhnameStep2 = () => {
       <SafeAreaView className="h-full">
         <ScrollView
           contentContainerStyle={{
-            flexGrow: 1,
+            // flexGrow: 1,
             paddingBottom: 90,
+            zIndex: 1000,
           }}
           showsVerticalScrollIndicator={false}
           stickyHeaderIndices={[0]}

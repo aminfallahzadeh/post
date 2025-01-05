@@ -131,7 +131,7 @@ const TabsLayout = () => {
 
       <Image
         source={assistant}
-        className="w-28 absolute bottom-0 left-2"
+        className="w-28 absolute bottom-16 left-2 h-32"
         resizeMode="contain"
       />
     </>

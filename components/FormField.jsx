@@ -137,7 +137,6 @@ export const FormField = ({
           keyboardType={keyboardType}
           autoCorrect={false}
           inputMode={inputMode}
-          //   {...props}
         />
 
         {type === "password" ? (
