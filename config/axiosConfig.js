@@ -5,7 +5,7 @@ import { BASE_URL, MAIN_URL, BASE_URL_HTTPS } from "@/constants/apiRoutes";
 import { toastConfig } from "./toast-config";
 import { logout } from "@/api/auth";
 
-export const URL = BASE_URL;
+export const URL = MAIN_URL;
 
 const axiosInstance = axios.create({
   baseURL: URL,
