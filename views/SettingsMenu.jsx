@@ -100,30 +100,6 @@ const SettingsMenu = ({ closeHandler }) => {
           <View className="w-full h-[2px] bg-grey3 rounded-lg mt-5" />
 
           <View className="gap-y-6 mt-5">
-            <Pressable
-              className="flex-row items-center justify-between w-full"
-              onPress={() => router.push("map")}
-            >
-              <Text className="text-grey5 font-isansmedium text-[12px]">
-                دریافت اطلاعات مراکز
-              </Text>
-
-              <View className="flex-row items-center justify-center gap-x-2">
-                <View>
-                  <Text className="text-black font-isansbold text-[15px] text-right">
-                    مراکز پستی
-                  </Text>
-                  <Text className="text-grey5 font-isansmedium text-[12px]">
-                    دریافت اطلاعات مراکز
-                  </Text>
-                </View>
-
-                <Feather name="mail" size={25} color="#333" />
-              </View>
-            </Pressable>
-
-            <View className="w-full h-[2px] bg-grey3 rounded-lg mt-5" />
-
             <View className="flex-row items-center justify-end w-full">
               <View className="flex-row items-center justify-center gap-x-2">
                 <View>

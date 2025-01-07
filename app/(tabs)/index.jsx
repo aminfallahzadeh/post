@@ -31,37 +31,36 @@ const Index = () => {
         description="شماره ملی شما ثبت نشده است. لطفا از پروفایل کاربری اقدام به ثبت شماره ملی نمایید."
       />
       <Background>
-        <SafeAreaView className="h-full">
-          <View className="w-full relative">
-            <CustomCarousel />
+        <View className="bg-green-400 h-36">
+          <CustomCarousel />
+        </View>
 
-            <Pressable onPress={() => router.push("forms/follow")}>
+        {/* <Pressable onPress={() => router.push("forms/follow")}>
               <View className="flex-row justify-center items-center bg-primary py-1 border-t border-b border-[#fcdb00]">
-                <Text className="text-white font-isansbold text-lg text-center">
-                  پیگیری مرسوله
-                </Text>
+              <Text className="text-white font-isansbold text-lg text-center">
+              پیگیری مرسوله
+              </Text>
               </View>
-            </Pressable>
-          </View>
+              </Pressable> */}
+        {/* <View className="w-full relative bg-red-400">
+          </View> */}
 
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{
-              flexGrow: 1,
-              paddingTop: 20,
-              paddingBottom: 600,
-            }}
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            flexGrow: 1,
+            paddingBottom: 120,
+          }}
+        >
+          <View
+            className="flex-row flex-wrap gap-y-2 justify-start items-start px-2 mt-5"
+            style={{ transform: [{ scaleX: -1 }] }}
           >
-            <View
-              className="flex-row flex-wrap gap-y-2 justify-start items-start px-2 mt-5"
-              style={{ transform: [{ scaleX: -1 }] }}
-            >
-              {allData.map((item, index) => (
-                <Service key={index} item={item} />
-              ))}
-            </View>
-          </ScrollView>
-        </SafeAreaView>
+            {allData.map((item, index) => (
+              <Service key={index} item={item} />
+            ))}
+          </View>
+        </ScrollView>
       </Background>
     </>
   );

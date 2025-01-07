@@ -12,9 +12,8 @@ import {
 const { width } = Dimensions.get("screen");
 
 const CarouselImages = [
-  { id: "1", image: require("@/assets/images/car-1.png") },
-  { id: "2", image: require("@/assets/images/car-2.jpg") },
-  { id: "3", image: require("@/assets/images/car-3.jpeg") },
+  { id: "1", image: require("@/assets/images/car-1.jpg") },
+  { id: "2", image: require("@/assets/images/car-2.jpeg") },
 ];
 
 const CustomCarousel = ({ data }) => {
@@ -91,6 +90,7 @@ const CustomCarousel = ({ data }) => {
 const styles = StyleSheet.create({
   container: {
     position: "relative",
+    height: "100%",
   },
   carouselItem: {
     width,

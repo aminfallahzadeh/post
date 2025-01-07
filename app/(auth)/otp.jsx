@@ -2,7 +2,6 @@
 import { useEffect, useState, useCallback } from "react";
 import {
   View,
-  ScrollView,
   Text,
   KeyboardAvoidingView,
   Platform,
@@ -18,8 +17,8 @@ import { login, generateOTP } from "@/api/auth";
 import useGetUserData from "@/hooks/useGetUserData";
 import { formatTime } from "@/utils/formatTime";
 import { toastConfig } from "@/config/toast-config";
+import otp from "@/assets/images/otp.png";
 import * as SecureStore from "expo-secure-store";
-import images from "@/constants/images";
 
 const Otp = () => {
   // STATES
@@ -86,79 +85,75 @@ const Otp = () => {
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : undefined}
         >
-          <ScrollView
-            contentContainerStyle={{
-              flexGrow: 1,
-              paddingBottom: 90,
-              minHeight: "100%",
-            }}
-            showsVerticalScrollIndicator={false}
-          >
-            <Image source={images.otpNew} className="w-full h-[500px]" />
-            <View className="w-full h-full justify-normal items-center px-7 mt-15">
-              <OtpInput
-                numberOfDigits={4}
-                focusColor="#164194"
-                onTextChange={setCode}
-                secureTextEntry={true}
-                theme={{
-                  containerStyle: {
-                    width: "70%",
-                  },
-                  pinCodeContainerStyle: {
-                    borderColor: "#333",
-                  },
-                }}
-              />
+          <Image
+            source={otp}
+            className="w-full h-[350px] mt-10"
+            resizeMode="contain"
+          />
 
-              <View className="flex-row justify-between items-center mt-8 w-full px-1">
-                <Pressable
-                  onPress={() => {}}
-                  className="border rounded-full border-gray-300 justify-center items-center w-[150px] h-[35px]"
-                >
-                  {isLoading || isValidating ? (
-                    <View className="py-1 px-4">
-                      <Flow size={25} color="#d0d0d0" />
-                    </View>
-                  ) : (
-                    <Text className="text-primary font-isansbold">
-                      کد را دریافت نمی کنم
-                    </Text>
-                  )}
-                </Pressable>
+          <View className="w-full h-full justify-normal items-center px-7 mt-20">
+            <OtpInput
+              numberOfDigits={4}
+              focusColor="#164194"
+              onTextChange={setCode}
+              secureTextEntry={true}
+              theme={{
+                containerStyle: {
+                  width: "70%",
+                },
+                pinCodeContainerStyle: {
+                  borderColor: "#333",
+                },
+              }}
+            />
 
-                <Pressable
-                  onPress={generateOTPHandler}
-                  disabled={retryDisabled}
-                  className="border rounded-full border-gray-300 justify-center items-center w-[110px] h-[35px]"
-                >
-                  {isLoading || isValidating ? (
-                    <View className="py-1 px-4">
-                      <Flow size={25} color="#d0d0d0" />
-                    </View>
-                  ) : (
-                    <Text
-                      className={`${
-                        retryDisabled ? "text-gray-500" : "text-primary"
-                      } font-isansbold`}
-                    >
-                      ارسال مجدد
-                    </Text>
-                  )}
-                </Pressable>
-              </View>
-
-              <Text className="text-gray-500 font-isansbold mt-7">
-                {formatTime(timeLeft)}
-              </Text>
-
-              <View className="mt-15">
+            <View className="flex-row justify-between items-center mt-8 w-full px-1">
+              <Pressable
+                onPress={() => {}}
+                className="border rounded-full border-gray-300 justify-center items-center w-[150px] h-[35px]"
+              >
                 {isLoading || isValidating ? (
-                  <Chase size={60} color="#164194" />
-                ) : null}
-              </View>
+                  <View className="py-1 px-4">
+                    <Flow size={25} color="#d0d0d0" />
+                  </View>
+                ) : (
+                  <Text className="text-primary font-isansbold">
+                    کد را دریافت نمی کنم
+                  </Text>
+                )}
+              </Pressable>
+
+              <Pressable
+                onPress={generateOTPHandler}
+                disabled={retryDisabled}
+                className="border rounded-full border-gray-300 justify-center items-center w-[110px] h-[35px]"
+              >
+                {isLoading || isValidating ? (
+                  <View className="py-1 px-4">
+                    <Flow size={25} color="#d0d0d0" />
+                  </View>
+                ) : (
+                  <Text
+                    className={`${
+                      retryDisabled ? "text-gray-500" : "text-primary"
+                    } font-isansbold`}
+                  >
+                    ارسال مجدد
+                  </Text>
+                )}
+              </Pressable>
             </View>
-          </ScrollView>
+
+            <Text className="text-gray-500 font-isansbold mt-7">
+              {formatTime(timeLeft)}
+            </Text>
+
+            <View className="mt-15">
+              {isLoading || isValidating ? (
+                <Chase size={60} color="#164194" />
+              ) : null}
+            </View>
+          </View>
         </KeyboardAvoidingView>
       </SafeAreaView>
     </Background>

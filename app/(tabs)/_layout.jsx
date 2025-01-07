@@ -10,7 +10,6 @@ import {
 import { Tabs } from "expo-router";
 import { useState, useRef } from "react";
 import { Ionicons } from "@expo/vector-icons";
-// import TabBar from "@/components/TabBar";
 import { SafeAreaView } from "react-native-safe-area-context";
 import assistant from "@/assets/images/assistant.png";
 import SettingsMenu from "@/views/SettingsMenu";
@@ -57,7 +56,6 @@ const TabsLayout = () => {
       </SafeAreaView>
 
       {/* TAB LAYOUT */}
-      {/* <Tabs tabBar={(props) => <TabBar {...props} />}> */}
       <Tabs
         screenOptions={{
           headerShown: false,
@@ -117,6 +115,31 @@ const TabsLayout = () => {
             ),
           }}
         />
+
+        <Tabs.Screen
+          name="map"
+          options={{
+            tabBarLabel: ({ focused }) => (
+              <Text
+                style={{
+                  color: focused ? "#164194" : "#787A8D",
+                  fontFamily: "IranSans-DemiBold",
+                  fontSize: 14,
+                  marginTop: 5,
+                }}
+              >
+                مراکز پستی
+              </Text>
+            ),
+            tabBarIcon: ({ color, focused }) => (
+              <MaterialCommunityIcons
+                name="google-maps"
+                size={focused ? 28 : 24}
+                color={color}
+              />
+            ),
+          }}
+        />
       </Tabs>
 
       {/* BURGER MENU OVERLAY */}
@@ -131,7 +154,7 @@ const TabsLayout = () => {
 
       <Image
         source={assistant}
-        className="w-28 absolute bottom-16 left-2 h-32"
+        className="w-28 absolute bottom-16 right-2 h-32"
         resizeMode="contain"
       />
     </>

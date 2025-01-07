@@ -107,7 +107,6 @@ const RootLayout = () => {
         <Stack.Screen name="result" options={{ headerShown: false }} />
         <Stack.Screen name="factor" options={{ headerShown: false }} />
         <Stack.Screen name="forms/ehraz" options={{ headerShown: false }} />
-        <Stack.Screen name="map" options={{ headerShown: false }} />
         <Stack.Screen name="forms/nerkhname" options={{ headerShown: false }} />
         <Stack.Screen name="waiting" options={{ headerShown: false }} />
       </Stack>

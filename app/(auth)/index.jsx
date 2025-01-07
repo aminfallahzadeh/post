@@ -1,20 +1,17 @@
 // IMPORTS
 import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { View, Image, ScrollView, Text, Animated } from "react-native";
+import { View, Animated } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import { generateOTP } from "@/api/auth";
 import { useUserStore } from "@/store";
-import images from "@/constants/images";
 import FormField from "@/components/FormField";
 import CustomButton from "@/components/CustomButton";
 import Background from "@/components/Background";
 import { mobilePhoneValidation } from "@/constants/validations";
+import login from "@/assets/images/login.png";
 import * as SecureStore from "expo-secure-store";
-
-// TEST
-import { URL } from "@/config/axiosConfig";
 
 const Login = () => {
   // STATES
@@ -63,39 +60,19 @@ const Login = () => {
 
   return (
     <Background>
-      <SafeAreaView className="h-full">
-        <ScrollView contentContainerStyle={{ height: "100%" }}>
-          <View className="w-full h-full justify-center px-4">
-            <View className="relative mt-3 justify-center items-center">
-              <Animated.Image
-                source={images.logo}
-                className="w-[150px] h-[150px]"
-                resizeMode="contain"
-                style={{
-                  opacity: imageOpacity,
-                  transform: [{ translateY: imageTranslateY }],
-                }}
-              />
+      <SafeAreaView className="w-full h-full">
+        <View className="w-full flex-1 justify-between items-center">
+          <Animated.Image
+            source={login}
+            className="w-full h-[350px] mt-10"
+            resizeMode="contain"
+            style={{
+              opacity: imageOpacity,
+              transform: [{ translateY: imageTranslateY }],
+            }}
+          />
 
-              <View className="flex-row justify-center items-center">
-                <View className="relative justify-center items-center">
-                  <Text className="text-secondary text-[35px]"> پست </Text>
-                  <Image
-                    source={images.underline}
-                    resizeMode="contain"
-                    className="absolute w-[80px] h-[15px] -bottom-1 left-[5px]"
-                  />
-                </View>
-                <Text className="text-primary font-isansbold text-[25px] text-center">
-                  شرکت ملی{" "}
-                </Text>
-              </View>
-
-              <Text className="text-primary font-isansdemibold text-[16px] text-center mt-2">
-                جمهوری اسلامی ایران
-              </Text>
-            </View>
-
+          <View className="w-full px-7 mb-16">
             <FormField
               placeholder={"شماره همراه"}
               value={phoneNumber}
@@ -116,13 +93,8 @@ const Login = () => {
               handlePress={handleSubmit(onSubmit)}
               isLoading={isLoading}
             />
-
-            {/* TEST */}
-            {/* <View className="mt-5">
-              <Text>{URL}</Text>
-            </View> */}
           </View>
-        </ScrollView>
+        </View>
       </SafeAreaView>
     </Background>
   );

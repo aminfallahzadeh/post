@@ -5,12 +5,11 @@ import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from "expo-location";
 import { getNearestPostOffice } from "@/api/customer";
-import { Title } from "@/components/Title";
 import { Chase } from "react-native-animated-spinkit";
 import Background from "@/components/Background";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
-const Index = () => {
+const Map = () => {
   // STATES
   const [nearLocs, setNearLocs] = useState([]);
   const [permission, setPermission] = useState(false);
@@ -119,9 +118,6 @@ const Index = () => {
   return (
     <Background>
       <SafeAreaView className="h-full">
-        {/* HEADER SECTION */}
-        <Title title="مراکز پستی" home={true} />
-
         {location ? (
           <View style={styles.container}>
             <MapView
@@ -206,7 +202,7 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Map;
 
 const styles = StyleSheet.create({
   container: {

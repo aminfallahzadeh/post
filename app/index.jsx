@@ -5,12 +5,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import CustomButton from "../components/CustomButton";
 import Background from "@/components/Background";
-import images from "../constants/images";
 import { Chase } from "react-native-animated-spinkit";
 import { isLoginValid } from "@/utils/authUtils";
 import useGetUserData from "@/hooks/useGetUserData";
 import * as SecureStore from "expo-secure-store";
 import { I18nManager } from "react-native";
+import welcome from "@/assets/images/welcome.png";
 
 // Lock the layout direction to LTR
 I18nManager.allowRTL(false);
@@ -98,20 +98,19 @@ const Index = () => {
 
   return (
     <Background>
-      <SafeAreaView className="h-full w-full">
-        <View className="flex-1 w-full justify-normal items-center">
+      <SafeAreaView className="h-full">
+        <View className="flex-1 w-full justify-between items-center">
           <Animated.Image
-            source={images.welcomeNew}
-            // className="w-[300px] h-[300px] mt-[100px]"
-            className="w-full h-[500px]"
-            // resizeMode="contain"
+            source={welcome}
+            className="w-full h-[350px] mt-10"
+            resizeMode="contain"
             style={{
               opacity: imageOpacity,
               transform: [{ translateY: imageTranslateY }],
             }}
           />
 
-          <View className="w-full px-7 mt-10">
+          <View className="w-full px-7 mb-16">
             <Animated.Text
               className="text-primary font-isansbold text-[30px] text-center w-full"
               style={{ opacity: textOpacity }}
