@@ -67,6 +67,7 @@ const NerkhnameStep4 = () => {
                   onChange={onChange}
                   value={value}
                   isMulti={true}
+                  textSize="text-sm"
                   itemsContainerStyle={
                     "flex-row-reverse w-full flex-wrap justify-between items-center gap-y-3"
                   }

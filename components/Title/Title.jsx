@@ -20,7 +20,7 @@ export const Title = ({ progress, title, home = true, back = true }) => {
 
         {home && (
           <Pressable
-            onPress={() => router.replace("/")}
+            onPress={() => router.replace("/(tabs)")}
             className="absolute right-4"
           >
             <Feather name="home" size={25} color="#fff" />

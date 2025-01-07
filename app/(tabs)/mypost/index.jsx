@@ -7,6 +7,7 @@ import CustomButton from "@/components/CustomButton";
 import { trackingOrders, trackingOrder } from "@/api/tracking";
 import { useUserStore } from "@/store";
 import * as SecureStore from "expo-secure-store";
+import { Barcode } from "expo-barcode-generator";
 
 const Index = () => {
   // STATES
@@ -81,21 +82,39 @@ const Index = () => {
 
                 <View className="flex-row-reverse justify-between items-center w-full mb-2">
                   <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm">
-                    {item.state === 2 ? "کد پیگیری" : "کد مرسوله"}
-                  </Text>
-                  <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm py-1">
-                    {item.barcode}
-                  </Text>
-                </View>
-
-                <View className="flex-row-reverse justify-between items-center w-full mb-2">
-                  <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm">
                     تاریخ صدور :
                   </Text>
                   <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm py-1">
                     {item.issueDateShamsi}
                   </Text>
                 </View>
+
+                {item.state === 2 ? (
+                  <View className="justify-between items-center w-full mb-2">
+                    <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm">
+                      کد پیگیری
+                    </Text>
+
+                    {/* {item.barcode} */}
+                    <Barcode
+                      value={item.barcode}
+                      options={{
+                        format: "CODE128",
+                        height: "50",
+                      }}
+                      style={{}}
+                    />
+                  </View>
+                ) : (
+                  <View className="flex-row-reverse justify-between items-center w-full mb-2">
+                    <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm">
+                      کد مرسوله
+                    </Text>
+                    <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm py-1">
+                      {item.barcode}
+                    </Text>
+                  </View>
+                )}
 
                 {item.state !== 2 && (
                   <CustomButton

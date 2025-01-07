@@ -5,7 +5,7 @@ UI:
     ✔ assistant image to the right @done(25-01-07 13:48)
     ✔ change some images from PSD files @done(25-01-07 14:31)
     ✔ add maps tab on the bottom tab navigation @done(25-01-07 14:00)
-    □ add forbidden goods tab on the bottom tab navigation
+    ✔ add forbidden goods tab on the bottom tab navigation @done(25-01-07 22:25)
     □ change the order tracking button to a ui input form
     ✔ remove first slide form carousel @done(25-01-07 13:48)
     □ change the "sefaresh" title to "marsoole posti" title
@@ -17,16 +17,17 @@ UI:
     ✔ remove "Post" word from nerkhname and order titles @done(25-01-07 16:56)
     ✔ add required star to mobile on receiver and also contents @done(25-01-07 14:59)
     □ add nerkhname to the final page of order form
+    □ refactor follow page
 
 
 FORM:
     ✔ add size title for box sizes @done(25-01-07 14:58)
     □ avoid nerkhname form resetting
-    □ check weight on first step
+    ✔ check weight on first step @done(25-01-07 22:36)
 
 NEW FEATURES:
     □ add tracking with mobile
-    □ add barcode for the orders tab in my posts tab
+    ✔ add barcode for the orders tab in my posts tab @done(25-01-07 22:49)
     □ add switch to change login type on the login screen
     □ add login with customer ID
     □ add sign up for postal ID

@@ -8,15 +8,18 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import CustomButton from "@/components/CustomButton";
 import CustomSelect from "@/components/CustomSelect";
+import { validateWeight } from "@/api/order";
 import FormField from "@/components/FormField";
 import { parcelOptions } from "@/data/parcelOptions";
 import { boxsizeOptions } from "@/data/boxsizeOptions";
+import { toastConfig } from "@/config/toast-config";
 import { nerkhnameValidations, requiredRule } from "@/constants/validations";
 import { Title } from "@/components/Title";
 
 const NerkhNameStep1 = () => {
   // STATES
   const [weightRules, setWeightRules] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   // CONSTS
   const order = useUserStore((state) => state.order);
@@ -36,9 +39,33 @@ const NerkhNameStep1 = () => {
   const form_data = watch();
 
   // HANDLERS
-  const onSubmit = () => {
-    setOrder({ ...order, ...form_data });
-    router.push(`/forms/order/order-step-2`);
+  const onSubmit = async () => {
+    setIsLoading(true);
+    try {
+      const response = await validateWeight({
+        typecode:
+          order.servicetype.id === 1
+            ? 11
+            : order.servicetype.id === 2
+            ? 19
+            : order.servicetype.id === 4
+            ? 19 //سرویس امانت همان سرویس سفارشی هست فقط برای 2 کیلو به بالا می باشد
+            : 77,
+        servicetype: order.servicetype.id === 4 ? 2 : order.servicetype.id,
+        parceltype: form_data.parceltype,
+        weight: parseFloat(form_data.weight) || 0,
+        boxsize: form_data.boxsize || 1,
+      });
+      console.log("WEIGHT RESPONSE: ", response.data);
+      if (response.data.status && response.data.status === true) {
+        setOrder({ ...order, ...form_data });
+        router.push(`/forms/order/order-step-2`);
+      } else {
+        toastConfig.warning("وزن نامعتبر است");
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   // EFFECTS
@@ -157,7 +184,11 @@ const NerkhNameStep1 = () => {
 
         {/* BOTTOM SECTION */}
         <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
-          <CustomButton title="ادامه" handlePress={handleSubmit(onSubmit)} />
+          <CustomButton
+            title="ادامه"
+            handlePress={handleSubmit(onSubmit)}
+            isLoading={isLoading}
+          />
         </View>
       </SafeAreaView>
     </Background>

@@ -8,6 +8,7 @@ const RadioButtons = ({
   onChange,
   containerStyle,
   titleStyle,
+  textSize = "text-md",
   isMulti = false,
   itemsContainerStyle = "flex-row flex-wrap justify-between items-center gap-y-3 w-full",
 }) => {
@@ -54,7 +55,7 @@ const RadioButtons = ({
             disabled={option.disabled}
           >
             <Text
-              className={` text-center font-isansdemibold text-[16px] ${
+              className={`text-center font-isansdemibold ${textSize} ${
                 option.disabled ? "text-gray-400" : ""
               }`}
             >
@@ -73,7 +74,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#fcd900",
     borderRadius: 8,
-    padding: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
     shadowColor: "#000",
     width: "100%",
     alignItems: "center",

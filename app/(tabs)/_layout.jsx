@@ -6,14 +6,14 @@ import {
   Animated,
   Dimensions,
   Image,
+  BackHandler,
 } from "react-native";
 import { Tabs, useRootNavigationState } from "expo-router";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import assistant from "@/assets/images/assistant.png";
 import SettingsMenu from "@/views/SettingsMenu";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Feather from "@expo/vector-icons/Feather";
 
 const { width, height } = Dimensions.get("screen");
@@ -25,10 +25,10 @@ const TabsLayout = () => {
   // CONSTS
   const animationValue = useRef(new Animated.Value(width)).current;
   const { routes } = useRootNavigationState();
-  const activeTab = routes[0]?.state?.index;
+  const activeTab = routes[routes.length - 1]?.state?.index;
 
   // TOGGLE MENU
-  const toggleMenu = () => {
+  const toggleMenu = useCallback(() => {
     const toValue = menuVisible ? width : 0;
     Animated.timing(animationValue, {
       toValue,
@@ -37,12 +37,24 @@ const TabsLayout = () => {
     }).start(() => {
       setMenuVisible(!menuVisible);
     });
-  };
+  }, [animationValue, menuVisible]);
 
-  // DEBUG
+  // HANDLE BACK
   useEffect(() => {
-    console.log("ACTIVE TAB:", routes);
-  }, [routes]);
+    const backAction = () => {
+      if (menuVisible) {
+        toggleMenu();
+        return true;
+      }
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, [menuVisible, toggleMenu]);
 
   return (
     <>

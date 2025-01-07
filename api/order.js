@@ -32,3 +32,7 @@ export function getCity(provinceID) {
 export function getPrice(data) {
   return axiosInstance.post("PriceOrder/GetPrice", data);
 }
+
+export function validateWeight(data) {
+  return axiosInstance.post("PriceOrder/ValidateServiceSpec", data);
+}
