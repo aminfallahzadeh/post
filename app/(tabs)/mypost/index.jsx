@@ -59,7 +59,7 @@ const Index = () => {
       >
         {isLoading ? (
           <Chase size={50} color="#164194" className="mt-20" />
-        ) : !userData.nationalCode ? (
+        ) : !userData?.nationalCode ? (
           <Text className="font-isansdemibold text-grey2 text-lg mt-20">
             کد ملی را ثبت کنید
           </Text>

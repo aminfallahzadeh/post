@@ -33,7 +33,7 @@ const Forbidden = () => {
               <View style={styles.headerCell}>
                 <Text style={styles.headerText}>شرح</Text>
               </View>
-              <View style={[styles.headerCell, styles.numberColumn]}>
+              <View style={[styles.headerCell, styles.numberColumnSlim]}>
                 <Text style={styles.headerText}>ردیف</Text>
               </View>
             </View>
@@ -50,7 +50,7 @@ const Forbidden = () => {
                 <View style={styles.rowCell}>
                   <Text style={styles.rowText}>{row.description}</Text>
                 </View>
-                <View style={[styles.rowCell, styles.numberColumn]}>
+                <View style={[styles.rowCell, styles.numberColumnSlim]}>
                   <Text style={styles.rowText}>{row.number}</Text>
                 </View>
               </View>
@@ -193,7 +193,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   numberColumn: {
-    flex: 0.2,
+    flex: 0.5,
+  },
+  numberColumnSlim: {
+    flex: 0.3,
   },
   rowText: {
     fontFamily: "IranSans-Regular",
