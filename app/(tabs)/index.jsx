@@ -1,7 +1,6 @@
 // IMPORTS
 import { useEffect, useState } from "react";
 import { ScrollView, View, Text, Pressable } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useUserStore } from "@/store";
 import Service from "@/components/Service";
 import { router } from "expo-router";
@@ -9,6 +8,7 @@ import Background from "@/components/Background";
 import CustomModal from "@/components/CustomModal";
 import CustomCarousel from "@/components/CustomCarousel";
 import { allData } from "@/data/services";
+// import { Barcode } from "expo-barcode-generator";
 
 const Index = () => {
   // STATES
@@ -31,7 +31,7 @@ const Index = () => {
         description="شماره ملی شما ثبت نشده است. لطفا از پروفایل کاربری اقدام به ثبت شماره ملی نمایید."
       />
       <Background>
-        <View className="bg-green-400 h-36">
+        <View className="h-36">
           <CustomCarousel />
         </View>
 
@@ -61,6 +61,15 @@ const Index = () => {
             ))}
           </View>
         </ScrollView>
+
+        {/* <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <Barcode
+            value="123456789999"
+            options={{ format: "CODE128", height: "50" }}
+          />
+        </View> */}
       </Background>
     </>
   );

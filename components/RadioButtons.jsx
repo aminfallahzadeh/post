@@ -54,7 +54,7 @@ const RadioButtons = ({
             disabled={option.disabled}
           >
             <Text
-              className={`text-center font-isansdemibold text-[16px] ${
+              className={` text-center font-isansdemibold text-[16px] ${
                 option.disabled ? "text-gray-400" : ""
               }`}
             >
@@ -72,11 +72,13 @@ const styles = StyleSheet.create({
     flexBasis: "48%",
     borderWidth: 1,
     borderColor: "#fcd900",
-    borderRadius: 10,
+    borderRadius: 8,
     padding: 10,
     shadowColor: "#000",
     width: "100%",
     alignItems: "center",
+    height: 58,
+    justifyContent: "center",
   },
   selected: {
     backgroundColor: "#fcd900",

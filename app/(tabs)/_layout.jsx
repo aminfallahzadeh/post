@@ -7,13 +7,14 @@ import {
   Dimensions,
   Image,
 } from "react-native";
-import { Tabs } from "expo-router";
-import { useState, useRef } from "react";
+import { Tabs, useRootNavigationState } from "expo-router";
+import { useState, useRef, useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import assistant from "@/assets/images/assistant.png";
 import SettingsMenu from "@/views/SettingsMenu";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import Feather from "@expo/vector-icons/Feather";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -23,6 +24,8 @@ const TabsLayout = () => {
 
   // CONSTS
   const animationValue = useRef(new Animated.Value(width)).current;
+  const { routes } = useRootNavigationState();
+  const activeTab = routes[0]?.state?.index;
 
   // TOGGLE MENU
   const toggleMenu = () => {
@@ -35,6 +38,11 @@ const TabsLayout = () => {
       setMenuVisible(!menuVisible);
     });
   };
+
+  // DEBUG
+  useEffect(() => {
+    console.log("ACTIVE TAB:", routes);
+  }, [routes]);
 
   return (
     <>
@@ -75,19 +83,15 @@ const TabsLayout = () => {
                 style={{
                   color: focused ? "#164194" : "#787A8D",
                   fontFamily: "IranSans-DemiBold",
-                  fontSize: 14,
-                  marginTop: 5,
+                  fontSize: 13,
+                  marginTop: 4,
                 }}
               >
                 خانه
               </Text>
             ),
             tabBarIcon: ({ color, focused }) => (
-              <MaterialCommunityIcons
-                name="hand-coin-outline"
-                size={focused ? 28 : 24}
-                color={color}
-              />
+              <Feather name="home" size={focused ? 28 : 22} color={color} />
             ),
           }}
         />
@@ -99,19 +103,15 @@ const TabsLayout = () => {
                 style={{
                   color: focused ? "#164194" : "#787A8D",
                   fontFamily: "IranSans-DemiBold",
-                  fontSize: 14,
-                  marginTop: 5,
+                  fontSize: 13,
+                  marginTop: 4,
                 }}
               >
                 پست من
               </Text>
             ),
             tabBarIcon: ({ color, focused }) => (
-              <MaterialCommunityIcons
-                name="package-variant"
-                size={focused ? 28 : 24}
-                color={color}
-              />
+              <Feather name="box" size={focused ? 28 : 22} color={color} />
             ),
           }}
         />
@@ -124,19 +124,36 @@ const TabsLayout = () => {
                 style={{
                   color: focused ? "#164194" : "#787A8D",
                   fontFamily: "IranSans-DemiBold",
-                  fontSize: 14,
-                  marginTop: 5,
+                  fontSize: 13,
+                  marginTop: 4,
                 }}
               >
                 مراکز پستی
               </Text>
             ),
             tabBarIcon: ({ color, focused }) => (
-              <MaterialCommunityIcons
-                name="google-maps"
-                size={focused ? 28 : 24}
-                color={color}
-              />
+              <Feather name="map-pin" size={focused ? 28 : 22} color={color} />
+            ),
+          }}
+        />
+
+        <Tabs.Screen
+          name="forbidden"
+          options={{
+            tabBarLabel: ({ focused }) => (
+              <Text
+                style={{
+                  color: focused ? "#164194" : "#787A8D",
+                  fontFamily: "IranSans-DemiBold",
+                  fontSize: 13,
+                  marginTop: 4,
+                }}
+              >
+                ممنوعات
+              </Text>
+            ),
+            tabBarIcon: ({ color, focused }) => (
+              <Feather name="slash" size={focused ? 28 : 22} color={color} />
             ),
           }}
         />
@@ -152,11 +169,13 @@ const TabsLayout = () => {
         <SettingsMenu closeHandler={toggleMenu} />
       </Animated.View>
 
-      <Image
-        source={assistant}
-        className="w-28 absolute bottom-16 right-2 h-32"
-        resizeMode="contain"
-      />
+      {activeTab !== 2 && (
+        <Image
+          source={assistant}
+          className="w-28 absolute bottom-16 right-2 h-32"
+          resizeMode="contain"
+        />
+      )}
     </>
   );
 };

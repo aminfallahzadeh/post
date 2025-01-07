@@ -162,7 +162,7 @@ const NerkhnameStep5 = () => {
               </View>
 
               <FormField
-                placeholder="محتویات مرسوله"
+                placeholder="* محتویات مرسوله"
                 type={"text"}
                 keyboardType="default"
                 containerStyle="mt-5"
@@ -185,7 +185,6 @@ const NerkhnameStep5 = () => {
                       inputMode="numeric"
                       rules={requiredRule}
                       containerStyle="mt-5"
-                      // editable={form_data.insurancetype === 1 ? false : true}
                       control={control}
                       name="insuranceamount"
                     />
@@ -200,11 +199,20 @@ const NerkhnameStep5 = () => {
 
           {/* BOTTOM SECTION */}
           <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
-            <CustomButton
-              title="ثبت سفارش"
-              handlePress={handleSubmit(onSubmit)}
-              isLoading={isLoading}
-            />
+            <View className="flex-1 mr-2">
+              <CustomButton
+                title="محاسبه"
+                // handlePress={() => router.replace("/")}
+              />
+            </View>
+
+            <View className="flex-1 ml-2">
+              <CustomButton
+                title="ثبت سفارش"
+                handlePress={handleSubmit(onSubmit)}
+                isLoading={isLoading}
+              />
+            </View>
           </View>
         </SafeAreaView>
       </Background>

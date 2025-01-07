@@ -175,7 +175,7 @@ const NerkhnameStep3 = () => {
               />
 
               <FormField
-                placeholder="تلفن همراه"
+                placeholder="* تلفن همراه"
                 keyboardType="numeric"
                 inputMode="numeric"
                 rules={requiredRule}

@@ -37,41 +37,13 @@ const NerkhnameStep2 = () => {
               style={styles.container}
               className="w-full bg-white rounded-md p-2 justify-center items-center border border-grey2"
             >
-              <View className="flex-row-reverse justify-between w-full items-center flex-wrap">
-                <Text className="font-isansdemibold text-grey2 text-[15px]">
-                  مبلغ بیمه
-                </Text>
-                <Text className="font-isansregular">
-                  {separateByThousand(nerkhname?.insuranceprice)}
+              <View>
+                <Text className="font-isansmedium text-base">
+                  ** مبالغ به ریال می باشد **
                 </Text>
               </View>
 
-              <View className="mt-2 mb-2 w-full">
-                <LinearGradient
-                  colors={["transparent", "#000", "transparent"]}
-                  style={styles.gradientLineHorizontal}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                />
-              </View>
-
-              <View className="flex-row-reverse justify-between w-full items-center flex-wrap">
-                <Text className="font-isansdemibold text-grey2 text-[15px]">
-                  مبلغ پست
-                </Text>
-                <Text className="font-isansregular">
-                  {separateByThousand(nerkhname?.postprice)}
-                </Text>
-              </View>
-
-              <View className="mt-2 mb-2 w-full">
-                <LinearGradient
-                  colors={["transparent", "#000", "transparent"]}
-                  style={styles.gradientLineHorizontal}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                />
-              </View>
+              <View className="w-full bg-primary h-[2px] mt-5 mb-5" />
 
               <View className="flex-row-reverse justify-between w-full items-center flex-wrap">
                 <Text className="font-isansdemibold text-grey2 text-[15px]">
@@ -93,7 +65,43 @@ const NerkhnameStep2 = () => {
 
               <View className="flex-row-reverse justify-between w-full items-center flex-wrap">
                 <Text className="font-isansdemibold text-grey2 text-[15px]">
-                  مالیات بر ارزش افزوده
+                  حق السهم پستی
+                </Text>
+                <Text className="font-isansregular">
+                  {separateByThousand(nerkhname?.postprice)}
+                </Text>
+              </View>
+
+              <View className="mt-2 mb-2 w-full">
+                <LinearGradient
+                  colors={["transparent", "#000", "transparent"]}
+                  style={styles.gradientLineHorizontal}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                />
+              </View>
+
+              <View className="flex-row-reverse justify-between w-full items-center flex-wrap">
+                <Text className="font-isansdemibold text-grey2 text-[15px]">
+                  بیمه
+                </Text>
+                <Text className="font-isansregular">
+                  {separateByThousand(nerkhname?.insuranceprice)}
+                </Text>
+              </View>
+
+              <View className="mt-2 mb-2 w-full">
+                <LinearGradient
+                  colors={["transparent", "#000", "transparent"]}
+                  style={styles.gradientLineHorizontal}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                />
+              </View>
+
+              <View className="flex-row-reverse justify-between w-full items-center flex-wrap">
+                <Text className="font-isansdemibold text-grey2 text-[15px]">
+                  مالیات
                 </Text>
                 <Text className="font-isansregular">
                   {separateByThousand(nerkhname?.tax)}

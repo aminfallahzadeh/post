@@ -11,16 +11,16 @@ UI:
     □ change the "sefaresh" title to "marsoole posti" title
     □ add currency in nerkhname
     □ add icons in my posts top tabs
-    □ change the fonts to smaller size (specially in my posts)
+    ✔ change the fonts to smaller size (specially in my posts) @started(25-01-07 18:46) @done(25-01-07 18:46) @lasted(58s)
     ✔ auto scroll @done(25-01-07 14:33)
     □ change the settings menu like the Bale app
-    □ remove "Post" word from nerkhname and order titles
-    □ add required star to mobile on receiver and also contents
+    ✔ remove "Post" word from nerkhname and order titles @done(25-01-07 16:56)
+    ✔ add required star to mobile on receiver and also contents @done(25-01-07 14:59)
     □ add nerkhname to the final page of order form
 
 
 FORM:
-    □ add size title for box sizes
+    ✔ add size title for box sizes @done(25-01-07 14:58)
     □ avoid nerkhname form resetting
     □ check weight on first step
 

@@ -3,7 +3,6 @@ import { useState, useEffect, useCallback } from "react";
 import { View, Text, ScrollView } from "react-native";
 import { router } from "expo-router";
 import { Chase } from "react-native-animated-spinkit";
-import Background from "@/components/Background";
 import CustomButton from "@/components/CustomButton";
 import { trackingOrders, trackingOrder } from "@/api/tracking";
 import { useUserStore } from "@/store";
@@ -49,72 +48,69 @@ const Index = () => {
   }, [fetchData]);
 
   return (
-    <Background>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View
-          style={{
-            rowGap: 10,
-            // transform: Platform.OS === "android" ? [{ scaleX: -1 }] : "",
-            transform: [{ scaleX: -1 }],
-          }}
-          className="justify-normal items-center mt-5 px-10 h-full pb-32"
-        >
-          {isLoading ? (
-            <Chase size={50} color="#164194" className="mt-20" />
-          ) : !userData.nationalCode ? (
-            <Text className="font-isansdemibold text-grey2 text-[30px] mt-20">
-              کد ملی را ثبت کنید
-            </Text>
-          ) : data.length === 0 ? (
-            <Text className="font-isansdemibold text-grey2 text-[30px] mt-20">
-              موردی یافت نشد!
-            </Text>
-          ) : (
-            data.map((item, index) => (
-              <View key={index} className="w-full">
-                <View className="bg-white rounded-md px-5 py-2 w-full">
-                  <View className="flex-row-reverse justify-between items-center w-full mb-2">
-                    <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm">
-                      نوع پیگیری :
-                    </Text>
-                    <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm py-1">
-                      {item.stateName}
-                    </Text>
-                  </View>
-
-                  <View className="flex-row-reverse justify-between items-center w-full mb-2">
-                    <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm">
-                      {item.state === 2 ? "کد پیگیری" : "کد مرسوله"}
-                    </Text>
-                    <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm py-1">
-                      {item.barcode}
-                    </Text>
-                  </View>
-
-                  <View className="flex-row-reverse justify-between items-center w-full mb-2">
-                    <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm">
-                      تاریخ صدور :
-                    </Text>
-                    <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm py-1">
-                      {item.issueDateShamsi}
-                    </Text>
-                  </View>
-
-                  {item.state !== 2 && (
-                    <CustomButton
-                      title="پیگیری"
-                      height="h-10"
-                      isLoading={isOrderLoading}
-                      handlePress={() => onSubmit(item.barcode)}
-                    />
-                  )}
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <View
+        style={{
+          rowGap: 10,
+          transform: [{ scaleX: -1 }],
+        }}
+        className="justify-normal items-center mt-5 px-10 h-full pb-32"
+      >
+        {isLoading ? (
+          <Chase size={50} color="#164194" className="mt-20" />
+        ) : !userData.nationalCode ? (
+          <Text className="font-isansdemibold text-grey2 text-lg mt-20">
+            کد ملی را ثبت کنید
+          </Text>
+        ) : data.length === 0 ? (
+          <Text className="font-isansdemibold text-grey2 text-lg mt-20">
+            موردی یافت نشد!
+          </Text>
+        ) : (
+          data.map((item, index) => (
+            <View key={index} className="w-full">
+              <View className="bg-white rounded-md px-5 py-2 w-full">
+                <View className="flex-row-reverse justify-between items-center w-full mb-2">
+                  <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm">
+                    نوع پیگیری :
+                  </Text>
+                  <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm py-1">
+                    {item.stateName}
+                  </Text>
                 </View>
+
+                <View className="flex-row-reverse justify-between items-center w-full mb-2">
+                  <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm">
+                    {item.state === 2 ? "کد پیگیری" : "کد مرسوله"}
+                  </Text>
+                  <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm py-1">
+                    {item.barcode}
+                  </Text>
+                </View>
+
+                <View className="flex-row-reverse justify-between items-center w-full mb-2">
+                  <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm">
+                    تاریخ صدور :
+                  </Text>
+                  <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm py-1">
+                    {item.issueDateShamsi}
+                  </Text>
+                </View>
+
+                {item.state !== 2 && (
+                  <CustomButton
+                    title="پیگیری"
+                    height="h-10"
+                    isLoading={isOrderLoading}
+                    handlePress={() => onSubmit(item.barcode)}
+                  />
+                )}
               </View>
-            ))
-          )}
-        </View>
-      </ScrollView>
-    </Background>
+            </View>
+          ))
+        )}
+      </View>
+    </ScrollView>
   );
 };
 
