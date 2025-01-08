@@ -1,7 +1,13 @@
 // IMPORTS
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { View, Text, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { router } from "expo-router";
 import { useUserStore } from "@/store";
 import Background from "@/components/Background";
@@ -132,88 +138,90 @@ const NerkhnameStep5 = () => {
       />
       <Background>
         <SafeAreaView className="h-full">
-          <ScrollView
-            contentContainerStyle={{
-              flexGrow: 1,
-              paddingBottom: 90,
-            }}
-            showsVerticalScrollIndicator={false}
-            stickyHeaderIndices={[0]}
-            keyboardShouldPersistTaps="handled"
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : undefined}
+            style={{ flex: 1 }}
           >
-            {/* HEADER SECTION */}
-            <Title
-              title={`${order?.servicetype?.label} : بیمه`}
-              progress={100}
-            />
+            <ScrollView
+              contentContainerStyle={{ flexGrow: 1, paddingBottom: 90 }}
+              showsVerticalScrollIndicator={false}
+              keyboardShouldPersistTaps="handled"
+              stickyHeaderIndices={[0]}
+            >
+              {/* HEADER SECTION */}
+              <Title
+                title={`${order?.servicetype?.label} : بیمه`}
+                progress={100}
+              />
 
-            {/* FORM FIELDS */}
-            <View className="w-full px-5">
-              <View className="mt-5">
-                <CustomSelect
-                  name="insurancetype"
+              {/* FORM FIELDS */}
+              <View className="w-full px-5">
+                <View className="mt-5">
+                  <CustomSelect
+                    name="insurancetype"
+                    control={control}
+                    rules={requiredRule}
+                    data={insuranceOptions}
+                    label="* نوع بیمه"
+                    errors={errors}
+                    setValue={setValue}
+                  />
+                </View>
+
+                <FormField
+                  placeholder="* محتویات مرسوله"
+                  type={"text"}
+                  keyboardType="default"
+                  containerStyle="mt-5"
+                  rules={{
+                    required: {
+                      value: form_data?.insurancetype === 1 ? true : false,
+                      message: "این فیلد اجباری است",
+                    },
+                  }}
                   control={control}
-                  rules={requiredRule}
-                  data={insuranceOptions}
-                  label="* نوع بیمه"
-                  errors={errors}
-                  setValue={setValue}
+                  name="contetnts"
+                />
+
+                {form_data.insurancetype !== 1 && (
+                  <View className="flex-row-reverse justify-center items-center">
+                    <View className="flex-1 ml-2">
+                      <FormField
+                        placeholder="مبلغ اظهار شده"
+                        keyboardType="numeric"
+                        inputMode="numeric"
+                        rules={requiredRule}
+                        containerStyle="mt-5"
+                        control={control}
+                        name="insuranceamount"
+                      />
+                    </View>
+                    <Text className="flex-3 self-center text-primary text-xl font-isansbold text-center rounded-lg pt-5">
+                      ریال
+                    </Text>
+                  </View>
+                )}
+              </View>
+            </ScrollView>
+
+            {/* BOTTOM SECTION */}
+            <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4 flex-row">
+              <View className="flex-1 mr-2">
+                <CustomButton
+                  title="محاسبه"
+                  // handlePress={() => router.replace("/")}
                 />
               </View>
 
-              <FormField
-                placeholder="* محتویات مرسوله"
-                type={"text"}
-                keyboardType="default"
-                containerStyle="mt-5"
-                rules={{
-                  required: {
-                    value: form_data?.insurancetype === 1 ? true : false,
-                    message: "این فیلد اجباری است",
-                  },
-                }}
-                control={control}
-                name="contetnts"
-              />
-
-              {form_data.insurancetype !== 1 && (
-                <View className="flex-row-reverse justify-center items-center">
-                  <View className="flex-1 ml-2">
-                    <FormField
-                      placeholder="مبلغ اظهار شده"
-                      keyboardType="numeric"
-                      inputMode="numeric"
-                      rules={requiredRule}
-                      containerStyle="mt-5"
-                      control={control}
-                      name="insuranceamount"
-                    />
-                  </View>
-                  <Text className="flex-3 self-center text-primary text-xl font-isansbold text-center rounded-lg pt-5">
-                    ریال
-                  </Text>
-                </View>
-              )}
+              <View className="flex-1 ml-2">
+                <CustomButton
+                  title="ثبت سفارش"
+                  handlePress={handleSubmit(onSubmit)}
+                  isLoading={isLoading}
+                />
+              </View>
             </View>
-          </ScrollView>
-
-          {/* BOTTOM SECTION */}
-          <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
-            <View className="flex-1 mr-2">
-              <CustomButton
-                title="محاسبه"
-                // handlePress={() => router.replace("/")}
-              />
-            </View>
-
-            <View className="flex-1 ml-2">
-              <CustomButton
-                title="ثبت سفارش"
-                handlePress={handleSubmit(onSubmit)}
-                isLoading={isLoading}
-              />
-            </View>
-          </View>
+          </KeyboardAvoidingView>
         </SafeAreaView>
       </Background>
     </>

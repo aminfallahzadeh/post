@@ -40,13 +40,10 @@ const NerkhnameStep4 = () => {
     <Background>
       <SafeAreaView className="h-full">
         <ScrollView
-          contentContainerStyle={{
-            flexGrow: 1,
-            paddingBottom: 90,
-          }}
+          contentContainerStyle={{ flexGrow: 1, paddingBottom: 90 }}
           showsVerticalScrollIndicator={false}
-          stickyHeaderIndices={[0]}
           keyboardShouldPersistTaps="handled"
+          stickyHeaderIndices={[0]}
         >
           {/* HEADER SECTION */}
           <Title

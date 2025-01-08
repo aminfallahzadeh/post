@@ -1,7 +1,7 @@
 // IMPORTS
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
 import { useUserStore } from "@/store";
 import Background from "@/components/Background";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -95,144 +95,145 @@ const NerkhnameStep2 = () => {
   return (
     <Background>
       <SafeAreaView className="h-full">
-        <ScrollView
-          contentContainerStyle={{
-            // flexGrow: 1,
-            paddingBottom: 90,
-            zIndex: 1000,
-          }}
-          showsVerticalScrollIndicator={false}
-          stickyHeaderIndices={[0]}
-          keyboardShouldPersistTaps="handled"
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+          style={{ flex: 1 }}
         >
-          {/* HEADER SECTION */}
-          <Title
-            title={`${order?.servicetype?.label} : اطلاعات فرستنده`}
-            progress={45}
-          />
-
-          <View className="w-full px-5">
-            <FormField
-              placeholder="* نام"
-              type={"text"}
-              keyboardType="default"
-              containerStyle="mt-10"
-              control={control}
-              rules={requiredRule}
-              name="sendername"
+          <ScrollView
+            contentContainerStyle={{ flexGrow: 1, paddingBottom: 90 }}
+            showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps="handled"
+            stickyHeaderIndices={[0]}
+          >
+            {/* HEADER SECTION */}
+            <Title
+              title={`${order?.servicetype?.label} : اطلاعات فرستنده`}
+              progress={45}
             />
 
-            <FormField
-              placeholder="* نام خانوادگی"
-              type={"text"}
-              keyboardType="default"
-              containerStyle="mt-5"
-              control={control}
-              rules={requiredRule}
-              name="senderLastname"
-            />
-
-            <FormField
-              placeholder="* تلفن همراه"
-              keyboardType="numeric"
-              inputMode="numeric"
-              containerStyle="mt-5"
-              control={control}
-              rules={requiredRule}
-              name="sendermobile"
-            />
-
-            <FormField
-              placeholder="تلفن ثابت"
-              keyboardType="numeric"
-              inputMode="numeric"
-              containerStyle="mt-5"
-              control={control}
-              name="senderPhone"
-            />
-
-            <FormField
-              placeholder="* کد ملی"
-              keyboardType="numeric"
-              inputMode="numeric"
-              containerStyle="mt-5"
-              control={control}
-              rules={{ ...requiredRule, ...nationalCodeRule }}
-              name="senderid"
-            />
-
-            <FormField
-              placeholder="* کد پستی"
-              keyboardType="numeric"
-              inputMode="numeric"
-              containerStyle="mt-5"
-              control={control}
-              rules={{ ...requiredRule, ...postCodeRule }}
-              name="senderpostalcode"
-            />
-            <View className="mt-5">
-              <CustomSelect
-                name="senderProvinceID"
+            <View className="w-full px-5">
+              <FormField
+                placeholder="* نام"
+                type={"text"}
+                keyboardType="default"
+                containerStyle="mt-10"
                 control={control}
                 rules={requiredRule}
-                data={provinceOptions}
-                label="* استان"
-                errors={errors}
-                search={true}
-                setValue={setValue}
-                isLoading={isProvinceLoading}
-                onValueChange={(val) => {
-                  if (val) {
-                    fetchCity(val);
-                  } else {
+                name="sendername"
+              />
+
+              <FormField
+                placeholder="* نام خانوادگی"
+                type={"text"}
+                keyboardType="default"
+                containerStyle="mt-5"
+                control={control}
+                rules={requiredRule}
+                name="senderLastname"
+              />
+
+              <FormField
+                placeholder="* تلفن همراه"
+                keyboardType="numeric"
+                inputMode="numeric"
+                containerStyle="mt-5"
+                control={control}
+                rules={requiredRule}
+                name="sendermobile"
+              />
+
+              <FormField
+                placeholder="تلفن ثابت"
+                keyboardType="numeric"
+                inputMode="numeric"
+                containerStyle="mt-5"
+                control={control}
+                name="senderPhone"
+              />
+
+              <FormField
+                placeholder="* کد ملی"
+                keyboardType="numeric"
+                inputMode="numeric"
+                containerStyle="mt-5"
+                control={control}
+                rules={{ ...requiredRule, ...nationalCodeRule }}
+                name="senderid"
+              />
+
+              <FormField
+                placeholder="* کد پستی"
+                keyboardType="numeric"
+                inputMode="numeric"
+                containerStyle="mt-5"
+                control={control}
+                rules={{ ...requiredRule, ...postCodeRule }}
+                name="senderpostalcode"
+              />
+              <View className="mt-5">
+                <CustomSelect
+                  name="senderProvinceID"
+                  control={control}
+                  rules={requiredRule}
+                  data={provinceOptions}
+                  label="* استان"
+                  errors={errors}
+                  search={true}
+                  setValue={setValue}
+                  isLoading={isProvinceLoading}
+                  onValueChange={(val) => {
+                    if (val) {
+                      fetchCity(val);
+                    } else {
+                      setCityOptions([]);
+                    }
+                  }}
+                  onClear={() => {
+                    setValue("senderProvinceID", null);
+                    setValue("sourcecode", null);
                     setCityOptions([]);
-                  }
-                }}
-                onClear={() => {
-                  setValue("senderProvinceID", null);
-                  setValue("sourcecode", null);
-                  setCityOptions([]);
-                }}
-              />
-            </View>
+                  }}
+                />
+              </View>
 
-            <View className="mt-5">
-              <CustomSelect
-                name="sourcecode"
-                control={control}
+              <View className="mt-5">
+                <CustomSelect
+                  name="sourcecode"
+                  control={control}
+                  rules={requiredRule}
+                  data={cityOptions}
+                  label="* شهر"
+                  errors={errors}
+                  setValue={setValue}
+                  isLoading={isCityLoading}
+                />
+              </View>
+
+              <FormField
+                placeholder="* آدرس"
+                type={"text"}
+                multiline={true}
                 rules={requiredRule}
-                data={cityOptions}
-                label="* شهر"
-                errors={errors}
-                setValue={setValue}
-                isLoading={isCityLoading}
+                keyboardType="default"
+                containerStyle="mt-5"
+                search={true}
+                height="h-32 align-top"
+                inputStyle={{
+                  textAlignVertical: "top",
+                  textAlign: "right",
+                  paddingTop: 20,
+                }}
+                control={control}
+                name="senderaddress"
               />
             </View>
+          </ScrollView>
 
-            <FormField
-              placeholder="* آدرس"
-              type={"text"}
-              multiline={true}
-              rules={requiredRule}
-              keyboardType="default"
-              containerStyle="mt-5"
-              search={true}
-              height="h-32 align-top"
-              inputStyle={{
-                textAlignVertical: "top",
-                textAlign: "right",
-                paddingTop: 20,
-              }}
-              control={control}
-              name="senderaddress"
-            />
+          {/* BOTTOM SECTION */}
+          <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
+            <CustomButton title="ادامه" handlePress={handleSubmit(onSubmit)} />
           </View>
-        </ScrollView>
-
-        {/* BOTTOM SECTION */}
-        <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
-          <CustomButton title="ادامه" handlePress={handleSubmit(onSubmit)} />
-        </View>
+        </KeyboardAvoidingView>
       </SafeAreaView>
     </Background>
   );

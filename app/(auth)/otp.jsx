@@ -9,7 +9,6 @@ import {
   Keyboard,
   Image,
   StyleSheet,
-  TouchableWithoutFeedback,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { OtpInput } from "react-native-otp-entry";
@@ -88,143 +87,77 @@ const Otp = () => {
           behavior={Platform.OS === "ios" ? "padding" : undefined}
           style={styles.container}
         >
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <View style={styles.inner}>
-              <Image
-                source={otp}
-                className="w-full h-[350px] mt-10"
-                resizeMode="contain"
+          <View style={styles.inner}>
+            <Image
+              source={otp}
+              className="w-full h-[350px] mt-10"
+              resizeMode="contain"
+            />
+
+            <View className="w-full absolute bottom-10 px-4 bg-gray-100 justify-center items-center">
+              <OtpInput
+                numberOfDigits={4}
+                focusColor="#164194"
+                onTextChange={setCode}
+                secureTextEntry={true}
+                theme={{
+                  containerStyle: {
+                    width: "70%",
+                  },
+                  pinCodeContainerStyle: {
+                    borderColor: "#333",
+                  },
+                }}
               />
 
-              <View className="w-full absolute bottom-10 px-4 bg-gray-100 justify-center items-center">
-                <OtpInput
-                  numberOfDigits={4}
-                  focusColor="#164194"
-                  onTextChange={setCode}
-                  secureTextEntry={true}
-                  theme={{
-                    containerStyle: {
-                      width: "70%",
-                    },
-                    pinCodeContainerStyle: {
-                      borderColor: "#333",
-                    },
-                  }}
-                />
+              <Text className="text-gray-500 font-isansbold mt-7">
+                {formatTime(timeLeft)}
+              </Text>
 
-                <Text className="text-gray-500 font-isansbold mt-7">
-                  {formatTime(timeLeft)}
-                </Text>
-
-                <View className="mt-15">
-                  {isLoading || isValidating ? (
-                    <Chase size={60} color="#164194" />
-                  ) : null}
-                </View>
-
-                <View className="flex-row justify-between items-center mt-5 w-full px-1">
-                  <Pressable
-                    onPress={() => {}}
-                    className="border rounded-full border-gray-300 justify-center items-center w-[150px] h-[35px]"
-                  >
-                    {isLoading || isValidating ? (
-                      <View className="py-1 px-4">
-                        <Flow size={25} color="#d0d0d0" />
-                      </View>
-                    ) : (
-                      <Text className="text-primary font-isansbold">
-                        کد را دریافت نمی کنم
-                      </Text>
-                    )}
-                  </Pressable>
-
-                  <Pressable
-                    onPress={generateOTPHandler}
-                    disabled={retryDisabled}
-                    className="border rounded-full border-gray-300 justify-center items-center w-[110px] h-[35px]"
-                  >
-                    {isLoading || isValidating ? (
-                      <View className="py-1 px-4">
-                        <Flow size={25} color="#d0d0d0" />
-                      </View>
-                    ) : (
-                      <Text
-                        className={`${
-                          retryDisabled ? "text-gray-500" : "text-primary"
-                        } font-isansbold`}
-                      >
-                        ارسال مجدد
-                      </Text>
-                    )}
-                  </Pressable>
-                </View>
+              <View className="mt-15">
+                {isLoading || isValidating ? (
+                  <Chase size={60} color="#164194" />
+                ) : null}
               </View>
 
-              {/* <View className="w-full h-full justify-normal items-center px-7 mt-20">
-                <OtpInput
-                  numberOfDigits={4}
-                  focusColor="#164194"
-                  onTextChange={setCode}
-                  secureTextEntry={true}
-                  theme={{
-                    containerStyle: {
-                      width: "70%",
-                    },
-                    pinCodeContainerStyle: {
-                      borderColor: "#333",
-                    },
-                  }}
-                />
-
-                <View className="flex-row justify-between items-center mt-20 w-full px-1">
-                  <Pressable
-                    onPress={() => {}}
-                    className="border rounded-full border-gray-300 justify-center items-center w-[150px] h-[35px]"
-                  >
-                    {isLoading || isValidating ? (
-                      <View className="py-1 px-4">
-                        <Flow size={25} color="#d0d0d0" />
-                      </View>
-                    ) : (
-                      <Text className="text-primary font-isansbold">
-                        کد را دریافت نمی کنم
-                      </Text>
-                    )}
-                  </Pressable>
-
-                  <Pressable
-                    onPress={generateOTPHandler}
-                    disabled={retryDisabled}
-                    className="border rounded-full border-gray-300 justify-center items-center w-[110px] h-[35px]"
-                  >
-                    {isLoading || isValidating ? (
-                      <View className="py-1 px-4">
-                        <Flow size={25} color="#d0d0d0" />
-                      </View>
-                    ) : (
-                      <Text
-                        className={`${
-                          retryDisabled ? "text-gray-500" : "text-primary"
-                        } font-isansbold`}
-                      >
-                        ارسال مجدد
-                      </Text>
-                    )}
-                  </Pressable>
-                </View>
-
-                <Text className="text-gray-500 font-isansbold mt-7">
-                  {formatTime(timeLeft)}
-                </Text>
-
-                <View className="mt-15">
+              <View className="flex-row justify-between items-center mt-5 w-full px-1">
+                <Pressable
+                  onPress={() => {}}
+                  className="border rounded-full border-gray-300 justify-center items-center w-[150px] h-[35px]"
+                >
                   {isLoading || isValidating ? (
-                    <Chase size={60} color="#164194" />
-                  ) : null}
-                </View>
-              </View> */}
+                    <View className="py-1 px-4">
+                      <Flow size={25} color="#d0d0d0" />
+                    </View>
+                  ) : (
+                    <Text className="text-primary font-isansbold">
+                      کد را دریافت نمی کنم
+                    </Text>
+                  )}
+                </Pressable>
+
+                <Pressable
+                  onPress={generateOTPHandler}
+                  disabled={retryDisabled}
+                  className="border rounded-full border-gray-300 justify-center items-center w-[110px] h-[35px]"
+                >
+                  {isLoading || isValidating ? (
+                    <View className="py-1 px-4">
+                      <Flow size={25} color="#d0d0d0" />
+                    </View>
+                  ) : (
+                    <Text
+                      className={`${
+                        retryDisabled ? "text-gray-500" : "text-primary"
+                      } font-isansbold`}
+                    >
+                      ارسال مجدد
+                    </Text>
+                  )}
+                </Pressable>
+              </View>
             </View>
-          </TouchableWithoutFeedback>
+          </View>
         </KeyboardAvoidingView>
       </SafeAreaView>
     </Background>

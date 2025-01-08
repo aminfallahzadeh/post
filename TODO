@@ -9,7 +9,7 @@ UI:
     □ change the order tracking button to a ui input form
     ✔ remove first slide form carousel @done(25-01-07 13:48)
     □ change the "sefaresh" title to "marsoole posti" title
-    □ add currency in nerkhname
+    □ add currency in all factors
     □ add icons in my posts top tabs
     ✔ change the fonts to smaller size (specially in my posts) @started(25-01-07 18:46) @done(25-01-07 18:46) @lasted(58s)
     ✔ auto scroll @done(25-01-07 14:33)
@@ -17,7 +17,7 @@ UI:
     ✔ remove "Post" word from nerkhname and order titles @done(25-01-07 16:56)
     ✔ add required star to mobile on receiver and also contents @done(25-01-07 14:59)
     □ add nerkhname to the final page of order form
-    □ refactor follow page
+    □ add keyboard avoiding view
 
 
 FORM:

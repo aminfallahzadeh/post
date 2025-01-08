@@ -1,15 +1,7 @@
 // IMPORTS
 import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import {
-  View,
-  Animated,
-  KeyboardAvoidingView,
-  Platform,
-  TouchableWithoutFeedback,
-  Keyboard,
-  StyleSheet,
-} from "react-native";
+import { View, Animated, KeyboardAvoidingView, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import { generateOTP } from "@/api/auth";
@@ -70,45 +62,48 @@ const Login = () => {
     <Background>
       <SafeAreaView className="w-full h-full">
         <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-          style={styles.container}
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+          style={{ flex: 1 }}
+          keyboardVerticalOffset={20}
         >
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <View style={styles.inner}>
-              <Animated.Image
-                source={login}
-                className="w-full h-[350px] mt-10"
-                resizeMode="contain"
-                style={{
-                  opacity: imageOpacity,
-                  transform: [{ translateY: imageTranslateY }],
-                }}
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              paddingHorizontal: 20,
+            }}
+          >
+            <Animated.Image
+              source={login}
+              className="w-full h-[350px] mt-10"
+              resizeMode="contain"
+              style={{
+                opacity: imageOpacity,
+                transform: [{ translateY: imageTranslateY }],
+              }}
+            />
+
+            <View className="mb-5 mt-10">
+              <FormField
+                placeholder={"شماره همراه"}
+                value={phoneNumber}
+                handleChange={setPhoneNumber}
+                keyboardType="numeric"
+                inputMode="numeric"
+                max={11}
+                type="text"
+                control={control}
+                name="mobile"
+                rules={mobilePhoneValidation}
               />
-
-              <View className="w-full absolute bottom-10 px-4 bg-gray-100">
-                <View className="mb-5">
-                  <FormField
-                    placeholder={"شماره همراه"}
-                    value={phoneNumber}
-                    handleChange={setPhoneNumber}
-                    keyboardType="numeric"
-                    inputMode="numeric"
-                    max={11}
-                    type="text"
-                    control={control}
-                    name="mobile"
-                    rules={mobilePhoneValidation}
-                  />
-                </View>
-
-                <CustomButton
-                  title="ادامه"
-                  handlePress={handleSubmit(onSubmit)}
-                  isLoading={isLoading}
-                />
-              </View>
             </View>
-          </TouchableWithoutFeedback>
+
+            <CustomButton
+              title="ادامه"
+              handlePress={handleSubmit(onSubmit)}
+              isLoading={isLoading}
+            />
+          </View>
         </KeyboardAvoidingView>
       </SafeAreaView>
     </Background>
@@ -116,13 +111,3 @@ const Login = () => {
 };
 
 export default Login;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  inner: {
-    flex: 1,
-    width: "100%",
-  },
-});

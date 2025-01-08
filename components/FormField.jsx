@@ -1,5 +1,12 @@
 // IMPORTS
-import { View, Text, TextInput, Animated, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Animated,
+  Pressable,
+  Platform,
+} from "react-native";
 import { useState, useEffect } from "react";
 import { useController } from "react-hook-form";
 import Feather from "@expo/vector-icons/Feather";
@@ -12,6 +19,7 @@ export const FormField = ({
   textStyle,
   type,
   inputStyle,
+  multiline = false,
   height = "h-14",
   max,
   editable = true,
@@ -90,7 +98,6 @@ export const FormField = ({
         } border-primary`}
       >
         {/* Animated Placeholder */}
-
         {animate ? (
           <Animated.Text
             style={{
@@ -124,7 +131,7 @@ export const FormField = ({
         )}
 
         <TextInput
-          className="flex-1 text-grey2 font-isansdemibold text-sm w-full text-right pl-10"
+          className={`flex-1 w-full text-grey2 font-isansdemibold text-sm text-right h-max`}
           value={field.value}
           placeholderTextColor="transparent"
           onChangeText={field.onChange}
@@ -137,7 +144,7 @@ export const FormField = ({
           keyboardType={keyboardType}
           autoCorrect={false}
           inputMode={inputMode}
-          multiline={true}
+          multiline={Platform.OS === "ios" ? multiline : true}
         />
 
         {type === "password" ? (

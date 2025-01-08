@@ -1,7 +1,13 @@
 // IMPORTS
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { View, Text, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { useUserStore } from "@/store";
 import Background from "@/components/Background";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -49,15 +55,14 @@ const NerkhNameStep1 = () => {
             : order.servicetype.id === 2
             ? 19
             : order.servicetype.id === 4
-            ? 19 //سرویس امانت همان سرویس سفارشی هست فقط برای 2 کیلو به بالا می باشد
+            ? 19 // سرویس امانت همان سرویس سفارشی هست فقط برای 2 کیلو به بالا می باشد
             : 77,
         servicetype: order.servicetype.id === 4 ? 2 : order.servicetype.id,
         parceltype: form_data.parceltype,
         weight: parseFloat(form_data.weight) || 0,
         boxsize: form_data.boxsize || 1,
       });
-      console.log("WEIGHT RESPONSE: ", response.data);
-      if (response.data.status && response.data.status === true) {
+      if (response.data.status) {
         setOrder({ ...order, ...form_data });
         router.push(`/forms/order/order-step-2`);
       } else {
@@ -79,21 +84,11 @@ const NerkhNameStep1 = () => {
     }
   }, [form_data?.parceltype]);
 
-  // DEBUG
-  useEffect(() => {
-    console.log("order Step 1: ", order);
-  }, [order]);
-
-  useEffect(() => {
-    console.log("FORM DATA Step 1: ", form_data);
-  }, [form_data]);
-
   useEffect(() => {
     if (
       form_data?.parceltype &&
       [1, 14, 3, 15].includes(form_data.parceltype)
     ) {
-      console.log("Unregistering boxsize");
       unregister("boxsize");
     }
   }, [form_data?.parceltype, unregister]);
@@ -101,95 +96,97 @@ const NerkhNameStep1 = () => {
   return (
     <Background>
       <SafeAreaView className="h-full">
-        <ScrollView
-          contentContainerStyle={{
-            flexGrow: 1,
-            paddingBottom: 90,
-          }}
-          showsVerticalScrollIndicator={false}
-          stickyHeaderIndices={[0]}
-          keyboardShouldPersistTaps="handled"
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+          style={{ flex: 1 }}
         >
-          {/* HEADER SECTION */}
-          <Title
-            title={`${order?.servicetype?.label} : اطلاعات مرسوله`}
-            progress={30}
-          />
-
-          {/* FORM FIELDS */}
-          <View className="w-full px-5">
-            <FormField
-              placeholder="تعداد مرسوله"
-              editable={false}
-              type={"text"}
-              containerStyle="mt-10"
-              control={control}
-              value="1"
-              name="number"
+          <ScrollView
+            contentContainerStyle={{ flexGrow: 1, paddingBottom: 90 }}
+            showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps="handled"
+            stickyHeaderIndices={[0]}
+          >
+            {/* HEADER SECTION */}
+            <Title
+              title={`${order?.servicetype?.label} : اطلاعات مرسوله`}
+              progress={30}
             />
 
-            <View className="mt-5">
-              <CustomSelect
-                name="parceltype"
+            {/* FORM FIELDS */}
+            <View className="w-full px-5">
+              <FormField
+                placeholder="تعداد مرسوله"
+                editable={false}
+                type="text"
+                containerStyle="mt-10"
                 control={control}
-                rules={nerkhnameValidations.parceltype}
-                data={
-                  order?.servicetype?.id === 2
-                    ? parcelOptions.sefareshi
-                    : order?.servicetype?.id === 4
-                    ? parcelOptions.amanat
-                    : order?.servicetype?.id === 3
-                    ? parcelOptions.vijhe
-                    : parcelOptions.pishtaz
-                }
-                label="* نوع مرسوله"
-                errors={errors}
-                setValue={setValue}
+                value="1"
+                name="number"
               />
-            </View>
 
-            <View className="flex-row-reverse justify-center items-center">
-              <View className="flex-1 ml-2">
-                <FormField
-                  placeholder="وزن مرسوله"
-                  keyboardType="numeric"
-                  inputMode="numeric"
-                  containerStyle="mt-5"
-                  control={control}
-                  rules={{ ...requiredRule, ...weightRules }}
-                  name="weight"
-                />
-              </View>
-
-              <Text className="flex-3 self-center text-primary text-xl font-isansbold text-center rounded-lg pt-5">
-                گرم
-              </Text>
-            </View>
-
-            {![1, 14, 3, 15].includes(form_data?.parceltype) && (
               <View className="mt-5">
                 <CustomSelect
-                  name="boxsize"
+                  name="parceltype"
                   control={control}
-                  rules={requiredRule}
-                  data={boxsizeOptions}
-                  label="* سایز کارتن"
+                  rules={nerkhnameValidations.parceltype}
+                  data={
+                    order?.servicetype?.id === 2
+                      ? parcelOptions.sefareshi
+                      : order?.servicetype?.id === 4
+                      ? parcelOptions.amanat
+                      : order?.servicetype?.id === 3
+                      ? parcelOptions.vijhe
+                      : parcelOptions.pishtaz
+                  }
+                  label="* نوع مرسوله"
                   errors={errors}
                   setValue={setValue}
                 />
               </View>
-            )}
-          </View>
-        </ScrollView>
 
-        {/* BOTTOM SECTION */}
-        <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
-          <CustomButton
-            title="ادامه"
-            handlePress={handleSubmit(onSubmit)}
-            isLoading={isLoading}
-          />
-        </View>
+              <View className="flex-row-reverse justify-center items-center">
+                <View className="flex-1 ml-2">
+                  <FormField
+                    placeholder="وزن مرسوله"
+                    keyboardType="numeric"
+                    inputMode="numeric"
+                    containerStyle="mt-5"
+                    control={control}
+                    rules={{ ...requiredRule, ...weightRules }}
+                    name="weight"
+                  />
+                </View>
+
+                <Text className="flex-3 self-center text-primary text-xl font-isansbold text-center rounded-lg pt-5">
+                  گرم
+                </Text>
+              </View>
+
+              {![1, 14, 3, 15].includes(form_data?.parceltype) && (
+                <View className="mt-5">
+                  <CustomSelect
+                    name="boxsize"
+                    control={control}
+                    rules={requiredRule}
+                    data={boxsizeOptions}
+                    label="* سایز کارتن"
+                    errors={errors}
+                    setValue={setValue}
+                  />
+                </View>
+              )}
+            </View>
+          </ScrollView>
+
+          {/* BOTTOM SECTION */}
+          <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
+            <CustomButton
+              title="ادامه"
+              handlePress={handleSubmit(onSubmit)}
+              isLoading={isLoading}
+            />
+          </View>
+        </KeyboardAvoidingView>
       </SafeAreaView>
     </Background>
   );
