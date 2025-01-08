@@ -8,7 +8,7 @@ UI:
     ✔ add forbidden goods tab on the bottom tab navigation @done(25-01-07 22:25)
     □ change the order tracking button to a ui input form
     ✔ remove first slide form carousel @done(25-01-07 13:48)
-    □ change the "sefaresh" title to "marsoole posti" title
+    ✔ change the "sefaresh" title to "marsoole posti" title @done(25-01-09 00:01)
     □ add currency in all factors
     □ add icons in my posts top tabs
     ✔ change the fonts to smaller size (specially in my posts) @started(25-01-07 18:46) @done(25-01-07 18:46) @lasted(58s)
@@ -24,6 +24,7 @@ FORM:
     ✔ add size title for box sizes @done(25-01-07 14:58)
     □ avoid nerkhname form resetting
     ✔ check weight on first step @done(25-01-07 22:36)
+    □ mobile validation on order form for receiver step
 
 NEW FEATURES:
     □ add tracking with mobile

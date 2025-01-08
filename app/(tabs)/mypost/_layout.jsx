@@ -2,27 +2,21 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { withLayoutContext } from "expo-router";
 import Background from "@/components/Background";
+import MyTabBar from "@/components/MyTabBar";
 
 const { Navigator } = createMaterialTopTabNavigator();
 
 const MaterialTopTabs = withLayoutContext(Navigator);
 
-const tabLabelStyle = {
-  fontSize: 14,
-  fontFamily: "IranSans-DemiBold",
-};
+// const TopTabs = createMaterialTopTabNavigator();
 
 const TabsLayout = () => {
   return (
     <Background>
       <MaterialTopTabs
+        tabBar={(props) => <MyTabBar {...props} />}
         screenOptions={{
           tabBarScrollEnabled: true,
-          tabBarLabelStyle: tabLabelStyle,
-          tabBarItemStyle: {
-            width: 100,
-            transform: [{ scaleX: -1 }],
-          },
           sceneStyle: {
             backgroundColor: "transparent",
           },
@@ -36,9 +30,10 @@ const TabsLayout = () => {
         <MaterialTopTabs.Screen
           name="index"
           options={{
-            title: "سفارش",
+            title: "مرسوله پستی",
           }}
         />
+
         <MaterialTopTabs.Screen
           name="my-govahi"
           options={{
@@ -51,21 +46,18 @@ const TabsLayout = () => {
             title: "غرامت",
           }}
         />
-
         <MaterialTopTabs.Screen
           name="my-complaint"
           options={{
             title: "شکایت",
           }}
         />
-
         <MaterialTopTabs.Screen
           name="my-postcode"
           options={{
             title: "کد پستی",
           }}
         />
-
         <MaterialTopTabs.Screen
           name="my-yafte"
           options={{
