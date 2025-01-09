@@ -1,7 +1,8 @@
 // IMPORTS
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { View, Text, ScrollView } from "react-native";
 import { router } from "expo-router";
+import { useFocusEffect } from "@react-navigation/native";
 import { Chase } from "react-native-animated-spinkit";
 import CustomButton from "@/components/CustomButton";
 import { trackingOrders, trackingOrder } from "@/api/tracking";
@@ -44,9 +45,13 @@ const Index = () => {
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+
+      return () => {};
+    }, [fetchData])
+  );
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>

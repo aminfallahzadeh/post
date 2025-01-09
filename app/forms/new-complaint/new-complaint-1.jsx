@@ -1,7 +1,7 @@
 // IMPORTS
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FormField from "@/components/FormField";
 import CustomButton from "@/components/CustomButton";
@@ -106,75 +106,82 @@ const NewComplaintStep1 = () => {
       />
       <Background>
         <SafeAreaView className="h-full">
-          <ScrollView
-            contentContainerStyle={{
-              flexGrow: 1,
-              paddingBottom: 90,
-            }}
-            showsVerticalScrollIndicator={false}
-            stickyHeaderIndices={[0]}
-            keyboardShouldPersistTaps="handled"
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : undefined}
+            style={{ flex: 1 }}
           >
-            {/* HEADER SECTION */}
-            <Title title={"ثبت شکایت"} progress={100} home={true} />
+            <View className="flex-1">
+              {/* HEADER SECTION */}
+              <Title title={"ثبت شکایت"} progress={100} home={true} />
 
-            {/* FORM FIELDS */}
-            <View className="w-full px-4">
-              <FormField
-                placeholder="شماره سریال بسته پستی"
-                keyboardType="numeric"
-                inputMode="numeric"
-                control={control}
-                containerStyle="mt-5"
-                name="serialNo"
-              />
+              <ScrollView
+                contentContainerStyle={{
+                  flexGrow: 1,
+                  paddingBottom: 90,
+                }}
+                showsVerticalScrollIndicator={false}
+                keyboardShouldPersistTaps="handled"
+                //   stickyHeaderIndices={[0]}
+              >
+                {/* FORM FIELDS */}
+                <View className="w-full px-5">
+                  <FormField
+                    placeholder="شماره سریال بسته پستی"
+                    keyboardType="numeric"
+                    inputMode="numeric"
+                    control={control}
+                    containerStyle="mt-5"
+                    name="serialNo"
+                  />
 
-              <View className="mt-5">
-                <CustomSelect
-                  name="complaintType"
-                  control={control}
-                  rules={requiredRule}
-                  data={complaintTypeLookup}
-                  label="* نوع شکایت"
-                  errors={errors}
-                  setValue={setValue}
-                />
-              </View>
+                  <View className="mt-5">
+                    <CustomSelect
+                      name="complaintType"
+                      control={control}
+                      rules={requiredRule}
+                      data={complaintTypeLookup}
+                      label="* نوع شکایت"
+                      errors={errors}
+                      setValue={setValue}
+                    />
+                  </View>
 
-              <View className="mt-5">
-                <CustomSelect
-                  name="serviceId"
-                  control={control}
-                  rules={requiredRule}
-                  data={serviceTypeLookup}
-                  label="* نوع سرویس"
-                  errors={errors}
-                  setValue={setValue}
-                />
-              </View>
+                  <View className="mt-5">
+                    <CustomSelect
+                      name="serviceId"
+                      control={control}
+                      rules={requiredRule}
+                      data={serviceTypeLookup}
+                      label="* نوع سرویس"
+                      errors={errors}
+                      setValue={setValue}
+                    />
+                  </View>
 
-              <View className="mt-5">
-                <CustomSelect
-                  name="to_org_id"
-                  control={control}
-                  rules={requiredRule}
-                  data={postalRegionLookup}
-                  label="* واحد پستی"
-                  errors={errors}
-                  setValue={setValue}
+                  <View className="mt-5">
+                    <CustomSelect
+                      name="to_org_id"
+                      control={control}
+                      rules={requiredRule}
+                      data={postalRegionLookup}
+                      label="* واحد پستی"
+                      errors={errors}
+                      setValue={setValue}
+                    />
+                  </View>
+                </View>
+              </ScrollView>
+
+              {/* Submit Section */}
+              <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
+                <CustomButton
+                  title="ثبت شکایت"
+                  handlePress={handleSubmit(onSubmit)}
+                  isLoading={isLoading}
                 />
               </View>
             </View>
-          </ScrollView>
-
-          {/* Submit Section */}
-          <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
-            <CustomButton
-              title="ثبت شکایت"
-              handlePress={handleSubmit(onSubmit)}
-              isLoading={isLoading}
-            />
-          </View>
+          </KeyboardAvoidingView>
         </SafeAreaView>
       </Background>
     </>

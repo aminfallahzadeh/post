@@ -64,7 +64,7 @@ const Index = () => {
 
           <View className="w-1/4 mr-2">
             <CustomButton
-              title="جست و جو"
+              title="جستجو"
               height="h-10"
               handlePress={handleSubmit(onSubmit)}
             />

@@ -1,8 +1,9 @@
 // IMPORTS
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { View, Text, ScrollView } from "react-native";
 import { router } from "expo-router";
 import { Chase } from "react-native-animated-spinkit";
+import { useFocusEffect } from "@react-navigation/native";
 import { useUserStore } from "@/store";
 import { getRequestPostYafte } from "@/api/request";
 import { requestPayment } from "@/api/payment";
@@ -58,9 +59,13 @@ const MyYafte = () => {
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+
+      return () => {};
+    }, [fetchData])
+  );
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>

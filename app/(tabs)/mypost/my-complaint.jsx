@@ -1,6 +1,7 @@
 // IMPORTS
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { View, Text, ScrollView } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import { Chase } from "react-native-animated-spinkit";
 import ComplaintCard from "@/components/ComplaintCard";
 import { eopList } from "@/api/eop";
@@ -25,9 +26,13 @@ const MyComplaint = () => {
     }
   }, [mobile]);
 
-  useEffect(() => {
-    fetchEopList();
-  }, [fetchEopList]);
+  useFocusEffect(
+    useCallback(() => {
+      fetchEopList();
+
+      return () => {};
+    }, [fetchEopList])
+  );
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>

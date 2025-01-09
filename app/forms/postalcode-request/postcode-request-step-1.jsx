@@ -1,6 +1,6 @@
 // IMPORTS
 import { useState } from "react";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
 import { insertRequestBulk } from "@/api/request";
 import { useForm } from "react-hook-form";
 import CustomButton from "@/components/CustomButton";
@@ -80,116 +80,123 @@ const Step2 = () => {
   return (
     <Background>
       <SafeAreaView className="h-full">
-        <ScrollView
-          contentContainerStyle={{
-            flexGrow: 1,
-            paddingBottom: 30,
-          }}
-          showsVerticalScrollIndicator={false}
-          stickyHeaderIndices={[0]}
-          keyboardShouldPersistTaps="handled"
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+          style={{ flex: 1 }}
         >
-          {/* HEADER SECTION */}
-          <Title title={"درخواست کد پستی"} progress={66} home={true} />
+          <View className="flex-1">
+            {/* HEADER SECTION */}
+            <Title title={"درخواست کد پستی"} progress={66} home={true} />
 
-          {/* FORM FIELDS */}
-          <View className="w-full px-4">
-            <FormField
-              placeholder="* نام"
-              keyboardType="default"
-              containerStyle="mt-5"
-              rules={requiredRule}
-              type={"text"}
-              value={userData?.name || ""}
-              control={control}
-              name="name"
-            />
+            <ScrollView
+              contentContainerStyle={{
+                flexGrow: 1,
+                paddingBottom: 90,
+              }}
+              showsVerticalScrollIndicator={false}
+              keyboardShouldPersistTaps="handled"
+              //   stickyHeaderIndices={[0]}
+            >
+              {/* FORM FIELDS */}
+              <View className="w-full px-5">
+                <FormField
+                  placeholder="* نام"
+                  keyboardType="default"
+                  containerStyle="mt-5"
+                  rules={requiredRule}
+                  type={"text"}
+                  value={userData?.name || ""}
+                  control={control}
+                  name="name"
+                />
 
-            <FormField
-              placeholder="* نام خانوادگی"
-              keyboardType="default"
-              containerStyle="mt-5"
-              rules={requiredRule}
-              type={"text"}
-              control={control}
-              value={userData?.lastName || ""}
-              name="lastname"
-            />
+                <FormField
+                  placeholder="* نام خانوادگی"
+                  keyboardType="default"
+                  containerStyle="mt-5"
+                  rules={requiredRule}
+                  type={"text"}
+                  control={control}
+                  value={userData?.lastName || ""}
+                  name="lastname"
+                />
 
-            <FormField
-              placeholder="* تلفن همراه"
-              keyboardType="numeric"
-              inputMode="numeric"
-              containerStyle="mt-5"
-              rules={requiredRule}
-              control={control}
-              editable={false}
-              value={mobile || " "}
-              name="mobile"
-            />
+                <FormField
+                  placeholder="* تلفن همراه"
+                  keyboardType="numeric"
+                  inputMode="numeric"
+                  containerStyle="mt-5"
+                  rules={requiredRule}
+                  control={control}
+                  editable={false}
+                  value={mobile || " "}
+                  name="mobile"
+                />
 
-            <FormField
-              placeholder="شماره تلفن ثابت"
-              keyboardType="numeric"
-              containerStyle="mt-5"
-              type={"text"}
-              control={control}
-              name="tel"
-            />
+                <FormField
+                  placeholder="شماره تلفن ثابت"
+                  keyboardType="numeric"
+                  containerStyle="mt-5"
+                  type={"text"}
+                  control={control}
+                  name="tel"
+                />
 
-            <FormField
-              placeholder="موقعیت"
-              keyboardType="default"
-              containerStyle="mt-5"
-              type={"text"}
-              value={userAddress || ""}
-              control={control}
-              name="addressMain"
-              editable={false}
-              height="h-24"
-              multiline={true}
-            />
+                <FormField
+                  placeholder="موقعیت"
+                  keyboardType="default"
+                  containerStyle="mt-5"
+                  type={"text"}
+                  value={userAddress || ""}
+                  control={control}
+                  name="addressMain"
+                  editable={false}
+                  height="h-24"
+                  multiline={true}
+                />
 
-            <FormField
-              placeholder="* نشانی"
-              keyboardType="default"
-              containerStyle="mt-5"
-              rules={requiredRule}
-              type={"text"}
-              control={control}
-              name="addressSub"
-              multiline={true}
-            />
+                <FormField
+                  placeholder="* نشانی"
+                  keyboardType="default"
+                  containerStyle="mt-5"
+                  rules={requiredRule}
+                  type={"text"}
+                  control={control}
+                  name="addressSub"
+                  multiline={true}
+                />
 
-            <FormField
-              placeholder="نزدیکترین کد پستی"
-              keyboardType="numeric"
-              containerStyle="mt-5"
-              rules={postCodeRule}
-              type={"text"}
-              control={control}
-              name="nearestPostCode"
-            />
+                <FormField
+                  placeholder="نزدیکترین کد پستی"
+                  keyboardType="numeric"
+                  containerStyle="mt-5"
+                  rules={postCodeRule}
+                  type={"text"}
+                  control={control}
+                  name="nearestPostCode"
+                />
 
-            <View className="mt-5">
-              <BuildingDetailInput
-                items={items}
-                setItems={setItems}
-                onDeleteItem={deleteBuildingTypeHandler}
+                <View className="mt-5">
+                  <BuildingDetailInput
+                    items={items}
+                    setItems={setItems}
+                    onDeleteItem={deleteBuildingTypeHandler}
+                  />
+                </View>
+              </View>
+            </ScrollView>
+
+            {/* BOTTOM SECTION */}
+            <View className="w-full z-10 px-4 bg-gray-100 py-4">
+              <CustomButton
+                title="ادامه"
+                disabled={items.length === 0}
+                handlePress={handleSubmit(onSubmit)}
+                isLoading={isLoading}
               />
             </View>
           </View>
-        </ScrollView>
-
-        {/* BOTTOM SECTION */}
-        <View className="w-full z-10 px-4 bg-gray-100 py-4">
-          <CustomButton
-            title="ادامه"
-            disabled={items.length === 0}
-            handlePress={handleSubmit(onSubmit)}
-            isLoading={isLoading}
-          />
-        </View>
+        </KeyboardAvoidingView>
       </SafeAreaView>
     </Background>
   );

@@ -1,7 +1,13 @@
 // IMPORTS
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { View, Text, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useLocalSearchParams, router } from "expo-router";
 import { useUserStore } from "@/store";
@@ -96,94 +102,101 @@ const UserProfile = () => {
   return (
     <Background>
       <SafeAreaView className="h-full">
-        <ScrollView
-          contentContainerStyle={{
-            flexGrow: 1,
-            paddingBottom: 90,
-          }}
-          showsVerticalScrollIndicator={false}
-          stickyHeaderIndices={[0]}
-          keyboardShouldPersistTaps="handled"
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+          style={{ flex: 1 }}
         >
-          {/* HEADER SECTION */}
-          <Title title={"پروفایل کاربر"} progress={false} home={true} />
+          <View className="flex-1">
+            {/* HEADER SECTION */}
+            <Title title={"پروفایل کاربر"} progress={false} home={true} />
 
-          <View className="w-full px-4 pt-5">
-            <FormField
-              placeholder="نام"
-              control={control}
-              containerStyle="mt-5"
-              name="name"
-            />
-
-            <FormField
-              placeholder="نام خانوادگی"
-              control={control}
-              containerStyle="mt-5"
-              name="lastName"
-            />
-            <FormField
-              placeholder="کد ملی"
-              keyboardType="numeric"
-              inputMode="numeric"
-              rules={nationalCodeRule}
-              control={control}
-              containerStyle="mt-5"
-              name="nationalCode"
-            />
-
-            <View className="mt-5">
-              <Text className="text-base text-gray2 font-isansmedium w-full text-right px-2">
-                تاریخ تولد :
-              </Text>
-            </View>
-
-            <View className="flex-row-reverse justify-between items-center mt-5">
-              <View className="flex-1 ml-2">
-                <CustomSelect
-                  name="day"
+            <ScrollView
+              contentContainerStyle={{
+                flexGrow: 1,
+                paddingBottom: 90,
+              }}
+              showsVerticalScrollIndicator={false}
+              keyboardShouldPersistTaps="handled"
+              //   stickyHeaderIndices={[0]}
+            >
+              <View className="w-full px-5">
+                <FormField
+                  placeholder="نام"
                   control={control}
-                  data={days}
-                  label="روز"
-                  errors={errors}
-                  setValue={setValue}
+                  containerStyle="mt-5"
+                  name="name"
                 />
-              </View>
 
-              <View className="flex-1 mr-2 ml-2">
-                <CustomSelect
-                  name="month"
+                <FormField
+                  placeholder="نام خانوادگی"
                   control={control}
-                  data={months}
-                  label="ماه"
-                  errors={errors}
-                  setValue={setValue}
+                  containerStyle="mt-5"
+                  name="lastName"
                 />
-              </View>
+                <FormField
+                  placeholder="کد ملی"
+                  keyboardType="numeric"
+                  inputMode="numeric"
+                  rules={nationalCodeRule}
+                  control={control}
+                  containerStyle="mt-5"
+                  name="nationalCode"
+                />
 
-              <View className="flex-1 mr-2">
-                <CustomSelect
-                  name="year"
-                  control={control}
-                  data={years}
-                  label="سال"
-                  errors={errors}
-                  setValue={setValue}
-                />
+                <View className="mt-5">
+                  <Text className="text-base text-gray2 font-isansmedium w-full text-right px-2">
+                    تاریخ تولد :
+                  </Text>
+                </View>
+
+                <View className="flex-row-reverse justify-between items-center mt-5">
+                  <View className="flex-1 ml-2">
+                    <CustomSelect
+                      name="day"
+                      control={control}
+                      data={days}
+                      label="روز"
+                      errors={errors}
+                      setValue={setValue}
+                    />
+                  </View>
+
+                  <View className="flex-1 mr-2 ml-2">
+                    <CustomSelect
+                      name="month"
+                      control={control}
+                      data={months}
+                      label="ماه"
+                      errors={errors}
+                      setValue={setValue}
+                    />
+                  </View>
+
+                  <View className="flex-1 mr-2">
+                    <CustomSelect
+                      name="year"
+                      control={control}
+                      data={years}
+                      label="سال"
+                      errors={errors}
+                      setValue={setValue}
+                    />
+                  </View>
+                </View>
               </View>
+            </ScrollView>
+
+            {/* BOTTOM SECTION */}
+
+            <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
+              <CustomButton
+                title="ذخیره"
+                handlePress={handleSubmit(onSubmit)}
+                isLoading={isLoading || userDataLoading}
+              />
             </View>
           </View>
-        </ScrollView>
-
-        {/* BOTTOM SECTION */}
-
-        <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
-          <CustomButton
-            title="ذخیره"
-            handlePress={handleSubmit(onSubmit)}
-            isLoading={isLoading || userDataLoading}
-          />
-        </View>
+        </KeyboardAvoidingView>
       </SafeAreaView>
     </Background>
   );

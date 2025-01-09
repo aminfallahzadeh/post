@@ -1,6 +1,13 @@
 // IMPORTS
 import { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useUserStore } from "@/store";
 import { insertRequestCertification } from "@/api/request";
@@ -79,55 +86,62 @@ const CertificateStep2 = () => {
   return (
     <Background>
       <SafeAreaView className="h-full">
-        <ScrollView
-          contentContainerStyle={{
-            flexGrow: 1,
-            paddingBottom: 90,
-          }}
-          showsVerticalScrollIndicator={false}
-          stickyHeaderIndices={[0]}
-          keyboardShouldPersistTaps="handled"
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+          style={{ flex: 1 }}
         >
-          {/* HEADER SECTION */}
-          <Title title={"گواهی کد پستی"} progress={66} home={true} />
+          <View className="flex-1">
+            {/* HEADER SECTION */}
+            <Title title={"گواهی کد پستی"} progress={66} home={true} />
 
-          <TouchableOpacity
-            onPress={handleSelectAll}
-            className="mt-5 flex-row-reverse justify-center items-center self-end px-2 rounded-md mr-5"
-          >
-            {isSelectedAll ? (
-              <Feather name="check-circle" size={24} color="black" />
-            ) : (
-              <Feather name="circle" size={24} color="black" />
-            )}
+            <ScrollView
+              contentContainerStyle={{
+                flexGrow: 1,
+                paddingBottom: 90,
+              }}
+              showsVerticalScrollIndicator={false}
+              keyboardShouldPersistTaps="handled"
+              //   stickyHeaderIndices={[0]}
+            >
+              <TouchableOpacity
+                onPress={handleSelectAll}
+                className="mt-5 flex-row-reverse justify-center items-center self-end px-2 rounded-md mr-5"
+              >
+                {isSelectedAll ? (
+                  <Feather name="check-circle" size={24} color="black" />
+                ) : (
+                  <Feather name="circle" size={24} color="black" />
+                )}
 
-            <Text className="text-grey2 text-[15px] font-isansbold mr-2">
-              {SELECT_ALL}
-            </Text>
-          </TouchableOpacity>
+                <Text className="text-grey2 text-[15px] font-isansbold mr-2">
+                  {SELECT_ALL}
+                </Text>
+              </TouchableOpacity>
 
-          {/* RESULT LIST */}
-          <View className="w-full px-5">
-            {addressByPostCode.map((item, index) => (
-              <View key={index} className="mt-5">
-                <AddressCard
-                  item={item}
-                  isSelected={selectedItems.includes(item.postcode)}
-                  onSelect={() => handleSelect(item.postcode)}
-                />
+              {/* RESULT LIST */}
+              <View className="w-full px-5">
+                {addressByPostCode.map((item, index) => (
+                  <View key={index} className="mt-5">
+                    <AddressCard
+                      item={item}
+                      isSelected={selectedItems.includes(item.postcode)}
+                      onSelect={() => handleSelect(item.postcode)}
+                    />
+                  </View>
+                ))}
               </View>
-            ))}
-          </View>
-        </ScrollView>
+            </ScrollView>
 
-        {/* BOTTOM SECTION */}
-        <View className="w-full z-10 px-4 bg-gray-100 py-4">
-          <CustomButton
-            title="ادامه"
-            handlePress={onSubmit}
-            isLoading={isLoading}
-          />
-        </View>
+            {/* BOTTOM SECTION */}
+            <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
+              <CustomButton
+                title="ادامه"
+                handlePress={onSubmit}
+                isLoading={isLoading}
+              />
+            </View>
+          </View>
+        </KeyboardAvoidingView>
       </SafeAreaView>
     </Background>
   );

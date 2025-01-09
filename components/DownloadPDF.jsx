@@ -1,10 +1,6 @@
-// NATIVE IMPROTS
+// IMPORTS
 import { Pressable, Text, Image } from "react-native";
-
-// EXPO
 import { router } from "expo-router";
-
-// ASSETS
 import images from "@/constants/images";
 
 export const DownloadPDF = ({ item }) => {

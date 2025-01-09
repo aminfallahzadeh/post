@@ -1,7 +1,15 @@
 // IMPORTS
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { View, Text, Pressable, ScrollView, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { addressByPostCode, validatePostCode } from "@/api/gnaf";
 import { useUserStore } from "@/store";
@@ -99,95 +107,106 @@ const Index = () => {
   return (
     <Background>
       <SafeAreaView className="h-full">
-        <ScrollView
-          contentContainerStyle={{
-            flexGrow: 1,
-            paddingBottom: 30,
-          }}
-          showsVerticalScrollIndicator={false}
-          stickyHeaderIndices={[0]}
-          keyboardShouldPersistTaps="handled"
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+          style={{ flex: 1 }}
         >
-          {/* HEADER SECTION */}
-          <Title title={"گواهی کد پستی"} progress={33} home={false} />
+          <View className="flex-1">
+            {/* HEADER SECTION */}
+            <Title title={"گواهی کد پستی"} progress={33} home={false} />
 
-          {/* FORM FIELDS */}
-          <View className="w-full px-5">
-            <View
-              className="w-full flex-row-reverse px-10 justify-between items-center mt-10"
-              style={styles.inputContainer}
+            <ScrollView
+              contentContainerStyle={{
+                flexGrow: 1,
+                paddingBottom: 90,
+              }}
+              showsVerticalScrollIndicator={false}
+              keyboardShouldPersistTaps="handled"
+              //   stickyHeaderIndices={[0]}
             >
-              <FormField
-                placeholder="* کد پستی"
-                keyboardType="numeric"
-                inputMode="numeric"
-                containerStyle="w-full"
-                control={control}
-                name="postalCode"
-                max={10}
-                editable={!isValidating}
-              />
-
-              {isValidating ? (
-                <View>
-                  <Chase size={35} color="#164194" />
-                </View>
-              ) : (
-                <Pressable
-                  disabled={plusDisabled || isValidating}
-                  onPress={addPostalCodeHandler}
+              {/* FORM FIELDS */}
+              <View className="w-full px-5">
+                <View
+                  className="w-full flex-row-reverse px-10 justify-between items-center mt-10"
+                  style={styles.inputContainer}
                 >
-                  <Feather
-                    name="plus"
-                    size={24}
-                    color={`${plusDisabled ? "gray" : "#164194"}`}
+                  <FormField
+                    placeholder="* کد پستی"
+                    keyboardType="numeric"
+                    inputMode="numeric"
+                    containerStyle="w-full"
+                    control={control}
+                    name="postalCode"
+                    max={10}
+                    editable={!isValidating}
                   />
-                </Pressable>
-              )}
-            </View>
 
-            <View className="w-full mt-20 justify-center items-center">
-              <Text className="text-primary font-isansbold text-[18px]">
-                لیست کد پستی های شما
-              </Text>
-              <View
-                className={`w-full rounded-md mt-5 p-5 items-center ${
-                  postalCodes.length === 0 ? "justify-center" : "justify-start"
-                }`}
-                style={styles.postalCodeContainers}
-              >
-                {postalCodes.length === 0 ? (
-                  <Text className="text-grey4 font-isansregular text-[15px]">
-                    لطفا کد پستی خود را اضافه کنید
-                  </Text>
-                ) : (
-                  <View
-                    className="w-full flex-row-reverse flex-wrap"
-                    style={styles.postalCodesItemContainer}
-                  >
-                    {postalCodes.map((postalCode, index) => (
-                      <PostalCodeCard
-                        key={index}
-                        postalCode={postalCode}
-                        handlePress={() => removePostalCodeHandler(postalCode)}
+                  {isValidating ? (
+                    <View>
+                      <Chase size={35} color="#164194" />
+                    </View>
+                  ) : (
+                    <Pressable
+                      disabled={plusDisabled || isValidating}
+                      onPress={addPostalCodeHandler}
+                    >
+                      <Feather
+                        name="plus"
+                        size={24}
+                        color={`${plusDisabled ? "gray" : "#164194"}`}
                       />
-                    ))}
+                    </Pressable>
+                  )}
+                </View>
+
+                <View className="w-full mt-20 justify-center items-center">
+                  <Text className="text-primary font-isansbold text-[18px]">
+                    لیست کد پستی های شما
+                  </Text>
+                  <View
+                    className={`w-full rounded-md mt-5 p-5 items-center ${
+                      postalCodes.length === 0
+                        ? "justify-center"
+                        : "justify-start"
+                    }`}
+                    style={styles.postalCodeContainers}
+                  >
+                    {postalCodes.length === 0 ? (
+                      <Text className="text-grey4 font-isansregular text-[15px]">
+                        لطفا کد پستی خود را اضافه کنید
+                      </Text>
+                    ) : (
+                      <View
+                        className="w-full flex-row-reverse flex-wrap"
+                        style={styles.postalCodesItemContainer}
+                      >
+                        {postalCodes.map((postalCode, index) => (
+                          <PostalCodeCard
+                            key={index}
+                            postalCode={postalCode}
+                            handlePress={() =>
+                              removePostalCodeHandler(postalCode)
+                            }
+                          />
+                        ))}
+                      </View>
+                    )}
                   </View>
-                )}
+                </View>
               </View>
+            </ScrollView>
+
+            {/* BOTTOM SECTION */}
+            <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
+              <CustomButton
+                title="ادامه"
+                handlePress={handleSubmit(onSubmit)}
+                isLoading={isLoading || isValidating}
+                disabled={postalCodes.length === 0}
+              />
             </View>
           </View>
-        </ScrollView>
-
-        {/* BOTTOM SECTION */}
-        <View className="w-full z-10 px-4 bg-gray-100 py-4">
-          <CustomButton
-            title="ادامه"
-            handlePress={handleSubmit(onSubmit)}
-            isLoading={isLoading || isValidating}
-            disabled={postalCodes.length === 0}
-          />
-        </View>
+        </KeyboardAvoidingView>
       </SafeAreaView>
     </Background>
   );

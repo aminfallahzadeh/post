@@ -105,6 +105,7 @@ const NerkhnameStep2 = () => {
               title={`${order?.servicetype?.label} : اطلاعات فرستنده`}
               progress={45}
             />
+
             <ScrollView
               contentContainerStyle={{
                 flexGrow: 1,

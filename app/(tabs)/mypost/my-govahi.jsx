@@ -1,7 +1,8 @@
 // IMPORTS
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { View, Text, ScrollView } from "react-native";
 import { Chase } from "react-native-animated-spinkit";
+import { useFocusEffect } from "@react-navigation/native";
 import PostCertificateCard from "@/components/PostCertificateCard";
 import { getCertificate } from "@/api/gnaf";
 import * as SecureStore from "expo-secure-store";
@@ -26,9 +27,13 @@ const MyGovahi = () => {
     }
   }, [mobile]);
 
-  useEffect(() => {
-    fetchCertificateList();
-  }, [fetchCertificateList]);
+  useFocusEffect(
+    useCallback(() => {
+      fetchCertificateList();
+
+      return () => {};
+    }, [fetchCertificateList])
+  );
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>

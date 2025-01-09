@@ -1,7 +1,7 @@
 // IMPORTS
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
 import CustomSelect from "@/components/CustomSelect";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { insertRequestPostYafte } from "@/api/request";
@@ -98,99 +98,106 @@ const YafteStep1 = () => {
   return (
     <Background>
       <SafeAreaView className="h-full">
-        <ScrollView
-          contentContainerStyle={{
-            flexGrow: 1,
-            paddingBottom: 30,
-          }}
-          showsVerticalScrollIndicator={false}
-          stickyHeaderIndices={[0]}
-          keyboardShouldPersistTaps="handled"
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+          style={{ flex: 1 }}
         >
-          {/* HEADER SECTION */}
-          <Title title={POST_YAFTE} progress={66} home={true} />
+          <View className="flex-1">
+            {/* HEADER SECTION */}
+            <Title title={POST_YAFTE} progress={66} home={true} />
 
-          {/* FORM FIELDS */}
-          <View className="w-full px-5">
-            <FormField
-              placeholder="تلفن همراه"
-              editable={false}
-              type={"text"}
-              containerStyle="mt-10"
-              control={control}
-              value={mobile || " "}
-              name="mobile"
-            />
-
-            <FormField
-              placeholder="* آدرس"
-              multiline={true}
-              keyboardType="default"
-              type={"text"}
-              containerStyle="mt-5"
-              rules={postYafteValidation.address}
-              height={"h-40"}
-              inputStyle={{
-                textAlignVertical: "top",
+            <ScrollView
+              contentContainerStyle={{
+                flexGrow: 1,
+                paddingBottom: 90,
               }}
-              control={control}
-              name="address"
-            />
+              showsVerticalScrollIndicator={false}
+              keyboardShouldPersistTaps="handled"
+              //   stickyHeaderIndices={[0]}
+            >
+              {/* FORM FIELDS */}
+              <View className="w-full px-5">
+                <FormField
+                  placeholder="تلفن همراه"
+                  editable={false}
+                  type={"text"}
+                  containerStyle="mt-10"
+                  control={control}
+                  value={mobile || " "}
+                  name="mobile"
+                />
 
-            <FormField
-              placeholder="* کد پستی"
-              keyboardType="numeric"
-              inputMode="numeric"
-              rules={{ ...requiredRule, ...postCodeRule }}
-              containerStyle="mt-5"
-              control={control}
-              name="postCode"
-            />
+                <FormField
+                  placeholder="* آدرس"
+                  multiline={true}
+                  keyboardType="default"
+                  type={"text"}
+                  containerStyle="mt-5"
+                  rules={postYafteValidation.address}
+                  height={"h-40"}
+                  inputStyle={{
+                    textAlignVertical: "top",
+                  }}
+                  control={control}
+                  name="address"
+                />
 
-            <View className="mt-5">
-              <CustomSelect
-                name="state_id"
-                control={control}
-                rules={requiredRule}
-                data={provinceOptions}
-                label="* استان"
-                errors={errors}
-                setValue={setValue}
-                isLoading={isProvinceLoading}
-                onValueChange={(val) => {
-                  fetchCity(val);
-                }}
-                onClear={() => {
-                  setValue("state_id", null);
-                  setValue("city_id", null);
-                  setCityOptions([]);
-                }}
-              />
-            </View>
+                <FormField
+                  placeholder="* کد پستی"
+                  keyboardType="numeric"
+                  inputMode="numeric"
+                  rules={{ ...requiredRule, ...postCodeRule }}
+                  containerStyle="mt-5"
+                  control={control}
+                  name="postCode"
+                />
 
-            <View className="mt-5">
-              <CustomSelect
-                name="city_id"
-                control={control}
-                rules={requiredRule}
-                data={cityOptions}
-                label="* شهر"
-                errors={errors}
-                setValue={setValue}
-                isLoading={isCityLoading}
+                <View className="mt-5">
+                  <CustomSelect
+                    name="state_id"
+                    control={control}
+                    rules={requiredRule}
+                    data={provinceOptions}
+                    label="* استان"
+                    errors={errors}
+                    setValue={setValue}
+                    isLoading={isProvinceLoading}
+                    onValueChange={(val) => {
+                      fetchCity(val);
+                    }}
+                    onClear={() => {
+                      setValue("state_id", null);
+                      setValue("city_id", null);
+                      setCityOptions([]);
+                    }}
+                  />
+                </View>
+
+                <View className="mt-5">
+                  <CustomSelect
+                    name="city_id"
+                    control={control}
+                    rules={requiredRule}
+                    data={cityOptions}
+                    label="* شهر"
+                    errors={errors}
+                    setValue={setValue}
+                    isLoading={isCityLoading}
+                  />
+                </View>
+              </View>
+            </ScrollView>
+
+            {/* BOTTOM SECTION */}
+            <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
+              <CustomButton
+                title="درخواست ارسال"
+                handlePress={handleSubmit(onSubmit)}
+                isLoading={isLoading}
               />
             </View>
           </View>
-        </ScrollView>
-
-        {/* BOTTOM SECTION */}
-        <View className="w-full z-10 px-4 bg-gray-100 py-4">
-          <CustomButton
-            title="درخواست ارسال"
-            handlePress={handleSubmit(onSubmit)}
-            isLoading={isLoading}
-          />
-        </View>
+        </KeyboardAvoidingView>
       </SafeAreaView>
     </Background>
   );

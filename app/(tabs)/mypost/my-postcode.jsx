@@ -1,8 +1,9 @@
 // IMPORTS
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { View, Text, ScrollView } from "react-native";
 import { Chase } from "react-native-animated-spinkit";
 import { getRequestBulk } from "@/api/request";
+import { useFocusEffect } from "@react-navigation/native";
 import { PostCodeCard } from "@/components/PostCodeCard/PostCodeCard";
 import * as SecureStore from "expo-secure-store";
 
@@ -25,9 +26,13 @@ const MyPostcode = () => {
     }
   }, [mobile]);
 
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+
+      return () => {};
+    }, [fetchData])
+  );
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>

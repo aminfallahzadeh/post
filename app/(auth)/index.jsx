@@ -24,7 +24,7 @@ import SwitchInput from "@/components/SwitchInput";
 
 const Login = () => {
   // STATES
-  const [isEnabled, setIsEnabled] = useState(false);
+  const [isEnabled, setIsEnabled] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState(null);
 
@@ -103,7 +103,7 @@ const Login = () => {
 
                 <View className="mt-10 flex-row-reverse items-center justify-start">
                   <Text
-                    className={`text-center self-center font-isansdemibold text-lg ${
+                    className={`text-center self-center font-isansdemibold text-md m-2 ${
                       isEnabled ? "text-primary" : "text-gray-400"
                     }`}
                   >
@@ -112,7 +112,7 @@ const Login = () => {
 
                   <SwitchInput onValueChange={toggleSwitch} value={isEnabled} />
                   <Text
-                    className={`text-center self-center font-isansdemibold text-lg ${
+                    className={`text-center self-center font-isansdemibold text-md m-2 ${
                       !isEnabled ? "text-primary" : "text-gray-400"
                     }`}
                   >

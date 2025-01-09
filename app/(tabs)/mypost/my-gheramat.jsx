@@ -1,7 +1,8 @@
 // IMPORTS
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { View, Text, ScrollView } from "react-native";
 import { Chase } from "react-native-animated-spinkit";
+import { useFocusEffect } from "@react-navigation/native";
 import { trackingGheramat } from "@/api/gheramat";
 import * as SecureStore from "expo-secure-store";
 import { GheramatTrackCard } from "@/components/GheramatTrackCard";
@@ -26,9 +27,13 @@ const MyGheramat = () => {
     }
   }, [mobile]);
 
-  useEffect(() => {
-    fetchGheramatList();
-  }, [fetchGheramatList]);
+  useFocusEffect(
+    useCallback(() => {
+      fetchGheramatList();
+
+      return () => {};
+    }, [fetchGheramatList])
+  );
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>

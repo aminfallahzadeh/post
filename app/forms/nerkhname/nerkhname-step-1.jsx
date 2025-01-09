@@ -1,7 +1,13 @@
 // IMPORTS
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { View, ScrollView, Text } from "react-native";
+import {
+  View,
+  ScrollView,
+  Text,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "@/components/CustomButton";
 import { router } from "expo-router";
@@ -163,166 +169,173 @@ const NerkhnameStep1 = () => {
   return (
     <Background>
       <SafeAreaView className="h-full">
-        <ScrollView
-          contentContainerStyle={{
-            flexGrow: 1,
-            paddingBottom: 90,
-          }}
-          showsVerticalScrollIndicator={false}
-          stickyHeaderIndices={[0]}
-          keyboardShouldPersistTaps="handled"
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+          style={{ flex: 1 }}
         >
-          {/* HEADER SECTION */}
-          <Title
-            title={`${nerkhname?.servicetype?.label} : نرخ نامه`}
-            home={true}
-            progress={66}
-          />
+          <View className="flex-1">
+            {/* HEADER SECTION */}
+            <Title
+              title={`${nerkhname?.servicetype?.label} : نرخ نامه`}
+              home={true}
+              progress={66}
+            />
 
-          {/* FORM FIELDS */}
-          <View className="w-full px-5 mt-5">
-            <View className="mt-5">
-              <CustomSelect
-                name="parceltype"
-                control={control}
-                rules={nerkhnameValidations.parceltype}
-                data={
-                  nerkhname?.servicetype?.id === 2
-                    ? parcelOptions.sefareshi
-                    : nerkhname?.servicetype?.id === 4
-                    ? parcelOptions.amanat
-                    : nerkhname?.servicetype?.id === 3
-                    ? parcelOptions.vijhe
-                    : parcelOptions.pishtaz
-                }
-                label="* نوع مرسوله"
-                errors={errors}
-                setValue={setValue}
-              />
-            </View>
+            <ScrollView
+              contentContainerStyle={{
+                flexGrow: 1,
+                paddingBottom: 90,
+              }}
+              showsVerticalScrollIndicator={false}
+              keyboardShouldPersistTaps="handled"
+              //   stickyHeaderIndices={[0]}
+            >
+              {/* FORM FIELDS */}
+              <View className="w-full px-5">
+                <View className="mt-5">
+                  <CustomSelect
+                    name="parceltype"
+                    control={control}
+                    rules={nerkhnameValidations.parceltype}
+                    data={
+                      nerkhname?.servicetype?.id === 2
+                        ? parcelOptions.sefareshi
+                        : nerkhname?.servicetype?.id === 4
+                        ? parcelOptions.amanat
+                        : nerkhname?.servicetype?.id === 3
+                        ? parcelOptions.vijhe
+                        : parcelOptions.pishtaz
+                    }
+                    label="* نوع مرسوله"
+                    errors={errors}
+                    setValue={setValue}
+                  />
+                </View>
 
-            <View className="flex-row-reverse justify-center items-center">
-              <View className="flex-1 ml-2">
-                <FormField
-                  placeholder="وزن مرسوله"
-                  keyboardType="numeric"
-                  inputMode="numeric"
-                  containerStyle="mt-5"
-                  control={control}
-                  rules={{ ...requiredRule, ...weightRules }}
-                  name="weight"
-                />
+                <View className="flex-row-reverse justify-center items-center">
+                  <View className="flex-1 ml-2">
+                    <FormField
+                      placeholder="وزن مرسوله"
+                      keyboardType="numeric"
+                      inputMode="numeric"
+                      containerStyle="mt-5"
+                      control={control}
+                      rules={{ ...requiredRule, ...weightRules }}
+                      name="weight"
+                    />
+                  </View>
+
+                  <Text className="flex-3 self-center text-primary text-xl font-isansbold text-center rounded-lg pt-5">
+                    گرم
+                  </Text>
+                </View>
+
+                {![1, 14, 3, 15].includes(form_data?.parceltype) && (
+                  <View className="mt-5">
+                    <CustomSelect
+                      name="boxsize"
+                      control={control}
+                      rules={requiredRule}
+                      data={boxsizeOptions}
+                      label="* سایز کارتن"
+                      errors={errors}
+                      setValue={setValue}
+                    />
+                  </View>
+                )}
+
+                <View className="mt-5">
+                  <CustomSelect
+                    name="provinceIDSource"
+                    control={control}
+                    rules={requiredRule}
+                    data={provinceOptions}
+                    label="* استان مبدا"
+                    errors={errors}
+                    search={true}
+                    setValue={setValue}
+                    isLoading={isProvinceLoading}
+                    onValueChange={(val) => {
+                      if (val) {
+                        fetchCity(val);
+                      } else {
+                        setSourceCityOptions([]);
+                      }
+                    }}
+                    onClear={() => {
+                      setValue("senderProvinceID", null);
+                      setValue("sourcecode", null);
+                      setSourceCityOptions([]);
+                    }}
+                  />
+                </View>
+
+                <View className="mt-5">
+                  <CustomSelect
+                    name="sourcecode"
+                    control={control}
+                    rules={requiredRule}
+                    data={sourceCityOptions}
+                    label="* شهر مبدا"
+                    errors={errors}
+                    search={true}
+                    setValue={setValue}
+                    isLoading={isCityLoading}
+                  />
+                </View>
+
+                <View className="mt-5">
+                  <CustomSelect
+                    name="provinceIDDest"
+                    control={control}
+                    rules={requiredRule}
+                    data={provinceOptions}
+                    label="* استان مقصد"
+                    errors={errors}
+                    search={true}
+                    setValue={setValue}
+                    isLoading={isProvinceLoading}
+                    onValueChange={(val) => {
+                      if (val) {
+                        fetchDestCity(val);
+                      } else {
+                        setDestCityOptions([]);
+                      }
+                    }}
+                    onClear={() => {
+                      setValue("senderProvinceID", null);
+                      setValue("destcode", null);
+                      setDestCityOptions([]);
+                    }}
+                  />
+                </View>
+
+                <View className="mt-5">
+                  <CustomSelect
+                    name="destcode"
+                    control={control}
+                    rules={requiredRule}
+                    data={destCityOptions}
+                    search={true}
+                    label="* شهر مقصد"
+                    errors={errors}
+                    setValue={setValue}
+                    isLoading={isDestCityLoading}
+                  />
+                </View>
               </View>
+            </ScrollView>
 
-              <Text className="flex-3 self-center text-primary text-xl font-isansbold text-center rounded-lg pt-5">
-                گرم
-              </Text>
-            </View>
-
-            {![1, 14, 3, 15].includes(form_data?.parceltype) && (
-              <View className="mt-5">
-                <CustomSelect
-                  name="boxsize"
-                  control={control}
-                  rules={requiredRule}
-                  data={boxsizeOptions}
-                  label="* سایز کارتن"
-                  errors={errors}
-                  setValue={setValue}
-                />
-              </View>
-            )}
-
-            <View className="mt-5">
-              <CustomSelect
-                name="provinceIDSource"
-                control={control}
-                rules={requiredRule}
-                data={provinceOptions}
-                label="* استان مبدا"
-                errors={errors}
-                search={true}
-                setValue={setValue}
-                isLoading={isProvinceLoading}
-                onValueChange={(val) => {
-                  if (val) {
-                    fetchCity(val);
-                  } else {
-                    setSourceCityOptions([]);
-                  }
-                }}
-                onClear={() => {
-                  setValue("senderProvinceID", null);
-                  setValue("sourcecode", null);
-                  setSourceCityOptions([]);
-                }}
-              />
-            </View>
-
-            <View className="mt-5">
-              <CustomSelect
-                name="sourcecode"
-                control={control}
-                rules={requiredRule}
-                data={sourceCityOptions}
-                label="* شهر مبدا"
-                errors={errors}
-                search={true}
-                setValue={setValue}
-                isLoading={isCityLoading}
-              />
-            </View>
-
-            <View className="mt-5">
-              <CustomSelect
-                name="provinceIDDest"
-                control={control}
-                rules={requiredRule}
-                data={provinceOptions}
-                label="* استان مقصد"
-                errors={errors}
-                search={true}
-                setValue={setValue}
-                isLoading={isProvinceLoading}
-                onValueChange={(val) => {
-                  if (val) {
-                    fetchDestCity(val);
-                  } else {
-                    setDestCityOptions([]);
-                  }
-                }}
-                onClear={() => {
-                  setValue("senderProvinceID", null);
-                  setValue("destcode", null);
-                  setDestCityOptions([]);
-                }}
-              />
-            </View>
-
-            <View className="mt-5">
-              <CustomSelect
-                name="destcode"
-                control={control}
-                rules={requiredRule}
-                data={destCityOptions}
-                search={true}
-                label="* شهر مقصد"
-                errors={errors}
-                setValue={setValue}
-                isLoading={isDestCityLoading}
+            {/* BOTTOM SECTION */}
+            <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
+              <CustomButton
+                title="محاسبه"
+                isLoading={isLoading}
+                handlePress={handleSubmit(onSubmit)}
               />
             </View>
           </View>
-        </ScrollView>
-
-        {/* BOTTOM SECTION */}
-        <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
-          <CustomButton
-            title="محاسبه"
-            isLoading={isLoading}
-            handlePress={handleSubmit(onSubmit)}
-          />
-        </View>
+        </KeyboardAvoidingView>
       </SafeAreaView>
     </Background>
   );

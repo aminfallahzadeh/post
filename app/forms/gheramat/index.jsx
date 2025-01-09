@@ -1,7 +1,7 @@
 // IMPORTS
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useUserStore } from "@/store";
 import { router } from "expo-router";
@@ -93,105 +93,112 @@ const Index = () => {
   return (
     <Background>
       <SafeAreaView className="h-full">
-        <ScrollView
-          contentContainerStyle={{
-            flexGrow: 1,
-            paddingBottom: 90,
-          }}
-          showsVerticalScrollIndicator={false}
-          stickyHeaderIndices={[0]}
-          keyboardShouldPersistTaps="handled"
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+          style={{ flex: 1 }}
         >
-          {/* HEADER SECTION */}
-          <Title title={"درخواست غرامت"} progress={50} home={false} />
+          <View className="flex-1">
+            {/* HEADER SECTION */}
+            <Title title={"درخواست غرامت"} progress={50} home={false} />
 
-          {/* FORM FIELDS */}
-          <View className="w-full px-4">
-            <FormField
-              placeholder="نام"
-              value={userData?.name || "-"}
-              editable={false}
-              containerStyle="mt-5"
-              control={control}
-              name="name"
-            />
+            <ScrollView
+              contentContainerStyle={{
+                flexGrow: 1,
+                paddingBottom: 90,
+              }}
+              showsVerticalScrollIndicator={false}
+              keyboardShouldPersistTaps="handled"
+              //   stickyHeaderIndices={[0]}
+            >
+              {/* FORM FIELDS */}
+              <View className="w-full px-5">
+                <FormField
+                  placeholder="نام"
+                  value={userData?.name || "-"}
+                  editable={false}
+                  containerStyle="mt-5"
+                  control={control}
+                  name="name"
+                />
 
-            <FormField
-              placeholder="نام خانوادگی"
-              value={userData?.lastName || "-"}
-              editable={false}
-              containerStyle="mt-5"
-              control={control}
-              name="lastname"
-            />
+                <FormField
+                  placeholder="نام خانوادگی"
+                  value={userData?.lastName || "-"}
+                  editable={false}
+                  containerStyle="mt-5"
+                  control={control}
+                  name="lastname"
+                />
 
-            <FormField
-              placeholder="کد ملی"
-              type={"text"}
-              rules={nationalCodeRule}
-              value={userData?.nationalCode || "-"}
-              editable={false}
-              containerStyle="mt-5"
-              control={control}
-              name="nationalCode"
-            />
+                <FormField
+                  placeholder="کد ملی"
+                  type={"text"}
+                  rules={nationalCodeRule}
+                  value={userData?.nationalCode || "-"}
+                  editable={false}
+                  containerStyle="mt-5"
+                  control={control}
+                  name="nationalCode"
+                />
 
-            <FormField
-              placeholder="تلفن"
-              value={mobile || "-"}
-              editable={false}
-              containerStyle="mt-5"
-              control={control}
-              name="mobile"
-            />
+                <FormField
+                  placeholder="تلفن"
+                  value={mobile || "-"}
+                  editable={false}
+                  containerStyle="mt-5"
+                  control={control}
+                  name="mobile"
+                />
 
-            <FormField
-              placeholder="* شماره مرسوله"
-              keyboardType="numeric"
-              inputMode="numeric"
-              rules={requiredRule}
-              containerStyle="mt-5"
-              control={control}
-              name="parcellno"
-            />
+                <FormField
+                  placeholder="* شماره مرسوله"
+                  keyboardType="numeric"
+                  inputMode="numeric"
+                  rules={requiredRule}
+                  containerStyle="mt-5"
+                  control={control}
+                  name="parcellno"
+                />
 
-            <View className="mt-5">
-              <CustomSelect
-                name="serviceKind"
-                control={control}
-                rules={requiredRule}
-                data={serviceOptions}
-                label="* نوع سرویس"
-                errors={errors}
-                setValue={setValue}
-                isLoading={isServiceLoading}
-              />
-            </View>
+                <View className="mt-5">
+                  <CustomSelect
+                    name="serviceKind"
+                    control={control}
+                    rules={requiredRule}
+                    data={serviceOptions}
+                    label="* نوع سرویس"
+                    errors={errors}
+                    setValue={setValue}
+                    isLoading={isServiceLoading}
+                  />
+                </View>
 
-            <View className="mt-5">
-              <CustomSelect
-                name="province"
-                control={control}
-                rules={requiredRule}
-                data={provinceOptions}
-                label="* شهر"
-                errors={errors}
-                search={true}
-                setValue={setValue}
-                isLoading={isProvinceLoading}
+                <View className="mt-5">
+                  <CustomSelect
+                    name="province"
+                    control={control}
+                    rules={requiredRule}
+                    data={provinceOptions}
+                    label="* شهر"
+                    errors={errors}
+                    search={true}
+                    setValue={setValue}
+                    isLoading={isProvinceLoading}
+                  />
+                </View>
+              </View>
+            </ScrollView>
+
+            {/* BOTTOM SECTION */}
+            <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
+              <CustomButton
+                title="ادامه"
+                handlePress={handleSubmit(onSubmit)}
+                isLoading={isLoading}
               />
             </View>
           </View>
-        </ScrollView>
-
-        {/* BOTTOM SECTION */}
-        <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
-          <CustomButton
-            title="ادامه"
-            handlePress={handleSubmit(onSubmit)}
-            isLoading={isLoading}
-          />
-        </View>
+        </KeyboardAvoidingView>
       </SafeAreaView>
     </Background>
   );

@@ -1,7 +1,7 @@
 // IMPORTS
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useUserStore } from "@/store";
 import { stepOneEopValidations } from "@/constants/validations";
@@ -66,96 +66,103 @@ const Index = () => {
       />
       <Background>
         <SafeAreaView className="h-full">
-          <ScrollView
-            contentContainerStyle={{
-              flexGrow: 1,
-              paddingBottom: 90,
-            }}
-            showsVerticalScrollIndicator={false}
-            stickyHeaderIndices={[0]}
-            keyboardShouldPersistTaps="handled"
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : undefined}
+            style={{ flex: 1 }}
           >
-            {/* HEADER SECTION */}
-            <Title title={"ثبت شکایت"} progress={50} home={false} />
+            <View className="flex-1">
+              {/* HEADER SECTION */}
+              <Title title={"ثبت شکایت"} progress={50} home={false} />
 
-            {/* FORM FIELDS */}
-            <View className="w-full px-4">
-              <FormField
-                placeholder="شماره موبایل"
-                keyboardType="default"
-                type={"text"}
-                editable={false}
-                value={mobile || "-"}
-                style={{ color: "#666666" }}
-                containerStyle="mt-5"
-                control={control}
-                name="mobile"
-              />
-
-              <FormField
-                placeholder="نام"
-                keyboardType="default"
-                containerStyle="mt-5"
-                type={"text"}
-                value={userData?.name || "-"}
-                editable={false}
-                style={{ color: "#666666" }}
-                control={control}
-                name="name"
-              />
-
-              <FormField
-                placeholder="نام خانوادگی"
-                keyboardType="default"
-                containerStyle="mt-5"
-                type={"text"}
-                control={control}
-                editable={false}
-                style={{ color: "#666666" }}
-                value={userData?.lastName || "-"}
-                name="lastname"
-              />
-
-              <FormField
-                placeholder="کد ملی"
-                keyboardType="default"
-                type={"text"}
-                control={control}
-                rules={nationalCodeRule}
-                containerStyle="mt-5"
-                editable={false}
-                style={{ color: "#666666" }}
-                value={userData?.nationalCode || "-"}
-                name="nationalCode"
-              />
-
-              <FormField
-                placeholder="عنوان شکایت"
-                keyboardType="default"
-                type={"text"}
-                height={"h-[100px]"}
-                containerStyle="mt-5"
-                max={800}
-                multiline
-                inputStyle={{
-                  textAlignVertical: "top",
-                  textAlign: "right",
-                  paddingTop: 10,
+              <ScrollView
+                contentContainerStyle={{
+                  flexGrow: 1,
+                  paddingBottom: 90,
                 }}
-                control={control}
-                name="title"
-              />
-            </View>
-          </ScrollView>
+                showsVerticalScrollIndicator={false}
+                keyboardShouldPersistTaps="handled"
+                //   stickyHeaderIndices={[0]}
+              >
+                {/* FORM FIELDS */}
+                <View className="w-full px-4">
+                  <FormField
+                    placeholder="شماره موبایل"
+                    keyboardType="default"
+                    type={"text"}
+                    editable={false}
+                    value={mobile || "-"}
+                    style={{ color: "#666666" }}
+                    containerStyle="mt-5"
+                    control={control}
+                    name="mobile"
+                  />
 
-          {/* BOTTOM SECTION */}
-          <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
-            <CustomButton
-              title="ادامه"
-              handlePress={handleSubmit(onSubmit)}
-              isLoading={isLoading}
-            />
-          </View>
+                  <FormField
+                    placeholder="نام"
+                    keyboardType="default"
+                    containerStyle="mt-5"
+                    type={"text"}
+                    value={userData?.name || "-"}
+                    editable={false}
+                    style={{ color: "#666666" }}
+                    control={control}
+                    name="name"
+                  />
+
+                  <FormField
+                    placeholder="نام خانوادگی"
+                    keyboardType="default"
+                    containerStyle="mt-5"
+                    type={"text"}
+                    control={control}
+                    editable={false}
+                    style={{ color: "#666666" }}
+                    value={userData?.lastName || "-"}
+                    name="lastname"
+                  />
+
+                  <FormField
+                    placeholder="کد ملی"
+                    keyboardType="default"
+                    type={"text"}
+                    control={control}
+                    rules={nationalCodeRule}
+                    containerStyle="mt-5"
+                    editable={false}
+                    style={{ color: "#666666" }}
+                    value={userData?.nationalCode || "-"}
+                    name="nationalCode"
+                  />
+
+                  <FormField
+                    placeholder="عنوان شکایت"
+                    keyboardType="default"
+                    type={"text"}
+                    height={"h-[100px]"}
+                    containerStyle="mt-5"
+                    max={800}
+                    multiline
+                    inputStyle={{
+                      textAlignVertical: "top",
+                      textAlign: "right",
+                      paddingTop: 10,
+                    }}
+                    control={control}
+                    name="title"
+                  />
+                </View>
+              </ScrollView>
+
+              {/* BOTTOM SECTION */}
+              <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
+                <CustomButton
+                  title="ادامه"
+                  handlePress={handleSubmit(onSubmit)}
+                  isLoading={isLoading}
+                />
+              </View>
+            </View>
+          </KeyboardAvoidingView>
         </SafeAreaView>
       </Background>
     </>
