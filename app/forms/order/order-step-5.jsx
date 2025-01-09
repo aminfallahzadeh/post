@@ -16,17 +16,21 @@ import CustomButton from "@/components/CustomButton";
 import { convertToEnglishNumber } from "@/helpers/numberHelper";
 import { insuranceOptions } from "@/data/insuranceOptions";
 import { insertRequestPriceOrder } from "@/api/request";
+import { getPrice } from "@/api/order";
 import FormField from "@/components/FormField";
 import { Title } from "@/components/Title";
 import { CustomModal } from "@/components/CustomModal";
 import * as SecureStore from "expo-secure-store";
 import CustomSelect from "@/components/CustomSelect";
 import { requiredRule } from "@/constants/validations";
+import { separateByThousand } from "@/utils/numberSeparator";
 
 const NerkhnameStep5 = () => {
   // STATES
   const [isLoading, setIsLoading] = useState(false);
   const [resultModalVisible, setResultModalVisible] = useState(false);
+  const [amount, setAmount] = useState(0);
+  const [amountModalVisible, setAmountModalVisible] = useState(false);
 
   // CONSTS
   const mobile = SecureStore.getItem("mobile");
@@ -113,6 +117,37 @@ const NerkhnameStep5 = () => {
     }
   };
 
+  const onCalculate = async () => {
+    setIsLoading(true);
+    try {
+      const response = await getPrice({
+        typecode:
+          order.servicetype.id === 1
+            ? 11
+            : order.servicetype.id === 2
+            ? 19
+            : order.servicetype.id === 4
+            ? 19 //سرویس امانت همان سرویس سفارشی هست فقط برای 2 کیلو به بالا می باشد
+            : 77,
+        servicetype: order.servicetype.id === 4 ? 2 : order.servicetype.id, //سرویس امانت همان سرویس سفارشی هست فقط برای 2 کیلو به بالا می باشد
+        parceltype: form_data.parceltype,
+        sourcecode: form_data.sourcecode,
+        destcode: form_data.destcode,
+        weight: parseFloat(form_data.weight) || 0,
+        // boxsize: form_data.boxsize === undefined ? 1 : form_data.boxsize,
+        boxsize: form_data.boxsize || 1,
+      });
+
+      const amount = response.data.itemList[0].data.totalprice;
+      console.log(response.data);
+      console.log("PRICE RESPONSE: ", response.data);
+      setAmount(amount);
+      setAmountModalVisible(true);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   // DEBUG
   useEffect(() => {
     console.log("NERKHNAME Step 5: ", order);
@@ -136,89 +171,98 @@ const NerkhnameStep5 = () => {
         }
         onConfirm={() => router.replace("/")}
       />
+
+      <CustomModal
+        visible={amountModalVisible}
+        closeModal={() => setAmountModalVisible(false)}
+        title={"مبلغ قابل پرداخت"}
+        description={`${separateByThousand(amount)} ریال`}
+        onConfirm={() => setAmountModalVisible(false)}
+      />
       <Background>
         <SafeAreaView className="h-full">
           <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : undefined}
             style={{ flex: 1 }}
           >
-            <ScrollView
-              contentContainerStyle={{ flexGrow: 1, paddingBottom: 90 }}
-              showsVerticalScrollIndicator={false}
-              keyboardShouldPersistTaps="handled"
-              stickyHeaderIndices={[0]}
-            >
+            <View className="flex-1">
               {/* HEADER SECTION */}
               <Title
                 title={`${order?.servicetype?.label} : بیمه`}
                 progress={100}
               />
+              <ScrollView
+                contentContainerStyle={{
+                  flexGrow: 1,
+                  paddingBottom: 90,
+                }}
+                showsVerticalScrollIndicator={false}
+                keyboardShouldPersistTaps="handled"
+                //   stickyHeaderIndices={[0]}
+              >
+                {/* FORM FIELDS */}
+                <View className="w-full px-5">
+                  <View className="mt-5">
+                    <CustomSelect
+                      name="insurancetype"
+                      control={control}
+                      rules={requiredRule}
+                      data={insuranceOptions}
+                      label="* نوع بیمه"
+                      errors={errors}
+                      setValue={setValue}
+                    />
+                  </View>
 
-              {/* FORM FIELDS */}
-              <View className="w-full px-5">
-                <View className="mt-5">
-                  <CustomSelect
-                    name="insurancetype"
+                  <FormField
+                    placeholder="* محتویات مرسوله"
+                    type={"text"}
+                    keyboardType="default"
+                    containerStyle="mt-5"
+                    rules={{
+                      required: {
+                        value: form_data?.insurancetype === 1 ? true : false,
+                        message: "این فیلد اجباری است",
+                      },
+                    }}
                     control={control}
-                    rules={requiredRule}
-                    data={insuranceOptions}
-                    label="* نوع بیمه"
-                    errors={errors}
-                    setValue={setValue}
+                    name="contetnts"
                   />
+
+                  {form_data.insurancetype !== 1 && (
+                    <View className="flex-row-reverse justify-center items-center">
+                      <View className="flex-1 ml-2">
+                        <FormField
+                          placeholder="مبلغ اظهار شده"
+                          keyboardType="numeric"
+                          inputMode="numeric"
+                          rules={requiredRule}
+                          containerStyle="mt-5"
+                          control={control}
+                          name="insuranceamount"
+                        />
+                      </View>
+                      <Text className="flex-3 self-center text-primary text-xl font-isansbold text-center rounded-lg pt-5">
+                        ریال
+                      </Text>
+                    </View>
+                  )}
+                </View>
+              </ScrollView>
+
+              {/* BOTTOM SECTION */}
+              <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4 flex-row">
+                <View className="flex-1 mr-2">
+                  <CustomButton title="محاسبه" handlePress={onCalculate} />
                 </View>
 
-                <FormField
-                  placeholder="* محتویات مرسوله"
-                  type={"text"}
-                  keyboardType="default"
-                  containerStyle="mt-5"
-                  rules={{
-                    required: {
-                      value: form_data?.insurancetype === 1 ? true : false,
-                      message: "این فیلد اجباری است",
-                    },
-                  }}
-                  control={control}
-                  name="contetnts"
-                />
-
-                {form_data.insurancetype !== 1 && (
-                  <View className="flex-row-reverse justify-center items-center">
-                    <View className="flex-1 ml-2">
-                      <FormField
-                        placeholder="مبلغ اظهار شده"
-                        keyboardType="numeric"
-                        inputMode="numeric"
-                        rules={requiredRule}
-                        containerStyle="mt-5"
-                        control={control}
-                        name="insuranceamount"
-                      />
-                    </View>
-                    <Text className="flex-3 self-center text-primary text-xl font-isansbold text-center rounded-lg pt-5">
-                      ریال
-                    </Text>
-                  </View>
-                )}
-              </View>
-            </ScrollView>
-
-            {/* BOTTOM SECTION */}
-            <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4 flex-row">
-              <View className="flex-1 mr-2">
-                <CustomButton
-                  title="محاسبه"
-                  // handlePress={() => router.replace("/")}
-                />
-              </View>
-
-              <View className="flex-1 ml-2">
-                <CustomButton
-                  title="ثبت سفارش"
-                  handlePress={handleSubmit(onSubmit)}
-                  isLoading={isLoading}
-                />
+                <View className="flex-1 ml-2">
+                  <CustomButton
+                    title="ثبت سفارش"
+                    handlePress={handleSubmit(onSubmit)}
+                    isLoading={isLoading}
+                  />
+                </View>
               </View>
             </View>
           </KeyboardAvoidingView>

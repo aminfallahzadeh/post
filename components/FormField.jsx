@@ -1,15 +1,8 @@
 // IMPORTS
-import {
-  View,
-  Text,
-  TextInput,
-  Animated,
-  Pressable,
-  Platform,
-} from "react-native";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useController } from "react-hook-form";
 import Feather from "@expo/vector-icons/Feather";
+import { View, Text, TextInput, Animated, Pressable } from "react-native";
 
 export const FormField = ({
   title,
@@ -30,11 +23,12 @@ export const FormField = ({
   animate = true,
   keyboardType = "default",
   inputMode = "text",
-  ...props
+  numberOfLines,
 }) => {
   // STATES
   const [showPassword, setShowPassword] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+  const inputRef = useRef(null);
 
   // ANIMATION
   const placeholderAnimation = useState(new Animated.Value(0))[0];
@@ -66,6 +60,13 @@ export const FormField = ({
   });
 
   // HANDLERS
+  // HANDLE REACT NATIVE MESS
+  const focusInput = () => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -130,22 +131,29 @@ export const FormField = ({
           </View>
         )}
 
-        <TextInput
-          className={`flex-1 w-full text-grey2 font-isansdemibold text-sm text-right h-max`}
-          value={field.value}
-          placeholderTextColor="transparent"
-          onChangeText={field.onChange}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          style={inputStyle}
-          secureTextEntry={type === "password" && !showPassword}
-          maxLength={max}
-          editable={editable}
-          keyboardType={keyboardType}
-          autoCorrect={false}
-          inputMode={inputMode}
-          multiline={Platform.OS === "ios" ? multiline : true}
-        />
+        <Pressable onPress={focusInput} className="w-full">
+          <View pointerEvents="none" className="w-full h-full">
+            <TextInput
+              ref={inputRef}
+              className={`flex-1 w-full text-grey2 font-isansdemibold text-sm`}
+              value={field.value}
+              placeholderTextColor="transparent"
+              onChangeText={field.onChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              style={inputStyle}
+              secureTextEntry={type === "password" && !showPassword}
+              maxLength={max}
+              editable={editable}
+              keyboardType={keyboardType}
+              textAlign="right"
+              autoCorrect={false}
+              inputMode={inputMode}
+              multiline={multiline}
+              numberOfLines={numberOfLines}
+            />
+          </View>
+        </Pressable>
 
         {type === "password" ? (
           <Pressable

@@ -63,11 +63,4 @@ export const allData = [
     icon: "nerkhname",
     nationalCodeRequired: false,
   },
-  {
-    id: 17,
-    title: "کالاهای ممنوعه",
-    icon: "forbiddenThings",
-    url: "https://www.post.ir/post-information",
-    nationalCodeRequired: false,
-  },
 ];

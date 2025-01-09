@@ -83,7 +83,10 @@ const CustomSelect = ({
               activeColor="#fcd900"
               valueField="value"
               disable={disabled || isLoading || data.length === 0}
-              itemTextStyle={{ fontFamily: "IranSans-Regular" }}
+              itemTextStyle={{
+                fontFamily: "IranSans-Regular",
+                textAlign: "left",
+              }}
               placeholder={
                 value || isFocus ? "" : isLoading ? LOADING_MESSAGE : label
               }
@@ -156,14 +159,16 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontFamily: "IranSans-DemiBold",
     color: "#AFB4C0",
-    height: 55,
+    height: 58,
     paddingTop: 15,
+    textAlign: "left",
   },
   selectedTextStyle: {
     fontSize: 14,
     fontFamily: "IranSans-Regular",
     height: 55,
     paddingTop: 15,
+    textAlign: "left",
   },
   iconStyle: {
     width: 20,

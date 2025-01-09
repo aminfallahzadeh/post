@@ -1,14 +1,16 @@
 // IMPORTS
 import { useEffect, useState } from "react";
-import { ScrollView, View, Text, Pressable } from "react-native";
+import { ScrollView, View } from "react-native";
 import { useUserStore } from "@/store";
 import Service from "@/components/Service";
+import { useForm } from "react-hook-form";
 import { router } from "expo-router";
 import Background from "@/components/Background";
 import CustomModal from "@/components/CustomModal";
 import CustomCarousel from "@/components/CustomCarousel";
+import CustomButton from "@/components/CustomButton";
 import { allData } from "@/data/services";
-// import { Barcode } from "expo-barcode-generator";
+import FormField from "@/components/FormField";
 
 const Index = () => {
   // STATES
@@ -16,11 +18,23 @@ const Index = () => {
 
   // CONSTS
   const userData = useUserStore((state) => state.userData);
+  const { handleSubmit, control } = useForm();
 
   // DEBUG
   useEffect(() => {
     console.log("USER DATA: ", userData);
   }, [userData]);
+
+  const onSubmit = (data) => {
+    if (data.barcode) {
+      router.push({
+        pathname: "forms/follow",
+        params: {
+          barcode: data.barcode,
+        },
+      });
+    }
+  };
 
   return (
     <>
@@ -35,15 +49,27 @@ const Index = () => {
           <CustomCarousel />
         </View>
 
-        {/* <Pressable onPress={() => router.push("forms/follow")}>
-              <View className="flex-row justify-center items-center bg-primary py-1 border-t border-b border-[#fcdb00]">
-              <Text className="text-white font-isansbold text-lg text-center">
-              پیگیری مرسوله
-              </Text>
-              </View>
-              </Pressable> */}
-        {/* <View className="w-full relative bg-red-400">
-          </View> */}
+        <View className="w-full flex-row-reverse px-4 bg-white py-4">
+          <View className="w-3/4">
+            <FormField
+              placeholder="کد رهگیری"
+              keyboardType="numeric"
+              inputMode="numeric"
+              control={control}
+              name="barcode"
+              height="h-10"
+              animate={false}
+            />
+          </View>
+
+          <View className="w-1/4 mr-2">
+            <CustomButton
+              title="جست و جو"
+              height="h-10"
+              handlePress={handleSubmit(onSubmit)}
+            />
+          </View>
+        </View>
 
         <ScrollView
           showsVerticalScrollIndicator={false}
@@ -61,15 +87,6 @@ const Index = () => {
             ))}
           </View>
         </ScrollView>
-
-        {/* <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-        >
-          <Barcode
-            value="123456789999"
-            options={{ format: "CODE128", height: "50" }}
-          />
-        </View> */}
       </Background>
     </>
   );

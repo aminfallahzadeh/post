@@ -100,91 +100,96 @@ const NerkhNameStep1 = () => {
           behavior={Platform.OS === "ios" ? "padding" : undefined}
           style={{ flex: 1 }}
         >
-          <ScrollView
-            contentContainerStyle={{ flexGrow: 1, paddingBottom: 90 }}
-            showsVerticalScrollIndicator={false}
-            keyboardShouldPersistTaps="handled"
-            stickyHeaderIndices={[0]}
-          >
+          <View className="flex-1">
             {/* HEADER SECTION */}
             <Title
               title={`${order?.servicetype?.label} : اطلاعات مرسوله`}
               progress={30}
             />
 
-            {/* FORM FIELDS */}
-            <View className="w-full px-5">
-              <FormField
-                placeholder="تعداد مرسوله"
-                editable={false}
-                type="text"
-                containerStyle="mt-10"
-                control={control}
-                value="1"
-                name="number"
-              />
-
-              <View className="mt-5">
-                <CustomSelect
-                  name="parceltype"
+            <ScrollView
+              contentContainerStyle={{
+                flexGrow: 1,
+                paddingBottom: 90,
+              }}
+              showsVerticalScrollIndicator={false}
+              keyboardShouldPersistTaps="handled"
+              //   stickyHeaderIndices={[0]}
+            >
+              {/* FORM FIELDS */}
+              <View className="w-full px-5">
+                <FormField
+                  placeholder="تعداد مرسوله"
+                  editable={false}
+                  type="text"
+                  containerStyle="mt-10"
                   control={control}
-                  rules={nerkhnameValidations.parceltype}
-                  data={
-                    order?.servicetype?.id === 2
-                      ? parcelOptions.sefareshi
-                      : order?.servicetype?.id === 4
-                      ? parcelOptions.amanat
-                      : order?.servicetype?.id === 3
-                      ? parcelOptions.vijhe
-                      : parcelOptions.pishtaz
-                  }
-                  label="* نوع مرسوله"
-                  errors={errors}
-                  setValue={setValue}
+                  value="1"
+                  name="number"
                 />
-              </View>
 
-              <View className="flex-row-reverse justify-center items-center">
-                <View className="flex-1 ml-2">
-                  <FormField
-                    placeholder="وزن مرسوله"
-                    keyboardType="numeric"
-                    inputMode="numeric"
-                    containerStyle="mt-5"
-                    control={control}
-                    rules={{ ...requiredRule, ...weightRules }}
-                    name="weight"
-                  />
-                </View>
-
-                <Text className="flex-3 self-center text-primary text-xl font-isansbold text-center rounded-lg pt-5">
-                  گرم
-                </Text>
-              </View>
-
-              {![1, 14, 3, 15].includes(form_data?.parceltype) && (
                 <View className="mt-5">
                   <CustomSelect
-                    name="boxsize"
+                    name="parceltype"
                     control={control}
-                    rules={requiredRule}
-                    data={boxsizeOptions}
-                    label="* سایز کارتن"
+                    rules={nerkhnameValidations.parceltype}
+                    data={
+                      order?.servicetype?.id === 2
+                        ? parcelOptions.sefareshi
+                        : order?.servicetype?.id === 4
+                        ? parcelOptions.amanat
+                        : order?.servicetype?.id === 3
+                        ? parcelOptions.vijhe
+                        : parcelOptions.pishtaz
+                    }
+                    label="* نوع مرسوله"
                     errors={errors}
                     setValue={setValue}
                   />
                 </View>
-              )}
-            </View>
-          </ScrollView>
 
-          {/* BOTTOM SECTION */}
-          <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
-            <CustomButton
-              title="ادامه"
-              handlePress={handleSubmit(onSubmit)}
-              isLoading={isLoading}
-            />
+                <View className="flex-row-reverse justify-center items-center">
+                  <View className="flex-1 ml-2">
+                    <FormField
+                      placeholder="وزن مرسوله"
+                      keyboardType="numeric"
+                      inputMode="numeric"
+                      containerStyle="mt-5"
+                      control={control}
+                      rules={{ ...requiredRule, ...weightRules }}
+                      name="weight"
+                    />
+                  </View>
+
+                  <Text className="flex-3 self-center text-primary text-xl font-isansbold text-center rounded-lg pt-5">
+                    گرم
+                  </Text>
+                </View>
+
+                {![1, 14, 3, 15].includes(form_data?.parceltype) && (
+                  <View className="mt-5">
+                    <CustomSelect
+                      name="boxsize"
+                      control={control}
+                      rules={requiredRule}
+                      data={boxsizeOptions}
+                      label="* سایز کارتن"
+                      errors={errors}
+                      setValue={setValue}
+                    />
+                  </View>
+                )}
+              </View>
+            </ScrollView>
+
+            {/* BOTTOM SECTION */}
+            <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
+              <CustomButton
+                title="ادامه"
+                handlePress={handleSubmit(onSubmit)}
+                isLoading={isLoading}
+              />
+            </View>
           </View>
         </KeyboardAvoidingView>
       </SafeAreaView>

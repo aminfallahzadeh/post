@@ -6,7 +6,7 @@ UI:
     ✔ change some images from PSD files @done(25-01-07 14:31)
     ✔ add maps tab on the bottom tab navigation @done(25-01-07 14:00)
     ✔ add forbidden goods tab on the bottom tab navigation @done(25-01-07 22:25)
-    □ change the order tracking button to a ui input form
+    ✔ change the order tracking button to a ui input form @done(25-01-09 20:33)
     ✔ remove first slide form carousel @done(25-01-07 13:48)
     ✔ change the "sefaresh" title to "marsoole posti" title @done(25-01-09 00:01)
     □ add currency in all factors
@@ -16,8 +16,9 @@ UI:
     □ change the settings menu like the Bale app
     ✔ remove "Post" word from nerkhname and order titles @done(25-01-07 16:56)
     ✔ add required star to mobile on receiver and also contents @done(25-01-07 14:59)
-    □ add nerkhname to the final page of order form
+    ✔ add nerkhname to the final page of order form @done(25-01-09 21:24)
     □ add keyboard avoiding view
+    □ external link to app goes to result page in every condition
 
 
 FORM:
@@ -29,10 +30,10 @@ FORM:
 NEW FEATURES:
     □ add tracking with mobile
     ✔ add barcode for the orders tab in my posts tab @done(25-01-07 22:49)
-    □ add switch to change login type on the login screen
-    □ add login with customer ID
-    □ add sign up for postal ID
-    □ forget postal ID
+    ✔ add switch to change login type on the login screen @done(25-01-09 20:52)
+    ✔ add login with customer ID @done(25-01-09 20:52)
+    ✔ add sign up for postal ID @done(25-01-09 20:52)
+    ✔ forget postal ID @done(25-01-09 20:52)
 
 
 // NOTES

@@ -1,7 +1,15 @@
 // IMPORTS
 import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { View, Animated, KeyboardAvoidingView, Platform } from "react-native";
+import {
+  View,
+  Animated,
+  KeyboardAvoidingView,
+  Platform,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import { generateOTP } from "@/api/auth";
@@ -12,18 +20,25 @@ import Background from "@/components/Background";
 import { mobilePhoneValidation } from "@/constants/validations";
 import login from "@/assets/images/login.png";
 import * as SecureStore from "expo-secure-store";
+import SwitchInput from "@/components/SwitchInput";
 
 const Login = () => {
   // STATES
+  const [isEnabled, setIsEnabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState(null);
 
   // CONSTS
   const setMobile = useUserStore((state) => state.setMobile);
-  const { control, handleSubmit, watch } = useForm();
+  const { control, handleSubmit, watch, reset } = useForm();
   const form_data = watch();
 
   // HANDLERS
+  const toggleSwitch = () => {
+    reset();
+    setIsEnabled((previousState) => !previousState);
+  };
+
   const onSubmit = async () => {
     setIsLoading(true);
     try {
@@ -60,49 +75,114 @@ const Login = () => {
 
   return (
     <Background>
-      <SafeAreaView className="w-full h-full">
+      <SafeAreaView className="h-full">
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : undefined}
           style={{ flex: 1 }}
-          keyboardVerticalOffset={20}
         >
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              paddingHorizontal: 20,
-            }}
-          >
-            <Animated.Image
-              source={login}
-              className="w-full h-[350px] mt-10"
-              resizeMode="contain"
-              style={{
-                opacity: imageOpacity,
-                transform: [{ translateY: imageTranslateY }],
+          <View className="flex-1">
+            <ScrollView
+              contentContainerStyle={{
+                flexGrow: 1,
+                paddingBottom: 90,
               }}
-            />
+              showsVerticalScrollIndicator={false}
+              keyboardShouldPersistTaps="handled"
+              //   stickyHeaderIndices={[0]}
+            >
+              <View className="w-full px-5">
+                <Animated.Image
+                  source={login}
+                  className="w-full h-[350px] mt-10 mb-5"
+                  resizeMode="contain"
+                  style={{
+                    opacity: imageOpacity,
+                    transform: [{ translateY: imageTranslateY }],
+                  }}
+                />
 
-            <View className="mb-5 mt-10">
-              <FormField
-                placeholder={"شماره همراه"}
-                value={phoneNumber}
-                handleChange={setPhoneNumber}
-                keyboardType="numeric"
-                inputMode="numeric"
-                max={11}
-                type="text"
-                control={control}
-                name="mobile"
-                rules={mobilePhoneValidation}
-              />
+                <View className="mt-10 flex-row-reverse items-center justify-start">
+                  <Text
+                    className={`text-center self-center font-isansdemibold text-lg ${
+                      isEnabled ? "text-primary" : "text-gray-400"
+                    }`}
+                  >
+                    ورود با موبایل
+                  </Text>
+
+                  <SwitchInput onValueChange={toggleSwitch} value={isEnabled} />
+                  <Text
+                    className={`text-center self-center font-isansdemibold text-lg ${
+                      !isEnabled ? "text-primary" : "text-gray-400"
+                    }`}
+                  >
+                    ورود با شناسه مشتری
+                  </Text>
+                </View>
+
+                {isEnabled ? (
+                  <FormField
+                    placeholder={"شماره همراه"}
+                    value={phoneNumber}
+                    handleChange={setPhoneNumber}
+                    keyboardType="numeric"
+                    inputMode="numeric"
+                    containerStyle="mt-5"
+                    max={11}
+                    type="text"
+                    control={control}
+                    name="mobile"
+                    rules={mobilePhoneValidation}
+                  />
+                ) : (
+                  <FormField
+                    placeholder={"شناسه مشتری"}
+                    value={phoneNumber}
+                    handleChange={setPhoneNumber}
+                    keyboardType="numeric"
+                    inputMode="numeric"
+                    containerStyle="mt-5"
+                    max={11}
+                    type="text"
+                    control={control}
+                    name="customerID"
+                    rules={mobilePhoneValidation}
+                  />
+                )}
+
+                <View className="w-full flex-row-reverse justify-center items-center mt-5">
+                  <TouchableOpacity>
+                    <Text className="font-isansmedium text-sm text-grey2">
+                      ثبت نام شناسه پستی
+                    </Text>
+                  </TouchableOpacity>
+
+                  <View className="h-6 w-px bg-gray-400 mx-2" />
+
+                  <TouchableOpacity>
+                    <Text className="font-isansmedium text-sm text-grey2">
+                      فراموشی شناسه پستی
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </ScrollView>
+
+            <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
+              {isEnabled ? (
+                <CustomButton
+                  title="ادامه"
+                  handlePress={handleSubmit(onSubmit)}
+                  isLoading={isLoading}
+                />
+              ) : (
+                <CustomButton
+                  title="ادامه"
+                  // handlePress={handleSubmit(onSubmit)}
+                  isLoading={isLoading}
+                />
+              )}
             </View>
-
-            <CustomButton
-              title="ادامه"
-              handlePress={handleSubmit(onSubmit)}
-              isLoading={isLoading}
-            />
           </View>
         </KeyboardAvoidingView>
       </SafeAreaView>
