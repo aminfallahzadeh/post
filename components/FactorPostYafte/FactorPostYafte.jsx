@@ -9,6 +9,12 @@ export const FactorPostYafte = ({ data }) => {
       style={styles.container}
       className="w-full bg-white rounded-md p-2 justify-center items-center border border-grey2"
     >
+      <View>
+        <Text className="font-isansmedium text-base">
+          ** مبالغ به ریال می باشد **
+        </Text>
+      </View>
+
       <View className="flex-row-reverse justify-between w-full items-center flex-wrap">
         <Text className="font-isansdemibold text-grey2 text-[15px]">
           شماره فاکتور

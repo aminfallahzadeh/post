@@ -38,21 +38,53 @@ const RootLayout = () => {
   const ToastProvider = useMemo(() => toastConfig.registerProvider, []);
 
   // HANDLE DEEP LINK
+  //   useEffect(() => {
+  //     const handleUrl = (event) => {
+  //       const { url } = event;
+  //       console.log("URL received:", url);
+
+  //       // Parse the URL and extract parameters
+  //       const parsedUrl = new URL(url);
+  //       const requestID = parsedUrl.searchParams.get("requestID");
+  //       const success = parsedUrl.searchParams.get("success");
+  //       const type = parsedUrl.searchParams.get("type");
+
+  //       router.push({
+  //         pathname: `/result/${requestID}`,
+  //         params: { success, type },
+  //       });
+  //     };
+
+  //     // Add the event listener for handling URLs
+  //     const listener = Linking.addEventListener("url", handleUrl);
+
+  //     // Cleanup the listener on component unmount
+  //     return () => {
+  //       listener.remove();
+  //     };
+  //   }, []);
+
   useEffect(() => {
     const handleUrl = (event) => {
       const { url } = event;
       console.log("URL received:", url);
 
-      // Parse the URL and extract parameters
-      const parsedUrl = new URL(url);
-      const requestID = parsedUrl.searchParams.get("requestID");
-      const success = parsedUrl.searchParams.get("success");
-      const type = parsedUrl.searchParams.get("type");
+      // Check if the URL starts with 'postapp://'
+      if (url.startsWith("postapp://")) {
+        // Parse the URL and extract parameters
+        const parsedUrl = new URL(url);
+        const requestID = parsedUrl.searchParams.get("requestID");
+        const success = parsedUrl.searchParams.get("success");
+        const type = parsedUrl.searchParams.get("type");
 
-      router.push({
-        pathname: `/result/${requestID}`,
-        params: { success, type },
-      });
+        // Navigate to the appropriate route
+        router.push({
+          pathname: `/result/${requestID}`,
+          params: { success, type },
+        });
+      } else {
+        console.log("Ignoring URL as it doesn't start with postapp://");
+      }
     };
 
     // Add the event listener for handling URLs

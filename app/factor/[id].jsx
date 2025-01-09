@@ -101,6 +101,7 @@ const FactorResult = () => {
             <Text className="font-isansbold text-primary text-[18px] w-full justify-center items-center text-center">
               فاکتور مجموع
             </Text>
+
             <Animated.View
               style={[
                 {
