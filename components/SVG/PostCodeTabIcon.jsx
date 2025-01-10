@@ -1,5 +1,5 @@
 // IMPORTS
-import Svg, { Image } from "react-native-svg";
+import Svg, { Path } from "react-native-svg";
 
 const PostCodeTabIcon = ({ color }) => (
   <Svg
@@ -10,16 +10,15 @@ const PostCodeTabIcon = ({ color }) => (
     height="25"
     viewBox="0 0 42 42"
   >
-    <Image
-      id="pngimg.com_-_mailbox_PNG51"
-      data-name="pngimg.com - mailbox_PNG51"
-      x="1"
-      y="8"
-      width="40"
-      height="32"
-      href={{
-        uri: "data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAgCAYAAABgrToAAAACiUlEQVRYhc2YO2hUQRSGv91EjcYkKhowiqKdaCWCIFgKFqJYWNiIkFJRQWysxE7rgEUKJUkjAcFGSCOIDxALES0EH4iIQYmFbnwk0UTm8g+cvbl3sveR3f3hMjsz55z555y5585ZAjgB3AVqwELsmQZ+AL8T5rI8H4EbwME0GpWEsWPATWC9+o7Iay26Bdgakx8DNgFdod0mrLsB2GPGngODalNx3ez+MrAjQXAbcB74JrlLGYglEd0LDJt1z6QJX5PA0wQvJWEjMCGdoQIkPfYBk7J3Lj55WBNB96bggXRPlkByDfBJ9g7YiWkN9uUwWgVmgbmUM50VA+Lyxesd0cDVAkYvysZgCQQx78JxzDnqL2BwlWy8Kolgr+w9cyGZB76btJIX74CdCrkzfgi4YPpJmAF+AWuBTmAKuA3cAz4A25Hy4xJ2fUe2utU/mzN5P5T+uOtX1flTAsE5tR1qh+SZ3sBzSrKnJePwT6178SK3WqNF4G3YcP5cwt5X09ZicxG36mKdpqJHi/WYRectgVYT9HnTeq+OU7sQ7DderHvjW01whdpbujXZsQidi3WaivvAKLAZWKk8OCICHe1AcNKkmjii8Lc6xCFEZ7GdCUZoe4JJZ3AXsFu/0z7yPj28AV4sE7cISQTHDcGlMKWCadkJ/jVjRzN48K0Zm1Ub/6bmRd1loctk8vd6GoXX89esgZJIdntPpHmpEdRU6IRuQ7XYZSATHMErqk37MpBdUOb3ldcj3YxndDP3G9+vT9cThazRoqqijb3MuzFLdCIwP1IwQoXyoAst8mQaVsdkm0rQn7tQ2Cox2cwoQtDrrgvI+Doj9zpFCLrixh3kzwEZ9++Ak/GFUDYA/wHHpaByhpYMdwAAAABJRU5ErkJggg==",
-      }}
+    <Path
+      id="Color_Fill_1"
+      data-name="Color Fill 1"
+      class="cls-1"
+      fillRule="evenodd"
+      fill={color}
+      stroke={color}
+      strokeWidth={0.1}
+      d="M26.09,33.794q-0.041,2.891-.083,5.783l-0.413.33-0.744-.083a0.757,0.757,0,0,1-.5-0.5q-0.041-2.767-.083-5.535H17.333q-0.041,2.808-.083,5.617l-0.5.5-0.743-.083-0.5-.413V33.794L0.151,33.711c-0.88-.71-0.5-5.473-0.5-7.187,0-7.963-.9-14.924,3.635-18.5,3.838-3.033,9.2-2.478,16.026-2.478,11.268,0,18.8-2.313,22.3,7.765,1.014,2.92.33,7.7,0.33,11.235q-0.041,4.419-.083,8.839l-0.5.33ZM1.472,31.976H18.985V20.246c0-2.637.194-5.564-.578-7.435a8.893,8.893,0,0,0-4.378-4.543,7.852,7.852,0,0,0-4.791-.909C2.178,8.56,1.472,13,1.472,21.237V31.976Zm19.33,0h19.33V19.833c0-1.961.229-4.363-.248-5.948a9.365,9.365,0,0,0-4.956-5.7c-2.507-1.1-6.614-.826-10.243-0.826l-8.426.083h0.165C17.918,9.2,19.59,10.35,20.39,12.894c0.581,1.85.413,4.53,0.413,6.939V31.976ZM33.111,16.116l-9.335-.083-0.33-.413,0.083-.743a0.757,0.757,0,0,1,.5-0.5L34.516,14.3c1.041,0,2.941-.252,3.552.248,0.5,0.352.689,7.639,0.165,8.261-0.556.814-4.213,0.527-4.956,0.083C32.789,21.07,33.1,18.236,33.111,16.116Zm1.817,0V21.4h1.735V16.116H34.929ZM4.612,28.424l11.4,0.083L16.425,29l-0.083.661a0.757,0.757,0,0,1-.5.5H4.446l-0.413-.5L4.116,29Z"
     />
   </Svg>
 );

@@ -1,5 +1,4 @@
 // TASKS FOR 17th AZAR
-
 UI:
     ✔ change Yafte icon on the main menu @done(25-01-07 13:51)
     ✔ assistant image to the right @done(25-01-07 13:48)
@@ -26,9 +25,9 @@ FORM:
     □ avoid nerkhname form resetting
     ✔ check weight on first step @done(25-01-07 22:36)
     ✔ mobile validation on order form for receiver step @done(25-01-10 16:21)
+    □ add tracking with mobile
 
 NEW FEATURES:
-    □ add tracking with mobile
     ✔ add barcode for the orders tab in my posts tab @done(25-01-07 22:49)
     ✔ add switch to change login type on the login screen @done(25-01-09 20:52)
     ✔ add login with customer ID @done(25-01-09 20:52)

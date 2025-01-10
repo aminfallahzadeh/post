@@ -71,8 +71,8 @@ export const BuildingDetailInput = ({ items, setItems, onDeleteItem }) => {
 
       {addMode ? (
         <View className="flex-col justify-center items-center w-full px-2">
-          <View className="flex-row-reverse gap-2">
-            <View className="flex-2">
+          <View className="w-full flex-row-reverse px-4 bg-white py-4">
+            <View className="w-2/5">
               <FormField
                 placeholder="طبقه"
                 keyboardType="default"
@@ -85,7 +85,7 @@ export const BuildingDetailInput = ({ items, setItems, onDeleteItem }) => {
               />
             </View>
 
-            <View className="flex-1">
+            <View className="w-3/5 mr-2">
               <FormField
                 placeholder="واحد / سمت"
                 keyboardType="default"
