@@ -7,7 +7,5 @@ export { FormField } from "./FormField";
 export { PostalCodeCard } from "./PostalCodeCard";
 export { ProgressBar } from "./ProgressBar";
 export { SliderItem } from "./SliderItem";
-export { TabBar } from "./TabBar";
-export { TabBarButton } from "./TabBarButton";
 export { Factor } from "./Factor";
 export { DownloadPDF } from "./DownloadPDF";

@@ -1,7 +1,5 @@
-// REACT IMPORTS
+// IMPORTS
 import { useEffect } from "react";
-
-// NATIVE IMPORTS
 import { Pressable } from "react-native";
 import Animated, {
   interpolate,
@@ -9,11 +7,9 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
-
-// CONTANTS
 import { icons } from "../constants/icons";
 
-export const TabBarButton = ({
+export const FlowTabBarButton = ({
   onPress,
   onLongPress,
   routeName,
@@ -84,4 +80,4 @@ export const TabBarButton = ({
   );
 };
 
-export default TabBarButton;
+export default FlowTabBarButton;

@@ -6,9 +6,9 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
-import TabBarButton from "./TabBarButton";
+import FlowTabBarButton from "./FlowTabBarButton";
 
-export const TabBar = ({ state, descriptors, navigation }) => {
+export const FlowTabBar = ({ state, descriptors, navigation }) => {
   // TAB BAR ICONS BACKGROUND STATE
   const [dimensions, setDimensions] = useState({
     height: 20,
@@ -88,7 +88,7 @@ export const TabBar = ({ state, descriptors, navigation }) => {
         };
 
         return (
-          <TabBarButton
+          <FlowTabBarButton
             key={route.name}
             onPress={onPress}
             onLongPress={onLongPress}
@@ -103,7 +103,7 @@ export const TabBar = ({ state, descriptors, navigation }) => {
   );
 };
 
-export default TabBar;
+export default FlowTabBar;
 
 const styles = StyleSheet.create({
   shadow: {

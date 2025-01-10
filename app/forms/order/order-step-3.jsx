@@ -15,6 +15,7 @@ import {
   requiredRule,
   nationalCodeRule,
   postCodeRule,
+  mobilePhoneValidation,
 } from "@/constants/validations";
 import { getProvince, getCity } from "@/api/order";
 import { optionsGenerator } from "@/helpers/selectHelper";
@@ -182,7 +183,7 @@ const NerkhnameStep3 = () => {
                     placeholder="* تلفن همراه"
                     keyboardType="numeric"
                     inputMode="numeric"
-                    rules={requiredRule}
+                    rules={{ ...requiredRule, ...mobilePhoneValidation }}
                     containerStyle="mt-5"
                     control={control}
                     name="receivermobile"

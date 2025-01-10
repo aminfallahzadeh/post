@@ -8,7 +8,7 @@ import {
   Platform,
 } from "react-native";
 
-function MyTabBar({ state, descriptors, navigation, position }) {
+const TopTabBar = ({ state, descriptors, navigation, position }) => {
   const scrollViewRef = useRef(null);
 
   // AUTO SCROLL
@@ -29,9 +29,8 @@ function MyTabBar({ state, descriptors, navigation, position }) {
       showsHorizontalScrollIndicator={false}
       style={{
         backgroundColor: "#fff",
-        paddingHorizontal: 10,
         paddingVertical: 4,
-        maxHeight: 50,
+        maxHeight: 60,
         direction: Platform.OS === "ios" ? "rtl" : "ltr",
       }}
       contentContainerStyle={{
@@ -89,18 +88,24 @@ function MyTabBar({ state, descriptors, navigation, position }) {
                 alignItems: "center",
                 borderRadius: 20,
                 paddingVertical: 10,
-                backgroundColor: isFocused
-                  ? "rgba(252, 217, 0, 0.5)"
-                  : "transparent",
+                backgroundColor: "transparent",
                 paddingHorizontal: 20,
               }}
             >
+              {options.tabBarIcon && (
+                <View style={{ transform: [{ scaleX: -1 }], marginBottom: 2 }}>
+                  {options.tabBarIcon(isFocused ? "#164194" : "#333")}
+                </View>
+              )}
               <Animated.Text
                 style={{
-                  color: isFocused ? "#000" : "#000",
-                  fontWeight: isFocused ? "bold" : "normal",
+                  color: isFocused ? "#164194" : "#333",
+                  borderBottomWidth: 2,
+                  borderBottomColor: isFocused ? "#fec900" : "transparent",
+                  height: "100%",
+                  width: "100%",
                   opacity: 1,
-                  fontFamily: "IranSans-DemiBold",
+                  fontFamily: "IranSans-Regular",
                   transform: [{ scaleX: -1 }],
                 }}
               >
@@ -112,6 +117,6 @@ function MyTabBar({ state, descriptors, navigation, position }) {
       </View>
     </ScrollView>
   );
-}
+};
 
-export default MyTabBar;
+export default TopTabBar;

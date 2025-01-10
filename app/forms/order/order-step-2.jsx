@@ -15,6 +15,7 @@ import {
   requiredRule,
   nationalCodeRule,
   postCodeRule,
+  mobilePhoneValidation,
 } from "@/constants/validations";
 import { getProvince, getCity } from "@/api/order";
 import { optionsGenerator } from "@/helpers/selectHelper";
@@ -143,7 +144,7 @@ const NerkhnameStep2 = () => {
                   inputMode="numeric"
                   containerStyle="mt-5"
                   control={control}
-                  rules={requiredRule}
+                  rules={{ ...requiredRule, ...mobilePhoneValidation }}
                   name="sendermobile"
                 />
 

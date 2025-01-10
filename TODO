@@ -10,7 +10,7 @@ UI:
     ✔ remove first slide form carousel @done(25-01-07 13:48)
     ✔ change the "sefaresh" title to "marsoole posti" title @done(25-01-09 00:01)
     ✔ add currency in all factors @done(25-01-10 02:38)
-    □ add icons in my posts top tabs
+    ✔ add icons in my posts top tabs @done(25-01-10 16:15)
     ✔ change the fonts to smaller size (specially in my posts) @started(25-01-07 18:46) @done(25-01-07 18:46) @lasted(58s)
     ✔ auto scroll @done(25-01-07 14:33)
     □ change the settings menu like the Bale app
@@ -25,7 +25,7 @@ FORM:
     ✔ add size title for box sizes @done(25-01-07 14:58)
     □ avoid nerkhname form resetting
     ✔ check weight on first step @done(25-01-07 22:36)
-    □ mobile validation on order form for receiver step
+    ✔ mobile validation on order form for receiver step @done(25-01-10 16:21)
 
 NEW FEATURES:
     □ add tracking with mobile
