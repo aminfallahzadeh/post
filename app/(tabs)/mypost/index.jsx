@@ -39,7 +39,13 @@ const Index = () => {
     try {
       const response = await trackingOrder(barcode);
       console.log("TRACKING ORDER RESPONSE:", response.data);
-      router.push(`/follow/order?barcode=${barcode}`);
+      //   router.push(`/follow?barcode=${barcode}`);
+      router.push({
+        pathname: "forms/follow",
+        params: {
+          barcode,
+        },
+      });
     } finally {
       setIsOrderLoading(false);
     }
