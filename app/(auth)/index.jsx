@@ -21,7 +21,6 @@ import { mobilePhoneValidation } from "@/constants/validations";
 import login from "@/assets/images/login.png";
 import * as SecureStore from "expo-secure-store";
 import SwitchInput from "@/components/SwitchInput";
-import CustomSelect from "@/components/CustomSelect";
 
 const Login = () => {
   // STATES
@@ -122,36 +121,19 @@ const Login = () => {
                 </View>
 
                 {isEnabled ? (
-                  <>
-                    <FormField
-                      placeholder={"شماره همراه"}
-                      value={phoneNumber}
-                      handleChange={setPhoneNumber}
-                      keyboardType="numeric"
-                      inputMode="numeric"
-                      containerStyle="mt-5"
-                      max={11}
-                      type="text"
-                      control={control}
-                      name="mobile"
-                      rules={mobilePhoneValidation}
-                    />
-
-                    <View className="mt-5">
-                      <CustomSelect
-                        name="complaintType"
-                        control={control}
-                        // rules={requiredRule}
-                        data={[
-                          { label: "خرید", value: "خرید" },
-                          { label: "فروش", value: "فروش" },
-                        ]}
-                        label="* نوع شکایت"
-                        // errors={errors}
-                        // setValue={setValue}
-                      />
-                    </View>
-                  </>
+                  <FormField
+                    placeholder={"شماره همراه"}
+                    value={phoneNumber}
+                    handleChange={setPhoneNumber}
+                    keyboardType="numeric"
+                    inputMode="numeric"
+                    containerStyle="mt-5"
+                    max={11}
+                    type="text"
+                    control={control}
+                    name="mobile"
+                    rules={mobilePhoneValidation}
+                  />
                 ) : (
                   <FormField
                     placeholder={"شناسه مشتری"}
