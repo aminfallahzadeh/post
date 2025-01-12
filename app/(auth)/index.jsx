@@ -142,7 +142,10 @@ const Login = () => {
                         name="complaintType"
                         control={control}
                         // rules={requiredRule}
-                        data={[]}
+                        data={[
+                          { label: "خرید", value: "خرید" },
+                          { label: "فروش", value: "فروش" },
+                        ]}
                         label="* نوع شکایت"
                         // errors={errors}
                         // setValue={setValue}

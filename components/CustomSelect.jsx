@@ -85,7 +85,7 @@ const CustomSelect = ({
               disable={disabled || isLoading || data.length === 0}
               itemTextStyle={{
                 fontFamily: "IranSans-Regular",
-                textAlign: "left",
+                textAlign: "right",
               }}
               placeholder={
                 value || isFocus ? "" : isLoading ? LOADING_MESSAGE : label
@@ -127,21 +127,18 @@ export default CustomSelect;
 const styles = StyleSheet.create({
   container: {
     fontFamily: "IranSans-Regular",
-    direction: "rtl",
+    textAlign: "right",
     height: 58,
   },
   dropdown: {
     height: 58,
-    direction: "rtl",
+    textAlign: "right",
     fontFamily: "IranSans-Regular",
     borderColor: "#183f97",
     borderWidth: 1,
     borderRadius: 7,
     paddingHorizontal: 8,
     backgroundColor: "#fff",
-  },
-  icon: {
-    marginRight: 5,
   },
   label: {
     position: "absolute",
@@ -161,14 +158,14 @@ const styles = StyleSheet.create({
     color: "#AFB4C0",
     height: 58,
     paddingTop: 15,
-    textAlign: "left",
+    textAlign: "right",
   },
   selectedTextStyle: {
     fontSize: 14,
     fontFamily: "IranSans-Regular",
     height: 55,
     paddingTop: 15,
-    textAlign: "left",
+    textAlign: "right",
   },
   iconStyle: {
     width: 20,

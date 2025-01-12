@@ -14,12 +14,12 @@ import { stepTwoEopValidation, requiredRule } from "@/constants/validations";
 import { router } from "expo-router";
 import { toastStyles } from "@/constants/styles";
 import { CustomModal } from "@/components/CustomModal";
+import { Title } from "@/components/Title";
 import {
   serviceTypeLookup,
   postalRegionLookup,
   complaintTypeLookup,
 } from "@/data/lookup.js";
-import { Title } from "@/components/Title";
 
 const NewComplaintStep1 = () => {
   // STATES
