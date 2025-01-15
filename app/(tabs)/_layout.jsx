@@ -236,9 +236,7 @@ const TabsLayout = () => {
                 <Pressable onPress={handleClose} style={styles.close}>
                   <Feather name="x" size={24} color="black" />
                 </Pressable>
-                <WebView
-                  source={{ uri: "https://newpostkhoone.post.ir/bot" }}
-                />
+                <WebView source={{ uri: "https://newpostkhoone.post.ir" }} />
               </View>
             </View>
           )}
