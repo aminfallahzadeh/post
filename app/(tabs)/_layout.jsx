@@ -217,16 +217,18 @@ const TabsLayout = () => {
       {activeTab !== 2 && (
         <>
           {!keyboardVisible && (
-            <Pressable onPress={handleOpen}>
+            <Pressable onPress={handleOpen} style={{ zIndex: 100 }}>
               <Image
                 source={assistant}
                 className="w-28 absolute bottom-16 right-2 h-32"
                 resizeMode="contain"
               />
-              <Animated.View style={[styles.popup]}>
-                <View style={styles.triangle} />
-                <Text style={styles.popupText}>چطور میتونم کمکت کنم ؟</Text>
-              </Animated.View>
+              {!botVisible && (
+                <View style={[styles.popup]}>
+                  <View style={styles.triangle} />
+                  <Text style={styles.popupText}>چطور میتونم کمکت کنم ؟</Text>
+                </View>
+              )}
             </Pressable>
           )}
 
