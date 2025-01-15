@@ -29,10 +29,9 @@ export const FormField = ({
   const [showPassword, setShowPassword] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef(null);
-
-  // ANIMATION
   const placeholderAnimation = useState(new Animated.Value(0))[0];
 
+  // CONSTS
   const { field, fieldState } = useController({
     control,
     defaultValue: value,
@@ -40,6 +39,7 @@ export const FormField = ({
     rules,
   });
 
+  // HANDLERS
   useEffect(() => {
     Animated.timing(placeholderAnimation, {
       toValue: isFocused || field?.value ? 1 : 0,
@@ -132,7 +132,7 @@ export const FormField = ({
         )}
 
         <Pressable onPress={focusInput} className="w-full">
-          <View pointerEvents="none" className="w-full h-full">
+          <View pointerEvents="box-none" className="w-full h-full">
             <TextInput
               ref={inputRef}
               className={`flex-1 w-full text-grey2 font-isansdemibold text-sm`}
