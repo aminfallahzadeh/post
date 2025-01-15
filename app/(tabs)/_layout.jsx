@@ -10,7 +10,7 @@ import {
   Pressable,
   Keyboard,
 } from "react-native";
-import { Tabs, useRootNavigationState } from "expo-router";
+import { router, Tabs, useRootNavigationState } from "expo-router";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -49,7 +49,8 @@ const TabsLayout = () => {
   };
 
   const handleOpen = () => {
-    setBotVisible(true);
+    // setBotVisible(true);
+    router.push("/(tabs)/assistant");
   };
 
   useEffect(() => {
@@ -202,6 +203,31 @@ const TabsLayout = () => {
             ),
           }}
         />
+
+        <Tabs.Screen
+          name="assistant"
+          options={{
+            tabBarLabel: ({ focused }) => (
+              <Text
+                style={{
+                  color: focused ? "#164194" : "#787A8D",
+                  fontFamily: "IranSans-DemiBold",
+                  fontSize: 13,
+                  marginTop: 4,
+                }}
+              >
+                پشتیبانی
+              </Text>
+            ),
+            tabBarIcon: ({ color, focused }) => (
+              <Feather
+                name="help-circle"
+                size={focused ? 28 : 22}
+                color={color}
+              />
+            ),
+          }}
+        />
       </Tabs>
 
       {/* BURGER MENU OVERLAY */}
@@ -214,25 +240,25 @@ const TabsLayout = () => {
         <SettingsMenu closeHandler={toggleMenu} />
       </Animated.View>
 
-      {activeTab !== 2 && (
+      {activeTab !== 2 && activeTab !== 4 && (
         <>
           {!keyboardVisible && (
             <Pressable onPress={handleOpen} style={{ zIndex: 100 }}>
               <Image
                 source={assistant}
-                className="w-28 absolute bottom-16 right-2 h-32"
+                className="w-28 absolute bottom-16 left-2 h-32"
                 resizeMode="contain"
               />
-              {!botVisible && (
+              {/* {!botVisible && (
                 <View style={[styles.popup]}>
                   <View style={styles.triangle} />
                   <Text style={styles.popupText}>چطور میتونم کمکت کنم ؟</Text>
                 </View>
-              )}
+              )} */}
             </Pressable>
           )}
 
-          {botVisible && !keyboardVisible && (
+          {botVisible && (
             <View style={styles.overlay}>
               <View style={styles.bot}>
                 <Pressable onPress={handleClose} style={styles.close}>
@@ -270,7 +296,7 @@ const styles = {
     width: width,
     height: height,
     backgroundColor: "#fff",
-    zIndex: 10,
+    zIndex: 200,
     padding: 20,
     justifyContent: "center",
     alignItems: "center",
