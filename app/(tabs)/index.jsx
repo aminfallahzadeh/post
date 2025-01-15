@@ -1,7 +1,6 @@
 // IMPORTS
-import { useEffect, useState } from "react";
-import { ScrollView, View } from "react-native";
-import { useUserStore } from "@/store";
+import { useState } from "react";
+import { ScrollView, View, TextInput, Pressable } from "react-native";
 import Service from "@/components/Service";
 import { useForm } from "react-hook-form";
 import { router } from "expo-router";
@@ -10,30 +9,34 @@ import CustomModal from "@/components/CustomModal";
 import CustomCarousel from "@/components/CustomCarousel";
 import CustomButton from "@/components/CustomButton";
 import { allData } from "@/data/services";
-import FormField from "@/components/FormField";
+import Feather from "@expo/vector-icons/Feather";
 
 const Index = () => {
   // STATES
   const [visible, setVisible] = useState(false);
+  const [barcode, setBarcode] = useState("");
 
   // CONSTS
-  const userData = useUserStore((state) => state.userData);
-  const { handleSubmit, control } = useForm();
+  const { handleSubmit } = useForm();
 
-  // DEBUG
-  useEffect(() => {
-    console.log("USER DATA: ", userData);
-  }, [userData]);
-
-  const onSubmit = (data) => {
-    if (data.barcode) {
+  // HANDLERS
+  const onSubmit = () => {
+    if (barcode) {
       router.push({
         pathname: "forms/follow",
         params: {
-          barcode: data.barcode,
+          barcode,
         },
       });
     }
+  };
+
+  const handleBarcodeChange = (barcode) => {
+    setBarcode(barcode);
+  };
+
+  const handleRemoveField = () => {
+    setBarcode("");
   };
 
   return (
@@ -50,16 +53,29 @@ const Index = () => {
         </View>
 
         <View className="w-full flex-row-reverse px-4 bg-white py-4">
-          <View className="w-3/4">
-            <FormField
+          <View className="w-3/4 relative">
+            <TextInput
+              className="flex-1 w-full bg-white border border-primary rounded-md px-4 text-sm font-isansmedium"
               placeholder="کد رهگیری"
               keyboardType="numeric"
               inputMode="numeric"
-              control={control}
               name="barcode"
-              height="h-10"
-              animate={false}
+              textAlignVertical="center"
+              textAlign="right"
+              value={barcode}
+              onChangeText={handleBarcodeChange}
             />
+            {barcode && (
+              <Pressable
+                onPress={handleRemoveField}
+                className="absolute top-[50%] left-4"
+                style={{
+                  transform: [{ translateY: -12 }],
+                }}
+              >
+                <Feather name="x-circle" size={24} color={"#AFB4C0"} />
+              </Pressable>
+            )}
           </View>
 
           <View className="w-1/4 mr-2">

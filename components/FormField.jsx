@@ -132,7 +132,7 @@ export const FormField = ({
         )}
 
         <Pressable onPress={focusInput} className="w-full">
-          <View pointerEvents="box-none" className="w-full h-full">
+          <View pointerEvents="none" className="w-full h-full">
             <TextInput
               ref={inputRef}
               className={`flex-1 w-full text-grey2 font-isansdemibold text-sm`}
@@ -141,7 +141,7 @@ export const FormField = ({
               onChangeText={field.onChange}
               onFocus={handleFocus}
               onBlur={handleBlur}
-              style={inputStyle}
+              style={[inputStyle]}
               secureTextEntry={type === "password" && !showPassword}
               maxLength={max}
               editable={editable}

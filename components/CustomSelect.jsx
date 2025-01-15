@@ -94,7 +94,7 @@ const CustomSelect = ({
               onFocus={() => setIsFocus(true)}
               onBlur={() => setIsFocus(false)}
               value={value}
-              renderRightIcon={() =>
+              renderLeftIcon={() =>
                 value &&
                 setValue && (
                   <Pressable
@@ -107,7 +107,7 @@ const CustomSelect = ({
                   </Pressable>
                 )
               }
-              renderLeftIcon={() => (
+              renderRightIcon={() => (
                 <Feather
                   name="chevron-down"
                   size={20}
