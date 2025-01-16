@@ -122,7 +122,7 @@ const TabsLayout = () => {
         }}
       >
         <Tabs.Screen
-          name="index"
+          name="assistant"
           options={{
             tabBarLabel: ({ focused }) => (
               <Text
@@ -133,52 +133,15 @@ const TabsLayout = () => {
                   marginTop: 4,
                 }}
               >
-                خانه
+                پشتیبانی
               </Text>
             ),
             tabBarIcon: ({ color, focused }) => (
-              <Feather name="home" size={focused ? 28 : 22} color={color} />
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="mypost"
-          options={{
-            tabBarLabel: ({ focused }) => (
-              <Text
-                style={{
-                  color: focused ? "#164194" : "#787A8D",
-                  fontFamily: "IranSans-DemiBold",
-                  fontSize: 13,
-                  marginTop: 4,
-                }}
-              >
-                پست من
-              </Text>
-            ),
-            tabBarIcon: ({ color, focused }) => (
-              <Feather name="box" size={focused ? 28 : 22} color={color} />
-            ),
-          }}
-        />
-
-        <Tabs.Screen
-          name="map"
-          options={{
-            tabBarLabel: ({ focused }) => (
-              <Text
-                style={{
-                  color: focused ? "#164194" : "#787A8D",
-                  fontFamily: "IranSans-DemiBold",
-                  fontSize: 13,
-                  marginTop: 4,
-                }}
-              >
-                مراکز پستی
-              </Text>
-            ),
-            tabBarIcon: ({ color, focused }) => (
-              <Feather name="map-pin" size={focused ? 28 : 22} color={color} />
+              <Feather
+                name="help-circle"
+                size={focused ? 28 : 22}
+                color={color}
+              />
             ),
           }}
         />
@@ -205,7 +168,7 @@ const TabsLayout = () => {
         />
 
         <Tabs.Screen
-          name="assistant"
+          name="map"
           options={{
             tabBarLabel: ({ focused }) => (
               <Text
@@ -216,15 +179,53 @@ const TabsLayout = () => {
                   marginTop: 4,
                 }}
               >
-                پشتیبانی
+                مراکز پستی
               </Text>
             ),
             tabBarIcon: ({ color, focused }) => (
-              <Feather
-                name="help-circle"
-                size={focused ? 28 : 22}
-                color={color}
-              />
+              <Feather name="map-pin" size={focused ? 28 : 22} color={color} />
+            ),
+          }}
+        />
+
+        <Tabs.Screen
+          name="mypost"
+          options={{
+            tabBarLabel: ({ focused }) => (
+              <Text
+                style={{
+                  color: focused ? "#164194" : "#787A8D",
+                  fontFamily: "IranSans-DemiBold",
+                  fontSize: 13,
+                  marginTop: 4,
+                }}
+              >
+                پست من
+              </Text>
+            ),
+            tabBarIcon: ({ color, focused }) => (
+              <Feather name="box" size={focused ? 28 : 22} color={color} />
+            ),
+          }}
+        />
+
+        <Tabs.Screen
+          name="index"
+          options={{
+            tabBarLabel: ({ focused }) => (
+              <Text
+                style={{
+                  color: focused ? "#164194" : "#787A8D",
+                  fontFamily: "IranSans-DemiBold",
+                  fontSize: 13,
+                  marginTop: 4,
+                }}
+              >
+                خانه
+              </Text>
+            ),
+            tabBarIcon: ({ color, focused }) => (
+              <Feather name="home" size={focused ? 28 : 22} color={color} />
             ),
           }}
         />
@@ -240,7 +241,7 @@ const TabsLayout = () => {
         <SettingsMenu closeHandler={toggleMenu} />
       </Animated.View>
 
-      {activeTab !== 2 && activeTab !== 4 && (
+      {activeTab !== 2 && activeTab !== 0 && (
         <>
           {!keyboardVisible && (
             <Pressable onPress={handleOpen} style={{ zIndex: 100 }}>

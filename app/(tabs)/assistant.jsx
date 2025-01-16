@@ -16,10 +16,10 @@ const Assistant = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, // Ensures the View takes up the full screen
+    flex: 1,
   },
   webview: {
-    flex: 1, // Ensures the WebView fills the parent View
+    flex: 1,
   },
 });
 
