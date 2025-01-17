@@ -26,6 +26,7 @@ const TabsLayout = () => {
   const [menuVisible, setMenuVisible] = useState(false);
   const [botVisible, setBotVisible] = useState(false);
   const [keyboardVisible, setKeyboardVisible] = useState(false);
+  const fadeAnim = useRef(new Animated.Value(0)).current;
 
   // CONSTS
   const animationValue = useRef(new Animated.Value(width)).current;
@@ -89,6 +90,28 @@ const TabsLayout = () => {
 
     return () => backHandler.remove();
   }, [menuVisible, toggleMenu]);
+
+  useEffect(() => {
+    const animatePopup = () => {
+      Animated.sequence([
+        Animated.timing(fadeAnim, {
+          toValue: 1, // Fully visible
+          duration: 1000, // Fade-in duration
+          useNativeDriver: true,
+        }),
+        Animated.delay(3000), // Keep visible for 3 seconds
+        Animated.timing(fadeAnim, {
+          toValue: 0, // Fade out
+          duration: 1000, // Fade-out duration
+          useNativeDriver: true,
+        }),
+      ]).start(() => {
+        setTimeout(animatePopup, 1000); // Restart animation after a 1-second pause
+      });
+    };
+
+    animatePopup();
+  }, [fadeAnim]);
 
   return (
     <>
@@ -250,12 +273,12 @@ const TabsLayout = () => {
                 className="w-28 absolute bottom-16 left-2 h-32"
                 resizeMode="contain"
               />
-              {/* {!botVisible && (
-                <View style={[styles.popup]}>
+              {!botVisible && (
+                <Animated.View style={[styles.popup, { opacity: fadeAnim }]}>
                   <View style={styles.triangle} />
                   <Text style={styles.popupText}>چطور میتونم کمکت کنم ؟</Text>
-                </View>
-              )} */}
+                </Animated.View>
+              )}
             </Pressable>
           )}
 
@@ -307,30 +330,28 @@ const styles = {
   popup: {
     position: "absolute",
     bottom: 120,
-    right: 100,
-    backgroundColor: "#fff",
-    borderRadius: 10,
+    left: 100,
+    backgroundColor: "white",
     padding: 10,
+    borderRadius: 10,
+    shadowColor: "#000",
     shadowOpacity: 0.2,
-    shadowRadius: 5,
+    shadowRadius: 4,
     shadowOffset: { width: 0, height: 2 },
-    elevation: 5,
   },
   triangle: {
     position: "absolute",
     top: "50%",
-    right: -8,
-    transform: [{ translateY: -5 }],
+    left: -8,
     width: 0,
     height: 0,
-    backgroundColor: "transparent",
-    borderStyle: "solid",
     borderTopWidth: 10,
     borderBottomWidth: 10,
-    borderLeftWidth: 10,
+    borderRightWidth: 10,
+    borderStyle: "solid",
     borderTopColor: "transparent",
     borderBottomColor: "transparent",
-    borderLeftColor: "#fff",
+    borderRightColor: "white",
   },
   popupText: {
     color: "#333",

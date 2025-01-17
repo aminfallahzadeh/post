@@ -7,7 +7,7 @@ const Assistant = () => {
   return (
     <View style={styles.container}>
       <WebView
-        source={{ uri: "https://newpostkhoone.post.ir" }}
+        source={{ uri: "https://newpostkhoone.post.ir/bot" }}
         style={styles.webview}
       />
     </View>
