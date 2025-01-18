@@ -27,6 +27,7 @@ const TabsLayout = () => {
   const [botVisible, setBotVisible] = useState(false);
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const fadeAnim = useRef(new Animated.Value(0)).current;
+  const [hasAnimated, setHasAnimated] = useState(false);
 
   // CONSTS
   const animationValue = useRef(new Animated.Value(width)).current;
@@ -92,6 +93,8 @@ const TabsLayout = () => {
   }, [menuVisible, toggleMenu]);
 
   useEffect(() => {
+    if (hasAnimated) return; // Do not start the animation again if already completed
+
     const animatePopup = () => {
       Animated.sequence([
         Animated.timing(fadeAnim, {
@@ -106,12 +109,12 @@ const TabsLayout = () => {
           useNativeDriver: true,
         }),
       ]).start(() => {
-        setTimeout(animatePopup, 1000); // Restart animation after a 1-second pause
+        setHasAnimated(true); // Mark the animation as completed
       });
     };
 
     animatePopup();
-  }, [fadeAnim]);
+  }, [fadeAnim, hasAnimated]);
 
   return (
     <>

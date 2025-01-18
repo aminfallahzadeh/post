@@ -1,5 +1,5 @@
 // IMPORTS
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ScrollView, View, TextInput, Pressable } from "react-native";
 import Service from "@/components/Service";
 import { useForm } from "react-hook-form";
@@ -10,11 +10,14 @@ import CustomCarousel from "@/components/CustomCarousel";
 import CustomButton from "@/components/CustomButton";
 import { allData } from "@/data/services";
 import Feather from "@expo/vector-icons/Feather";
+import { CopilotStep, walkthroughable, useCopilot } from "react-native-copilot";
 
 const Index = () => {
   // STATES
   const [visible, setVisible] = useState(false);
   const [barcode, setBarcode] = useState("");
+  const { start, copilotEvents } = useCopilot();
+  const [copilotCompleted, setCopilotCompleted] = useState(false);
 
   // CONSTS
   const { handleSubmit } = useForm();
@@ -38,6 +41,23 @@ const Index = () => {
   const handleRemoveField = () => {
     setBarcode("");
   };
+
+  const CopilotView = walkthroughable(View);
+
+  useEffect(() => {
+    if (!copilotCompleted) {
+      start(); // Start Copilot only if it hasn't been completed
+    }
+
+    // Listen for Copilot completion event
+    copilotEvents.on("stop", () => {
+      setCopilotCompleted(true); // Mark Copilot as completed
+    });
+
+    return () => {
+      copilotEvents.off("stop"); // Clean up event listener
+    };
+  }, [start, copilotCompleted, copilotEvents]);
 
   return (
     <>
@@ -78,13 +98,19 @@ const Index = () => {
             )}
           </View>
 
-          <View className="w-1/4 mr-2">
-            <CustomButton
-              title="جستجو"
-              height="h-10"
-              handlePress={handleSubmit(onSubmit)}
-            />
-          </View>
+          <CopilotStep
+            text="می توانید برای پیگیری مرسوله از اینجا اقدام کنید"
+            order={1}
+            name="barcode-search"
+          >
+            <CopilotView className="w-1/4 mr-2">
+              <CustomButton
+                title="جستجو"
+                height="h-10"
+                handlePress={handleSubmit(onSubmit)}
+              />
+            </CopilotView>
+          </CopilotStep>
         </View>
 
         <ScrollView

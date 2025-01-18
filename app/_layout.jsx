@@ -6,6 +6,8 @@ import { useFonts } from "expo-font";
 import { toastConfig } from "@/config/toast-config";
 import { StatusBar } from "expo-status-bar";
 import { I18nManager } from "react-native";
+import { CopilotProvider } from "react-native-copilot";
+import * as SecureStore from "expo-secure-store";
 
 // Lock the layout direction to LTR
 I18nManager.allowRTL(false);
@@ -79,7 +81,16 @@ const RootLayout = () => {
   if (!fontsLoaded && !error) return null;
 
   return (
-    <>
+    <CopilotProvider
+      stopOnOutsideClick
+      stepNumberComponent={() => null}
+      tooltipStyle={{
+        borderRadius: 10,
+      }}
+      labels={{
+        finish: "بستن",
+      }}
+    >
       <StatusBar style="dark" />
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
@@ -116,7 +127,7 @@ const RootLayout = () => {
         <Stack.Screen name="waiting" options={{ headerShown: false }} />
       </Stack>
       <ToastProvider />
-    </>
+    </CopilotProvider>
   );
 };
 
