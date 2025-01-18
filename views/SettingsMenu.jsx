@@ -100,7 +100,13 @@ const SettingsMenu = ({ closeHandler }) => {
           <View className="w-full h-[2px] bg-grey3 rounded-lg mt-5" />
 
           <View className="gap-y-6 mt-5">
-            <View className="flex-row items-center justify-end w-full">
+            <Pressable
+              className="flex-row items-center justify-end w-full"
+              onPress={() => {
+                router.push("/assistant");
+                closeHandler();
+              }}
+            >
               <View className="flex-row items-center justify-center gap-x-2">
                 <View>
                   <Text className="text-black font-isansbold text-[15px]">
@@ -110,7 +116,7 @@ const SettingsMenu = ({ closeHandler }) => {
 
                 <Feather name="help-circle" size={25} color="#333" />
               </View>
-            </View>
+            </Pressable>
 
             <View className="flex-row items-center justify-end w-full">
               <View className="flex-row items-center justify-center gap-x-2">

@@ -17,14 +17,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import assistant from "@/assets/images/assistant.png";
 import SettingsMenu from "@/views/SettingsMenu";
 import Feather from "@expo/vector-icons/Feather";
-import { WebView } from "react-native-webview";
 
 const { width, height } = Dimensions.get("screen");
 
 const TabsLayout = () => {
   // STATES
   const [menuVisible, setMenuVisible] = useState(false);
-  const [botVisible, setBotVisible] = useState(false);
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const [hasAnimated, setHasAnimated] = useState(false);
@@ -45,15 +43,6 @@ const TabsLayout = () => {
       setMenuVisible(!menuVisible);
     });
   }, [animationValue, menuVisible]);
-
-  const handleClose = () => {
-    setBotVisible(false);
-  };
-
-  const handleOpen = () => {
-    // setBotVisible(true);
-    router.push("/(tabs)/assistant");
-  };
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -270,32 +259,24 @@ const TabsLayout = () => {
       {activeTab !== 2 && activeTab !== 0 && (
         <>
           {!keyboardVisible && (
-            <Pressable onPress={handleOpen} style={{ zIndex: 100 }}>
+            <Pressable
+              onPress={() => {
+                router.push("/assistant");
+                console.log("pressed");
+              }}
+              style={{ zIndex: 100 }}
+            >
               <Image
                 source={assistant}
-                className="w-28 absolute bottom-16 left-2 h-32"
+                className="w-24 absolute bottom-14 left-0 h-32"
                 resizeMode="contain"
               />
-              {!botVisible && (
-                <Animated.View style={[styles.popup, { opacity: fadeAnim }]}>
-                  <View style={styles.triangle} />
-                  <Text style={styles.popupText}>چطور میتونم کمکت کنم ؟</Text>
-                </Animated.View>
-              )}
-            </Pressable>
-          )}
 
-          {botVisible && (
-            <View style={styles.overlay}>
-              <View style={styles.bot}>
-                <Pressable onPress={handleClose} style={styles.close}>
-                  <Feather name="x" size={24} color="black" />
-                </Pressable>
-                <WebView
-                  source={{ uri: "https://newpostkhoone.post.ir/bot" }}
-                />
-              </View>
-            </View>
+              <Animated.View style={[styles.popup, { opacity: fadeAnim }]}>
+                <View style={styles.triangle} />
+                <Text style={styles.popupText}>چطور میتونم کمکت کنم ؟</Text>
+              </Animated.View>
+            </Pressable>
           )}
         </>
       )}
