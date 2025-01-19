@@ -6,8 +6,7 @@ import { useFonts } from "expo-font";
 import { toastConfig } from "@/config/toast-config";
 import { StatusBar } from "expo-status-bar";
 import { I18nManager } from "react-native";
-import { CopilotProvider } from "react-native-copilot";
-import * as SecureStore from "expo-secure-store";
+import { TourGuideProvider } from "rn-tourguide";
 
 // Lock the layout direction to LTR
 I18nManager.allowRTL(false);
@@ -24,17 +23,17 @@ SplashScreen.preventAutoHideAsync();
 const RootLayout = () => {
   // IMPLEMENT FONTS
   const [fontsLoaded, error] = useFonts({
-    "IranSans-Black": require("../assets/fonts/IRANSansX-Black.ttf"),
-    "IranSans-Bold": require("../assets/fonts/IRANSansX-Bold.ttf"),
-    "IranSans-DemiBold": require("../assets/fonts/IRANSansX-DemiBold.ttf"),
-    "IranSans-ExtraBlack": require("../assets/fonts/IRANSansX-ExtraBlack.ttf"),
-    "IranSans-ExtraBold": require("../assets/fonts/IRANSansX-ExtraBold.ttf"),
-    "IranSans-Heavy": require("../assets/fonts/IRANSansX-Heavy.ttf"),
-    "IranSans-Light": require("../assets/fonts/IRANSansX-Light.ttf"),
-    "IranSans-Medium": require("../assets/fonts/IRANSansX-Medium.ttf"),
-    "IranSans-Regular": require("../assets/fonts/IRANSansX-Regular.ttf"),
-    "IranSans-Thin": require("../assets/fonts/IRANSansX-Thin.ttf"),
-    "IranSans-UltraLight": require("../assets/fonts/IRANSansX-Regular.ttf"),
+    "IranSans-Black": require("../assets/fonts/IRANSansXFaNum-Black.ttf"),
+    "IranSans-Bold": require("../assets/fonts/IRANSansXFaNum-Bold.ttf"),
+    "IranSans-DemiBold": require("../assets/fonts/IRANSansXFaNum-DemiBold.ttf"),
+    "IranSans-ExtraBlack": require("../assets/fonts/IRANSansXFaNum-ExtraBlack.ttf"),
+    "IranSans-ExtraBold": require("../assets/fonts/IRANSansXFaNum-ExtraBold.ttf"),
+    "IranSans-Heavy": require("../assets/fonts/IRANSansXFaNum-Heavy.ttf"),
+    "IranSans-Light": require("../assets/fonts/IRANSansXFaNum-Light.ttf"),
+    "IranSans-Medium": require("../assets/fonts/IRANSansXFaNum-Medium.ttf"),
+    "IranSans-Regular": require("../assets/fonts/IRANSansXFaNum-Regular.ttf"),
+    "IranSans-Thin": require("../assets/fonts/IRANSansXFaNum-Thin.ttf"),
+    "IranSans-UltraLight": require("../assets/fonts/IRANSansXFaNum-UltraLight.ttf"),
   });
 
   const ToastProvider = useMemo(() => toastConfig.registerProvider, []);
@@ -81,15 +80,14 @@ const RootLayout = () => {
   if (!fontsLoaded && !error) return null;
 
   return (
-    <CopilotProvider
-      stopOnOutsideClick
-      stepNumberComponent={() => null}
-      tooltipStyle={{
-        borderRadius: 10,
-      }}
+    <TourGuideProvider
       labels={{
         finish: "بستن",
+        skip: "رد کردن",
+        next: "بعدی",
+        previous: "قبلی",
       }}
+      androidStatusBarVisible
     >
       <StatusBar style="dark" />
       <Stack>
@@ -127,7 +125,7 @@ const RootLayout = () => {
         <Stack.Screen name="waiting" options={{ headerShown: false }} />
       </Stack>
       <ToastProvider />
-    </CopilotProvider>
+    </TourGuideProvider>
   );
 };
 

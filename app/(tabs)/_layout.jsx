@@ -1,4 +1,11 @@
 // IMPORTS
+import { router, Tabs, useRootNavigationState } from "expo-router";
+import { useState, useRef, useEffect, useCallback } from "react";
+import { Ionicons } from "@expo/vector-icons";
+import { SafeAreaView } from "react-native-safe-area-context";
+import assistant from "@/assets/images/assistant.png";
+import SettingsMenu from "@/views/SettingsMenu";
+import Feather from "@expo/vector-icons/Feather";
 import {
   View,
   Text,
@@ -10,13 +17,6 @@ import {
   Pressable,
   Keyboard,
 } from "react-native";
-import { router, Tabs, useRootNavigationState } from "expo-router";
-import { useState, useRef, useEffect, useCallback } from "react";
-import { Ionicons } from "@expo/vector-icons";
-import { SafeAreaView } from "react-native-safe-area-context";
-import assistant from "@/assets/images/assistant.png";
-import SettingsMenu from "@/views/SettingsMenu";
-import Feather from "@expo/vector-icons/Feather";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -98,7 +98,7 @@ const TabsLayout = () => {
           useNativeDriver: true,
         }),
       ]).start(() => {
-        setHasAnimated(true); // Mark the animation as completed
+        setHasAnimated(true);
       });
     };
 

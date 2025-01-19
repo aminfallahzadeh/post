@@ -1,5 +1,5 @@
 // IMPORTS
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { ScrollView, View, TextInput, Pressable } from "react-native";
 import Service from "@/components/Service";
 import { useForm } from "react-hook-form";
@@ -10,17 +10,21 @@ import CustomCarousel from "@/components/CustomCarousel";
 import CustomButton from "@/components/CustomButton";
 import { allData } from "@/data/services";
 import Feather from "@expo/vector-icons/Feather";
-import { CopilotStep, walkthroughable, useCopilot } from "react-native-copilot";
+import { useUserStore } from "@/store";
+import { TourGuideZone, useTourGuideController } from "rn-tourguide";
 
 const Index = () => {
   // STATES
   const [visible, setVisible] = useState(false);
   const [barcode, setBarcode] = useState("");
-  const { start, copilotEvents } = useCopilot();
-  const [copilotCompleted, setCopilotCompleted] = useState(false);
 
   // CONSTS
   const { handleSubmit } = useForm();
+  const { canStart, start, stop, eventEmitter } = useTourGuideController();
+  const setCopilotShouldStart = useUserStore(
+    (state) => state.setCopilotShouldStart
+  );
+  const copilotShouldStart = useUserStore((state) => state.copilotShouldStart);
 
   // HANDLERS
   const onSubmit = () => {
@@ -42,22 +46,23 @@ const Index = () => {
     setBarcode("");
   };
 
-  const CopilotView = walkthroughable(View);
+  useEffect(() => {
+    if (canStart && copilotShouldStart) {
+      start();
+    }
+  }, [canStart, copilotShouldStart]);
 
   useEffect(() => {
-    if (!copilotCompleted) {
-      start(); // Start Copilot only if it hasn't been completed
-    }
-
-    // Listen for Copilot completion event
-    copilotEvents.on("stop", () => {
-      setCopilotCompleted(true); // Mark Copilot as completed
+    eventEmitter.on("stop", () => {
+      setCopilotShouldStart(false);
     });
 
     return () => {
-      copilotEvents.off("stop"); // Clean up event listener
+      eventEmitter.off("stop", () => {
+        setCopilotShouldStart(false);
+      });
     };
-  }, [start, copilotCompleted, copilotEvents]);
+  }, [eventEmitter, setCopilotShouldStart]);
 
   return (
     <>
@@ -72,46 +77,47 @@ const Index = () => {
           <CustomCarousel />
         </View>
 
-        <View className="w-full flex-row-reverse px-4 bg-white py-4">
-          <View className="w-3/4 relative">
-            <TextInput
-              className="flex-1 w-full bg-white border border-primary rounded-md px-4 text-sm font-isansmedium"
-              placeholder="کد رهگیری"
-              keyboardType="numeric"
-              inputMode="numeric"
-              name="barcode"
-              textAlignVertical="center"
-              textAlign="right"
-              value={barcode}
-              onChangeText={handleBarcodeChange}
-            />
-            {barcode && (
-              <Pressable
-                onPress={handleRemoveField}
-                className="absolute top-[50%] left-4"
-                style={{
-                  transform: [{ translateY: -12 }],
-                }}
-              >
-                <Feather name="x-circle" size={24} color={"#AFB4C0"} />
-              </Pressable>
-            )}
-          </View>
+        <TourGuideZone
+          zone={1}
+          shape="rectangle"
+          text={"برای پیگیری مرسوله کد رهگیری را وارد کنید"}
+          borderRadius={16}
+        >
+          <View className="w-full flex-row-reverse px-4 bg-white py-4">
+            <View className="w-3/4 relative">
+              <TextInput
+                className="flex-1 w-full bg-white border border-primary rounded-md px-4 text-sm font-isansmedium"
+                placeholder="کد رهگیری"
+                keyboardType="numeric"
+                inputMode="numeric"
+                name="barcode"
+                textAlignVertical="center"
+                textAlign="right"
+                value={barcode}
+                onChangeText={handleBarcodeChange}
+              />
+              {barcode && (
+                <Pressable
+                  onPress={handleRemoveField}
+                  className="absolute top-[50%] left-4"
+                  style={{
+                    transform: [{ translateY: -12 }],
+                  }}
+                >
+                  <Feather name="x-circle" size={24} color={"#AFB4C0"} />
+                </Pressable>
+              )}
+            </View>
 
-          <CopilotStep
-            text="می توانید برای پیگیری مرسوله از اینجا اقدام کنید"
-            order={1}
-            name="barcode-search"
-          >
-            <CopilotView className="w-1/4 mr-2">
+            <View className="w-1/4 mr-2">
               <CustomButton
                 title="جستجو"
                 height="h-10"
                 handlePress={handleSubmit(onSubmit)}
               />
-            </CopilotView>
-          </CopilotStep>
-        </View>
+            </View>
+          </View>
+        </TourGuideZone>
 
         <ScrollView
           showsVerticalScrollIndicator={false}
@@ -120,14 +126,21 @@ const Index = () => {
             paddingBottom: 120,
           }}
         >
-          <View
-            className="flex-row flex-wrap gap-y-2 justify-start items-start px-2 mt-5"
-            style={{ transform: [{ scaleX: -1 }] }}
+          <TourGuideZone
+            zone={2}
+            shape="rectangle"
+            text={"سایر خدمات پست ملی"}
+            borderRadius={16}
           >
-            {allData.map((item, index) => (
-              <Service key={index} item={item} />
-            ))}
-          </View>
+            <View
+              className="flex-row flex-wrap gap-y-2 justify-start items-start px-2 mt-5"
+              style={{ transform: [{ scaleX: -1 }] }}
+            >
+              {allData.map((item, index) => (
+                <Service key={index} item={item} />
+              ))}
+            </View>
+          </TourGuideZone>
         </ScrollView>
       </Background>
     </>

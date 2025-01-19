@@ -14,6 +14,7 @@ const initialState = {
   nerkhname: [],
   ehrazFormData: {},
   order: [],
+  copilotShouldStart: true,
 };
 
 export const useUserStore = create(
@@ -44,6 +45,8 @@ export const useUserStore = create(
     setOrder: (order) => set({ order }),
 
     setEhrazFormData: (ehrazFormData) => set({ ehrazFormData }),
+
+    setCopilotShouldStart: (copilotShouldStart) => set({ copilotShouldStart }),
 
     resetStore: () => set(initialState),
   }))

@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "@/components/CustomButton";
-import { router } from "expo-router";
+// import { router } from "expo-router";
 import Background from "@/components/Background";
 import { requiredRule, nerkhnameValidations } from "@/constants/validations";
 import { useUserStore } from "@/store";
@@ -47,7 +47,6 @@ const NerkhnameStep1 = () => {
     formState: { errors },
     unregister,
     setValue,
-    reset,
   } = useForm({
     defaultValues: {
       ...nerkhname,
@@ -199,7 +198,6 @@ const NerkhnameStep1 = () => {
               <Title
                 title={`${nerkhname?.servicetype?.label} : نرخ نامه`}
                 home={true}
-                progress={66}
               />
 
               <ScrollView
