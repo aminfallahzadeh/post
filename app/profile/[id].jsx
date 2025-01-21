@@ -21,13 +21,16 @@ import CustomSelect from "@/components/CustomSelect";
 import Background from "@/components/Background";
 import useGetUserData from "@/hooks/useGetUserData";
 import { userDataValidations, nationalCodeRule } from "@/constants/validations";
+import { validatePostCode } from "@/api/gnaf";
 import { Title } from "@/components/Title";
 import * as SecureStore from "expo-secure-store";
 import { toastStyles } from "@/constants/styles";
+import { postalCodeValidation } from "@/constants/validations";
 
 const UserProfile = () => {
   // STATES
   const [isLoading, setIsLoading] = useState(false);
+  const [isValidating, setIsValidating] = useState(false);
 
   // CONSTS
   const { id } = useLocalSearchParams();
@@ -60,8 +63,11 @@ const UserProfile = () => {
     }
   }, [setValue, userData]);
 
-  const onSubmit = async () => {
-    const validations = userDataValidations(form_data);
+  const onSubmit = async (data) => {
+    const validations = [
+      ...userDataValidations(form_data),
+      ...postalCodeValidation(form_data),
+    ];
 
     for (let validation of validations) {
       if (validation.check) {
@@ -74,8 +80,16 @@ const UserProfile = () => {
       }
     }
 
-    setIsLoading(true);
+    setIsValidating(true);
     try {
+      const data = [{ clientRowID: 1, postCode: form_data.postalCode }];
+      const validateResponse = await validatePostCode(data);
+      if (!validateResponse.data.itemList[0].value) {
+        toastConfig.warning("کد پستی معتبر نیست");
+        return;
+      }
+
+      setIsLoading(true);
       const birthDate =
         form_data.year + "/" + form_data.month + "/" + form_data.day;
 
@@ -85,6 +99,7 @@ const UserProfile = () => {
         lastName: form_data.lastName,
         birthDate,
         nationalCode: form_data.nationalCode,
+        postalCode: form_data.postalCode,
         mobile,
       });
 
@@ -95,6 +110,7 @@ const UserProfile = () => {
       toastConfig.success(response.data.message);
       router.replace("/");
     } finally {
+      setIsValidating(false);
       setIsLoading(false);
     }
   };
@@ -141,6 +157,15 @@ const UserProfile = () => {
                   control={control}
                   containerStyle="mt-5"
                   name="nationalCode"
+                />
+
+                <FormField
+                  placeholder="کد پستی"
+                  keyboardType="numeric"
+                  inputMode="numeric"
+                  control={control}
+                  containerStyle="mt-5"
+                  name="postalCode"
                 />
 
                 <View className="mt-5">
@@ -192,7 +217,7 @@ const UserProfile = () => {
               <CustomButton
                 title="ذخیره"
                 handlePress={handleSubmit(onSubmit)}
-                isLoading={isLoading || userDataLoading}
+                isLoading={isLoading || userDataLoading || isValidating}
               />
             </View>
           </View>

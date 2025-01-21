@@ -311,8 +311,8 @@ const styles = {
   },
   popup: {
     position: "absolute",
-    bottom: 120,
-    left: 100,
+    bottom: 50,
+    left: 90,
     backgroundColor: "white",
     padding: 10,
     borderRadius: 10,
@@ -337,8 +337,8 @@ const styles = {
   },
   popupText: {
     color: "#333",
-    fontSize: 14,
-    fontFamily: "IranSans-DemiBold",
+    fontSize: 12,
+    fontFamily: "IranSans-Regular",
   },
   bot: {
     position: "absolute",

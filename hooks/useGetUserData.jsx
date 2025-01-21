@@ -13,6 +13,7 @@ const useGetUserData = () => {
       try {
         const response = await getCustomerProfile(mobile);
         setUserData(response.data.itemList[0]);
+        console.log("User Data: ", response.data.itemList[0]);
         console.log("User Data Saved to store");
       } finally {
         setIsLoading(false);
