@@ -122,7 +122,7 @@ const Index = () => {
               className="text-grey2 font-isansregular text-[17px] mt-10 text-center w-full px-10"
               style={{ opacity: textOpacity }}
             >
-              سریع‌ترین و مطمئن‌ترین راه برای ارسال بسته‌های شما!
+              فردا؛ دیر است...
             </Animated.Text>
 
             <Animated.View

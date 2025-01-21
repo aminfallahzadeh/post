@@ -18,8 +18,6 @@ import {
   TextInput,
   Pressable,
   StyleSheet,
-  TouchableOpacity,
-  Text,
 } from "react-native";
 
 const Index = () => {

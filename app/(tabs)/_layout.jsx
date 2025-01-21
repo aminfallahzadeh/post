@@ -105,6 +105,10 @@ const TabsLayout = () => {
     animatePopup();
   }, [fadeAnim, hasAnimated]);
 
+  const handleBotPress = () => {
+    router.push("/assistant");
+  };
+
   return (
     <>
       {/* TOP BAR */}
@@ -259,16 +263,10 @@ const TabsLayout = () => {
       {activeTab !== 2 && activeTab !== 0 && (
         <>
           {!keyboardVisible && (
-            <Pressable
-              onPress={() => {
-                router.push("/assistant");
-                console.log("pressed");
-              }}
-              style={{ zIndex: 100 }}
-            >
+            <Pressable onPress={handleBotPress} style={styles.bot}>
               <Image
                 source={assistant}
-                className="w-24 absolute bottom-14 left-0 h-32"
+                className="w-24 h-32"
                 resizeMode="contain"
               />
 
@@ -344,17 +342,8 @@ const styles = {
   },
   bot: {
     position: "absolute",
-    bottom: height / 2 - 300,
-    left: width / 2 - 175,
-    width: 350,
-    height: 600,
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 5,
-    borderRadius: 10,
-    backgroundColor: "#fff",
-    padding: 20,
+    left: 0,
+    bottom: 55,
   },
   close: {
     flexDirection: "row-reverse",
