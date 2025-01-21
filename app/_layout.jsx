@@ -123,6 +123,7 @@ const RootLayout = () => {
         <Stack.Screen name="forms/ehraz" options={{ headerShown: false }} />
         <Stack.Screen name="forms/nerkhname" options={{ headerShown: false }} />
         <Stack.Screen name="waiting" options={{ headerShown: false }} />
+        <Stack.Screen name="camera" options={{ headerShown: false }} />
       </Stack>
       <ToastProvider />
     </TourGuideProvider>

@@ -14,6 +14,7 @@ export const CustomButton = ({
   height = "h-14",
   bgColor = "bg-primary",
   titleColor = "text-white",
+  children,
 }) => {
   return (
     <TouchableOpacity
@@ -27,6 +28,8 @@ export const CustomButton = ({
     >
       {isLoading ? (
         <Flow size={45} color="#333" />
+      ) : children ? (
+        children
       ) : (
         <Text
           className={`${titleColor} font-isansdemibold text-md ${textStyles}`}

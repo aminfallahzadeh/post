@@ -56,7 +56,7 @@ const NerkhnameStep5 = () => {
   const checkSpecialService = (data, id) => data.some((item) => item.id === id);
 
   // HANDLERS
-  const onSubmit = async () => {
+  const onSubmit = async (data) => {
     setIsLoading(true);
     try {
       const response = await insertRequestPriceOrder({
@@ -104,7 +104,7 @@ const NerkhnameStep5 = () => {
           ? checkSpecialService(order?.specialServices, 8)
           : false,
         isnonstandard: true,
-        contetnts: order?.contetnts || "",
+        contetnts: data?.contetnts || "",
         boxsize: order?.boxsize || 1,
       });
 

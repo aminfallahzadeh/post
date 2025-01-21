@@ -14,7 +14,8 @@ export const PostCertificateCard = ({ item, containerStyles }) => {
       onPress={download}
       className={`bg-white rounded-md px-5 py-2 w-full ${containerStyles}`}
     >
-      <View className="justify-center items-center w-full">
+      <View className="justify-center items-center w-full flex-row">
+        <Text className="font-isansregular text-grey2 text-sm">دانلود</Text>
         <Image source={images.pdf} className="w-10 h-10" />
       </View>
       <View className="flex-row-reverse justify-between items-center w-full mb-2">

@@ -213,6 +213,7 @@ const NerkhnameStep2 = () => {
                     errors={errors}
                     setValue={setValue}
                     isLoading={isCityLoading}
+                    search={true}
                   />
                 </View>
 

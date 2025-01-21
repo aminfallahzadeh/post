@@ -1,15 +1,6 @@
 // IMPORTS
 import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import {
-  View,
-  Animated,
-  KeyboardAvoidingView,
-  Platform,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import { generateOTP } from "@/api/auth";
@@ -21,6 +12,15 @@ import { mobilePhoneValidation } from "@/constants/validations";
 import login from "@/assets/images/login.png";
 import * as SecureStore from "expo-secure-store";
 import SwitchInput from "@/components/SwitchInput";
+import {
+  View,
+  Animated,
+  KeyboardAvoidingView,
+  Platform,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 
 const Login = () => {
   // STATES
@@ -93,7 +93,7 @@ const Login = () => {
               <View className="w-full px-5">
                 <Animated.Image
                   source={login}
-                  className="w-full h-[350px] mt-10 mb-5"
+                  className="w-full h-[250px] mt-10 mb-5"
                   resizeMode="contain"
                   style={{
                     opacity: imageOpacity,

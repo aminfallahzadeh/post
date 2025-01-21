@@ -112,10 +112,10 @@ const Index = () => {
 
           <View className="w-full px-7 mb-16">
             <Animated.Text
-              className="text-primary font-isansbold text-[30px] text-center w-full"
+              className="text-primary font-isansbold text-lg text-center w-full"
               style={{ opacity: textOpacity }}
             >
-              خوش آمدید...
+              به پستخونه خوش آمدید ...
             </Animated.Text>
 
             <Animated.Text
