@@ -62,6 +62,7 @@ const Index = () => {
         facing={"back"}
         barcodeScannerSettings={{ barcodeTypes: ["code128"] }}
         onBarcodeScanned={({ data }) => {
+          console.log("BARCODE SCANNED:", data);
           onSubmit(data);
         }}
       />

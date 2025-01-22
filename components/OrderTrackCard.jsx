@@ -12,9 +12,11 @@ const OrderTrackCard = ({ item }) => {
 
       <View className="w-full h-[1px] bg-gray-400" />
 
-      <View className="mt-2">
-        <Text className="text-primary font-isansbold text-sm">توضیحات :</Text>
-        <Text className="text-grey2 font-isansdemibold text-sm mt-1">
+      <View className="mt-4">
+        <Text className="text-primary font-isansbold text-sm text-right">
+          توضیحات :
+        </Text>
+        <Text className="text-grey2 font-isansdemibold text-sm mt-1 text-right">
           {item.describe}
         </Text>
       </View>
