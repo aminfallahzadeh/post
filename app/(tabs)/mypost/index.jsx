@@ -1,4 +1,3 @@
-// IMPORTS
 import { useState, useCallback } from "react";
 import { View, Text, ScrollView } from "react-native";
 import { router } from "expo-router";
@@ -13,7 +12,7 @@ import { Barcode } from "expo-barcode-generator";
 const Index = () => {
   // STATES
   const [isLoading, setIsLoading] = useState(false);
-  const [isOrderLoading, setIsOrderLoading] = useState(false);
+  const [loadingStates, setLoadingStates] = useState({}); // Track loading state per item
   const [data, setData] = useState([]);
 
   // CONSTS
@@ -35,19 +34,16 @@ const Index = () => {
 
   // HANDLERS
   const onSubmit = async (barcode) => {
-    setIsOrderLoading(true);
+    setLoadingStates((prev) => ({ ...prev, [barcode]: true })); // Set the clicked button to loading
     try {
       const response = await trackingOrder(barcode);
       console.log("TRACKING ORDER RESPONSE:", response.data);
-      //   router.push(`/follow?barcode=${barcode}`);
       router.push({
         pathname: "forms/follow",
-        params: {
-          barcode,
-        },
+        params: { barcode },
       });
     } finally {
-      setIsOrderLoading(false);
+      setLoadingStates((prev) => ({ ...prev, [barcode]: false })); // Reset loading state
     }
   };
 
@@ -105,8 +101,6 @@ const Index = () => {
                     <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm">
                       کد پیگیری
                     </Text>
-
-                    {/* {item.barcode} */}
                     <Barcode
                       value={item.barcode}
                       options={{
@@ -131,7 +125,10 @@ const Index = () => {
                   <CustomButton
                     title="پیگیری"
                     height="h-10"
-                    isLoading={isOrderLoading}
+                    isLoading={loadingStates[item.barcode] || false} // Show loading for the clicked button
+                    disabled={Object.values(loadingStates).some(
+                      (state) => state
+                    )} // Disable if any button is loading
                     handlePress={() => onSubmit(item.barcode)}
                   />
                 )}
