@@ -15,7 +15,7 @@ export const CustomModal = ({
   return (
     <Modal
       visible={visible}
-      animationType="fade"
+      animationType="slide"
       transparent={true}
       statusBarTranslucent={true}
       onRequestClose={closeModal}

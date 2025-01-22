@@ -11,6 +11,7 @@ import CustomSelect from "@/components/CustomSelect";
 import FormField from "@/components/FormField";
 import CustomModal from "@/components/CustomModal";
 import { Title } from "@/components/Title";
+import { toastConfig } from "@/config/toast-config";
 import {
   requiredRule,
   nationalCodeRule,
@@ -48,6 +49,15 @@ const NerkhnameStep3 = () => {
 
   // HANDLERS
   const onSubmit = () => {
+    if (form_data.receiverpostalcode) {
+      const cityCodeString = form_data.destcode.toString();
+
+      if (!form_data.receiverpostalcode.startsWith(cityCodeString)) {
+        toastConfig.warning("کد پستی با شهر انتخابی مطابقت ندارد");
+        return;
+      }
+    }
+
     if (form_data.receiverid === order.senderid) {
       setNationalCodeModal(true);
       return;

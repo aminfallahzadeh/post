@@ -1,7 +1,7 @@
 // IMPORTS
-import { View, Text, StyleSheet, Pressable, Image } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import { router } from "expo-router";
-import images from "@/constants/images";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 export const PostCertificateCard = ({ item, containerStyles }) => {
   const download = () => {
@@ -14,10 +14,13 @@ export const PostCertificateCard = ({ item, containerStyles }) => {
       onPress={download}
       className={`bg-white rounded-md px-5 py-2 w-full ${containerStyles}`}
     >
-      <View className="justify-center items-center w-full flex-row">
-        <Text className="font-isansregular text-grey2 text-sm">دانلود</Text>
-        <Image source={images.pdf} className="w-10 h-10" />
+      <View className="justify-center items-center flex-row">
+        <Text className="font-isansregular text-grey5 text-sm mr-2">
+          دانلود
+        </Text>
+        <FontAwesome name="file-pdf-o" size={28} color="#a3a3a3" />
       </View>
+
       <View className="flex-row-reverse justify-between items-center w-full mb-2">
         <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm">
           نوع گواهی :

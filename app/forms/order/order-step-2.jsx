@@ -11,6 +11,7 @@ import FormField from "@/components/FormField";
 import * as SecureStore from "expo-secure-store";
 import CustomSelect from "@/components/CustomSelect";
 import { Title } from "@/components/Title";
+import { toastConfig } from "@/config/toast-config";
 import {
   requiredRule,
   nationalCodeRule,
@@ -53,6 +54,15 @@ const NerkhnameStep2 = () => {
 
   // HANDLERS
   const onSubmit = () => {
+    // CHECK POSTAL CODE WITH CITY CODE
+    const cityCodeString = form_data.sourcecode.toString();
+
+    if (!form_data.senderpostalcode.startsWith(cityCodeString)) {
+      toastConfig.warning("کد پستی با شهر انتخابی مطابقت ندارد");
+      return;
+    }
+
+    console.log("FORM DATA: ", form_data);
     setOrder({ ...order, ...form_data });
     router.push(`/forms/order/order-step-3`);
   };

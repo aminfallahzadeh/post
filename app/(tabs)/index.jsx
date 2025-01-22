@@ -152,7 +152,7 @@ const Index = () => {
           <TourGuideZone
             zone={2}
             shape="rectangle"
-            text={"سایر خدمات شرکت ملی پست"}
+            text={"خدمات شرکت ملی پست"}
             borderRadius={16}
           >
             <View
