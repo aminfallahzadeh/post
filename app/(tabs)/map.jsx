@@ -51,7 +51,7 @@ const Map = () => {
         <View style={styles.container}>
           <WebView
             source={{
-              uri: `http://84.241.12.49:8090/map?latitude=${location?.coords?.latitude}&longitude=${location?.coords?.longitude}`,
+              uri: `https://newpostkhoone.post.ir/map?latitude=${location?.coords?.latitude}&longitude=${location?.coords?.longitude}`,
             }}
             style={styles.webview}
           />
