@@ -18,6 +18,7 @@ I18nManager.forceRTL(false);
 
 try {
   I18nManager.allowRTL(false);
+  console.log("RTL LOCKED");
 } catch (e) {
   console.log(e);
 }

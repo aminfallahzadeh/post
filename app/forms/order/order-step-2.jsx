@@ -48,6 +48,7 @@ const NerkhnameStep2 = () => {
       senderLastname: order.lastName
         ? order.senderLastname
         : userData?.lastName,
+      senderpostalcode: userData?.postalCode || "",
     },
   });
   const form_data = watch();

@@ -12,7 +12,7 @@ import Feather from "@expo/vector-icons/Feather";
 import { useUserStore } from "@/store";
 import { TourGuideZone, useTourGuideController } from "rn-tourguide";
 import { useCameraPermissions } from "expo-camera";
-import { ScrollView, View, TextInput, Pressable } from "react-native";
+import { ScrollView, View, TextInput, Pressable, Text } from "react-native";
 
 const Index = () => {
   // STATES
@@ -141,7 +141,6 @@ const Index = () => {
             </View>
           </View>
         </TourGuideZone>
-
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
@@ -165,6 +164,10 @@ const Index = () => {
             </View>
           </TourGuideZone>
         </ScrollView>
+
+        {/* <View className="w-full bg-red-400">
+          <Text>Test</Text>
+        </View> */}
       </Background>
     </>
   );

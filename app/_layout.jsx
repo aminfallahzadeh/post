@@ -5,18 +5,18 @@ import { SplashScreen, Stack, router } from "expo-router";
 import { useFonts } from "expo-font";
 import { toastConfig } from "@/config/toast-config";
 import { StatusBar } from "expo-status-bar";
-import { I18nManager } from "react-native";
+// import { I18nManager } from "react-native";
 import { TourGuideProvider } from "rn-tourguide";
 
 // Lock the layout direction to LTR
-I18nManager.allowRTL(false);
-I18nManager.forceRTL(false);
+// I18nManager.allowRTL(false);
+// I18nManager.forceRTL(false);
 
-try {
-  I18nManager.allowRTL(false);
-} catch (e) {
-  console.log(e);
-}
+// try {
+//   I18nManager.allowRTL(false);
+// } catch (e) {
+//   console.log(e);
+// }
 
 SplashScreen.preventAutoHideAsync();
 
