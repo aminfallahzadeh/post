@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "@/components/CustomButton";
-import { addressByPostCode } from "@/api/gnaf";
+import { addressByPostCode, addressStringByPostCode } from "@/api/gnaf";
 import { router } from "expo-router";
 import Background from "@/components/Background";
 import { useUserStore } from "@/store";
@@ -66,11 +66,10 @@ const EhrazStep1 = () => {
         postCode,
       },
     ];
-    const response = await addressByPostCode(data);
-
+    const response = await addressStringByPostCode(data);
+    console.log("ADDRESS STRING RESPONSE: ", response.data);
     if (response.data.itemList[0].resMsg === "موفق") {
-      const result = response?.data?.itemList[0].data[0].result;
-      const address = `استان ${result?.province} - شهرستان ${result?.localityName} - بخش ${result?.zone} - شهر ${result?.townShip} - خیابان ${result?.street} - خیابان ${result?.street2} - پلاک ${result?.houseNumber} - ساختمان ${result?.buildingName} - ${result?.description} - طبقه ${result?.floor} - واحد ${result?.sideFloor}`;
+      const address = response.data.itemList[0].data[0].result.value;
       setValue("address", address);
     } else {
       setValue("address", response.data.itemList[0].resMsg);

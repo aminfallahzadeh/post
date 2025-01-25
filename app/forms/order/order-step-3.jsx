@@ -130,7 +130,7 @@ const OrderStep3 = () => {
             {/* HEADER SECTION */}
             <Title
               title={`${order?.servicetype?.label} : اطلاعات گیرنده`}
-              progress={56}
+              progress={64}
             />
             <ScrollView
               contentContainerStyle={{

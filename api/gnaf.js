@@ -120,3 +120,9 @@ export function validatePostCode(data) {
     postCodes: data,
   });
 }
+
+export function addressStringByPostCode(data) {
+  return axiosInstance.post("GNAF/AddressStringByPostcode", {
+    postCodes: data,
+  });
+}

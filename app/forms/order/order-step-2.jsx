@@ -115,7 +115,7 @@ const OrderStep2 = () => {
             {/* HEADER SECTION */}
             <Title
               title={`${order?.servicetype?.label} : اطلاعات فرستنده`}
-              progress={42}
+              progress={48}
             />
 
             <ScrollView

@@ -15,13 +15,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import CustomButton from "@/components/CustomButton";
 import CustomSelect from "@/components/CustomSelect";
-import { validateWeight } from "@/api/order";
+import { validateServiceSpec } from "@/api/order";
 import FormField from "@/components/FormField";
 import { parcelOptions } from "@/data/parcelOptions";
 import { boxsizeOptions } from "@/data/boxsizeOptions";
 import { toastConfig } from "@/config/toast-config";
 import { nerkhnameValidations, requiredRule } from "@/constants/validations";
 import { Title } from "@/components/Title";
+import { insuranceOptions } from "@/data/insuranceOptions";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import CustomModal from "@/components/CustomModal";
 
@@ -53,7 +54,7 @@ const OrderStep1 = () => {
   const onSubmit = async () => {
     setIsLoading(true);
     try {
-      const response = await validateWeight({
+      const response = await validateServiceSpec({
         typecode:
           order.servicetype.id === 1
             ? 11
@@ -68,6 +69,9 @@ const OrderStep1 = () => {
         parceltype: form_data.parceltype,
         weight: parseFloat(form_data.weight) || 0,
         boxsize: form_data.boxsize || 1,
+        insurancetype: form_data.insurancetype,
+        insuranceamount: form_data.insuranceamount || 0,
+        Contetnts: form_data.contetnts,
       });
       if (response.data.status) {
         setOrder({ ...order, ...form_data });
@@ -130,7 +134,7 @@ const OrderStep1 = () => {
               {/* HEADER SECTION */}
               <Title
                 title={`${order?.servicetype?.label} : اطلاعات مرسوله`}
-                progress={28}
+                progress={32}
               />
 
               <ScrollView
@@ -205,6 +209,52 @@ const OrderStep1 = () => {
                       </Text>
                     </View>
                   </View>
+
+                  <View className="mt-5">
+                    <CustomSelect
+                      name="insurancetype"
+                      control={control}
+                      rules={requiredRule}
+                      data={insuranceOptions}
+                      label="* نوع بیمه"
+                      errors={errors}
+                      setValue={setValue}
+                    />
+                  </View>
+
+                  <FormField
+                    placeholder="* محتویات مرسوله"
+                    type={"text"}
+                    keyboardType="default"
+                    containerStyle="mt-5"
+                    rules={{
+                      required: {
+                        value: form_data?.insurancetype === 1 ? true : false,
+                        message: "این فیلد اجباری است",
+                      },
+                    }}
+                    control={control}
+                    name="contetnts"
+                  />
+
+                  {form_data.insurancetype !== 1 && (
+                    <View className="flex-row-reverse justify-center items-center">
+                      <View className="flex-1 ml-2">
+                        <FormField
+                          placeholder="مبلغ اظهار شده"
+                          keyboardType="numeric"
+                          inputMode="numeric"
+                          rules={requiredRule}
+                          containerStyle="mt-5"
+                          control={control}
+                          name="insuranceamount"
+                        />
+                      </View>
+                      <Text className="flex-3 self-center text-primary text-xl font-isansbold text-center rounded-lg pt-5">
+                        ریال
+                      </Text>
+                    </View>
+                  )}
 
                   {![1, 14, 3, 15].includes(form_data?.parceltype) && (
                     <View className="mt-5">

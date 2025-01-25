@@ -1,289 +1,208 @@
 // IMPORTS
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import {
-  View,
-  Text,
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native";
-import { router } from "expo-router";
+import { useEffect } from "react";
+import { View, Text, StyleSheet } from "react-native";
 import { useUserStore } from "@/store";
+import { router } from "expo-router";
 import Background from "@/components/Background";
 import { SafeAreaView } from "react-native-safe-area-context";
-import CustomButton from "@/components/CustomButton";
-import { convertToEnglishNumber } from "@/helpers/numberHelper";
-import { insuranceOptions } from "@/data/insuranceOptions";
-import { insertRequestPriceOrder } from "@/api/request";
-import { getPrice } from "@/api/order";
-import FormField from "@/components/FormField";
 import { Title } from "@/components/Title";
-import { CustomModal } from "@/components/CustomModal";
-import * as SecureStore from "expo-secure-store";
-import CustomSelect from "@/components/CustomSelect";
-import { requiredRule } from "@/constants/validations";
-import { separateByThousand } from "@/utils/numberSeparator";
+import { LinearGradient } from "expo-linear-gradient";
+import CustomButton from "@/components/CustomButton";
 
-const OrderStep5 = () => {
-  // STATES
-  const [isLoading, setIsLoading] = useState(false);
-  const [resultModalVisible, setResultModalVisible] = useState(false);
-  const [calculateResult, setCalculateResult] = useState(null);
-  const [amountModalVisible, setAmountModalVisible] = useState(false);
-
+const OrderStep6 = () => {
   // CONSTS
-  const mobile = SecureStore.getItem("mobile");
   const order = useUserStore((state) => state.order);
   const setOrder = useUserStore((state) => state.setOrder);
 
-  const {
-    watch,
-    handleSubmit,
-    control,
-    formState: { errors },
-    unregister,
-    setValue,
-  } = useForm({
-    defaultValues: {
-      ...order,
-    },
-  });
-  const form_data = watch();
-
-  // helper
-  const checkSpecialService = (data, id) => data.some((item) => item.id === id);
-
   // HANDLERS
-  const onSubmit = async (data) => {
-    setIsLoading(true);
-    try {
-      const response = await insertRequestPriceOrder({
-        mobile,
-        typecode:
-          order?.servicetype?.id === 1
-            ? 11
-            : order?.servicetype.id === 4
-            ? 11
-            : order?.servicetype?.id === 2
-            ? 19
-            : order?.servicetype?.id === 5
-            ? 27
-            : 77,
-        servicetype: order?.servicetype?.id,
-        parceltype: order?.parceltype,
-        sourcecode: order?.sourcecode || "",
-        destcode: order?.destcode || "",
-        sendername: order?.sendername || "",
-        receivername: order?.receivername || "",
-        receiverpostalcode: order?.receiverpostalcode || "",
-        senderpostalcode: order?.senderpostalcode || "",
-        senderid: order?.senderid || "",
-        receiverid: order?.receiverid || "",
-        sendermobile: order?.sendermobile || "",
-        receivermobile: order?.receivermobile || "",
-        senderaddress: order?.senderaddress || "",
-        receiveraddress: order?.receiveraddress || "",
-        weight: parseFloat(convertToEnglishNumber(order?.weight)) || 0,
-        insurancetype: form_data.insurancetype || 1,
-        insuranceamount: parseFloat(form_data.insuranceamount) || 0,
-        spsdestinationtype: 0,
-        spsreceivertimetype: 0,
-        spsparceltype:
-          order?.servicetype?.id !== 3
-            ? 0
-            : order?.parceltype === 1
-            ? 1
-            : order?.parceltype === 3
-            ? 3
-            : 2,
-        electworeceiptant: true,
-        iscot: order?.specialServices
-          ? checkSpecialService(order?.specialServices, 5)
-          : false,
-        smsservice: order?.specialServices
-          ? checkSpecialService(order?.specialServices, 8)
-          : false,
-        isnonstandard: true,
-        contetnts: data?.contetnts || "",
-        boxsize: order?.boxsize || 1,
-      });
-
-      console.log("INSERT REQUEST PRICE ORDER RESPONSE: ", response.data);
-      //   setResultModalVisible(true);
-      //   reset();
-      //   setOrder([]);
-      setOrder({ ...order, ...form_data, ...response.data.itemList[0] });
-      router.push(`/forms/order/order-step-6`);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const onCalculate = async () => {
-    setIsLoading(true);
-    try {
-      const response = await getPrice({
-        typecode:
-          order.servicetype.id === 1
-            ? 11
-            : order?.servicetype.id === 4
-            ? 11
-            : order.servicetype.id === 2
-            ? 19
-            : order.servicetype.id === 5
-            ? 19 //سرویس امانت همان سرویس سفارشی هست فقط برای 2 کیلو به بالا می باشد
-            : 77,
-        servicetype: order.servicetype.id === 5 ? 2 : order.servicetype.id, //سرویس امانت همان سرویس سفارشی هست فقط برای 2 کیلو به بالا می باشد
-        parceltype: form_data.parceltype,
-        sourcecode: form_data.sourcecode,
-        destcode: form_data.destcode,
-        weight: parseFloat(form_data.weight) || 0,
-        // boxsize: form_data.boxsize === undefined ? 1 : form_data.boxsize,
-        boxsize: form_data.boxsize || 1,
-      });
-
-      setCalculateResult(response.data.itemList[0].data);
-      console.log("PRICE RESPONSE: ", response.data);
-      //   setAmount(amount);
-      setAmountModalVisible(true);
-    } finally {
-      setIsLoading(false);
-    }
+  const onSubmit = () => {
+    setOrder([]);
+    router.replace("/");
   };
 
   // DEBUG
   useEffect(() => {
-    console.log("NERKHNAME Step 5: ", order);
-    console.log("FORM DATA: ", form_data);
-  }, [order, form_data]);
-
-  useEffect(() => {
-    if (form_data?.insurancetype && form_data?.insurancetype === 1) {
-      unregister("insuranceamount");
-    }
-  }, [form_data?.insurancetype, unregister]);
+    console.log("ORDER IN RESID: ", order);
+  }, [order]);
 
   return (
-    <>
-      <CustomModal
-        visible={resultModalVisible}
-        closeModal={() => setResultModalVisible(false)}
-        title={"توجه"}
-        description={
-          "درخواست شما ثبت شد. برای پیگیری به صفحه پست من مراجعه کنید"
-        }
-        onConfirm={() => router.replace("/")}
-      />
+    <Background>
+      <SafeAreaView className="h-full">
+        <View className="flex-1">
+          <Title title={"رسید سفارش"} progress={100} />
+          <View className="justify-center items-center mt-5 px-4">
+            <View
+              style={styles.container}
+              className="w-full bg-white rounded-md p-2 justify-center items-center border border-grey2"
+            >
+              <View>
+                <Text className="font-isansmedium text-base">
+                  ** مبالغ به ریال می باشد **
+                </Text>
+              </View>
 
-      <CustomModal
-        visible={amountModalVisible}
-        closeModal={() => setAmountModalVisible(false)}
-        title={"مبلغ قابل پرداخت به ریال"}
-        description={`کرایه پستی : ${separateByThousand(
-          calculateResult?.postfare || 0
-        )} \n  حق السهم پستی : ${separateByThousand(
-          calculateResult?.postprice || 0
-        )}\n بیمه : ${separateByThousand(
-          calculateResult?.insuranceprice || 0
-        )}\n  مالیات : ${separateByThousand(
-          calculateResult?.tax || 0
-        )} \n مبلغ کل : ${separateByThousand(
-          calculateResult?.totalprice || 0
-        )}`}
-        onConfirm={() => setAmountModalVisible(false)}
-      />
-      <Background>
-        <SafeAreaView className="h-full">
-          <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : undefined}
-            style={{ flex: 1 }}
-          >
-            <View className="flex-1">
-              {/* HEADER SECTION */}
-              <Title
-                title={`${order?.servicetype?.label} : بیمه`}
-                progress={85}
-              />
-              <ScrollView
-                contentContainerStyle={{
-                  flexGrow: 1,
-                  paddingBottom: 90,
-                }}
-                showsVerticalScrollIndicator={false}
-                keyboardShouldPersistTaps="handled"
-                //   stickyHeaderIndices={[0]}
-              >
-                {/* FORM FIELDS */}
-                <View className="w-full px-5">
-                  <View className="mt-5">
-                    <CustomSelect
-                      name="insurancetype"
-                      control={control}
-                      rules={requiredRule}
-                      data={insuranceOptions}
-                      label="* نوع بیمه"
-                      errors={errors}
-                      setValue={setValue}
-                    />
-                  </View>
+              <View className="mt-2 mb-2 w-full">
+                <LinearGradient
+                  colors={["transparent", "#000", "transparent"]}
+                  style={styles.gradientLineHorizontal}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                />
+              </View>
 
-                  <FormField
-                    placeholder="* محتویات مرسوله"
-                    type={"text"}
-                    keyboardType="default"
-                    containerStyle="mt-5"
-                    rules={{
-                      required: {
-                        value: form_data?.insurancetype === 1 ? true : false,
-                        message: "این فیلد اجباری است",
-                      },
-                    }}
-                    control={control}
-                    name="contetnts"
-                  />
+              <View className="flex-row-reverse justify-between w-full items-center">
+                <Text className="font-isansdemibold text-grey2 text-[15px]">
+                  کد پیگیری
+                </Text>
+                <Text className="font-isansregular">
+                  {order?.trackingId || "---"}
+                </Text>
+              </View>
 
-                  {form_data.insurancetype !== 1 && (
-                    <View className="flex-row-reverse justify-center items-center">
-                      <View className="flex-1 ml-2">
-                        <FormField
-                          placeholder="مبلغ اظهار شده"
-                          keyboardType="numeric"
-                          inputMode="numeric"
-                          rules={requiredRule}
-                          containerStyle="mt-5"
-                          control={control}
-                          name="insuranceamount"
-                        />
-                      </View>
-                      <Text className="flex-3 self-center text-primary text-xl font-isansbold text-center rounded-lg pt-5">
-                        ریال
-                      </Text>
-                    </View>
-                  )}
-                </View>
-              </ScrollView>
+              <View className="mt-2 mb-2 w-full">
+                <LinearGradient
+                  colors={["transparent", "#000", "transparent"]}
+                  style={styles.gradientLineHorizontal}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                />
+              </View>
 
-              {/* BOTTOM SECTION */}
-              <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4 flex-row">
-                <View className="flex-1 mr-2">
-                  <CustomButton title="محاسبه" handlePress={onCalculate} />
-                </View>
+              <View className="flex-row-reverse justify-between w-full items-center">
+                <Text className="font-isansdemibold text-grey2 text-[15px]">
+                  نوع سرویس
+                </Text>
+                <Text className="font-isansregular">
+                  {order?.servicetypeName || "---"}
+                </Text>
+              </View>
 
-                <View className="flex-1 ml-2">
-                  <CustomButton
-                    title="ثبت سفارش"
-                    handlePress={handleSubmit(onSubmit)}
-                    isLoading={isLoading}
-                  />
-                </View>
+              <View className="mt-2 mb-2 w-full">
+                <LinearGradient
+                  colors={["transparent", "#000", "transparent"]}
+                  style={styles.gradientLineHorizontal}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                />
+              </View>
+
+              <View className="flex-row-reverse justify-between w-full items-center">
+                <Text className="font-isansdemibold text-grey2 text-[15px]">
+                  نوع مرسوله
+                </Text>
+                <Text className="font-isansregular">
+                  {order?.parceltypeName || "---"}
+                </Text>
+              </View>
+
+              <View className="mt-2 mb-2 w-full">
+                <LinearGradient
+                  colors={["transparent", "#000", "transparent"]}
+                  style={styles.gradientLineHorizontal}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                />
+              </View>
+
+              <View className="flex-row-reverse justify-between w-full items-center">
+                <Text className="font-isansdemibold text-grey2 text-[15px]">
+                  فرستنده
+                </Text>
+                <Text className="font-isansregular">
+                  {order?.sendername + " " + order?.senderLastname || "---"}
+                </Text>
+              </View>
+
+              <View className="mt-2 mb-2 w-full">
+                <LinearGradient
+                  colors={["transparent", "#000", "transparent"]}
+                  style={styles.gradientLineHorizontal}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                />
+              </View>
+
+              <View className="flex-row-reverse justify-between w-full items-center">
+                <Text className="font-isansdemibold text-grey2 text-[15px]">
+                  گیرنده
+                </Text>
+                <Text className="font-isansregular">
+                  {order?.receivername + " " + order?.receiverLastname || "---"}
+                </Text>
+              </View>
+
+              <View className="mt-2 mb-2 w-full">
+                <LinearGradient
+                  colors={["transparent", "#000", "transparent"]}
+                  style={styles.gradientLineHorizontal}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                />
+              </View>
+
+              <View className="flex-row-reverse justify-between w-full items-center">
+                <Text className="font-isansdemibold text-grey2 text-[15px]">
+                  آدرس فرستنده
+                </Text>
+                <Text
+                  className="font-isansregular flex-1 text-left break-words mr-10"
+                  style={{ flexWrap: "wrap" }}
+                >
+                  {order?.senderaddress || "---"}
+                </Text>
+              </View>
+
+              <View className="mt-2 mb-2 w-full">
+                <LinearGradient
+                  colors={["transparent", "#000", "transparent"]}
+                  style={styles.gradientLineHorizontal}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                />
+              </View>
+
+              <View className="flex-row-reverse justify-between w-full items-center">
+                <Text className="font-isansdemibold text-grey2 text-[15px]">
+                  آدرس گیرنده
+                </Text>
+                <Text
+                  className="font-isansregular flex-1 text-left break-words mr-10"
+                  style={{ flexWrap: "wrap" }}
+                >
+                  {order?.receiveraddress || "---"}
+                </Text>
               </View>
             </View>
-          </KeyboardAvoidingView>
-        </SafeAreaView>
-      </Background>
-    </>
+          </View>
+
+          <View className="w-full justify-center items-center mt-5">
+            <Text className="font-isansregular text-grey2 text-sm">
+              برای پیگیری به صفحه پست من مراجعه کنید
+            </Text>
+          </View>
+        </View>
+
+        {/* BOTTOM SECTION */}
+        <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
+          <CustomButton title="بازگشت" handlePress={onSubmit} />
+        </View>
+      </SafeAreaView>
+    </Background>
   );
 };
 
-export default OrderStep5;
+export default OrderStep6;
+
+const styles = StyleSheet.create({
+  container: {
+    shadowColor: "black",
+    shadowOpacity: 0.26,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 10,
+    elevation: 3,
+  },
+  gradientLineHorizontal: {
+    width: "100%",
+    height: 2,
+  },
+});

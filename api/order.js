@@ -33,6 +33,6 @@ export function getPrice(data) {
   return axiosInstance.post("PriceOrder/GetPrice", data);
 }
 
-export function validateWeight(data) {
+export function validateServiceSpec(data) {
   return axiosInstance.post("PriceOrder/ValidateServiceSpec", data);
 }

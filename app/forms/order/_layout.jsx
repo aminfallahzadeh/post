@@ -10,7 +10,6 @@ const OrderLayout = () => {
       <Stack.Screen name="order-step-3" options={{ headerShown: false }} />
       <Stack.Screen name="order-step-4" options={{ headerShown: false }} />
       <Stack.Screen name="order-step-5" options={{ headerShown: false }} />
-      <Stack.Screen name="order-step-6" options={{ headerShown: false }} />
     </Stack>
   );
 };
