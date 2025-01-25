@@ -1,13 +1,13 @@
 export const serviceOptions = [
-  { id: 1, label: "ویژه", disabled: false, type: "vijhe" },
+  { id: 3, label: "ویژه", disabled: false, type: "vijhe" },
   {
-    id: 2,
-    label: "اکسپرس (در حال توسعه)",
-    disabled: true,
+    id: 4,
+    label: "اکسپرس",
+    disabled: false,
     type: "express",
   },
-  { id: 3, label: "پیشتاز", disabled: false, type: "pishtaz" },
-  { id: 4, label: "سفارشی", disabled: false, type: "sefareshi" },
+  { id: 1, label: "پیشتاز", disabled: false, type: "pishtaz" },
+  { id: 2, label: "سفارشی", disabled: false, type: "sefareshi" },
   { id: 5, label: "امانت", disabled: false, type: "amanat" },
 ];
 

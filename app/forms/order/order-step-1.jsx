@@ -57,12 +57,14 @@ const OrderStep1 = () => {
         typecode:
           order.servicetype.id === 1
             ? 11
+            : order?.servicetype.id === 4
+            ? 11
             : order.servicetype.id === 2
             ? 19
-            : order.servicetype.id === 4
+            : order.servicetype.id === 5
             ? 19 // سرویس امانت همان سرویس سفارشی هست فقط برای 2 کیلو به بالا می باشد
             : 77,
-        servicetype: order.servicetype.id === 4 ? 2 : order.servicetype.id,
+        servicetype: order.servicetype.id === 5 ? 2 : order.servicetype.id,
         parceltype: form_data.parceltype,
         weight: parseFloat(form_data.weight) || 0,
         boxsize: form_data.boxsize || 1,

@@ -135,13 +135,15 @@ const NerkhnameStep1 = () => {
         typecode:
           nerkhname.servicetype.id === 1
             ? 11
+            : nerkhname.servicetype.id === 4
+            ? 11
             : nerkhname.servicetype.id === 2
             ? 19
-            : nerkhname.servicetype.id === 4
+            : nerkhname.servicetype.id === 5
             ? 19 //سرویس امانت همان سرویس سفارشی هست فقط برای 2 کیلو به بالا می باشد
             : 77,
         servicetype:
-          nerkhname.servicetype.id === 4 ? 2 : nerkhname.servicetype.id, //سرویس امانت همان سرویس سفارشی هست فقط برای 2 کیلو به بالا می باشد
+          nerkhname.servicetype.id === 5 ? 2 : nerkhname.servicetype.id, //سرویس امانت همان سرویس سفارشی هست فقط برای 2 کیلو به بالا می باشد
         parceltype: form_data.parceltype,
         sourcecode: form_data.sourcecode,
         destcode: form_data.destcode,
