@@ -7,10 +7,10 @@ import {
   Text,
   KeyboardAvoidingView,
   Platform,
+  Pressable,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "@/components/CustomButton";
-// import { router } from "expo-router";
 import Background from "@/components/Background";
 import { requiredRule, nerkhnameValidations } from "@/constants/validations";
 import { useUserStore } from "@/store";
@@ -24,6 +24,7 @@ import { getProvince, getCity } from "@/api/order";
 import { optionsGenerator } from "@/helpers/selectHelper";
 import { CustomModal } from "@/components/CustomModal";
 import { separateByThousand } from "@/utils/numberSeparator";
+import AntDesign from "@expo/vector-icons/AntDesign";
 
 const NerkhnameStep1 = () => {
   // STATES
@@ -36,6 +37,7 @@ const NerkhnameStep1 = () => {
   const [isProvinceLoading, setIsProvinceLoading] = useState(false);
   const [weightRules, setWeightRules] = useState({});
   const [amountModalVisible, setAmountModalVisible] = useState(false);
+  const [weightHelpModalVisible, setWeightHelpModalVisible] = useState(false);
 
   // CONSTS
   const nerkhname = useUserStore((state) => state.nerkhname);
@@ -187,6 +189,15 @@ const NerkhnameStep1 = () => {
         onConfirm={() => setAmountModalVisible(false)}
       />
 
+      <CustomModal
+        visible={weightHelpModalVisible}
+        closeModal={() => setWeightHelpModalVisible(false)}
+        title={"راهنمای وزن"}
+        description={
+          "پاکت تا ۵۰۰ گرم \n پاکت جوف تا ۲۰۰۰ گرم \n بسته از حداکثر ۳۰۰۰۰ گرم"
+        }
+      />
+
       <Background>
         <SafeAreaView className="h-full">
           <KeyboardAvoidingView
@@ -244,9 +255,17 @@ const NerkhnameStep1 = () => {
                       />
                     </View>
 
-                    <Text className="flex-3 self-center text-primary text-xl font-isansbold text-center rounded-lg pt-5">
-                      گرم
-                    </Text>
+                    <View className="flex-row justify-center items-center pt-5 gap-2">
+                      <Pressable
+                        onPress={() => setWeightHelpModalVisible(true)}
+                      >
+                        <AntDesign name="question" size={28} color="#164194" />
+                      </Pressable>
+
+                      <Text className="flex-3 self-center text-primary text-xl font-isansbold text-center rounded-lg">
+                        گرم
+                      </Text>
+                    </View>
                   </View>
 
                   {![1, 14, 3, 15].includes(form_data?.parceltype) && (

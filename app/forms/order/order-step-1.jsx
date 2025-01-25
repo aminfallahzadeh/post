@@ -25,11 +25,12 @@ import { Title } from "@/components/Title";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import CustomModal from "@/components/CustomModal";
 
-const NerkhNameStep1 = () => {
+const OrderStep1 = () => {
   // STATES
   const [weightRules, setWeightRules] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const [helpModalVisible, setHelpModalVisible] = useState(false);
+  const [parcelHelpModalVisible, setParcelHelpModalVisible] = useState(false);
+  const [weightHelpModalVisible, setWeightHelpModalVisible] = useState(false);
 
   // CONSTS
   const order = useUserStore((state) => state.order);
@@ -100,11 +101,20 @@ const NerkhNameStep1 = () => {
   return (
     <>
       <CustomModal
-        visible={helpModalVisible}
-        closeModal={() => setHelpModalVisible(false)}
+        visible={parcelHelpModalVisible}
+        closeModal={() => setParcelHelpModalVisible(false)}
         title={"راهنمای مرسوله"}
         description={
           "پاکت : مرسولات اوراق و کاغذ که در پاکت های استاندارد پستی قرار میگیرند \n\n پاکت - جوف : هرگونه شیء که غیر اوراق و کاغذ در درون پاکت های استاندارد پستی قرار میگیرند از وزن 1 گرم تا 2000 گرم"
+        }
+      />
+
+      <CustomModal
+        visible={weightHelpModalVisible}
+        closeModal={() => setWeightHelpModalVisible(false)}
+        title={"راهنمای وزن"}
+        description={
+          "پاکت تا ۵۰۰ گرم \n پاکت جوف تا ۲۰۰۰ گرم \n بسته از حداکثر ۳۰۰۰۰ گرم"
         }
       />
 
@@ -118,7 +128,7 @@ const NerkhNameStep1 = () => {
               {/* HEADER SECTION */}
               <Title
                 title={`${order?.servicetype?.label} : اطلاعات مرسوله`}
-                progress={30}
+                progress={28}
               />
 
               <ScrollView
@@ -163,7 +173,7 @@ const NerkhNameStep1 = () => {
                       />
                     </View>
 
-                    <Pressable onPress={() => setHelpModalVisible(true)}>
+                    <Pressable onPress={() => setParcelHelpModalVisible(true)}>
                       <AntDesign name="question" size={28} color="#164194" />
                     </Pressable>
                   </View>
@@ -181,9 +191,17 @@ const NerkhNameStep1 = () => {
                       />
                     </View>
 
-                    <Text className="flex-3 self-center text-primary text-xl font-isansbold text-center rounded-lg pt-5">
-                      گرم
-                    </Text>
+                    <View className="flex-row justify-center items-center pt-5 gap-2">
+                      <Pressable
+                        onPress={() => setWeightHelpModalVisible(true)}
+                      >
+                        <AntDesign name="question" size={28} color="#164194" />
+                      </Pressable>
+
+                      <Text className="flex-3 self-center text-primary text-xl font-isansbold text-center rounded-lg">
+                        گرم
+                      </Text>
+                    </View>
                   </View>
 
                   {![1, 14, 3, 15].includes(form_data?.parceltype) && (
@@ -218,4 +236,4 @@ const NerkhNameStep1 = () => {
   );
 };
 
-export default NerkhNameStep1;
+export default OrderStep1;

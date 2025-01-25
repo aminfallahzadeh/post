@@ -47,7 +47,6 @@ export const useUserStore = create(
     setEhrazFormData: (ehrazFormData) => set({ ehrazFormData }),
 
     setCopilotShouldStart: (copilotShouldStart) => set({ copilotShouldStart }),
-
     resetStore: () => set(initialState),
   }))
 );

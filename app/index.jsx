@@ -91,7 +91,7 @@ const Index = () => {
     return (
       <Background>
         <SafeAreaView className="h-full w-full justify-center items-center">
-          <Chase size={50} color="#164194" className="mt-20" />
+          <Chase size={50} color="#164194" />
         </SafeAreaView>
       </Background>
     );

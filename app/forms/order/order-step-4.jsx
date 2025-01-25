@@ -11,7 +11,7 @@ import RadioButtons from "@/components/RadioButtons";
 import { specialServiceOptions } from "@/data/specialServiceOptions";
 import { Title } from "@/components/Title";
 
-const NerkhnameStep4 = () => {
+const OrderStep4 = () => {
   // CONSTS
   const order = useUserStore((state) => state.order);
   const setOrder = useUserStore((state) => state.setOrder);
@@ -29,6 +29,8 @@ const NerkhnameStep4 = () => {
     router.push(`/forms/order/order-step-5`);
     console.log("FORM DATA: ", form_data);
   };
+
+  const specialOptions = specialServiceOptions(order?.parceltype);
 
   // DEBUG
   useEffect(() => {
@@ -48,7 +50,7 @@ const NerkhnameStep4 = () => {
           {/* HEADER SECTION */}
           <Title
             title={`${order?.servicetype?.label} : خدمات ویژه`}
-            progress={80}
+            progress={70}
           />
 
           {/* FORM FIELDS */}
@@ -59,7 +61,7 @@ const NerkhnameStep4 = () => {
               control={control}
               render={({ field: { onChange, value } }) => (
                 <RadioButtons
-                  options={specialServiceOptions}
+                  options={specialOptions}
                   title="نوع خدمات ویژه"
                   onChange={onChange}
                   value={value}
@@ -83,4 +85,4 @@ const NerkhnameStep4 = () => {
   );
 };
 
-export default NerkhnameStep4;
+export default OrderStep4;

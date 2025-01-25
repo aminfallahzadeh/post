@@ -10,7 +10,7 @@ import CustomSelect from "@/components/CustomSelect";
 import { useUserStore } from "@/store";
 import { Title } from "@/components/Title";
 import FormField from "@/components/FormField";
-import { requiredRule } from "@/constants/validations";
+import { requiredRule, nationalCodeRule } from "@/constants/validations";
 import {
   applicantTypeOptions,
   genderOptions,
@@ -31,9 +31,9 @@ const Index = () => {
     setValue,
   } = useForm({
     defaultValues: {
-      firstName: userData.name,
-      lastName: userData.lastName,
-      nationalCodeOrId: userData.nationalCode,
+      firstName: userData?.name,
+      lastName: userData?.lastName,
+      nationalCodeOrId: userData?.nationalCode,
     },
   });
   const form_data = watch();
@@ -116,7 +116,7 @@ const Index = () => {
                   keyboardType="numeric"
                   inputMode="numeric"
                   containerStyle="mt-5"
-                  rules={requiredRule}
+                  rules={nationalCodeRule}
                   control={control}
                   name="nationalCodeOrId"
                 />

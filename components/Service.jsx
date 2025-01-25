@@ -1,6 +1,5 @@
 // IMPORTS
 import { View, Text, Pressable, StyleSheet } from "react-native";
-import { router } from "expo-router";
 import {
   NerkhnameIcon,
   DarkhastCodePostiIcon,
@@ -28,13 +27,9 @@ const icons = {
   forbiddenThings: <ForbiddenThingsIcon />,
 };
 
-const Service = ({ item }) => {
+const Service = ({ item, handlePress }) => {
   return (
-    <Pressable
-      key={item.id}
-      style={styles.container}
-      onPress={() => router.push(item.url)}
-    >
+    <Pressable key={item.id} style={styles.container} onPress={handlePress}>
       {item.icon && (
         <View className="justify-center items-center">{icons[item.icon]}</View>
       )}
@@ -65,5 +60,10 @@ const styles = StyleSheet.create({
   itemIcon: {
     width: 50,
     height: 50,
+  },
+  fullScreenContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "red",
   },
 });

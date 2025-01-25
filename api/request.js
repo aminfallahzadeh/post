@@ -112,3 +112,7 @@ export function insertRequestPriceOrder(data) {
      */
   return axiosInstance.post("Request/InsertRequestPriceOrder", data);
 }
+
+export function getRequestTypeStatus(id) {
+  return axiosInstance.get(`/Request/GetRequestTypeStatus?RequestTypeID=${id}`);
+}

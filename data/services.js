@@ -5,6 +5,7 @@ export const allData = [
     icon: "newOrder",
     url: "forms/order",
     nationalCodeRequired: false,
+    value: "Order",
   },
   {
     id: 21,
@@ -12,6 +13,7 @@ export const allData = [
     icon: "postCodeCertificate",
     url: "forms/postalcode-certificate",
     nationalCodeRequired: false,
+    value: "Certificate",
   },
   {
     id: 22,
@@ -20,6 +22,7 @@ export const allData = [
     iconName: null,
     url: "forms/postalcode-geo",
     nationalCodeRequired: false,
+    value: "Certificategeo",
   },
   {
     id: 23,
@@ -27,6 +30,7 @@ export const allData = [
     icon: "darkhastCodePosti",
     url: "forms/postalcode-request",
     nationalCodeRequired: false,
+    value: "NewPostCode",
   },
   {
     id: 20,
@@ -34,6 +38,7 @@ export const allData = [
     icon: "postYafte",
     url: "forms/post-yafte",
     nationalCodeRequired: false,
+    value: "PostYafte",
   },
   {
     id: 47,
@@ -41,6 +46,7 @@ export const allData = [
     icon: "newComplaint",
     url: "forms/new-complaint",
     nationalCodeRequired: true,
+    value: "EOP",
   },
   {
     id: 19,
@@ -48,6 +54,7 @@ export const allData = [
     icon: "gheramat",
     url: "forms/gheramat",
     nationalCodeRequired: false,
+    value: "Gheramat",
   },
   {
     id: 24,
@@ -55,6 +62,7 @@ export const allData = [
     url: "forms/ehraz",
     icon: "ehraz",
     nationalCodeRequired: false,
+    value: "Ehraz",
   },
   {
     id: 25,
@@ -62,5 +70,6 @@ export const allData = [
     url: "forms/nerkhname",
     icon: "nerkhname",
     nationalCodeRequired: false,
+    value: "Order",
   },
 ];

@@ -12,13 +12,17 @@ import Feather from "@expo/vector-icons/Feather";
 import { useUserStore } from "@/store";
 import { TourGuideZone, useTourGuideController } from "rn-tourguide";
 import { useCameraPermissions } from "expo-camera";
-import { ScrollView, View, TextInput, Pressable, Text } from "react-native";
+import { ScrollView, View, TextInput, Pressable } from "react-native";
+import { getRequestTypeStatus } from "@/api/request";
+import { toastConfig } from "@/config/toast-config";
+import { LoadingModal } from "../../components/LoadingModal";
 
 const Index = () => {
   // STATES
   const [visible, setVisible] = useState(false);
   const [barcode, setBarcode] = useState("");
   const [permission, requestPermission] = useCameraPermissions();
+  const [isLoading, setIsLoading] = useState(false);
 
   // CONSTS
   const { handleSubmit } = useForm();
@@ -56,6 +60,25 @@ const Index = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [canStart, copilotShouldStart]);
 
+  const handlePressService = async (item) => {
+    console.log("ITEM:", item);
+
+    setIsLoading(true);
+    try {
+      const response = await getRequestTypeStatus(item.value);
+      console.log("REQUEST TYPE STATUS RESPONSE:", response.data);
+      const status = response.data.itemList[0].isactive;
+
+      if (!status) {
+        toastConfig.warning("سرویس در دسترس نیست");
+        return;
+      }
+    } finally {
+      setIsLoading(false);
+      router.push(item.url);
+    }
+  };
+
   useEffect(() => {
     eventEmitter.on("stop", () => {
       setCopilotShouldStart(false);
@@ -77,6 +100,8 @@ const Index = () => {
 
   return (
     <>
+      <LoadingModal visible={isLoading} />
+
       <CustomModal
         visible={visible}
         closeModal={() => setVisible(false)}
@@ -159,15 +184,15 @@ const Index = () => {
               style={{ transform: [{ scaleX: -1 }] }}
             >
               {allData.map((item, index) => (
-                <Service key={index} item={item} />
+                <Service
+                  key={index}
+                  item={item}
+                  handlePress={() => handlePressService(item)}
+                />
               ))}
             </View>
           </TourGuideZone>
         </ScrollView>
-
-        {/* <View className="w-full bg-red-400">
-          <Text>Test</Text>
-        </View> */}
       </Background>
     </>
   );

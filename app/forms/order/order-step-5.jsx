@@ -25,11 +25,11 @@ import CustomSelect from "@/components/CustomSelect";
 import { requiredRule } from "@/constants/validations";
 import { separateByThousand } from "@/utils/numberSeparator";
 
-const NerkhnameStep5 = () => {
+const OrderStep5 = () => {
   // STATES
   const [isLoading, setIsLoading] = useState(false);
   const [resultModalVisible, setResultModalVisible] = useState(false);
-  const [amount, setAmount] = useState(0);
+  const [calculateResult, setCalculateResult] = useState(null);
   const [amountModalVisible, setAmountModalVisible] = useState(false);
 
   // CONSTS
@@ -43,7 +43,6 @@ const NerkhnameStep5 = () => {
     control,
     formState: { errors },
     unregister,
-    reset,
     setValue,
   } = useForm({
     defaultValues: {
@@ -109,9 +108,11 @@ const NerkhnameStep5 = () => {
       });
 
       console.log("INSERT REQUEST PRICE ORDER RESPONSE: ", response.data);
-      setResultModalVisible(true);
-      reset();
-      setOrder([]);
+      //   setResultModalVisible(true);
+      //   reset();
+      //   setOrder([]);
+      setOrder({ ...order, ...form_data, ...response.data.itemList[0] });
+      router.push(`/forms/order/order-step-6`);
     } finally {
       setIsLoading(false);
     }
@@ -138,10 +139,9 @@ const NerkhnameStep5 = () => {
         boxsize: form_data.boxsize || 1,
       });
 
-      const amount = response.data.itemList[0].data.totalprice;
-      console.log(response.data);
+      setCalculateResult(response.data.itemList[0].data);
       console.log("PRICE RESPONSE: ", response.data);
-      setAmount(amount);
+      //   setAmount(amount);
       setAmountModalVisible(true);
     } finally {
       setIsLoading(false);
@@ -175,8 +175,18 @@ const NerkhnameStep5 = () => {
       <CustomModal
         visible={amountModalVisible}
         closeModal={() => setAmountModalVisible(false)}
-        title={"مبلغ قابل پرداخت"}
-        description={`${separateByThousand(amount)} ریال`}
+        title={"مبلغ قابل پرداخت به ریال"}
+        description={`کرایه پستی : ${separateByThousand(
+          calculateResult?.postfare || 0
+        )} \n  حق السهم پستی : ${separateByThousand(
+          calculateResult?.postprice || 0
+        )}\n بیمه : ${separateByThousand(
+          calculateResult?.insuranceprice || 0
+        )}\n  مالیات : ${separateByThousand(
+          calculateResult?.tax || 0
+        )} \n مبلغ کل : ${separateByThousand(
+          calculateResult?.totalprice || 0
+        )}`}
         onConfirm={() => setAmountModalVisible(false)}
       />
       <Background>
@@ -189,7 +199,7 @@ const NerkhnameStep5 = () => {
               {/* HEADER SECTION */}
               <Title
                 title={`${order?.servicetype?.label} : بیمه`}
-                progress={100}
+                progress={85}
               />
               <ScrollView
                 contentContainerStyle={{
@@ -272,4 +282,4 @@ const NerkhnameStep5 = () => {
   );
 };
 
-export default NerkhnameStep5;
+export default OrderStep5;

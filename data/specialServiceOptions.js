@@ -1,20 +1,35 @@
-export const specialServiceOptions = [
-  { id: 1, label: "آگهی تحویل فیزیکی", disabled: false, type: "physical" },
+export const specialServiceOptions = (parceltype) => [
+  //   { id: 1, label: "آگهی تحویل فیزیکی", disabled: false, type: "physical" },
   {
     id: 2,
     label: "آگهی تحویل الکترونیک",
     disabled: false,
     type: "electronic",
   },
-  { id: 3, label: "اشیا شکستنی", disabled: false, type: "glasses" },
-  { id: 4, label: "خارج از اندازه", disabled: false, type: "oversize" },
+  {
+    id: 3,
+    label: "اشیا شکستنی",
+    disabled: parceltype === 1 ? true : false,
+    type: "glasses",
+  },
+  {
+    id: 4,
+    label: "خارج از اندازه",
+    disabled: parceltype === 1 ? true : false,
+    type: "oversize",
+  },
   {
     id: 5,
     label: "کرایه در مقصد",
     disabled: false,
     type: "pardakhtDarbeManzel",
   },
-  { id: 6, label: "حاوی مایعات", disabled: false, type: "watery" },
+  {
+    id: 6,
+    label: "حاوی مایعات",
+    disabled: parceltype === 1 ? true : false,
+    type: "watery",
+  },
   {
     id: 7,
     label: "شناسه الکترونیک",
@@ -27,18 +42,6 @@ export const specialServiceOptions = [
     disabled: false,
     type: "SMS",
   },
-  //   {
-  //     id: 9,
-  //     label: "اکسپرس",
-  //     disabled: false,
-  //     type: "express",
-  //   },
-  //   {
-  //     id: 10,
-  //     label: "مرسولات جوق",
-  //     disabled: false,
-  //     type: "joogh",
-  //   },
   {
     id: 11,
     label: "تحویل در صندوق شخصی",

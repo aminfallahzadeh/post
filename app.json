@@ -84,9 +84,7 @@
     "extra": {
       "eas": {
         "projectId": "27eaeb60-277f-4ffa-92c7-16524bb033df"
-      },
-      "supportsRTL": true,
-      "forcesRTL": true
+      }
     },
     "runtimeVersion": {
       "policy": "appVersion"

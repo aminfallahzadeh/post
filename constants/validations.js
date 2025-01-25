@@ -185,7 +185,7 @@ export const nerkhnameValidations = {
 
 export const lastStreetRules = {
   pattern: {
-    value: /^[\u0600-\u06FF\s]+$/,
+    value: /^[آ-ی\s]+$/,
     message: "فقط حروف فارسی مجاز هستند",
   },
   maxLength: {

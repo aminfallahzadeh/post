@@ -343,7 +343,7 @@ const styles = {
   bot: {
     position: "absolute",
     left: 0,
-    bottom: 55,
+    bottom: 60,
   },
   close: {
     flexDirection: "row-reverse",

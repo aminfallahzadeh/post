@@ -21,7 +21,7 @@ import {
 import { getProvince, getCity } from "@/api/order";
 import { optionsGenerator } from "@/helpers/selectHelper";
 
-const NerkhnameStep2 = () => {
+const OrderStep2 = () => {
   // STATES
   const [provinceOptions, setProvinceOptions] = useState([]);
   const [cityOptions, setCityOptions] = useState([]);
@@ -115,7 +115,7 @@ const NerkhnameStep2 = () => {
             {/* HEADER SECTION */}
             <Title
               title={`${order?.servicetype?.label} : اطلاعات فرستنده`}
-              progress={45}
+              progress={42}
             />
 
             <ScrollView
@@ -262,4 +262,4 @@ const NerkhnameStep2 = () => {
   );
 };
 
-export default NerkhnameStep2;
+export default OrderStep2;

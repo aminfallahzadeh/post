@@ -5,7 +5,6 @@ import { SplashScreen, Stack, router } from "expo-router";
 import { useFonts } from "expo-font";
 import { toastConfig } from "@/config/toast-config";
 import { StatusBar } from "expo-status-bar";
-// import { I18nManager } from "react-native";
 import { TourGuideProvider } from "rn-tourguide";
 
 // Lock the layout direction to LTR
@@ -36,6 +35,7 @@ const RootLayout = () => {
     "IranSans-UltraLight": require("../assets/fonts/IRANSansXFaNum-UltraLight.ttf"),
   });
 
+  // CONSTS
   const ToastProvider = useMemo(() => toastConfig.registerProvider, []);
 
   useEffect(() => {
@@ -77,7 +77,9 @@ const RootLayout = () => {
     if (fontsLoaded) SplashScreen.hideAsync();
   }, [fontsLoaded, error]);
 
-  if (!fontsLoaded && !error) return null;
+  if (!fontsLoaded && !error) {
+    return null;
+  }
 
   return (
     <TourGuideProvider

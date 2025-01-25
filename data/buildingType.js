@@ -4,15 +4,15 @@ export const buildingTypeOptions = [
     label: "مسکونی",
   },
   {
-    id: 2,
+    id: 3,
     label: "تجاری",
   },
   {
-    id: 3,
+    id: -3,
     label: "مسکونی تجاری",
   },
   {
-    id: 4,
+    id: 2,
     label: "دولتی",
   },
 ];
