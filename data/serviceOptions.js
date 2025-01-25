@@ -10,10 +10,3 @@ export const serviceOptions = [
   { id: 2, label: "سفارشی", disabled: false, type: "sefareshi" },
   { id: 5, label: "امانت", disabled: false, type: "amanat" },
 ];
-
-export const nerkhnameServiceOptions = [
-  { label: "پیشتاز", value: 1 },
-  { label: "سفارشی", value: 2 },
-  { label: "ویژه", value: 3 },
-  { label: "امانت", value: 4 },
-];

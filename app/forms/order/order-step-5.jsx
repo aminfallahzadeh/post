@@ -134,7 +134,7 @@ const OrderStep5 = () => {
             : order.servicetype.id === 5
             ? 19 //سرویس امانت همان سرویس سفارشی هست فقط برای 2 کیلو به بالا می باشد
             : 77,
-        servicetype: order.servicetype.id === 4 ? 2 : order.servicetype.id, //سرویس امانت همان سرویس سفارشی هست فقط برای 2 کیلو به بالا می باشد
+        servicetype: order.servicetype.id === 5 ? 2 : order.servicetype.id, //سرویس امانت همان سرویس سفارشی هست فقط برای 2 کیلو به بالا می باشد
         parceltype: form_data.parceltype,
         sourcecode: form_data.sourcecode,
         destcode: form_data.destcode,
