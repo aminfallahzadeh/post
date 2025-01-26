@@ -32,6 +32,7 @@ const OrderStep1 = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [parcelHelpModalVisible, setParcelHelpModalVisible] = useState(false);
   const [weightHelpModalVisible, setWeightHelpModalVisible] = useState(false);
+  const [isContentRequired, setIsContentRequired] = useState(true);
 
   // CONSTS
   const order = useUserStore((state) => state.order);
@@ -43,6 +44,7 @@ const OrderStep1 = () => {
     formState: { errors },
     unregister,
     setValue,
+    trigger,
   } = useForm({
     values: {
       ...order,
@@ -103,6 +105,39 @@ const OrderStep1 = () => {
       unregister("boxsize");
     }
   }, [form_data?.parceltype, unregister]);
+
+  useEffect(() => {
+    if (form_data?.insurancetype === 1) {
+      if (
+        form_data?.servicetype?.id === 3 ||
+        form_data?.servicetype?.id === 1
+      ) {
+        if (form_data?.parceltype === 1) {
+          setIsContentRequired(false);
+        } else {
+          setIsContentRequired(true);
+        }
+      } else if (form_data?.servicetype?.id === 2) {
+        if (form_data?.parceltype === 3) {
+          setIsContentRequired(false);
+        } else {
+          setIsContentRequired(true);
+        }
+      }
+    } else {
+      setIsContentRequired(true);
+    }
+  }, [form_data]);
+
+  useEffect(() => {
+    trigger("contetnts");
+  }, [trigger, isContentRequired]);
+
+  //   // DEBUG
+  //   useEffect(() => {
+  //     console.log("FORM DATA: ", form_data);
+  //     console.log("IS CONTENT REQUIRED: ", isContentRequired);
+  //   }, [form_data, isContentRequired]);
 
   return (
     <>
@@ -229,7 +264,7 @@ const OrderStep1 = () => {
                     containerStyle="mt-5"
                     rules={{
                       required: {
-                        value: form_data?.insurancetype === 1 ? true : false,
+                        value: isContentRequired,
                         message: "این فیلد اجباری است",
                       },
                     }}

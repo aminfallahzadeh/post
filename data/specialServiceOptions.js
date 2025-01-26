@@ -42,12 +42,12 @@ export const specialServiceOptions = (parceltype) => [
     disabled: false,
     type: "SMS",
   },
-  {
-    id: 11,
-    label: "تحویل در صندوق شخصی",
-    disabled: false,
-    type: "personalSandogh",
-  },
+  //   {
+  //     id: 11,
+  //     label: "تحویل در صندوق شخصی",
+  //     disabled: false,
+  //     type: "personalSandogh",
+  //   },
   {
     id: 12,
     label: "حق مقر",
