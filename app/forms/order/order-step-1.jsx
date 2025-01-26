@@ -167,7 +167,7 @@ const OrderStep1 = () => {
                         data={
                           order?.servicetype?.id === 2
                             ? parcelOptions.sefareshi
-                            : order?.servicetype?.id === 4
+                            : order?.servicetype?.id === 5
                             ? parcelOptions.amanat
                             : order?.servicetype?.id === 3
                             ? parcelOptions.vijhe

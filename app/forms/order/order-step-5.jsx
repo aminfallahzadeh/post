@@ -32,7 +32,12 @@ const OrderStep6 = () => {
     <Background>
       <SafeAreaView className="h-full">
         <View className="flex-1">
-          <Title title={"رسید سفارش"} progress={100} />
+          <Title
+            title={"رسید سفارش"}
+            progress={100}
+            back={false}
+            home={false}
+          />
           <View className="justify-center items-center mt-5 px-4">
             <View
               style={styles.container}
@@ -132,6 +137,48 @@ const OrderStep6 = () => {
                 <Text className="font-isansregular">
                   {factor?.receivername + " " + order?.receiverLastname ||
                     "---"}
+                </Text>
+              </View>
+
+              <View className="mt-2 mb-2 w-full">
+                <LinearGradient
+                  colors={["transparent", "#000", "transparent"]}
+                  style={styles.gradientLineHorizontal}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                />
+              </View>
+
+              <View className="flex-row-reverse justify-between w-full items-center">
+                <Text className="font-isansdemibold text-grey2 text-[15px]">
+                  شهر مبدا
+                </Text>
+                <Text
+                  className="font-isansregular flex-1 text-left break-words mr-10"
+                  style={{ flexWrap: "wrap" }}
+                >
+                  {factor?.sourceCityNam || "---"}
+                </Text>
+              </View>
+
+              <View className="mt-2 mb-2 w-full">
+                <LinearGradient
+                  colors={["transparent", "#000", "transparent"]}
+                  style={styles.gradientLineHorizontal}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                />
+              </View>
+
+              <View className="flex-row-reverse justify-between w-full items-center">
+                <Text className="font-isansdemibold text-grey2 text-[15px]">
+                  شهر مقصد
+                </Text>
+                <Text
+                  className="font-isansregular flex-1 text-left break-words mr-10"
+                  style={{ flexWrap: "wrap" }}
+                >
+                  {factor?.destCityName || "---"}
                 </Text>
               </View>
 
