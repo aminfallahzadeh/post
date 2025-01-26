@@ -37,7 +37,7 @@ const OrderStep3 = () => {
     formState: { errors },
     setValue,
   } = useForm({
-    defaultValues: {
+    values: {
       ...order,
     },
   });
@@ -113,10 +113,16 @@ const OrderStep3 = () => {
     fetchProvince();
   }, []);
 
+  useEffect(() => {
+    if (order?.destcode) {
+      fetchCity(order?.destcode);
+    }
+  }, [order?.destcode]);
+
   // DEBUG
   useEffect(() => {
-    console.log("NERKHNAME Step 2: ", order);
-    console.log("FORM DATA: ", form_data);
+    console.log("NERKHNAME STEP 3: ", order);
+    console.log("FORM DATA STEP 3: ", form_data);
   }, [order, form_data]);
 
   return (
@@ -215,7 +221,7 @@ const OrderStep3 = () => {
                     isLoading={isProvinceLoading}
                     onValueChange={(val) => {
                       if (val) {
-                        console.log(val);
+                        setValue("destcode", null);
                         fetchCity(val);
                       } else {
                         setCityOptions([]);

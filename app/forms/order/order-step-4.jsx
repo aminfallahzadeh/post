@@ -26,6 +26,7 @@ const OrderStep4 = () => {
 
   // CONSTS
   const order = useUserStore((state) => state.order);
+  const setFactor = useUserStore((state) => state.setFactor);
   const mobile = SecureStore.getItem("mobile");
   const setOrder = useUserStore((state) => state.setOrder);
   const { watch, handleSubmit, control } = useForm({
@@ -81,19 +82,28 @@ const OrderStep4 = () => {
             : order?.parceltype === 3
             ? 3
             : 2,
-        electworeceiptant: true,
+        electworeceiptant: checkSpecialService(form_data?.specialServices, 2)
+          ? true
+          : false,
         iscot: order?.specialServices
-          ? checkSpecialService(order?.specialServices, 5)
+          ? checkSpecialService(form_data?.specialServices, 5)
           : false,
         smsservice: order?.specialServices
-          ? checkSpecialService(order?.specialServices, 8)
+          ? checkSpecialService(form_data?.specialServices, 8)
           : false,
-        isnonstandard: true,
+        isnonstandard: checkSpecialService(form_data?.specialServices, 3)
+          ? true
+          : checkSpecialService(form_data?.specialServices, 4)
+          ? true
+          : checkSpecialService(form_data?.specialServices, 6)
+          ? true
+          : false,
         contetnts: order?.contetnts || "",
         boxsize: order?.boxsize || 1,
       });
       console.log("INSERT REQUEST PRICE ORDER RESPONSE: ", response.data);
       setOrder({ ...order, ...form_data, ...response.data.itemList[0] });
+      setFactor({ ...response.data.itemList[0] });
       router.push(`/forms/order/order-step-5`);
     } finally {
       setIsSubmitting(false);

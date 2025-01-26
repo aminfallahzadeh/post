@@ -40,7 +40,7 @@ const OrderStep2 = () => {
     formState: { errors },
     setValue,
   } = useForm({
-    defaultValues: {
+    values: {
       ...order,
       sendermobile,
       senderid: userData?.nationalCode,
@@ -103,6 +103,18 @@ const OrderStep2 = () => {
   useEffect(() => {
     fetchProvince();
   }, []);
+
+  useEffect(() => {
+    if (order?.sourcecode) {
+      fetchCity(order?.sourcecode);
+    }
+  }, [order?.sourcecode]);
+
+  // DEBUG
+  useEffect(() => {
+    console.log("FORM DATA STEP 2: ", form_data);
+    console.log("ORDER STEP 2: ", order);
+  }, [form_data, order]);
 
   return (
     <Background>
@@ -201,6 +213,7 @@ const OrderStep2 = () => {
                     isLoading={isProvinceLoading}
                     onValueChange={(val) => {
                       if (val) {
+                        setValue("sourcecode", null);
                         fetchCity(val);
                       } else {
                         setCityOptions([]);

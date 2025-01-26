@@ -44,7 +44,7 @@ const OrderStep1 = () => {
     unregister,
     setValue,
   } = useForm({
-    defaultValues: {
+    values: {
       ...order,
     },
   });

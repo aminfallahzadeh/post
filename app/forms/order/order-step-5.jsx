@@ -12,18 +12,21 @@ import CustomButton from "@/components/CustomButton";
 const OrderStep6 = () => {
   // CONSTS
   const order = useUserStore((state) => state.order);
+  const factor = useUserStore((state) => state.factor);
   const setOrder = useUserStore((state) => state.setOrder);
+  const setFactor = useUserStore((state) => state.setFactor);
 
   // HANDLERS
   const onSubmit = () => {
     setOrder([]);
+    setFactor([]);
     router.replace("/");
   };
 
   // DEBUG
   useEffect(() => {
-    console.log("ORDER IN RESID: ", order);
-  }, [order]);
+    console.log("ORDER IN RESID: ", factor);
+  }, [factor]);
 
   return (
     <Background>
@@ -35,27 +38,27 @@ const OrderStep6 = () => {
               style={styles.container}
               className="w-full bg-white rounded-md p-2 justify-center items-center border border-grey2"
             >
-              <View>
+              {/* <View>
                 <Text className="font-isansmedium text-base">
                   ** مبالغ به ریال می باشد **
                 </Text>
-              </View>
+              </View> */}
 
-              <View className="mt-2 mb-2 w-full">
+              {/* <View className="mt-2 mb-2 w-full">
                 <LinearGradient
                   colors={["transparent", "#000", "transparent"]}
                   style={styles.gradientLineHorizontal}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 0 }}
                 />
-              </View>
+              </View> */}
 
               <View className="flex-row-reverse justify-between w-full items-center">
                 <Text className="font-isansdemibold text-grey2 text-[15px]">
                   کد پیگیری
                 </Text>
                 <Text className="font-isansregular">
-                  {order?.trackingId || "---"}
+                  {factor?.trackingId || "---"}
                 </Text>
               </View>
 
@@ -73,7 +76,7 @@ const OrderStep6 = () => {
                   نوع سرویس
                 </Text>
                 <Text className="font-isansregular">
-                  {order?.servicetypeName || "---"}
+                  {factor?.servicetypeName || "---"}
                 </Text>
               </View>
 
@@ -91,7 +94,7 @@ const OrderStep6 = () => {
                   نوع مرسوله
                 </Text>
                 <Text className="font-isansregular">
-                  {order?.parceltypeName || "---"}
+                  {factor?.parceltypeName || "---"}
                 </Text>
               </View>
 
@@ -109,7 +112,7 @@ const OrderStep6 = () => {
                   فرستنده
                 </Text>
                 <Text className="font-isansregular">
-                  {order?.sendername + " " + order?.senderLastname || "---"}
+                  {factor?.sendername + " " + order?.senderLastname || "---"}
                 </Text>
               </View>
 
@@ -127,7 +130,8 @@ const OrderStep6 = () => {
                   گیرنده
                 </Text>
                 <Text className="font-isansregular">
-                  {order?.receivername + " " + order?.receiverLastname || "---"}
+                  {factor?.receivername + " " + order?.receiverLastname ||
+                    "---"}
                 </Text>
               </View>
 
@@ -148,7 +152,7 @@ const OrderStep6 = () => {
                   className="font-isansregular flex-1 text-left break-words mr-10"
                   style={{ flexWrap: "wrap" }}
                 >
-                  {order?.senderaddress || "---"}
+                  {factor?.senderaddress || "---"}
                 </Text>
               </View>
 
@@ -169,7 +173,7 @@ const OrderStep6 = () => {
                   className="font-isansregular flex-1 text-left break-words mr-10"
                   style={{ flexWrap: "wrap" }}
                 >
-                  {order?.receiveraddress || "---"}
+                  {factor?.receiveraddress || "---"}
                 </Text>
               </View>
             </View>
