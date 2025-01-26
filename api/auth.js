@@ -4,8 +4,10 @@ import { router } from "expo-router";
 import { removeCredentials, setCredentials } from "@/utils/authUtils";
 import { toastConfig } from "@/config/toast-config";
 
-export function generateOTP(Mobile) {
-  return axiosInstance.post(`/Customer/GenerateOTP?Mobile=${Mobile}`);
+export function generateOTP(Mobile, IsMobile = true) {
+  return axiosInstance.post(
+    `/Customer/GenerateOTP?Mobile=${Mobile}&IsMobile=${IsMobile}`
+  );
 }
 
 export async function login(data) {

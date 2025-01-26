@@ -15,6 +15,7 @@ import { OtpInput } from "react-native-otp-entry";
 import { Flow, Chase } from "react-native-animated-spinkit";
 import Background from "@/components/Background";
 import { login, generateOTP } from "@/api/auth";
+import { useLocalSearchParams } from "expo-router";
 import useGetUserData from "@/hooks/useGetUserData";
 import { formatTime } from "@/utils/formatTime";
 import { toastConfig } from "@/config/toast-config";
@@ -31,6 +32,7 @@ const Otp = () => {
 
   // CONSTS
   const mobile = SecureStore.getItem("mobile");
+  const { isMobile } = useLocalSearchParams();
   const { fetchCustomerData } = useGetUserData(mobile);
 
   useEffect(() => {
@@ -62,7 +64,7 @@ const Otp = () => {
     setIsLoading(true);
     try {
       Keyboard.dismiss();
-      await generateOTP(mobile);
+      await generateOTP(mobile, isMobile);
       setTimeLeft(120);
       setRetryDisabled(true);
       toastConfig.success("کد مجددا ارسال شد");

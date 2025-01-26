@@ -42,13 +42,19 @@ const Login = () => {
   const onSubmit = async () => {
     setIsLoading(true);
     try {
-      const response = await generateOTP(form_data.mobile);
+      const response = await generateOTP(form_data.mobile, isEnabled);
       setMobile(response.data.itemList[0].mobile);
       await SecureStore.setItemAsync(
         "mobile",
         response.data.itemList[0].mobile
       );
-      router.push("/otp");
+      //   router.push("/otp");
+      router.push({
+        pathname: "/otp",
+        params: {
+          isMobile: isEnabled,
+        },
+      });
     } finally {
       setIsLoading(false);
     }
@@ -145,7 +151,7 @@ const Login = () => {
                     max={11}
                     type="text"
                     control={control}
-                    name="customerID"
+                    name="mobile"
                     rules={mobilePhoneValidation}
                   />
                 )}
@@ -178,7 +184,7 @@ const Login = () => {
               ) : (
                 <CustomButton
                   title="ادامه"
-                  // handlePress={handleSubmit(onSubmit)}
+                  handlePress={handleSubmit(onSubmit)}
                   isLoading={isLoading}
                 />
               )}

@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "@/components/CustomButton";
-import { addressByPostCode, addressStringByPostCode } from "@/api/gnaf";
+import { addressStringByPostCode } from "@/api/gnaf";
 import { router } from "expo-router";
 import Background from "@/components/Background";
 import { useUserStore } from "@/store";
@@ -205,16 +205,9 @@ const EhrazStep1 = () => {
                   placeholder="معبر آخر"
                   type={"text"}
                   containerStyle="mt-5"
-                  multiline={true}
                   editable={checked}
                   control={control}
-                  height={"h-28"}
                   rules={lastStreetRules}
-                  inputStyle={{
-                    textAlignVertical: "top",
-                    textAlign: "right",
-                    paddingTop: 15,
-                  }}
                   name="lastStreet"
                 />
 
