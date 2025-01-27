@@ -136,7 +136,7 @@ const NerkhnameStep1 = () => {
           nerkhname.servicetype.id === 1
             ? 11
             : nerkhname.servicetype.id === 4
-            ? 11
+            ? 1
             : nerkhname.servicetype.id === 2
             ? 19
             : nerkhname.servicetype.id === 5
@@ -232,10 +232,12 @@ const NerkhnameStep1 = () => {
                       data={
                         nerkhname?.servicetype?.id === 2
                           ? parcelOptions.sefareshi
-                          : nerkhname?.servicetype?.id === 4
+                          : nerkhname?.servicetype?.id === 5
                           ? parcelOptions.amanat
                           : nerkhname?.servicetype?.id === 3
                           ? parcelOptions.vijhe
+                          : nerkhname?.servicetype?.id === 4
+                          ? parcelOptions.express
                           : parcelOptions.pishtaz
                       }
                       label="* نوع مرسوله"

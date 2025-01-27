@@ -123,6 +123,12 @@ const OrderStep1 = () => {
         } else {
           setIsContentRequired(true);
         }
+      } else if (form_data?.servicetype?.id === 4) {
+        if (form_data?.parceltype === 16) {
+          setIsContentRequired(false);
+        } else {
+          setIsContentRequired(true);
+        }
       }
     } else {
       setIsContentRequired(true);
@@ -133,11 +139,11 @@ const OrderStep1 = () => {
     trigger("contetnts");
   }, [trigger, isContentRequired]);
 
-  //   // DEBUG
-  //   useEffect(() => {
-  //     console.log("FORM DATA: ", form_data);
-  //     console.log("IS CONTENT REQUIRED: ", isContentRequired);
-  //   }, [form_data, isContentRequired]);
+  // DEBUG
+  useEffect(() => {
+    console.log("FORM DATA: ", form_data);
+    console.log("IS CONTENT REQUIRED: ", isContentRequired);
+  }, [form_data, isContentRequired]);
 
   return (
     <>
@@ -206,6 +212,8 @@ const OrderStep1 = () => {
                             ? parcelOptions.amanat
                             : order?.servicetype?.id === 3
                             ? parcelOptions.vijhe
+                            : order?.servicetype?.id === 4
+                            ? parcelOptions.express
                             : parcelOptions.pishtaz
                         }
                         label="* نوع مرسوله"

@@ -32,4 +32,15 @@ export const parcelOptions = {
     { label: "بسته", value: 2 },
     // { label: "بسته بالای یک کیلو (تا ۳۰ کیلو)", value: 2 },
   ],
+  express: [
+    {
+      label: "پاکت",
+      value: 16,
+    },
+    {
+      label: "بسته",
+      value: 18,
+    },
+    { label: "بسته", value: 17 },
+  ],
 };

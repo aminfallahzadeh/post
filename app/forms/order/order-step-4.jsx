@@ -49,7 +49,7 @@ const OrderStep4 = () => {
           order?.servicetype?.id === 1
             ? 11
             : order?.servicetype.id === 4
-            ? 11
+            ? 1
             : order?.servicetype?.id === 2
             ? 19
             : order?.servicetype?.id === 5
@@ -120,7 +120,7 @@ const OrderStep4 = () => {
           order.servicetype.id === 1
             ? 11
             : order?.servicetype.id === 4
-            ? 11
+            ? 1
             : order.servicetype.id === 2
             ? 19
             : order.servicetype.id === 5

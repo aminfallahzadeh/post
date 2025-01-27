@@ -46,18 +46,14 @@ const Map = () => {
   }, [location]);
 
   return (
-    <Background>
-      <SafeAreaView className="h-full">
-        <View style={styles.container}>
-          <WebView
-            source={{
-              uri: `https://newpostkhoone.post.ir/map?latitude=${location?.coords?.latitude}&longitude=${location?.coords?.longitude}`,
-            }}
-            style={styles.webview}
-          />
-        </View>
-      </SafeAreaView>
-    </Background>
+    <View style={styles.container}>
+      <WebView
+        source={{
+          uri: `https://newpostkhoone.post.ir/map?latitude=${location?.coords?.latitude}&longitude=${location?.coords?.longitude}`,
+        }}
+        style={styles.webview}
+      />
+    </View>
   );
 };
 
