@@ -78,7 +78,7 @@ export const allData = [
     url: "forms/return",
     icon: "nerkhname",
     nationalCodeRequired: false,
-    value: "Owdat",
+    value: "ReturnToSender",
   },
   {
     id: 27,
@@ -86,6 +86,6 @@ export const allData = [
     url: "forms/redistribution",
     icon: "nerkhname",
     nationalCodeRequired: false,
-    value: "Owdat",
+    value: "Redistribution",
   },
 ];
