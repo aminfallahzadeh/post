@@ -72,4 +72,20 @@ export const allData = [
     nationalCodeRequired: false,
     value: "Order",
   },
+  {
+    id: 26,
+    title: "عودت",
+    url: "forms/return",
+    icon: "nerkhname",
+    nationalCodeRequired: false,
+    value: "Owdat",
+  },
+  {
+    id: 27,
+    title: "بازتوزیع",
+    url: "forms/redistribution",
+    icon: "nerkhname",
+    nationalCodeRequired: false,
+    value: "Owdat",
+  },
 ];

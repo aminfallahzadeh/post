@@ -73,6 +73,9 @@ const Index = () => {
         toastConfig.warning("سرویس در دسترس نیست");
         return;
       }
+      //    else {
+      //     router.push(item.url);
+      //   }
     } finally {
       setIsLoading(false);
       router.push(item.url);

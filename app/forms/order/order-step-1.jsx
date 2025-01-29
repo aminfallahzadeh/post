@@ -1,5 +1,5 @@
 // IMPORTS
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   View,
@@ -247,7 +247,7 @@ const OrderStep1 = () => {
                         <AntDesign name="question" size={28} color="#164194" />
                       </Pressable>
 
-                      <Text className="flex-3 self-center text-primary text-xl font-isansbold text-center rounded-lg">
+                      <Text className="flex-3 self-center text-primary text-sm font-isansbold text-center rounded-lg">
                         گرم
                       </Text>
                     </View>
@@ -293,7 +293,7 @@ const OrderStep1 = () => {
                           name="insuranceamount"
                         />
                       </View>
-                      <Text className="flex-3 self-center text-primary text-xl font-isansbold text-center rounded-lg pt-5">
+                      <Text className="flex-3 self-center text-primary text-sm font-isansbold text-center rounded-lg pt-5">
                         ریال
                       </Text>
                     </View>

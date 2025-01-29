@@ -128,10 +128,10 @@ const styles = StyleSheet.create({
   container: {
     fontFamily: "IranSans-Regular",
     textAlign: "right",
-    height: 58,
+    height: 56,
   },
   dropdown: {
-    height: 58,
+    height: 56,
     textAlign: "right",
     fontFamily: "IranSans-Regular",
     borderColor: "#183f97",
