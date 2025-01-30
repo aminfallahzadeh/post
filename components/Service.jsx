@@ -11,6 +11,8 @@ import {
   NewOrderIcon,
   EhrazIcon,
   ForbiddenThingsIcon,
+  ReturnIcon,
+  RedistributionIcon,
 } from "@/components/SVG/Icons";
 import React from "react";
 
@@ -25,6 +27,8 @@ const icons = {
   newOrder: <NewOrderIcon />,
   ehraz: <EhrazIcon />,
   forbiddenThings: <ForbiddenThingsIcon />,
+  return: <ReturnIcon />,
+  redistribution: <RedistributionIcon />,
 };
 
 const Service = ({ item, handlePress }) => {
