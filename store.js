@@ -15,6 +15,7 @@ const initialState = {
   ehrazFormData: {},
   order: [],
   copilotShouldStart: true,
+  canStartTour: true,
 };
 
 export const useUserStore = create(
@@ -47,6 +48,7 @@ export const useUserStore = create(
     setEhrazFormData: (ehrazFormData) => set({ ehrazFormData }),
 
     setCopilotShouldStart: (copilotShouldStart) => set({ copilotShouldStart }),
+    setCanStartTour: (canStartTour) => set({ canStartTour }),
     resetStore: () => set(initialState),
   }))
 );

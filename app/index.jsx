@@ -11,6 +11,7 @@ import useGetUserData from "@/hooks/useGetUserData";
 import * as SecureStore from "expo-secure-store";
 import { I18nManager } from "react-native";
 import welcome from "@/assets/images/welcome.png";
+import { useUserStore } from "@/store";
 
 // Lock the layout direction to LTR
 I18nManager.allowRTL(false);
@@ -34,6 +35,7 @@ const Index = () => {
   const imageTranslateY = useRef(new Animated.Value(100)).current;
   const textOpacity = useRef(new Animated.Value(0)).current;
   const buttonOpacity = useRef(new Animated.Value(0)).current;
+  const setCanStartTour = useUserStore((state) => state.setCanStartTour);
 
   // HANDLERS
   const handlePress = () => {
@@ -47,6 +49,7 @@ const Index = () => {
 
       if (isValid) {
         await fetchCustomerData(mobile);
+        setCanStartTour(false);
         router.replace("/(tabs)");
       } else {
         setLoading(false);
@@ -54,7 +57,7 @@ const Index = () => {
     };
 
     checkLogin();
-  }, [mobile, fetchCustomerData]);
+  }, [mobile, fetchCustomerData, setCanStartTour]);
 
   useEffect(() => {
     if (!loading) {

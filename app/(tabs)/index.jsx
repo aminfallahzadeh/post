@@ -26,6 +26,7 @@ const Index = () => {
 
   // CONSTS
   const { handleSubmit } = useForm();
+  const canStartTour = useUserStore((state) => state.canStartTour);
   const { canStart, start, eventEmitter } = useTourGuideController();
   const setCopilotShouldStart = useUserStore(
     (state) => state.setCopilotShouldStart
@@ -53,7 +54,7 @@ const Index = () => {
   };
 
   useEffect(() => {
-    if (canStart && copilotShouldStart) {
+    if (canStart && copilotShouldStart && canStartTour) {
       start();
     }
 
