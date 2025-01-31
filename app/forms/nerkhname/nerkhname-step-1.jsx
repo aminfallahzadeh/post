@@ -272,7 +272,7 @@ const NerkhnameStep1 = () => {
                     </View>
                   </View>
 
-                  {![1, 14, 3, 15].includes(form_data?.parceltype) && (
+                  {![1, 14, 3, 15, 16, 17].includes(form_data?.parceltype) && (
                     <View className="mt-5">
                       <CustomSelect
                         name="boxsize"

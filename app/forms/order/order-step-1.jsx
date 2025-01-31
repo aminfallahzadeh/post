@@ -253,6 +253,20 @@ const OrderStep1 = () => {
                     </View>
                   </View>
 
+                  {![1, 14, 3, 15, 16, 17].includes(form_data?.parceltype) && (
+                    <View className="mt-5">
+                      <CustomSelect
+                        name="boxsize"
+                        control={control}
+                        rules={requiredRule}
+                        data={boxsizeOptions}
+                        label="* سایز کارتن"
+                        errors={errors}
+                        setValue={setValue}
+                      />
+                    </View>
+                  )}
+
                   <View className="mt-5">
                     <CustomSelect
                       name="insurancetype"
@@ -296,20 +310,6 @@ const OrderStep1 = () => {
                       <Text className="flex-3 self-center text-primary text-sm font-isansbold text-center rounded-lg pt-5">
                         ریال
                       </Text>
-                    </View>
-                  )}
-
-                  {![1, 14, 3, 15, 16, 17].includes(form_data?.parceltype) && (
-                    <View className="mt-5">
-                      <CustomSelect
-                        name="boxsize"
-                        control={control}
-                        rules={requiredRule}
-                        data={boxsizeOptions}
-                        label="* سایز کارتن"
-                        errors={errors}
-                        setValue={setValue}
-                      />
                     </View>
                   )}
                 </View>
