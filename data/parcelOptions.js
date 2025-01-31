@@ -38,9 +38,12 @@ export const parcelOptions = {
       value: 16,
     },
     {
+      label: "پاکت جوف",
+      value: 17,
+    },
+    {
       label: "بسته",
       value: 18,
     },
-    { label: "بسته", value: 17 },
   ],
 };

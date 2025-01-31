@@ -35,6 +35,7 @@ const Index = () => {
   // STATES
   const [barcodeOptions, setBarcodeOptions] = useState([]);
   const [isEnabled, setIsEnabled] = useState(true);
+  const [isSwitchDisabled, setIsSwitchDisabled] = useState(false);
   const [isBarcodeLoading, setIsBarcodeLoading] = useState(false);
   const [provinceOptions, setProvinceOptions] = useState([]);
   const [cityOptions, setCityOptions] = useState([]);
@@ -63,11 +64,16 @@ const Index = () => {
     try {
       const response = await trackingOrders(mobile);
       console.log("BARCODE RESPONSE:", response);
-      const options = optionsGenerator(
-        response.data.itemList,
-        "barcode",
-        "barcode"
+      const filteredData = response.data.itemList.filter(
+        (item) => item.state !== 2
       );
+      const options = optionsGenerator(filteredData, "barcode", "barcode");
+      if (options.length === 0) {
+        toastConfig.warning("بارکدی یافت نشد لطفا بارکد را وارد کنید");
+        setIsEnabled(false);
+        setIsSwitchDisabled(true);
+        return;
+      }
       setBarcodeOptions(options);
     } finally {
       setIsBarcodeLoading(false);
@@ -205,7 +211,11 @@ const Index = () => {
                     انتخاب بارکد
                   </Text>
 
-                  <SwitchInput onValueChange={toggleSwitch} value={isEnabled} />
+                  <SwitchInput
+                    onValueChange={toggleSwitch}
+                    value={isEnabled}
+                    disabled={isSwitchDisabled}
+                  />
                   <Text
                     className={`text-center self-center font-isansdemibold text-md m-2 ${
                       !isEnabled ? "text-primary" : "text-gray-400"

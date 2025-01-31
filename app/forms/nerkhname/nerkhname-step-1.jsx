@@ -135,15 +135,15 @@ const NerkhnameStep1 = () => {
         typecode:
           nerkhname.servicetype.id === 1
             ? 11
-            : nerkhname.servicetype.id === 4
+            : nerkhname.servicetype.id === 5
             ? 1
             : nerkhname.servicetype.id === 2
             ? 19
-            : nerkhname.servicetype.id === 5
+            : nerkhname.servicetype.id === 4
             ? 19 //سرویس امانت همان سرویس سفارشی هست فقط برای 2 کیلو به بالا می باشد
             : 77,
         servicetype:
-          nerkhname.servicetype.id === 5 ? 2 : nerkhname.servicetype.id, //سرویس امانت همان سرویس سفارشی هست فقط برای 2 کیلو به بالا می باشد
+          nerkhname.servicetype.id === 4 ? 2 : nerkhname.servicetype.id, //سرویس امانت همان سرویس سفارشی هست فقط برای 2 کیلو به بالا می باشد
         parceltype: form_data.parceltype,
         sourcecode: form_data.sourcecode,
         destcode: form_data.destcode,
@@ -232,11 +232,11 @@ const NerkhnameStep1 = () => {
                       data={
                         nerkhname?.servicetype?.id === 2
                           ? parcelOptions.sefareshi
-                          : nerkhname?.servicetype?.id === 5
+                          : nerkhname?.servicetype?.id === 4
                           ? parcelOptions.amanat
                           : nerkhname?.servicetype?.id === 3
                           ? parcelOptions.vijhe
-                          : nerkhname?.servicetype?.id === 4
+                          : nerkhname?.servicetype?.id === 5
                           ? parcelOptions.express
                           : parcelOptions.pishtaz
                       }

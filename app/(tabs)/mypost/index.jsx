@@ -107,7 +107,6 @@ const Index = () => {
                         format: "CODE128",
                         height: "50",
                       }}
-                      style={{}}
                     />
                   </View>
                 ) : (

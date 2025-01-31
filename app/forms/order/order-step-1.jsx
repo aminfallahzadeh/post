@@ -60,14 +60,14 @@ const OrderStep1 = () => {
         typecode:
           order.servicetype.id === 1
             ? 11
-            : order?.servicetype.id === 4
+            : order?.servicetype.id === 5
             ? 11
             : order.servicetype.id === 2
             ? 19
-            : order.servicetype.id === 5
+            : order.servicetype.id === 4
             ? 19 // سرویس امانت همان سرویس سفارشی هست فقط برای 2 کیلو به بالا می باشد
             : 77,
-        servicetype: order.servicetype.id === 5 ? 2 : order.servicetype.id,
+        servicetype: order.servicetype.id === 4 ? 2 : order.servicetype.id,
         parceltype: form_data.parceltype,
         weight: parseFloat(form_data.weight) || 0,
         boxsize: form_data.boxsize || 1,
@@ -123,7 +123,7 @@ const OrderStep1 = () => {
         } else {
           setIsContentRequired(true);
         }
-      } else if (form_data?.servicetype?.id === 4) {
+      } else if (form_data?.servicetype?.id === 5) {
         if (form_data?.parceltype === 16) {
           setIsContentRequired(false);
         } else {
@@ -208,11 +208,11 @@ const OrderStep1 = () => {
                         data={
                           order?.servicetype?.id === 2
                             ? parcelOptions.sefareshi
-                            : order?.servicetype?.id === 5
+                            : order?.servicetype?.id === 4
                             ? parcelOptions.amanat
                             : order?.servicetype?.id === 3
                             ? parcelOptions.vijhe
-                            : order?.servicetype?.id === 4
+                            : order?.servicetype?.id === 5
                             ? parcelOptions.express
                             : parcelOptions.pishtaz
                         }
@@ -299,7 +299,7 @@ const OrderStep1 = () => {
                     </View>
                   )}
 
-                  {![1, 14, 3, 15].includes(form_data?.parceltype) && (
+                  {![1, 14, 3, 15, 16, 17].includes(form_data?.parceltype) && (
                     <View className="mt-5">
                       <CustomSelect
                         name="boxsize"

@@ -8,12 +8,19 @@ const defaultColors = {
   },
   thumb: "#00075a",
 };
-const SwitchInput = ({ trackColor, thumbColor, onValueChange, value }) => {
+const SwitchInput = ({
+  trackColor,
+  thumbColor,
+  onValueChange,
+  value,
+  disabled,
+}) => {
   return (
     <Switch
       trackColor={trackColor ? trackColor : defaultColors.track}
       thumbColor={thumbColor ? thumbColor : defaultColors.thumb}
       onValueChange={onValueChange}
+      disabled={disabled}
       value={value}
       style={{
         justifyContent: "center",
