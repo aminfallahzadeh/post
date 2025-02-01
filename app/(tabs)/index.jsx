@@ -62,8 +62,6 @@ const Index = () => {
   }, [canStart, copilotShouldStart]);
 
   const handlePressService = async (item) => {
-    console.log("ITEM:", item);
-
     setIsLoading(true);
     try {
       const response = await getRequestTypeStatus(item.value);
@@ -71,7 +69,7 @@ const Index = () => {
       const status = response.data.itemList[0].isactive;
 
       if (!status) {
-        toastConfig.warning("سرویس در دسترس نیست");
+        toastConfig.warning(response.data.itemList[0].description);
         return;
       } else {
         router.push(item.url);
