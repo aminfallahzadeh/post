@@ -7,18 +7,38 @@ import { toastConfig } from "@/config/toast-config";
 import { StatusBar } from "expo-status-bar";
 import { TourGuideProvider } from "rn-tourguide";
 import { I18nManager } from "react-native";
+import * as expoUpdates from "expo-updates";
 
 // Lock the layout direction to LTR
-I18nManager.allowRTL(false);
-I18nManager.forceRTL(false);
+// I18nManager.allowRTL(false);
+// I18nManager.forceRTL(false);
+// I18nManager.swapLeftAndRightInRTL(false);
 
-try {
-  I18nManager.allowRTL(false);
-  I18nManager.forceRTL(false);
-  console.log("RTL LOCKED");
-} catch (e) {
-  console.log(e);
-}
+// try {
+//   I18nManager.allowRTL(false);
+//   I18nManager.forceRTL(false);
+//   I18nManager.swapLeftAndRightInRTL(false);
+//   console.log("RTL LOCKED");
+// } catch (e) {
+//   console.log(e);
+// }
+const lockRTL = async () => {
+  try {
+    if (I18nManager.isRTL) {
+      I18nManager.allowRTL(false);
+      I18nManager.forceRTL(false);
+      I18nManager.swapLeftAndRightInRTL(false);
+      console.log("RTL LOCKED ❌");
+
+      // **Restart app after applying changes** (only needed if RTL was active)
+      setTimeout(() => {
+        expoUpdates.reloadAsync(); // Force app restart for changes to apply
+      }, 500);
+    }
+  } catch (e) {
+    console.log("Error locking RTL:", e);
+  }
+};
 
 SplashScreen.preventAutoHideAsync();
 
@@ -70,6 +90,11 @@ const RootLayout = () => {
     return () => {
       listener.remove();
     };
+  }, []);
+
+  // Run RTL lock on first render
+  useEffect(() => {
+    lockRTL();
   }, []);
 
   // HANDLE FONTS

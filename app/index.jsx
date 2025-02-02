@@ -14,16 +14,16 @@ import welcome from "@/assets/images/welcome.png";
 import { useUserStore } from "@/store";
 
 // Lock the layout direction to LTR
-I18nManager.allowRTL(false);
-I18nManager.forceRTL(false);
+// I18nManager.allowRTL(false);
+// I18nManager.forceRTL(false);
 
-try {
-  I18nManager.allowRTL(false);
-  I18nManager.forceRTL(false);
-  console.log("RTL LOCKED");
-} catch (e) {
-  console.log(e);
-}
+// try {
+//   I18nManager.allowRTL(false);
+//   I18nManager.forceRTL(false);
+//   console.log("RTL LOCKED");
+// } catch (e) {
+//   console.log(e);
+// }
 
 const Index = () => {
   // STATES
