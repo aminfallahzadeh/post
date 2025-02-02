@@ -20,6 +20,7 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
+  I18nManager,
 } from "react-native";
 
 const Login = () => {
@@ -161,7 +162,7 @@ const Login = () => {
                 <View className="w-full flex-row-reverse justify-center items-center mt-5">
                   <TouchableOpacity>
                     <Text className="font-isansmedium text-sm text-grey2">
-                      ثبت نام شناسه پستی
+                      ثبت نام شناسه پستی {I18nManager.isRTL ? " RTL" : " LTR"}
                     </Text>
                   </TouchableOpacity>
 

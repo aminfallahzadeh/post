@@ -44,7 +44,6 @@
       "output": "static",
       "favicon": "./assets/images/splash-logo-post.png"
     },
-
     "plugins": [
       "expo-router",
       "expo-secure-store",
@@ -75,7 +74,8 @@
           "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera",
           "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone"
         }
-      ]
+      ],
+      "expo-localization"
     ],
     "experiments": {
       "typedRoutes": true
@@ -83,7 +83,9 @@
     "extra": {
       "eas": {
         "projectId": "27eaeb60-277f-4ffa-92c7-16524bb033df"
-      }
+      },
+      "supportsRTL": false,
+      "forcesRTL": false
     },
     "runtimeVersion": {
       "policy": "appVersion"

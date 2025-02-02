@@ -1,7 +1,7 @@
 // IMPORTS
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { Switch } from "react-native";
-import { I18nManager } from "react-native";
+// import { I18nManager } from "react-native";
 
 const defaultColors = {
   track: {
@@ -18,9 +18,9 @@ const SwitchInput = ({
   disabled,
 }) => {
   // DEBUG
-  useEffect(() => {
-    console.log("IS RTL:", I18nManager.isRTL);
-  }, []);
+  //   useEffect(() => {
+  //     console.log("IS RTL:", I18nManager.isRTL);
+  //   }, []);
 
   return (
     <Switch
@@ -30,7 +30,7 @@ const SwitchInput = ({
       disabled={disabled}
       value={value}
       style={{
-        transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+        // transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
         alignSelf: "center",
       }}
     />
