@@ -66,10 +66,6 @@ const Index = () => {
     try {
       const data = [{ clientRowID: 1, postCode: form_data.postalCode }];
       const response = await validatePostCode(data);
-      console.log(
-        "VALIDATE POSTAL CODE RESPONSE: ",
-        response.data.itemList[0].value
-      );
 
       if (response.data.itemList[0].value) {
         setPostalCodes([...postalCodes, form_data.postalCode]);
@@ -94,7 +90,6 @@ const Index = () => {
         postCode: code,
       }));
       const response = await addressByPostCode(data);
-      console.log("POSTAL CODES RESPONSE: ", response.data.itemList[0].data);
       await setAddressByPostCode(response.data.itemList[0].data);
       router.push("forms/postalcode-geo/geo-step-1");
     } finally {

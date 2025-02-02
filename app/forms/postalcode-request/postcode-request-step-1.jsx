@@ -69,7 +69,6 @@ const Step2 = () => {
         lon: 0,
         units,
       });
-      console.log("FINAL RESPONSE:", response.data);
       setFactor(response.data.itemList[0]);
       router.push("forms/postalcode-request/postcode-request-step-2");
     } finally {

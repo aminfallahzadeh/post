@@ -47,7 +47,6 @@ const YafteStep1 = () => {
     setIsProvinceLoading(true);
     try {
       const response = await getYafteProvince();
-      console.log("PROVINCE RESPONSE: ", response.data);
       const options = optionsGenerator(response.data.itemList, "id", "name");
       setProvinceOptions(options);
     } finally {
@@ -59,7 +58,6 @@ const YafteStep1 = () => {
     setIsCityLoading(true);
     try {
       const response = await getYafteCity({ provinceID });
-      console.log("CITY RESPONSE: ", response.data);
       const options = optionsGenerator(response.data.itemList, "id", "name");
       setCityOptions(options);
     } finally {
@@ -73,7 +71,7 @@ const YafteStep1 = () => {
       const docList = foundDocIds.map((doc) => ({
         foundDocId: doc.id,
       }));
-      const response = await insertRequestPostYafte({
+      await insertRequestPostYafte({
         mobile,
         cityID: form_data.city_id,
         address: form_data.address,
@@ -82,7 +80,7 @@ const YafteStep1 = () => {
         trackingID: "",
         id: "",
       });
-      console.log("POST YAFTE RESPONSE: ", response.data);
+
       router.replace("/forms/post-yafte/yafte-step-2");
       reset();
     } finally {

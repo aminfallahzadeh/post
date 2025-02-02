@@ -33,7 +33,6 @@ const Index = () => {
         lastName: "test1",
       });
       setData(response.data?.itemList[0]?.data?.docs);
-      console.log("POST YAFTE RESPONSE:", response);
     } finally {
       setIsLoading(false);
     }

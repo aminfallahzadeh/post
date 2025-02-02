@@ -74,7 +74,7 @@ const Step2 = () => {
         title,
         counter: selectedItems.length,
       });
-      console.log("INSERT REQUEST CERTIFICATE RESPONSE: ", response.data);
+
       setFactor(response.data.itemList[0]);
       router.push("forms/postalcode-geo/geo-step-2");
     } finally {

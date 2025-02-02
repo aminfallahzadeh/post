@@ -36,7 +36,6 @@ const PaymentResult = () => {
 
     const generateCertificateData = async (generateFunction) => {
       const response = await generateFunction(id);
-      console.log("GENERATE CERTIFICATE RESPONSE: ", response.data.itemList);
 
       if (type === "NewPostCode") {
         setData(response.data);
@@ -64,11 +63,6 @@ const PaymentResult = () => {
       handleGenerateCertificate();
     }
   }, [isSuccess, handleGenerateCertificate]);
-
-  // DEBUG
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
 
   return (
     <Background>

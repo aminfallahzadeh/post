@@ -28,18 +28,6 @@ const Map = () => {
     getCurrentLocation();
   }, []);
 
-  //   const fetchLocations = useCallback(async (lat, long) => {
-  //     setIsLoading(true);
-
-  //     try {
-  //       const response = await getNearestPostOffice(lat, long);
-  //       setNearLocs(response.data.itemList);
-  //       console.log("LOCATIONS RESPONSE: ", response.data.itemList);
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   }, []);
-
   // DEBUG
   useEffect(() => {
     console.log("CURRENT LOCATIONS: ", location);

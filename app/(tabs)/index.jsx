@@ -65,7 +65,6 @@ const Index = () => {
     setIsLoading(true);
     try {
       const response = await getRequestTypeStatus(item.value);
-      console.log("REQUEST TYPE STATUS RESPONSE:", response.data);
       const status = response.data.itemList[0].isactive;
 
       if (!status) {

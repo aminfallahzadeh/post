@@ -52,7 +52,7 @@ const Otp = () => {
   const loginHandler = useCallback(async () => {
     setIsValidating(true);
     try {
-      await login({ code: parseInt(code), mobile });
+      await login({ code, mobile });
       await fetchCustomerData(mobile);
     } finally {
       setIsValidating(false);

@@ -23,6 +23,7 @@ const SwitchInput = ({
       disabled={disabled}
       value={value}
       style={{
+        transform: [{ scaleX: 1 }],
         justifyContent: "center",
         alignItems: "center",
         alignSelf: "center",

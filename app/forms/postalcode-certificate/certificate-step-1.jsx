@@ -75,7 +75,6 @@ const CertificateStep2 = () => {
         title,
         counter: selectedItems.length,
       });
-      console.log("INSERT REQUEST CERTIFICATE RESPONSE: ", response.data);
       setFactor(response.data.itemList[0]);
       router.push("forms/postalcode-certificate/certificate-step-2");
     } finally {

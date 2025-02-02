@@ -77,6 +77,7 @@ const NewComplaintStep1 = () => {
       });
       reset();
       router.replace("/");
+      setVisible(true);
       removeComplaintData();
     } catch (error) {
       console.log("Complain error: ", error.response);
@@ -86,7 +87,6 @@ const NewComplaintStep1 = () => {
         titleStyle: toastStyles,
       });
       reset();
-      setVisible(true);
       removeComplaintData();
     } finally {
       setIsLoading(false);

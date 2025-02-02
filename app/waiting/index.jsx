@@ -1,5 +1,4 @@
 // IMPORTS
-import { useEffect } from "react";
 import { View, Text, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useLocalSearchParams, router } from "expo-router";
@@ -9,14 +8,6 @@ import { Title } from "@/components/Title";
 const Index = () => {
   // CONSTS
   const { url } = useLocalSearchParams();
-
-  // EFFECTS
-  useEffect(() => {
-    if (url) {
-      //   router.push(url);
-      console.log(url);
-    }
-  }, [url]);
 
   return (
     <Background>

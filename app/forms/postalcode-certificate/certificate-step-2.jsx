@@ -22,7 +22,7 @@ const CertificateStep3 = () => {
 
   // CONSTS
   const factor = useUserStore((state) => state.factor);
-  const setFactor = useUserStore((state) => state.setFactor);
+  //   const setFactor = useUserStore((state) => state.setFactor);
   const mobile = SecureStore.getItem("mobile");
 
   // ANIMATION
@@ -46,11 +46,6 @@ const CertificateStep3 = () => {
     setChecked((prev) => !prev);
   };
 
-  // DEBUG
-  useEffect(() => {
-    console.log("FACTOR:", factor);
-  }, [factor]);
-
   // HANDLE SUBMIT
   const onSubmit = async () => {
     setIsLoading(true);
@@ -69,10 +64,6 @@ const CertificateStep3 = () => {
       };
 
       const response = await requestPayment(data);
-      console.log(
-        "REQUEST PAYMENT RESPONSE: ",
-        response.data.itemList[0].data.paymentUrl
-      );
       router.push(response.data.itemList[0].data.paymentUrl);
       setCancelButton(true);
       //   setFactor([]);
@@ -131,10 +122,7 @@ const CertificateStep3 = () => {
             >
               <Text className="text-grey2 font-isansregular px-2">
                 موارد فوق مورد تایید است و من با{" "}
-                <Text
-                  style={{ color: "blue" }}
-                  onPress={() => console.log("Navigate to Terms")}
-                >
+                <Text style={{ color: "blue" }} onPress={() => {}}>
                   شرایط
                 </Text>
                 خرید موافق هستم

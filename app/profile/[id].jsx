@@ -105,8 +105,6 @@ const UserProfile = () => {
 
       await fetchCustomerData(mobile);
       reset();
-
-      console.log("Customer profile response", response);
       toastConfig.success(response.data.message);
       router.replace("/");
     } finally {

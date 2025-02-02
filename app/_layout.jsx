@@ -6,16 +6,19 @@ import { useFonts } from "expo-font";
 import { toastConfig } from "@/config/toast-config";
 import { StatusBar } from "expo-status-bar";
 import { TourGuideProvider } from "rn-tourguide";
+import { I18nManager } from "react-native";
 
 // Lock the layout direction to LTR
-// I18nManager.allowRTL(false);
-// I18nManager.forceRTL(false);
+I18nManager.allowRTL(false);
+I18nManager.forceRTL(false);
 
-// try {
-//   I18nManager.allowRTL(false);
-// } catch (e) {
-//   console.log(e);
-// }
+try {
+  I18nManager.allowRTL(false);
+  I18nManager.forceRTL(false);
+  console.log("RTL LOCKED");
+} catch (e) {
+  console.log(e);
+}
 
 SplashScreen.preventAutoHideAsync();
 
@@ -41,7 +44,6 @@ const RootLayout = () => {
   useEffect(() => {
     const handleUrl = (event) => {
       const { url } = event;
-      console.log("URL received:", url);
 
       // Check if the URL starts with 'postapp://'
       if (url.startsWith("postapp://")) {

@@ -19,7 +19,7 @@ const Assistant = () => {
       <WebView
         source={{
           uri: `https://newpostkhoone.post.ir/bot?mobile=${mobile}&name=${
-            userData.name ? userData.name : ""
+            userData?.name ? userData.name : ""
           }`,
         }}
         style={styles.webview}

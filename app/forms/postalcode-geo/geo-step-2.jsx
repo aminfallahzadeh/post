@@ -44,11 +44,6 @@ const Step3 = () => {
     setChecked((prev) => !prev);
   };
 
-  // DEBUG
-  useEffect(() => {
-    console.log("FACTOR:", factor);
-  }, [factor]);
-
   // HANDLE SUBMIT
   const onSubmit = async () => {
     setIsLoading(true);
@@ -121,10 +116,7 @@ const Step3 = () => {
             >
               <Text className="text-grey2 font-isansregular px-2">
                 موارد فوق مورد تایید است و من با{" "}
-                <Text
-                  style={{ color: "blue" }}
-                  onPress={() => console.log("Navigate to Terms")}
-                >
+                <Text style={{ color: "blue" }} onPress={() => {}}>
                   شرایط{" "}
                 </Text>
                 خرید موافق هستم

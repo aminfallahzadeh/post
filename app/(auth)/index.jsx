@@ -43,6 +43,8 @@ const Login = () => {
     setIsLoading(true);
     try {
       const response = await generateOTP(form_data.mobile, isEnabled);
+      //   const response = await generateOTP("09123345493", isEnabled);
+
       setMobile(response.data.itemList[0].mobile);
       await SecureStore.setItemAsync(
         "mobile",

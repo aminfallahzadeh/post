@@ -1,4 +1,4 @@
-// NATIVE IMPROTS
+// IMPORTS
 import { Stack } from "expo-router";
 
 const PostalCodeGeoLayout = () => {
