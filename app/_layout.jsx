@@ -26,13 +26,13 @@ import * as Updates from "expo-updates";
 SplashScreen.preventAutoHideAsync();
 
 const RootLayout = () => {
-  const shouldBeRTL = false;
+  //   const shouldBeRTL = false;
 
-  if (shouldBeRTL !== I18nManager.isRTL && Platform.OS !== "web") {
-    I18nManager.allowRTL(shouldBeRTL);
-    I18nManager.forceRTL(shouldBeRTL);
-    Updates.reloadAsync();
-  }
+  //   if (shouldBeRTL !== I18nManager.isRTL && Platform.OS !== "web") {
+  //     I18nManager.allowRTL(shouldBeRTL);
+  //     I18nManager.forceRTL(shouldBeRTL);
+  //     Updates.reloadAsync();
+  //   }
 
   // IMPLEMENT FONTS
   const [fontsLoaded, error] = useFonts({
