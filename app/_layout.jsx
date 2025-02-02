@@ -6,8 +6,8 @@ import { useFonts } from "expo-font";
 import { toastConfig } from "@/config/toast-config";
 import { StatusBar } from "expo-status-bar";
 import { TourGuideProvider } from "rn-tourguide";
-import { I18nManager, Platform } from "react-native";
-import * as Updates from "expo-updates";
+// import { I18nManager, Platform } from "react-native";
+// import * as Updates from "expo-updates";
 
 // Lock the layout direction to LTR
 // I18nManager.allowRTL(true);
