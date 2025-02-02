@@ -1,17 +1,7 @@
 // IMPORTS
+import { useEffect } from "react";
 import { Switch } from "react-native";
 import { I18nManager } from "react-native";
-
-I18nManager.allowRTL(false);
-I18nManager.forceRTL(false);
-
-try {
-  I18nManager.allowRTL(false);
-  I18nManager.forceRTL(false);
-  console.log("RTL LOCKED");
-} catch (e) {
-  console.log(e);
-}
 
 const defaultColors = {
   track: {
@@ -27,6 +17,11 @@ const SwitchInput = ({
   value,
   disabled,
 }) => {
+  // DEBUG
+  useEffect(() => {
+    console.log("IS RTL:", I18nManager.isRTL);
+  }, []);
+
   return (
     <Switch
       trackColor={trackColor ? trackColor : defaultColors.track}
@@ -36,8 +31,6 @@ const SwitchInput = ({
       value={value}
       style={{
         transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
-        justifyContent: "center",
-        alignItems: "center",
         alignSelf: "center",
       }}
     />

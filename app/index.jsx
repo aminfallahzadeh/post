@@ -9,7 +9,7 @@ import { Chase } from "react-native-animated-spinkit";
 import { isLoginValid } from "@/utils/authUtils";
 import useGetUserData from "@/hooks/useGetUserData";
 import * as SecureStore from "expo-secure-store";
-import { I18nManager } from "react-native";
+// import { I18nManager } from "react-native";
 import welcome from "@/assets/images/welcome.png";
 import { useUserStore } from "@/store";
 
