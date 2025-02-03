@@ -26,7 +26,7 @@ import * as Updates from "expo-updates";
 SplashScreen.preventAutoHideAsync();
 
 const RootLayout = () => {
-  const shouldBeRTL = false;
+  const shouldBeRTL = true;
 
   if (shouldBeRTL !== I18nManager.isRTL && Platform.OS !== "web") {
     I18nManager.allowRTL(shouldBeRTL);
