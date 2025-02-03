@@ -59,8 +59,7 @@
           "android": {
             "useCleartextTraffic": true,
             "enableProguardInReleaseBuilds": true,
-            "enableShrinkResourceslnReleaseBuilds": true,
-            "useLegacyPackaging": true
+            "enableShrinkResourceslnReleaseBuilds": true
           },
           "ios": {
             "flipper": true
@@ -83,9 +82,7 @@
     "extra": {
       "eas": {
         "projectId": "27eaeb60-277f-4ffa-92c7-16524bb033df"
-      },
-      "supportsRTL": false,
-      "forcesRTL": false
+      }
     },
     "runtimeVersion": {
       "policy": "appVersion"
