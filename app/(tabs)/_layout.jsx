@@ -142,27 +142,6 @@ const TabsLayout = () => {
         }}
       >
         <Tabs.Screen
-          name="colleagues"
-          options={{
-            tabBarLabel: ({ focused }) => (
-              <Text
-                style={{
-                  color: focused ? "#164194" : "#787A8D",
-                  fontFamily: "IranSans-DemiBold",
-                  fontSize: 11,
-                  marginTop: 4,
-                }}
-              >
-                همکاران
-              </Text>
-            ),
-            tabBarIcon: ({ color, focused }) => (
-              <FontAwesome name="handshake-o" size={20} color={color} />
-            ),
-          }}
-        />
-
-        <Tabs.Screen
           name="assistant"
           options={{
             tabBarLabel: ({ focused }) => (
@@ -179,6 +158,27 @@ const TabsLayout = () => {
             ),
             tabBarIcon: ({ color, focused }) => (
               <Feather name="help-circle" size={20} color={color} />
+            ),
+          }}
+        />
+
+        <Tabs.Screen
+          name="colleagues"
+          options={{
+            tabBarLabel: ({ focused }) => (
+              <Text
+                style={{
+                  color: focused ? "#164194" : "#787A8D",
+                  fontFamily: "IranSans-DemiBold",
+                  fontSize: 11,
+                  marginTop: 4,
+                }}
+              >
+                همکاران
+              </Text>
+            ),
+            tabBarIcon: ({ color, focused }) => (
+              <FontAwesome name="handshake-o" size={20} color={color} />
             ),
           }}
         />

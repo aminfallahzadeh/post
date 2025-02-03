@@ -61,7 +61,7 @@ const OrderStep1 = () => {
           order.servicetype.id === 1
             ? 11
             : order?.servicetype.id === 5
-            ? 11
+            ? 1
             : order.servicetype.id === 2
             ? 19
             : order.servicetype.id === 4

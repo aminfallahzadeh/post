@@ -16,6 +16,7 @@ const initialState = {
   order: [],
   copilotShouldStart: true,
   canStartTour: true,
+  formData: [],
 };
 
 export const useUserStore = create(
@@ -49,6 +50,7 @@ export const useUserStore = create(
 
     setCopilotShouldStart: (copilotShouldStart) => set({ copilotShouldStart }),
     setCanStartTour: (canStartTour) => set({ canStartTour }),
+    setFormData: (formData) => set({ formData }),
     resetStore: () => set(initialState),
   }))
 );

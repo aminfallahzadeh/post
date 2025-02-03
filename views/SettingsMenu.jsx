@@ -51,7 +51,7 @@ const SettingsMenu = ({ closeHandler }) => {
           stickyHeaderIndices={[0]}
           keyboardShouldPersistTaps="handled"
         >
-          <View className="flex-row-reverse w-full justify-between items-center">
+          <View className="flex-row w-full justify-between items-center">
             <View className="">
               <Text className="font-isansregular text-sm text-grey2">
                 نسخه : ۱.۰۱
@@ -70,14 +70,14 @@ const SettingsMenu = ({ closeHandler }) => {
 
           <Pressable
             className="w-full justify-between items-center flex-row mt-10"
-            onPress={() => router.push(`profile/${user.id}`)}
+            onPress={() => router.push(`profile/${user?.id}`)}
           >
             <Feather name="edit-2" size={25} color="#333" />
 
             <View className="justify-center items-center flex-row gap-5">
-              <View>
+              <View className="justify-center items-end">
                 <Text className="text-black font-isansmedium text-right">
-                  نام کاربری
+                  {user?.name + " " + user?.lastName}
                 </Text>
                 <Text className="text-black font-isansregular">
                   {mobile || (

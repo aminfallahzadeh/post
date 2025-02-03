@@ -13,3 +13,7 @@ export const selectMessages = {
 
 // STATES
 export const LOADING_MESSAGE = "در حال بارگذاری...";
+
+// COPY
+export const BARCODE_COPIED_MESSAGE = "بارکد پستی کپی شد";
+export const TRACKING_CODE_COPIED_MESSAGE = "کد پیگیری کپی شد";

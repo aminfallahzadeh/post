@@ -3,7 +3,7 @@ import { useState, useCallback } from "react";
 import { View, Text, ScrollView } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { Chase } from "react-native-animated-spinkit";
-import ComplaintCard from "@/components/ComplaintCard";
+import ComplaintCard from "@/components/my-post/ComplaintCard";
 import { eopList } from "@/api/eop";
 import * as SecureStore from "expo-secure-store";
 
@@ -50,11 +50,7 @@ const MyComplaint = () => {
             موردی یافت نشد!
           </Text>
         ) : (
-          list.map((item, index) => (
-            <View className="w-full" key={index}>
-              <ComplaintCard item={item} />
-            </View>
-          ))
+          list.map((item, index) => <ComplaintCard key={index} item={item} />)
         )}
       </View>
     </ScrollView>
