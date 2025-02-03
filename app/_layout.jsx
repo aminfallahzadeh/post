@@ -10,29 +10,29 @@ import { I18nManager, Platform } from "react-native";
 import * as Updates from "expo-updates";
 
 // Lock the layout direction to LTR
-// I18nManager.allowRTL(true);
-// I18nManager.forceRTL(true);
-// I18nManager.swapLeftAndRightInRTL(true);
+I18nManager.allowRTL(false);
+I18nManager.forceRTL(false);
+I18nManager.swapLeftAndRightInRTL(false);
 
-// try {
-//   I18nManager.allowRTL(true);
-//   I18nManager.forceRTL(true);
-//   I18nManager.swapLeftAndRightInRTL(true);
-//   console.log("RTL LOCKED");
-// } catch (e) {
-//   console.log(e);
-// }
+try {
+  I18nManager.allowRTL(false);
+  I18nManager.forceRTL(false);
+  I18nManager.swapLeftAndRightInRTL(false);
+  console.log("RTL LOCKED");
+} catch (e) {
+  console.log(e);
+}
 
 SplashScreen.preventAutoHideAsync();
 
 const RootLayout = () => {
-  const shouldBeRTL = true;
+  //   const shouldBeRTL = false;
 
-  if (shouldBeRTL !== I18nManager.isRTL && Platform.OS !== "web") {
-    I18nManager.allowRTL(shouldBeRTL);
-    I18nManager.forceRTL(shouldBeRTL);
-    Updates.reloadAsync();
-  }
+  //   if (shouldBeRTL !== I18nManager.isRTL && Platform.OS !== "web") {
+  //     I18nManager.allowRTL(shouldBeRTL);
+  //     I18nManager.forceRTL(shouldBeRTL);
+  //     Updates.reloadAsync();
+  //   }
 
   // IMPLEMENT FONTS
   const [fontsLoaded, error] = useFonts({
