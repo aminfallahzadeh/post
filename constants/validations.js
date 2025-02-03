@@ -229,3 +229,12 @@ export const postCodeRule = {
     return validatePostalCode(value) || "کد پستی معتبر نیست";
   },
 };
+
+// BARCODE RULES
+
+export const barcodeRule = {
+  minLength: {
+    value: 20,
+    message: "بارکد پستی معتبر نیست",
+  },
+};

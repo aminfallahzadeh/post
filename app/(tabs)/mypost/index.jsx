@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Pressable } from "react-native";
 import { router } from "expo-router";
 import { useFocusEffect } from "@react-navigation/native";
 import { Chase } from "react-native-animated-spinkit";
@@ -8,6 +8,9 @@ import { trackingOrders, trackingOrder } from "@/api/tracking";
 import { useUserStore } from "@/store";
 import * as SecureStore from "expo-secure-store";
 import { Barcode } from "expo-barcode-generator";
+import * as Clipboard from "expo-clipboard";
+import Feather from "@expo/vector-icons/Feather";
+import { toastConfig } from "@/config/toast-config";
 
 const Index = () => {
   // STATES
@@ -33,6 +36,11 @@ const Index = () => {
   }, [mobile, userData?.nationalCode]);
 
   // HANDLERS
+  const copyHandler = async (code) => {
+    await Clipboard.setStringAsync(code.toString());
+    toastConfig.success("بارکد پستی کپی شد");
+  };
+
   const onSubmit = async (barcode) => {
     setLoadingStates((prev) => ({ ...prev, [barcode]: true })); // Set the clicked button to loading
     try {
@@ -98,9 +106,15 @@ const Index = () => {
 
                 {item.state === 2 ? (
                   <View className="justify-between items-center w-full mb-2">
-                    <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm">
-                      کد پیگیری
-                    </Text>
+                    <View className="flex-row justify-center items-center w-full">
+                      <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm">
+                        کد پیگیری
+                      </Text>
+                      <Pressable onPress={() => copyHandler(item.barcode)}>
+                        <Feather name="copy" size={14} color="black" />
+                      </Pressable>
+                    </View>
+
                     <Barcode
                       value={item.barcode}
                       options={{
@@ -114,9 +128,15 @@ const Index = () => {
                     <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm">
                       کد مرسوله
                     </Text>
-                    <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm py-1">
-                      {item.barcode}
-                    </Text>
+
+                    <View className="flex-row items-center justify-center">
+                      <Text className="font-isansdemibold leading-none text-grey2 mr-2 items-center justify-center text-sm py-1">
+                        {item.barcode}
+                      </Text>
+                      <Pressable onPress={() => copyHandler(item.barcode)}>
+                        <Feather name="copy" size={14} color="black" />
+                      </Pressable>
+                    </View>
                   </View>
                 )}
 
@@ -124,10 +144,10 @@ const Index = () => {
                   <CustomButton
                     title="پیگیری"
                     height="h-10"
-                    isLoading={loadingStates[item.barcode] || false} // Show loading for the clicked button
+                    isLoading={loadingStates[item.barcode] || false}
                     disabled={Object.values(loadingStates).some(
                       (state) => state
-                    )} // Disable if any button is loading
+                    )}
                     handlePress={() => onSubmit(item.barcode)}
                   />
                 )}

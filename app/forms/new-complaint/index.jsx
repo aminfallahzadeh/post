@@ -13,6 +13,7 @@ import { showMessage } from "react-native-flash-message";
 import { toastStyles } from "@/constants/styles";
 import { nationalCodeRule } from "@/constants/validations";
 import * as SecureStore from "expo-secure-store";
+import { requiredRule } from "@/constants/validations";
 import CustomModal from "@/components/CustomModal";
 import { Title } from "@/components/Title";
 
@@ -135,12 +136,13 @@ const Index = () => {
                   />
 
                   <FormField
-                    placeholder="عنوان شکایت"
+                    placeholder="شرح شکایت"
                     keyboardType="default"
                     type={"text"}
                     height={"h-[100px]"}
                     containerStyle="mt-5"
                     max={800}
+                    rules={requiredRule}
                     multiline
                     inputStyle={{
                       textAlignVertical: "top",

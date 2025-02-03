@@ -24,7 +24,7 @@ import FormField from "@/components/FormField";
 import { toastConfig } from "@/config/toast-config";
 import { requiredRule, nationalCodeRule } from "@/constants/validations";
 import { Title } from "@/components/Title";
-import SwitchInput from "@/components/SwitchInput";
+import CustomSwitch from "@/components/CustomSwitch";
 import { optionsGenerator } from "@/helpers/selectHelper";
 import { OtpInput } from "react-native-otp-entry";
 import { getProvince, getCity } from "@/api/order";
@@ -211,11 +211,12 @@ const Index = () => {
                     انتخاب بارکد
                   </Text>
 
-                  <SwitchInput
-                    onValueChange={toggleSwitch}
+                  <CustomSwitch
                     value={isEnabled}
+                    onToggle={toggleSwitch}
                     disabled={isSwitchDisabled}
                   />
+
                   <Text
                     className={`text-center self-center font-isansdemibold text-md m-2 ${
                       !isEnabled ? "text-primary" : "text-gray-400"
@@ -225,7 +226,7 @@ const Index = () => {
                   </Text>
                 </View>
 
-                <View className="w-full px-5">
+                <View className="w-full px-5 mt-5">
                   {isEnabled ? (
                     <CustomSelect
                       name="barcode"

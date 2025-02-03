@@ -10,7 +10,7 @@ import { router } from "expo-router";
 import CustomButton from "@/components/CustomButton";
 import CustomSelect from "@/components/CustomSelect";
 import Background from "@/components/Background";
-import SwitchInput from "@/components/SwitchInput";
+import CustomSwitch from "@/components/CustomSwitch";
 import {
   PROVINCE,
   COUNTY,
@@ -184,7 +184,7 @@ export const PostalCodeRequest = () => {
                 شهری
               </Text>
 
-              <SwitchInput
+              <CustomSwitch
                 onValueChange={changeModeHandler}
                 value={state.isUrban}
               />

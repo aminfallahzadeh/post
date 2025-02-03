@@ -19,7 +19,7 @@ import FormFieldPastable from "@/components/FormFieldPastable";
 import { toastConfig } from "@/config/toast-config";
 import { requiredRule } from "@/constants/validations";
 import { Title } from "@/components/Title";
-import SwitchInput from "@/components/SwitchInput";
+import CustomSwitch from "@/components/CustomSwitch";
 import { optionsGenerator } from "@/helpers/selectHelper";
 import { OtpInput } from "react-native-otp-entry";
 import { formatTime } from "@/utils/formatTime";
@@ -176,9 +176,9 @@ const Index = () => {
                     انتخاب بارکد
                   </Text>
 
-                  <SwitchInput
-                    onValueChange={toggleSwitch}
+                  <CustomSwitch
                     value={isEnabled}
+                    onToggle={toggleSwitch}
                     disabled={isSwitchDisabled}
                   />
                   <Text
@@ -190,7 +190,7 @@ const Index = () => {
                   </Text>
                 </View>
 
-                <View className="w-full px-5">
+                <View className="w-full px-5 mt-5">
                   {isEnabled ? (
                     <CustomSelect
                       name="parcelCode"

@@ -1,20 +1,26 @@
 // IMPORTS
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { View, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
+import {
+  View,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+  Text,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import FormField from "@/components/FormField";
 import CustomButton from "@/components/CustomButton";
 import Background from "@/components/Background";
 import { useUserStore } from "@/store";
 import { newEop } from "@/api/eop";
 import CustomSelect from "@/components/CustomSelect";
 import { showMessage } from "react-native-flash-message";
-import { stepTwoEopValidation, requiredRule } from "@/constants/validations";
+import { requiredRule, barcodeRule } from "@/constants/validations";
 import { router } from "expo-router";
 import { toastStyles } from "@/constants/styles";
 import { CustomModal } from "@/components/CustomModal";
 import { Title } from "@/components/Title";
+import FormFieldPastable from "@/components/FormFieldPastable";
 import {
   serviceTypeLookup,
   postalRegionLookup,
@@ -25,6 +31,8 @@ const NewComplaintStep1 = () => {
   // STATES
   const [isLoading, setIsLoading] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [trackingCode, setTrackingCode] = useState("یافت نشد");
+  const [isBarcodeRequired, setIsBarcodeRequired] = useState(true);
 
   // CONSTS
   const complaintData = useUserStore((state) => state.complaintFormData);
@@ -37,6 +45,7 @@ const NewComplaintStep1 = () => {
     watch,
     reset,
     setValue,
+    trigger,
     formState: { errors },
   } = useForm();
   const form_data = watch();
@@ -51,18 +60,17 @@ const NewComplaintStep1 = () => {
   }, [complaintData.serialNo]);
 
   const onSubmit = async () => {
-    const validations = stepTwoEopValidation(form_data);
-    for (let validation of validations) {
-      if (validation.check) {
-        showMessage({
-          message: validation.message,
-          type: "warning",
-          titleStyle: toastStyles,
-        });
-        return;
-      }
-    }
-
+    // const validations = stepTwoEopValidation(form_data);
+    // for (let validation of validations) {
+    //   if (validation.check) {
+    //     showMessage({
+    //       message: validation.message,
+    //       type: "warning",
+    //       titleStyle: toastStyles,
+    //     });
+    //     return;
+    //   }
+    // }
     setIsLoading(true);
     try {
       const response = await newEop({
@@ -75,9 +83,9 @@ const NewComplaintStep1 = () => {
         type: "success",
         titleStyle: toastStyles,
       });
-      reset();
-      router.replace("/");
+      setTrackingCode(response.data.itemList[0].retVal);
       setVisible(true);
+      reset();
       removeComplaintData();
     } catch (error) {
       console.log("Complain error: ", error.response);
@@ -86,24 +94,50 @@ const NewComplaintStep1 = () => {
         type: "danger",
         titleStyle: toastStyles,
       });
-      reset();
-      removeComplaintData();
     } finally {
       setIsLoading(false);
     }
   };
 
+  // EFFECTS
+  useEffect(() => {
+    if (form_data.complaintType) {
+      if ([81, 110].includes(form_data.complaintType)) {
+        setIsBarcodeRequired(false);
+      } else {
+        setIsBarcodeRequired(true);
+      }
+    }
+  }, [form_data.complaintType]);
+
+  useEffect(() => {
+    trigger("serialNo");
+  }, [trigger, isBarcodeRequired]);
+
+  // DEBUG
+  useEffect(() => {
+    console.log("FORM DATA: ", form_data);
+  }, [form_data]);
+
   return (
     <>
       <CustomModal
         visible={visible}
-        closeModal={() => setVisible(false)}
         title={"توجه"}
-        description={
-          "درخواست شما ثبت شد. برای پیگیری به صفحه پست من مراجعه کنید"
-        }
+        description={`درخواست شما با موفقیت ثبت شد \n شماره پیگیری :${trackingCode}`}
         onConfirm={() => router.replace("/")}
-      />
+      >
+        <Text className="text-grey2 text-sm font-isansregular text-center pt-5 mt-5">
+          برای اطلاعات بیشتر به صفحه{" "}
+          <Text
+            className="text-primary text-md font-isansbold text-center underline"
+            onPress={() => router.replace("/mypost/my-complaint")}
+          >
+            پست من{" "}
+          </Text>
+          مراجعه کنید
+        </Text>
+      </CustomModal>
       <Background>
         <SafeAreaView className="h-full">
           <KeyboardAvoidingView
@@ -125,11 +159,18 @@ const NewComplaintStep1 = () => {
               >
                 {/* FORM FIELDS */}
                 <View className="w-full px-5">
-                  <FormField
-                    placeholder="شماره سریال بسته پستی"
+                  <FormFieldPastable
+                    placeholder="بارکد پستی"
                     keyboardType="numeric"
                     inputMode="numeric"
                     control={control}
+                    rules={{
+                      ...barcodeRule,
+                      required: {
+                        value: isBarcodeRequired,
+                        message: "این فیلد الزامی است",
+                      },
+                    }}
                     containerStyle="mt-5"
                     name="serialNo"
                   />
@@ -164,9 +205,10 @@ const NewComplaintStep1 = () => {
                       control={control}
                       rules={requiredRule}
                       data={postalRegionLookup}
-                      label="* واحد پستی"
+                      label="* استان مقصد"
                       errors={errors}
                       setValue={setValue}
+                      search={true}
                     />
                   </View>
                 </View>

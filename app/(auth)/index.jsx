@@ -11,7 +11,6 @@ import Background from "@/components/Background";
 import { mobilePhoneValidation } from "@/constants/validations";
 import login from "@/assets/images/login.png";
 import * as SecureStore from "expo-secure-store";
-import SwitchInput from "@/components/SwitchInput";
 import CustomSwitch from "@/components/CustomSwitch";
 import {
   View,
@@ -21,7 +20,7 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
-  I18nManager,
+  Pressable,
 } from "react-native";
 
 const Login = () => {
@@ -120,8 +119,6 @@ const Login = () => {
                     ورود با موبایل
                   </Text>
 
-                  {/* <SwitchInput onValueChange={toggleSwitch} value={isEnabled} />
-                   */}
                   <CustomSwitch value={isEnabled} onToggle={toggleSwitch} />
                   <Text
                     className={`text-center self-center font-isansdemibold text-md m-2 ${
@@ -163,12 +160,13 @@ const Login = () => {
                 )}
 
                 <View className="w-full flex-row-reverse justify-center items-center mt-5">
-                  <TouchableOpacity>
+                  <Pressable
+                    onPress={() => router.push("https://sapost.ir/postkhooneh")}
+                  >
                     <Text className="font-isansmedium text-sm text-grey2">
                       ثبت نام شناسه پستی
                     </Text>
-                    <Text>{I18nManager.isRTL ? " RTL" : " LTR"}</Text>
-                  </TouchableOpacity>
+                  </Pressable>
 
                   <View className="h-6 w-px bg-gray-400 mx-2" />
 

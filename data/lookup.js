@@ -8,7 +8,7 @@ export const complaintTypeLookup = [
   { label: "تحویل مرسوله به گیرنده غیر اصلی", value: 77 },
   { label: "سایر", value: 79 },
   { label: "اضافه دریافتی", value: 80 },
-  { label: "رخورد نامناسب", value: 81 },
+  { label: "برخورد نامناسب", value: 81 },
   { label: "سرویس اجباری", value: 84 },
   { label: "مغایرت کالا با محتوا", value: 95 },
   { label: "عدم راهنمایی و اطلاع رسانی", value: 110 },

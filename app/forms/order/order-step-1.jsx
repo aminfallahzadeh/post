@@ -287,7 +287,7 @@ const OrderStep1 = () => {
                     rules={{
                       required: {
                         value: isContentRequired,
-                        message: "این فیلد اجباری است",
+                        message: "این فیلد الزامی است",
                       },
                     }}
                     control={control}

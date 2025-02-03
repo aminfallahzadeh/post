@@ -172,7 +172,7 @@ export const FormField = ({
         ) : type !== "password" && field.value && clearBtn && editable ? (
           <Pressable
             onPress={handleRemoveField}
-            className="absolute top-[50%] left-4"
+            className="absolute top-[50%] left-2"
             style={{
               transform: [{ translateY: -12 }],
             }}

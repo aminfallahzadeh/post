@@ -11,6 +11,7 @@ export const CustomModal = ({
   title,
   description,
   onConfirm,
+  children,
 }) => {
   return (
     <Modal
@@ -36,6 +37,8 @@ export const CustomModal = ({
           <Text className="text-gray2 text-center font-isansbold text-[17px] mt-5 px-4">
             {description}
           </Text>
+
+          {children}
 
           {/* BOTTOM SECTION */}
           <View className="w-full z-10 px-4 py-4">

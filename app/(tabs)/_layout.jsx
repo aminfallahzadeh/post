@@ -6,6 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import assistant from "@/assets/images/assistant.png";
 import SettingsMenu from "@/views/SettingsMenu";
 import Feather from "@expo/vector-icons/Feather";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import {
   View,
   Text,
@@ -82,7 +83,7 @@ const TabsLayout = () => {
   }, [menuVisible, toggleMenu]);
 
   useEffect(() => {
-    if (hasAnimated) return; // Do not start the animation again if already completed
+    if (hasAnimated) return;
 
     const animatePopup = () => {
       Animated.sequence([
@@ -141,6 +142,27 @@ const TabsLayout = () => {
         }}
       >
         <Tabs.Screen
+          name="colleagues"
+          options={{
+            tabBarLabel: ({ focused }) => (
+              <Text
+                style={{
+                  color: focused ? "#164194" : "#787A8D",
+                  fontFamily: "IranSans-DemiBold",
+                  fontSize: 11,
+                  marginTop: 4,
+                }}
+              >
+                همکاران
+              </Text>
+            ),
+            tabBarIcon: ({ color, focused }) => (
+              <FontAwesome name="handshake-o" size={20} color={color} />
+            ),
+          }}
+        />
+
+        <Tabs.Screen
           name="assistant"
           options={{
             tabBarLabel: ({ focused }) => (
@@ -148,7 +170,7 @@ const TabsLayout = () => {
                 style={{
                   color: focused ? "#164194" : "#787A8D",
                   fontFamily: "IranSans-DemiBold",
-                  fontSize: 13,
+                  fontSize: 11,
                   marginTop: 4,
                 }}
               >
@@ -156,11 +178,7 @@ const TabsLayout = () => {
               </Text>
             ),
             tabBarIcon: ({ color, focused }) => (
-              <Feather
-                name="help-circle"
-                size={focused ? 28 : 22}
-                color={color}
-              />
+              <Feather name="help-circle" size={20} color={color} />
             ),
           }}
         />
@@ -173,7 +191,7 @@ const TabsLayout = () => {
                 style={{
                   color: focused ? "#164194" : "#787A8D",
                   fontFamily: "IranSans-DemiBold",
-                  fontSize: 13,
+                  fontSize: 11,
                   marginTop: 4,
                 }}
               >
@@ -181,7 +199,7 @@ const TabsLayout = () => {
               </Text>
             ),
             tabBarIcon: ({ color, focused }) => (
-              <Feather name="slash" size={focused ? 28 : 22} color={color} />
+              <Feather name="slash" size={20} color={color} />
             ),
           }}
         />
@@ -194,7 +212,7 @@ const TabsLayout = () => {
                 style={{
                   color: focused ? "#164194" : "#787A8D",
                   fontFamily: "IranSans-DemiBold",
-                  fontSize: 13,
+                  fontSize: 11,
                   marginTop: 4,
                 }}
               >
@@ -202,7 +220,7 @@ const TabsLayout = () => {
               </Text>
             ),
             tabBarIcon: ({ color, focused }) => (
-              <Feather name="map-pin" size={focused ? 28 : 22} color={color} />
+              <Feather name="map-pin" size={20} color={color} />
             ),
           }}
         />
@@ -215,7 +233,7 @@ const TabsLayout = () => {
                 style={{
                   color: focused ? "#164194" : "#787A8D",
                   fontFamily: "IranSans-DemiBold",
-                  fontSize: 13,
+                  fontSize: 11,
                   marginTop: 4,
                 }}
               >
@@ -223,7 +241,7 @@ const TabsLayout = () => {
               </Text>
             ),
             tabBarIcon: ({ color, focused }) => (
-              <Feather name="box" size={focused ? 28 : 22} color={color} />
+              <Feather name="box" size={20} color={color} />
             ),
           }}
         />
@@ -236,7 +254,7 @@ const TabsLayout = () => {
                 style={{
                   color: focused ? "#164194" : "#787A8D",
                   fontFamily: "IranSans-DemiBold",
-                  fontSize: 13,
+                  fontSize: 11,
                   marginTop: 4,
                 }}
               >
@@ -244,7 +262,7 @@ const TabsLayout = () => {
               </Text>
             ),
             tabBarIcon: ({ color, focused }) => (
-              <Feather name="home" size={focused ? 28 : 22} color={color} />
+              <Feather name="home" size={20} color={color} />
             ),
           }}
         />
