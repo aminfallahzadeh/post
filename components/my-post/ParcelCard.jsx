@@ -26,7 +26,7 @@ const ParcelCard = ({ item, loadingStates, setLoadingStates }) => {
 
   return (
     <View className="w-full">
-      <View className="bg-white rounded-md px-5 py-2 w-full">
+      <View className="bg-white rounded-md p-2 w-full">
         <View className="flex-row-reverse justify-between items-center w-full mb-2">
           <Text className="font-isansregular leading-none text-grey2 mr-2 items-center justify-center text-sm">
             نوع پیگیری :

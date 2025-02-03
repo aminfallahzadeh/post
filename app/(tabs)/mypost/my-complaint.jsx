@@ -20,7 +20,7 @@ const MyComplaint = () => {
     try {
       const response = await eopList(mobile);
       console.log("EOP LIST RESPONSE: ", response.data.itemList);
-      setList(response.data.itemList);
+      setList([...response.data.itemList].reverse());
     } finally {
       setIsLoading(false);
     }

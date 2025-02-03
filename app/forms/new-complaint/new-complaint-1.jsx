@@ -159,6 +159,18 @@ const NewComplaintStep1 = () => {
               >
                 {/* FORM FIELDS */}
                 <View className="w-full px-5">
+                  <View className="mt-5">
+                    <CustomSelect
+                      name="complaintType"
+                      control={control}
+                      rules={requiredRule}
+                      data={complaintTypeLookup}
+                      label="* نوع شکایت"
+                      errors={errors}
+                      setValue={setValue}
+                    />
+                  </View>
+
                   <FormFieldPastable
                     placeholder="بارکد پستی"
                     keyboardType="numeric"
@@ -174,18 +186,6 @@ const NewComplaintStep1 = () => {
                     containerStyle="mt-5"
                     name="serialNo"
                   />
-
-                  <View className="mt-5">
-                    <CustomSelect
-                      name="complaintType"
-                      control={control}
-                      rules={requiredRule}
-                      data={complaintTypeLookup}
-                      label="* نوع شکایت"
-                      errors={errors}
-                      setValue={setValue}
-                    />
-                  </View>
 
                   <View className="mt-5">
                     <CustomSelect

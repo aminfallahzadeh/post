@@ -1,8 +1,11 @@
 // IMPORTS
 import { View, Text, Pressable } from "react-native";
 import Feather from "@expo/vector-icons/Feather";
-import { TRACKING_CODE_COPIED_MESSAGE } from "@/constants/messages";
 import { copyPasteHandler } from "@/utils/copyPaste";
+import {
+  TRACKING_CODE_COPIED_MESSAGE,
+  BARCODE_COPIED_MESSAGE,
+} from "@/constants/messages";
 
 const ComplaintCard = ({ item, containerStyles }) => {
   // STATUS
@@ -11,7 +14,25 @@ const ComplaintCard = ({ item, containerStyles }) => {
   const error = [-1, -2];
 
   return (
-    <View className={"bg-white rounded-md px-5 py-2 w-full"}>
+    <View className={"bg-white rounded-md p-2 w-full"}>
+      <View className="flex-row-reverse justify-between items-center w-full mb-2">
+        <Text className="font-isansregular leading-none text-grey2 mr-2 items-center justify-center text-sm">
+          بارکد پستی :
+        </Text>
+
+        <View className="flex-row items-start justify-center">
+          <Pressable
+            onPress={() => copyPasteHandler(item.srial, BARCODE_COPIED_MESSAGE)}
+            className="mr-1 p-1 rounded-full bg-gray-200"
+          >
+            <Feather name="copy" size={14} color="black" />
+          </Pressable>
+          <Text className="font-isansregular leading-none text-grey2 mr-2 items-center justify-center text-sm py-1">
+            {item?.srial || "---"}
+          </Text>
+        </View>
+      </View>
+
       <View className="flex-row-reverse justify-between items-center w-full mb-2">
         <Text className="font-isansregular leading-none text-grey2 mr-2 items-center justify-center text-sm">
           کد پیگیری :
@@ -30,6 +51,15 @@ const ComplaintCard = ({ item, containerStyles }) => {
             {item?.key || "---"}
           </Text>
         </View>
+      </View>
+
+      <View className="flex-row-reverse justify-between items-center w-full mb-2">
+        <Text className="font-isansregular leading-none text-grey2 mr-2 items-center justify-center text-sm">
+          نوع شکایت :
+        </Text>
+        <Text className="font-isansregular first:leading-none text-grey2 mr-2 items-center justify-center text-sm py-1">
+          {item?.typename || "---"}
+        </Text>
       </View>
 
       <View className="flex-row-reverse justify-between items-center w-full mb-2">
