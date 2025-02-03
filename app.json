@@ -59,7 +59,8 @@
           "android": {
             "useCleartextTraffic": true,
             "enableProguardInReleaseBuilds": true,
-            "enableShrinkResourceslnReleaseBuilds": true
+            "enableShrinkResourceslnReleaseBuilds": true,
+            "useLegacyPackaging": true
           },
           "ios": {
             "flipper": true
