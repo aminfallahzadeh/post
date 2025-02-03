@@ -6,8 +6,8 @@ import { useFonts } from "expo-font";
 import { toastConfig } from "@/config/toast-config";
 import { StatusBar } from "expo-status-bar";
 import { TourGuideProvider } from "rn-tourguide";
-// import { I18nManager, Platform } from "react-native";
-// import * as Updates from "expo-updates";
+import { I18nManager, Platform } from "react-native";
+import * as Updates from "expo-updates";
 
 // Lock the layout direction to LTR
 // I18nManager.allowRTL(true);
@@ -26,13 +26,13 @@ import { TourGuideProvider } from "rn-tourguide";
 SplashScreen.preventAutoHideAsync();
 
 const RootLayout = () => {
-  //   const shouldBeRTL = false;
+  const shouldBeRTL = false;
 
-  //   if (shouldBeRTL !== I18nManager.isRTL && Platform.OS !== "web") {
-  //     I18nManager.allowRTL(shouldBeRTL);
-  //     I18nManager.forceRTL(shouldBeRTL);
-  //     Updates.reloadAsync();
-  //   }
+  if (shouldBeRTL !== I18nManager.isRTL && Platform.OS !== "web") {
+    I18nManager.allowRTL(shouldBeRTL);
+    I18nManager.forceRTL(shouldBeRTL);
+    Updates.reloadAsync();
+  }
 
   // IMPLEMENT FONTS
   const [fontsLoaded, error] = useFonts({
