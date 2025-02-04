@@ -48,12 +48,12 @@ const OrderStep4 = () => {
         typecode:
           order?.servicetype?.id === 1
             ? 11
-            : order?.servicetype.id === 4
+            : order?.servicetype.id === 5
             ? 1
             : order?.servicetype?.id === 2
             ? 19
-            : order?.servicetype?.id === 5
-            ? 27
+            : order?.servicetype?.id === 4
+            ? 19
             : 77,
         servicetype: order?.servicetype?.id,
         parceltype: order?.parceltype,

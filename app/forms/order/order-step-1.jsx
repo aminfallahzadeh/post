@@ -58,13 +58,13 @@ const OrderStep1 = () => {
     try {
       const response = await validateServiceSpec({
         typecode:
-          order.servicetype.id === 1
+          order?.servicetype.id === 1
             ? 11
             : order?.servicetype.id === 5
             ? 1
-            : order.servicetype.id === 2
+            : order?.servicetype.id === 2
             ? 19
-            : order.servicetype.id === 4
+            : order?.servicetype.id === 4
             ? 19 // سرویس امانت همان سرویس سفارشی هست فقط برای 2 کیلو به بالا می باشد
             : 77,
         servicetype: order.servicetype.id === 4 ? 2 : order.servicetype.id,
