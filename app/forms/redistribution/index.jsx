@@ -148,7 +148,7 @@ const Index = () => {
   };
 
   const toggleSwitch = () => {
-    setValue("barcode", "");
+    setValue("parcelCode", "");
     setIsEnabled((previousState) => !previousState);
   };
 
@@ -229,7 +229,7 @@ const Index = () => {
                 <View className="w-full px-5 mt-5">
                   {isEnabled ? (
                     <CustomSelect
-                      name="barcode"
+                      name="parcelCode"
                       control={control}
                       rules={requiredRule}
                       data={barcodeOptions}
@@ -244,7 +244,7 @@ const Index = () => {
                       placeholder="* بارکد مرسوله"
                       control={control}
                       rules={requiredRule}
-                      name="barcode"
+                      name="parcelCode"
                       keyboardType="numeric"
                       inputMode="numeric"
                     />
@@ -416,7 +416,7 @@ const Index = () => {
                   title="ثبت درخواست"
                   handlePress={handleSubmit(requestRedistribution)}
                   isLoading={isRequestRedistributionLoading}
-                  //   disabled={showForm ? false : true}
+                  disabled={showForm ? false : true}
                 />
               </View>
             </View>

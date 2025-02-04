@@ -105,7 +105,7 @@ const Index = () => {
   };
 
   const toggleSwitch = () => {
-    setValue("barcode", "");
+    setValue("parcelCode", "");
     setIsEnabled((previousState) => !previousState);
   };
 
