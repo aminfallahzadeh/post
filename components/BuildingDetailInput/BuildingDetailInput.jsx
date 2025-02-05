@@ -29,7 +29,7 @@ export const BuildingDetailInput = ({ items, setItems, onDeleteItem }) => {
       ...prev,
       {
         id: Math.random().toString(),
-        floorNo: parseInt(form_data.floor),
+        floorNo: form_data.floor,
         sideFloor: form_data.section,
         landUse: 0,
         text,

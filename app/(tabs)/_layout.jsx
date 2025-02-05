@@ -7,6 +7,7 @@ import assistant from "@/assets/images/assistant.png";
 import SettingsMenu from "@/views/SettingsMenu";
 import Feather from "@expo/vector-icons/Feather";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { useUserStore } from "@/store";
 import {
   View,
   Text,
@@ -27,6 +28,7 @@ const TabsLayout = () => {
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const [hasAnimated, setHasAnimated] = useState(false);
+  const userData = useUserStore((state) => state.userData);
 
   // CONSTS
   const animationValue = useRef(new Animated.Value(width)).current;
@@ -165,6 +167,8 @@ const TabsLayout = () => {
         <Tabs.Screen
           name="colleagues"
           options={{
+            href: userData?.colleague ? "/colleagues" : null,
+            tabBarStyle: userData?.colleague ? {} : { display: "none" },
             tabBarLabel: ({ focused }) => (
               <Text
                 style={{
