@@ -167,8 +167,7 @@ const TabsLayout = () => {
         <Tabs.Screen
           name="colleagues"
           options={{
-            href: userData?.colleague ? "/colleagues" : null,
-            tabBarStyle: userData?.colleague ? {} : { display: "none" },
+            href: userData?.colleague ? "(tabs)/colleagues" : null,
             tabBarLabel: ({ focused }) => (
               <Text
                 style={{
