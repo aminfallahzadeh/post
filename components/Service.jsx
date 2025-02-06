@@ -13,7 +13,17 @@ import {
   ForbiddenThingsIcon,
   ReturnIcon,
   RedistributionIcon,
-} from "@/components/SVG/Icons";
+} from "./SVG/Icons";
+import EditAddressIcon from "./SVG/icons/EditAddressIcon";
+import DistTimeIcon from "./SVG/icons/DistTimeIcon";
+import RegisterOfferIcon from "./SVG/icons/RegisterOfferIcon";
+import SecondAddressIcon from "./SVG/icons/SecondAddressIcon";
+import SignatureObserve from "./SVG/icons/SignatureObserve";
+import AppreciationIcon from "./SVG/icons/AppreciationIcon";
+import DeliveryCodeIcon from "./SVG/icons/DeliveryCodeIcon";
+import SurveyIcon from "./SVG/icons/SurveyIcon";
+import OnlineReserveIcon from "./SVG/icons/OnlineReserveIcon";
+import RegisterInfoIcon from "./SVG/icons/RegisterInfoIcon";
 import React from "react";
 
 const icons = {
@@ -29,6 +39,16 @@ const icons = {
   forbiddenThings: <ForbiddenThingsIcon />,
   return: <ReturnIcon />,
   redistribution: <RedistributionIcon />,
+  editAddress: <EditAddressIcon />,
+  distTime: <DistTimeIcon />,
+  registerOffer: <RegisterOfferIcon />,
+  secondAddress: <SecondAddressIcon />,
+  signature: <SignatureObserve />,
+  appreciation: <AppreciationIcon />,
+  deliveryCode: <DeliveryCodeIcon />,
+  survey: <SurveyIcon />,
+  onlineReserve: <OnlineReserveIcon />,
+  registerInfo: <RegisterInfoIcon />,
 };
 
 const Service = ({ item, handlePress }) => {

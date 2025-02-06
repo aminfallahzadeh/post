@@ -6,8 +6,7 @@ import { useFonts } from "expo-font";
 import { toastConfig } from "@/config/toast-config";
 import { StatusBar } from "expo-status-bar";
 import { TourGuideProvider } from "rn-tourguide";
-import { I18nManager, Platform } from "react-native";
-import * as Updates from "expo-updates";
+import { I18nManager } from "react-native";
 
 // Lock the layout direction to LTR
 I18nManager.allowRTL(false);
@@ -142,6 +141,38 @@ const RootLayout = () => {
         <Stack.Screen name="forms/return" options={{ headerShown: false }} />
         <Stack.Screen
           name="forms/redistribution"
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="forms/edit-address"
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name="forms/dist-time" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="forms/register-offer"
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="forms/second-dist"
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name="forms/signature" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="forms/appreciation"
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="forms/delivery-code"
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name="forms/survey" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="forms/online-reserve"
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="forms/register-info"
           options={{ headerShown: false }}
         />
       </Stack>
