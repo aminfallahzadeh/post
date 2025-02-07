@@ -6,6 +6,7 @@ export const allData = [
     url: "forms/order",
     nationalCodeRequired: false,
     value: "Order",
+    isDeveloping: false,
   },
   {
     id: 2,
@@ -14,6 +15,7 @@ export const allData = [
     url: "forms/postalcode-certificate",
     nationalCodeRequired: false,
     value: "Certificate",
+    isDeveloping: false,
   },
   {
     id: 3,
@@ -23,6 +25,7 @@ export const allData = [
     url: "forms/postalcode-geo",
     nationalCodeRequired: false,
     value: "Certificategeo",
+    isDeveloping: false,
   },
   {
     id: 4,
@@ -31,6 +34,7 @@ export const allData = [
     url: "forms/postalcode-request",
     nationalCodeRequired: false,
     value: "NewPostCode",
+    isDeveloping: false,
   },
   {
     id: 5,
@@ -39,6 +43,7 @@ export const allData = [
     url: "forms/post-yafte",
     nationalCodeRequired: false,
     value: "PostYafte",
+    isDeveloping: false,
   },
   {
     id: 6,
@@ -47,6 +52,7 @@ export const allData = [
     url: "forms/new-complaint",
     nationalCodeRequired: true,
     value: "EOP",
+    isDeveloping: false,
   },
   {
     id: 7,
@@ -55,6 +61,7 @@ export const allData = [
     url: "forms/gheramat",
     nationalCodeRequired: false,
     value: "Gheramat",
+    isDeveloping: false,
   },
   {
     id: 8,
@@ -63,6 +70,7 @@ export const allData = [
     icon: "ehraz",
     nationalCodeRequired: false,
     value: "Ehraz",
+    isDeveloping: false,
   },
   {
     id: 9,
@@ -71,6 +79,7 @@ export const allData = [
     icon: "nerkhname",
     nationalCodeRequired: false,
     value: "Order",
+    isDeveloping: false,
   },
   {
     id: 10,
@@ -79,6 +88,7 @@ export const allData = [
     icon: "return",
     nationalCodeRequired: false,
     value: "ReturnToSender",
+    isDeveloping: true,
   },
   {
     id: 11,
@@ -87,6 +97,7 @@ export const allData = [
     icon: "redistribution",
     nationalCodeRequired: false,
     value: "Redistribution",
+    isDeveloping: true,
   },
   {
     id: 12,
@@ -95,6 +106,7 @@ export const allData = [
     icon: "editAddress",
     nationalCodeRequired: false,
     value: null,
+    isDeveloping: true,
   },
   {
     id: 13,
@@ -103,6 +115,7 @@ export const allData = [
     icon: "distTime",
     nationalCodeRequired: false,
     value: null,
+    isDeveloping: true,
   },
   {
     id: 14,
@@ -111,6 +124,7 @@ export const allData = [
     icon: "registerOffer",
     nationalCodeRequired: false,
     value: null,
+    isDeveloping: true,
   },
   {
     id: 15,
@@ -119,6 +133,7 @@ export const allData = [
     icon: "secondAddress",
     nationalCodeRequired: false,
     value: null,
+    isDeveloping: true,
   },
   {
     id: 16,
@@ -127,6 +142,7 @@ export const allData = [
     icon: "signature",
     nationalCodeRequired: false,
     value: null,
+    isDeveloping: true,
   },
   {
     id: 17,
@@ -135,6 +151,7 @@ export const allData = [
     icon: "appreciation",
     nationalCodeRequired: false,
     value: null,
+    isDeveloping: true,
   },
   {
     id: 18,
@@ -143,6 +160,7 @@ export const allData = [
     icon: "deliveryCode",
     nationalCodeRequired: false,
     value: null,
+    isDeveloping: true,
   },
   {
     id: 19,
@@ -151,6 +169,7 @@ export const allData = [
     icon: "survey",
     nationalCodeRequired: false,
     value: null,
+    isDeveloping: true,
   },
   {
     id: 20,
@@ -159,6 +178,7 @@ export const allData = [
     icon: "onlineReserve",
     nationalCodeRequired: false,
     value: null,
+    isDeveloping: true,
   },
   {
     id: 21,
@@ -167,6 +187,7 @@ export const allData = [
     icon: "registerInfo",
     nationalCodeRequired: false,
     value: null,
+    isDeveloping: true,
   },
 ];
 
@@ -178,6 +199,7 @@ export const postalCodeServices = [
     url: "forms/postalcode-request",
     nationalCodeRequired: false,
     value: "NewPostCode",
+    isDeveloping: false,
   },
   {
     id: 2,
@@ -186,6 +208,7 @@ export const postalCodeServices = [
     url: "forms/postalcode-certificate",
     nationalCodeRequired: false,
     value: "Certificate",
+    isDeveloping: false,
   },
   {
     id: 3,
@@ -195,6 +218,7 @@ export const postalCodeServices = [
     url: "forms/postalcode-geo",
     nationalCodeRequired: false,
     value: "Certificategeo",
+    isDeveloping: false,
   },
   {
     id: 4,
@@ -203,6 +227,7 @@ export const postalCodeServices = [
     icon: "ehraz",
     nationalCodeRequired: false,
     value: "Ehraz",
+    isDeveloping: false,
   },
 ];
 
@@ -214,6 +239,7 @@ export const registerParcelServices = [
     icon: "registerInfo",
     nationalCodeRequired: false,
     value: null,
+    isDeveloping: true,
   },
   {
     id: 2,
@@ -222,6 +248,7 @@ export const registerParcelServices = [
     url: "forms/order",
     nationalCodeRequired: false,
     value: "Order",
+    isDeveloping: false,
   },
   {
     id: 3,
@@ -230,6 +257,7 @@ export const registerParcelServices = [
     icon: "nerkhname",
     nationalCodeRequired: false,
     value: "Order",
+    isDeveloping: false,
   },
   {
     id: 4,
@@ -238,6 +266,7 @@ export const registerParcelServices = [
     icon: "deliveryCode",
     nationalCodeRequired: false,
     value: null,
+    isDeveloping: true,
   },
 ];
 
@@ -249,6 +278,7 @@ export const newServices = [
     url: "forms/post-yafte",
     nationalCodeRequired: false,
     value: "PostYafte",
+    isDeveloping: false,
   },
   {
     id: 2,
@@ -257,6 +287,7 @@ export const newServices = [
     icon: "onlineReserve",
     nationalCodeRequired: false,
     value: null,
+    isDeveloping: true,
   },
 ];
 
@@ -268,6 +299,7 @@ export const customerServices = [
     icon: "survey",
     nationalCodeRequired: false,
     value: null,
+    isDeveloping: true,
   },
   {
     id: 2,
@@ -276,6 +308,7 @@ export const customerServices = [
     icon: "appreciation",
     nationalCodeRequired: false,
     value: null,
+    isDeveloping: true,
   },
   {
     id: 4,
@@ -284,6 +317,7 @@ export const customerServices = [
     url: "forms/new-complaint",
     nationalCodeRequired: true,
     value: "EOP",
+    isDeveloping: false,
   },
   {
     id: 5,
@@ -292,6 +326,7 @@ export const customerServices = [
     url: "forms/gheramat",
     nationalCodeRequired: false,
     value: "Gheramat",
+    isDeveloping: false,
   },
   {
     id: 6,
@@ -300,6 +335,7 @@ export const customerServices = [
     icon: "registerOffer",
     nationalCodeRequired: false,
     value: null,
+    isDeveloping: true,
   },
 ];
 
@@ -311,6 +347,7 @@ export const deliveryServices = [
     icon: "signature",
     nationalCodeRequired: false,
     value: null,
+    isDeveloping: true,
   },
   {
     id: 2,
@@ -319,6 +356,7 @@ export const deliveryServices = [
     icon: "redistribution",
     nationalCodeRequired: false,
     value: "Redistribution",
+    isDeveloping: true,
   },
   {
     id: 3,
@@ -327,6 +365,7 @@ export const deliveryServices = [
     icon: "secondAddress",
     nationalCodeRequired: false,
     value: null,
+    isDeveloping: true,
   },
   {
     id: 4,
@@ -335,6 +374,7 @@ export const deliveryServices = [
     icon: "return",
     nationalCodeRequired: false,
     value: "ReturnToSender",
+    isDeveloping: true,
   },
   {
     id: 5,
@@ -343,6 +383,7 @@ export const deliveryServices = [
     icon: "editAddress",
     nationalCodeRequired: false,
     value: null,
+    isDeveloping: true,
   },
   {
     id: 6,
@@ -351,5 +392,6 @@ export const deliveryServices = [
     icon: "distTime",
     nationalCodeRequired: false,
     value: null,
+    isDeveloping: true,
   },
 ];

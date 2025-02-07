@@ -1,9 +1,9 @@
 export const filtersData = [
-  //   {
-  //     id: 1,
-  //     label: "همه",
-  //     type: "ALL",
-  //   },
+  {
+    id: 1,
+    label: "همه",
+    type: "ALL",
+  },
   {
     id: 2,
     label: "کد پستی",

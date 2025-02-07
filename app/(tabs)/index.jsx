@@ -58,7 +58,7 @@ const Index = () => {
   const [barcode, setBarcode] = useState("");
   const [permission, requestPermission] = useCameraPermissions();
   const [isLoading, setIsLoading] = useState(false);
-  const [filteredItems, dispatch] = useReducer(filterReducer, "postalcode");
+  const [filteredItems, dispatch] = useReducer(filterReducer, "all");
 
   // CONSTS
   const { handleSubmit } = useForm();

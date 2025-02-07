@@ -1,5 +1,16 @@
 // IMPORTS
 import { View, Text, Pressable, StyleSheet } from "react-native";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import EditAddressIcon from "./SVG/icons/EditAddressIcon";
+import DistTimeIcon from "./SVG/icons/DistTimeIcon";
+import RegisterOfferIcon from "./SVG/icons/RegisterOfferIcon";
+import SecondAddressIcon from "./SVG/icons/SecondAddressIcon";
+import SignatureObserve from "./SVG/icons/SignatureObserve";
+import AppreciationIcon from "./SVG/icons/AppreciationIcon";
+import DeliveryCodeIcon from "./SVG/icons/DeliveryCodeIcon";
+import SurveyIcon from "./SVG/icons/SurveyIcon";
+import OnlineReserveIcon from "./SVG/icons/OnlineReserveIcon";
+import RegisterInfoIcon from "./SVG/icons/RegisterInfoIcon";
 import {
   NerkhnameIcon,
   DarkhastCodePostiIcon,
@@ -14,17 +25,6 @@ import {
   ReturnIcon,
   RedistributionIcon,
 } from "./SVG/Icons";
-import EditAddressIcon from "./SVG/icons/EditAddressIcon";
-import DistTimeIcon from "./SVG/icons/DistTimeIcon";
-import RegisterOfferIcon from "./SVG/icons/RegisterOfferIcon";
-import SecondAddressIcon from "./SVG/icons/SecondAddressIcon";
-import SignatureObserve from "./SVG/icons/SignatureObserve";
-import AppreciationIcon from "./SVG/icons/AppreciationIcon";
-import DeliveryCodeIcon from "./SVG/icons/DeliveryCodeIcon";
-import SurveyIcon from "./SVG/icons/SurveyIcon";
-import OnlineReserveIcon from "./SVG/icons/OnlineReserveIcon";
-import RegisterInfoIcon from "./SVG/icons/RegisterInfoIcon";
-import React from "react";
 
 const icons = {
   nerkhname: <NerkhnameIcon />,
@@ -55,7 +55,16 @@ const Service = ({ item, handlePress }) => {
   return (
     <Pressable key={item.id} style={styles.container} onPress={handlePress}>
       {item.icon && (
-        <View className="justify-center items-center">{icons[item.icon]}</View>
+        <View className="relative">
+          {item.isDeveloping && (
+            <View className="absolute -top-2 -left-2 z-20">
+              <MaterialIcons name="pending" size={24} color="#00075a" />
+            </View>
+          )}
+          <View className="justify-center items-center">
+            {icons[item.icon]}
+          </View>
+        </View>
       )}
       <Text style={styles.serviceText} numberOfLines={2}>
         {item.title}

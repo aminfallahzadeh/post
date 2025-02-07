@@ -55,7 +55,7 @@ const OrderStep4 = () => {
             : order?.servicetype?.id === 4
             ? 19
             : 77,
-        servicetype: order?.servicetype?.id,
+        servicetype: order?.servicetype.id === 4 ? 2 : order?.servicetype.id,
         parceltype: order?.parceltype,
         sourcecode: order?.sourcecode || "",
         destcode: order?.destcode || "",
