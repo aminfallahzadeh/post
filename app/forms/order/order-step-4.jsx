@@ -1,6 +1,5 @@
 // IMPORTS
 import { useEffect, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
 import { View, ScrollView } from "react-native";
 import { useUserStore } from "@/store";
 import Background from "@/components/Background";
@@ -23,18 +22,13 @@ const OrderStep4 = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [calculateResult, setCalculateResult] = useState(null);
   const [amountModalVisible, setAmountModalVisible] = useState(false);
+  const [specialServices, setSpecialServices] = useState([]);
 
   // CONSTS
   const order = useUserStore((state) => state.order);
   const setFactor = useUserStore((state) => state.setFactor);
   const mobile = SecureStore.getItem("mobile");
   const setOrder = useUserStore((state) => state.setOrder);
-  const { watch, handleSubmit, control } = useForm({
-    defaultValues: {
-      ...order.sender,
-    },
-  });
-  const form_data = watch();
 
   // HELPERS
   const checkSpecialService = (data, id) => data.some((item) => item.id === id);
@@ -82,27 +76,27 @@ const OrderStep4 = () => {
             : order?.parceltype === 3
             ? 3
             : 2,
-        electworeceiptant: checkSpecialService(form_data?.specialServices, 2)
+        electworeceiptant: checkSpecialService(specialServices, 2)
           ? true
           : false,
         iscot: order?.specialServices
-          ? checkSpecialService(form_data?.specialServices, 5)
+          ? checkSpecialService(specialServices, 5)
           : false,
         smsservice: order?.specialServices
-          ? checkSpecialService(form_data?.specialServices, 8)
+          ? checkSpecialService(specialServices, 8)
           : false,
-        isnonstandard: checkSpecialService(form_data?.specialServices, 3)
+        isnonstandard: checkSpecialService(specialServices, 3)
           ? true
-          : checkSpecialService(form_data?.specialServices, 4)
+          : checkSpecialService(specialServices, 4)
           ? true
-          : checkSpecialService(form_data?.specialServices, 6)
+          : checkSpecialService(specialServices, 6)
           ? true
           : false,
         contetnts: order?.contetnts || "",
         boxsize: order?.boxsize || 1,
       });
       console.log("INSERT REQUEST PRICE ORDER RESPONSE: ", response.data);
-      setOrder({ ...order, ...form_data, ...response.data.itemList[0] });
+      setOrder({ ...order, ...response.data.itemList[0] });
       setFactor({ ...response.data.itemList[0] });
       router.push(`/forms/order/order-step-5`);
     } finally {
@@ -131,13 +125,11 @@ const OrderStep4 = () => {
         sourcecode: order.sourcecode,
         destcode: order.destcode,
         weight: parseFloat(order.weight) || 0,
-        // boxsize: form_data.boxsize === undefined ? 1 : form_data.boxsize,
         boxsize: order.boxsize || 1,
       });
 
       setCalculateResult(response.data.itemList[0].data);
       console.log("PRICE RESPONSE: ", response.data);
-      //   setAmount(amount);
       setAmountModalVisible(true);
     } finally {
       setIsCalculating(false);
@@ -147,8 +139,8 @@ const OrderStep4 = () => {
   // DEBUG
   useEffect(() => {
     console.log("NERKHNAME Step 4: ", order);
-    console.log("FORM DATA: ", form_data);
-  }, [order, form_data]);
+    console.log("FORM DATA: ", specialServices);
+  }, [order, specialServices]);
 
   return (
     <>
@@ -185,32 +177,22 @@ const OrderStep4 = () => {
             />
 
             {/* FORM FIELDS */}
-
             <View className="w-full px-5 mt-10">
-              <Controller
-                name="specialServices"
-                control={control}
-                render={({ field: { onChange, value } }) => (
-                  <RadioButtons
-                    options={specialOptions}
-                    title="نوع خدمات ویژه"
-                    onChange={onChange}
-                    value={value}
-                    isMulti={true}
-                    textSize="text-sm"
-                    itemsContainerStyle={
-                      "flex-row-reverse w-full flex-wrap justify-between items-center gap-y-3"
-                    }
-                  />
-                )}
+              <RadioButtons
+                options={specialOptions}
+                title="نوع خدمات ویژه"
+                onChange={setSpecialServices}
+                value={specialServices}
+                isMulti={true}
+                textSize="text-sm"
+                itemsContainerStyle={
+                  "flex-row-reverse w-full flex-wrap justify-between items-center gap-y-3"
+                }
               />
             </View>
           </ScrollView>
 
           {/* BOTTOM SECTION */}
-          {/* <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
-          <CustomButton title="ادامه" handlePress={handleSubmit(onSubmit)} />
-        </View> */}
           <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4 flex-row">
             <View className="flex-1 mr-2">
               <CustomButton
@@ -224,7 +206,7 @@ const OrderStep4 = () => {
             <View className="flex-1 ml-2">
               <CustomButton
                 title="ثبت سفارش"
-                handlePress={handleSubmit(onSubmit)}
+                handlePress={onSubmit}
                 isLoading={isSubmitting}
                 disabled={isCalculating}
               />
