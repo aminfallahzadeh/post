@@ -88,7 +88,7 @@ export const allData = [
     icon: "return",
     nationalCodeRequired: false,
     value: "ReturnToSender",
-    isDeveloping: true,
+    isDeveloping: false,
   },
   {
     id: 11,
@@ -97,7 +97,7 @@ export const allData = [
     icon: "redistribution",
     nationalCodeRequired: false,
     value: "Redistribution",
-    isDeveloping: true,
+    isDeveloping: false,
   },
   {
     id: 12,
@@ -356,7 +356,7 @@ export const deliveryServices = [
     icon: "redistribution",
     nationalCodeRequired: false,
     value: "Redistribution",
-    isDeveloping: true,
+    isDeveloping: false,
   },
   {
     id: 3,
@@ -374,7 +374,7 @@ export const deliveryServices = [
     icon: "return",
     nationalCodeRequired: false,
     value: "ReturnToSender",
-    isDeveloping: true,
+    isDeveloping: false,
   },
   {
     id: 5,
