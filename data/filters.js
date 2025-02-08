@@ -6,7 +6,7 @@ export const filtersData = [
   },
   {
     id: 2,
-    label: "کد پستی",
+    label: "خدمات کد پستی",
     type: "POSTAL_CODE",
   },
   {

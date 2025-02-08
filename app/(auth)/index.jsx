@@ -19,7 +19,6 @@ import {
   Platform,
   Text,
   ScrollView,
-  TouchableOpacity,
   Pressable,
 } from "react-native";
 
@@ -170,11 +169,13 @@ const Login = () => {
 
                   <View className="h-6 w-px bg-gray-400 mx-2" />
 
-                  <TouchableOpacity>
+                  <Pressable
+                    onPress={() => router.push("https://sapost.ir/postkhooneh")}
+                  >
                     <Text className="font-isansmedium text-sm text-grey2">
                       فراموشی شناسه پستی
                     </Text>
-                  </TouchableOpacity>
+                  </Pressable>
                 </View>
               </View>
             </ScrollView>
