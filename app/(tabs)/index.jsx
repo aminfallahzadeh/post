@@ -107,6 +107,7 @@ const Index = () => {
 
     if (!item.value) {
       router.push(item.url);
+      setIsLoading(false);
       return;
     }
 
