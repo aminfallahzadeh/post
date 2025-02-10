@@ -11,6 +11,8 @@ import DeliveryCodeIcon from "./SVG/icons/DeliveryCodeIcon";
 import SurveyIcon from "./SVG/icons/SurveyIcon";
 import OnlineReserveIcon from "./SVG/icons/OnlineReserveIcon";
 import RegisterInfoIcon from "./SVG/icons/RegisterInfoIcon";
+import FindPostalCodeIcon from "./SVG/icons/FinPostalCodeIcon";
+import PostIdentificationIcon from "./SVG/icons/PostIdentificationIcon";
 import {
   NerkhnameIcon,
   DarkhastCodePostiIcon,
@@ -49,6 +51,8 @@ const icons = {
   survey: <SurveyIcon />,
   onlineReserve: <OnlineReserveIcon />,
   registerInfo: <RegisterInfoIcon />,
+  findPostalCode: <FindPostalCodeIcon />,
+  postIdentification: <PostIdentificationIcon />,
 };
 
 const Service = ({ item, handlePress }) => {

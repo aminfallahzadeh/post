@@ -101,6 +101,24 @@ export const allData = [
   },
   {
     id: 12,
+    title: "یافتن کد پستی",
+    url: "https://gnaf.post.ir/portal",
+    icon: "findPostalCode",
+    nationalCodeRequired: false,
+    value: null,
+    isDeveloping: false,
+  },
+  {
+    id: 13,
+    title: "ثبت شناسه پستی",
+    url: "https://sapost.ir/postkhooneh",
+    icon: "postIdentification",
+    nationalCodeRequired: false,
+    value: null,
+    isDeveloping: false,
+  },
+  {
+    id: 14,
     title: "اصلاح نشانی",
     url: "forms/edit-address",
     icon: "editAddress",
@@ -109,7 +127,7 @@ export const allData = [
     isDeveloping: true,
   },
   {
-    id: 13,
+    id: 15,
     title: "اعلام زمان توزیع (TDS)",
     url: "forms/dist-time",
     icon: "distTime",
@@ -118,7 +136,7 @@ export const allData = [
     isDeveloping: true,
   },
   {
-    id: 14,
+    id: 16,
     title: "ثبت پیشنهاد",
     url: "forms/register-offer",
     icon: "registerOffer",
@@ -127,7 +145,7 @@ export const allData = [
     isDeveloping: true,
   },
   {
-    id: 15,
+    id: 17,
     title: "توزیع در نشانی دوم",
     url: "forms/second-dist",
     icon: "secondAddress",
@@ -136,7 +154,7 @@ export const allData = [
     isDeveloping: true,
   },
   {
-    id: 16,
+    id: 18,
     title: "رویت امضاء",
     url: "forms/signature",
     icon: "signature",
@@ -145,7 +163,7 @@ export const allData = [
     isDeveloping: true,
   },
   {
-    id: 17,
+    id: 19,
     title: "ثبت تقدیر و تشکر",
     url: "forms/appreciation",
     icon: "appreciation",
@@ -154,7 +172,7 @@ export const allData = [
     isDeveloping: true,
   },
   {
-    id: 18,
+    id: 20,
     title: "نمایش کد تحویل",
     url: "forms/delivery-code",
     icon: "deliveryCode",
@@ -163,7 +181,7 @@ export const allData = [
     isDeveloping: true,
   },
   {
-    id: 19,
+    id: 21,
     title: "نظرسنجی",
     url: "forms/survey",
     icon: "survey",
@@ -172,7 +190,7 @@ export const allData = [
     isDeveloping: true,
   },
   {
-    id: 20,
+    id: 22,
     title: "نوبت دهی آنلاین",
     url: "forms/online-reserve",
     icon: "onlineReserve",
@@ -181,7 +199,7 @@ export const allData = [
     isDeveloping: true,
   },
   {
-    id: 21,
+    id: 23,
     title: "اعلام اطلاعات ثبت",
     url: "forms/register-info",
     icon: "registerInfo",
@@ -227,6 +245,15 @@ export const postalCodeServices = [
     icon: "ehraz",
     nationalCodeRequired: false,
     value: "Ehraz",
+    isDeveloping: false,
+  },
+  {
+    id: 5,
+    title: "یافتن کد پستی",
+    url: "https://gnaf.post.ir/portal",
+    icon: "findPostalCode",
+    nationalCodeRequired: false,
+    value: null,
     isDeveloping: false,
   },
 ];
@@ -336,6 +363,15 @@ export const customerServices = [
     nationalCodeRequired: false,
     value: null,
     isDeveloping: true,
+  },
+  {
+    id: 7,
+    title: "ثبت شناسه پستی",
+    url: "https://sapost.ir/postkhooneh",
+    icon: "postIdentification",
+    nationalCodeRequired: false,
+    value: null,
+    isDeveloping: false,
   },
 ];
 
