@@ -1,5 +1,5 @@
 // IMPORTS
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   View,
   FlatList,
@@ -12,8 +12,9 @@ import {
 const { width } = Dimensions.get("screen");
 
 const CarouselImages = [
-  { id: "1", image: require("@/assets/images/car-1.jpg") },
-  { id: "2", image: require("@/assets/images/car-2.jpeg") },
+  { id: "1", image: require("@/assets/images/card-1.jpg") },
+  { id: "2", image: require("@/assets/images/card-2.jpeg") },
+  { id: "3", image: require("@/assets/images/card-3.jpg") },
 ];
 
 const CustomCarousel = ({ data }) => {
