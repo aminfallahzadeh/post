@@ -157,7 +157,7 @@ const OrderStep6 = () => {
                   className="font-isansregular flex-1 text-left break-words mr-10"
                   style={{ flexWrap: "wrap" }}
                 >
-                  {factor?.sourceCityNam || "---"}
+                  {factor?.sourceCityName || "---"}
                 </Text>
               </View>
 
