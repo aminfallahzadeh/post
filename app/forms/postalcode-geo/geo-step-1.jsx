@@ -95,7 +95,7 @@ const Step2 = () => {
           keyboardShouldPersistTaps="handled"
         >
           {/* HEADER SECTION */}
-          <Title title={"گواهی کد پستی مکانی"} progress={66} home={true} />
+          <Title title={"ژئو گواهی کد پستی"} progress={66} home={true} />
 
           <TouchableOpacity
             onPress={handleSelectAll}

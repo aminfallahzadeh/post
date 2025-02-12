@@ -53,8 +53,8 @@ const Step3 = () => {
         mobile,
         paymentTypeID: "2",
         postUnitID: 2,
-        income: factor.payment,
-        tax: factor.tax,
+        income: factor.amount * factor.counter,
+        tax: factor.tax * factor.counter,
         escrow: 0,
         callBackUrl: "",
         additionalData: "string",
@@ -86,7 +86,7 @@ const Step3 = () => {
           keyboardShouldPersistTaps="handled"
         >
           {/* HEADER SECTION */}
-          <Title title={"گواهی کد پستی مکانی"} progress={100} home={true} />
+          <Title title={"ژئو گواهی کد پستی"} progress={100} home={true} />
 
           {/* RESULT FACTOR */}
           <View className="w-full px-5 mt-5">

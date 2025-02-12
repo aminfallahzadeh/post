@@ -19,7 +19,7 @@ export const allData = [
   },
   {
     id: 3,
-    title: "گواهی مکانی",
+    title: "ژئو گواهی کد پستی",
     icon: "govahiMakani",
     iconName: null,
     url: "forms/postalcode-geo",
@@ -230,7 +230,7 @@ export const postalCodeServices = [
   },
   {
     id: 3,
-    title: "گواهی مکانی",
+    title: "ژئو گواهی کد پستی",
     icon: "govahiMakani",
     iconName: null,
     url: "forms/postalcode-geo",

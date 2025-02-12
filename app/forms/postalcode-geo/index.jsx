@@ -1,15 +1,6 @@
 // IMPORTS
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import {
-  View,
-  Text,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { addressByPostCode, validatePostCode } from "@/api/gnaf";
 import { useUserStore } from "@/store";
@@ -23,6 +14,15 @@ import { postalCodeValidation } from "@/constants/validations";
 import { Title } from "@/components/Title";
 import { toastConfig } from "@/config/toast-config";
 import { Chase } from "react-native-animated-spinkit";
+import {
+  View,
+  Text,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 
 const Index = () => {
   // STATES
@@ -106,7 +106,7 @@ const Index = () => {
         >
           <View className="flex-1">
             {/* HEADER SECTION */}
-            <Title title={"گواهی کد پستی مکانی"} progress={33} home={false} />
+            <Title title={"ژئو گواهی کد پستی"} progress={33} home={false} />
 
             <ScrollView
               contentContainerStyle={{
@@ -185,6 +185,12 @@ const Index = () => {
                       </View>
                     )}
                   </View>
+                </View>
+
+                <View className="w-full mt-5 justify-center items-center">
+                  <Text className="text-red-500 font-isansregular text-sm">
+                    ** ژئو گواهی کد پستی فقط برای شهرها صادر می شود **
+                  </Text>
                 </View>
               </View>
             </ScrollView>

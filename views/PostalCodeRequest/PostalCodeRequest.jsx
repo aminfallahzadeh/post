@@ -177,7 +177,7 @@ export const PostalCodeRequest = () => {
 
             <View className="mt-5 flex-row-reverse items-center justify-start ">
               <Text
-                className={`text-center self-center font-isansdemibold text-lg ${
+                className={`text-center self-center font-isansdemibold text-lg ml-2 ${
                   state.isUrban ? "text-primary" : "text-gray-400"
                 }`}
               >
@@ -190,7 +190,7 @@ export const PostalCodeRequest = () => {
               />
 
               <Text
-                className={`text-center self-center font-isansdemibold text-lg ${
+                className={`text-center self-center font-isansdemibold text-lg mr-2 ${
                   !state.isUrban ? "text-primary" : "text-gray-400"
                 }`}
               >

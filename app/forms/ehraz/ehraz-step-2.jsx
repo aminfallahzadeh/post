@@ -60,7 +60,7 @@ const EhrazStep2 = () => {
         mobile,
         paymentTypeID: "2",
         postUnitID: 2,
-        income: factor.amount + factor.tax,
+        income: factor.amount,
         tax: factor.tax,
         escrow: 0,
         callBackUrl: "",
