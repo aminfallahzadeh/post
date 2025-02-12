@@ -135,9 +135,8 @@ const Login = () => {
                     handleChange={setPhoneNumber}
                     keyboardType="numeric"
                     inputMode="numeric"
-                    containerStyle="mt-5"
                     max={11}
-                    type="text"
+                    containerStyle="mt-5"
                     control={control}
                     name="mobile"
                     rules={mobilePhoneValidation}

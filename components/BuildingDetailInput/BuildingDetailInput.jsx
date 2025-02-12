@@ -75,7 +75,8 @@ export const BuildingDetailInput = ({ items, setItems, onDeleteItem }) => {
             <View className="w-2/5">
               <FormField
                 placeholder="طبقه"
-                keyboardType="default"
+                keyboardType="numeric"
+                inputMode="numeric"
                 type={"text"}
                 containerStyle="mt-5"
                 control={control}

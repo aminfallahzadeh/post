@@ -1,5 +1,5 @@
 // IMPORTS
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { View, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
 import { insertRequestBulk } from "@/api/request";
 import { useForm } from "react-hook-form";
@@ -13,6 +13,8 @@ import { BuildingDetailInput } from "@/components/BuildingDetailInput";
 import * as SecureStore from "expo-secure-store";
 import { Title } from "@/components/Title";
 import { requiredRule, postCodeRule } from "@/constants/validations";
+import { validatePostCode } from "@/api/gnaf";
+import { toastConfig } from "@/config/toast-config";
 
 const Step2 = () => {
   // STATES
@@ -25,7 +27,8 @@ const Step2 = () => {
   const mobile = SecureStore.getItem("mobile");
   const userAddressCodes = useUserStore((state) => state.userAddressCodes);
   const setFactor = useUserStore((state) => state.setFactor);
-  const { control, watch, handleSubmit } = useForm();
+  const { control, watch, handleSubmit, trigger, setValue } = useForm();
+  const nearestPostCode = watch("nearestPostCode");
   const form_data = watch();
 
   const deleteBuildingTypeHandler = (id) => {
@@ -75,6 +78,27 @@ const Step2 = () => {
       setIsLoading(false);
     }
   };
+
+  // EFFECTS
+  useEffect(() => {
+    const validatePostalCode = async () => {
+      const isValid = await trigger("nearestPostCode");
+      if (isValid) {
+        const validateResponse = await validatePostCode([
+          { clientRowID: 1, postCode: nearestPostCode },
+        ]);
+
+        if (!validateResponse.data.itemList[0].value) {
+          setValue("nearestPostCode", "", { shouldValidate: true });
+          toastConfig.warning("کد پستی معتبر نیست");
+        }
+      }
+    };
+
+    if (nearestPostCode) {
+      validatePostalCode();
+    }
+  }, [nearestPostCode, setValue, trigger]);
 
   return (
     <Background>
@@ -134,11 +158,12 @@ const Step2 = () => {
 
                 <FormField
                   placeholder="شماره تلفن ثابت"
-                  keyboardType="numeric"
                   containerStyle="mt-5"
-                  type={"text"}
                   control={control}
                   name="tel"
+                  keyboardType="numeric"
+                  inputMode="numeric"
+                  max={8}
                 />
 
                 <FormField
@@ -168,10 +193,11 @@ const Step2 = () => {
                 <FormField
                   placeholder="نزدیکترین کد پستی"
                   keyboardType="numeric"
+                  inputMode="numeric"
                   containerStyle="mt-5"
                   rules={postCodeRule}
-                  type={"text"}
                   control={control}
+                  max={10}
                   name="nearestPostCode"
                 />
 

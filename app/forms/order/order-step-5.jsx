@@ -11,7 +11,6 @@ import CustomButton from "@/components/CustomButton";
 
 const OrderStep6 = () => {
   // CONSTS
-  const order = useUserStore((state) => state.order);
   const factor = useUserStore((state) => state.factor);
   const setOrder = useUserStore((state) => state.setOrder);
   const setFactor = useUserStore((state) => state.setFactor);
@@ -117,7 +116,7 @@ const OrderStep6 = () => {
                   فرستنده
                 </Text>
                 <Text className="font-isansregular">
-                  {factor?.sendername + " " + order?.senderLastname || "---"}
+                  {factor?.sendername || "---"}
                 </Text>
               </View>
 
@@ -135,8 +134,7 @@ const OrderStep6 = () => {
                   گیرنده
                 </Text>
                 <Text className="font-isansregular">
-                  {factor?.receivername + " " + order?.receiverLastname ||
-                    "---"}
+                  {factor?.receivername || "---"}
                 </Text>
               </View>
 

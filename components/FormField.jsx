@@ -141,6 +141,7 @@ export const FormField = ({
               placeholderTextColor="transparent"
               onChangeText={(text) => {
                 if (keyboardType === "default" && /[a-zA-Z0-9]/.test(text)) {
+                  field.onChange("");
                   toastConfig.warning("لطفا از کیبورد فارسی استفاده کنید");
                 } else {
                   field.onChange(text);
