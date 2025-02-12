@@ -1,5 +1,4 @@
 // IMPORTS
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { View, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -24,7 +23,6 @@ const Index = () => {
 
   // CONSTS
   const {
-    watch,
     handleSubmit,
     control,
     formState: { errors },
@@ -36,17 +34,11 @@ const Index = () => {
       nationalCodeOrId: userData?.nationalCode,
     },
   });
-  const form_data = watch();
 
   const onSubmit = (data) => {
     setEhrazFormData(data);
     router.push("forms/ehraz/ehraz-step-1");
   };
-
-  // DEBUG
-  useEffect(() => {
-    console.log(form_data);
-  }, [form_data]);
 
   return (
     <Background>

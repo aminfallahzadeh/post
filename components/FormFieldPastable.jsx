@@ -1,8 +1,9 @@
 // IMPORTS
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useController } from "react-hook-form";
 import Feather from "@expo/vector-icons/Feather";
 import { View, Text, TextInput, Animated, Pressable } from "react-native";
+import { toastConfig } from "@/config/toast-config";
 
 export const FormFieldPastable = ({
   title,
@@ -28,7 +29,6 @@ export const FormFieldPastable = ({
   // STATES
   const [showPassword, setShowPassword] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
-  const inputRef = useRef(null);
   const placeholderAnimation = useState(new Animated.Value(0))[0];
 
   // CONSTS
@@ -60,13 +60,6 @@ export const FormFieldPastable = ({
   });
 
   // HANDLERS
-  // HANDLE REACT NATIVE MESS
-  const focusInput = () => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  };
-
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -136,7 +129,13 @@ export const FormFieldPastable = ({
             className={`flex-1 w-full text-grey2 font-isansdemibold text-sm`}
             value={field.value}
             placeholderTextColor="transparent"
-            onChangeText={field.onChange}
+            onChangeText={(text) => {
+              if (keyboardType === "default" && /[a-zA-Z0-9]/.test(text)) {
+                toastConfig.warning("لطفا از کیبورد فارسی استفاده کنید");
+              } else {
+                field.onChange(text);
+              }
+            }}
             onFocus={handleFocus}
             onBlur={handleBlur}
             style={[inputStyle]}

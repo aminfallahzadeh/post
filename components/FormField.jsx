@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { useController } from "react-hook-form";
 import Feather from "@expo/vector-icons/Feather";
 import { View, Text, TextInput, Animated, Pressable } from "react-native";
+import { toastConfig } from "@/config/toast-config";
 
 export const FormField = ({
   title,
@@ -138,7 +139,13 @@ export const FormField = ({
               className={`flex-1 w-full text-grey2 font-isansdemibold text-sm`}
               value={field.value}
               placeholderTextColor="transparent"
-              onChangeText={field.onChange}
+              onChangeText={(text) => {
+                if (keyboardType === "default" && /[a-zA-Z0-9]/.test(text)) {
+                  toastConfig.warning("لطفا از کیبورد فارسی استفاده کنید");
+                } else {
+                  field.onChange(text);
+                }
+              }}
               onFocus={handleFocus}
               onBlur={handleBlur}
               style={[inputStyle]}

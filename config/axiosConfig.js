@@ -165,7 +165,9 @@ axiosInstance.interceptors.response.use(
 
     if (error.response) {
       console.error("Response error:", error.response);
-      toastConfig.error(error.response.data.message || "خطایی رخ داده است");
+      toastConfig.error(
+        error.response.data.message || "خطایی رخ داده است. لطفا مجددا تلاش کنید"
+      );
     } else {
       toastConfig.error("خطا در برقراری ارتباط");
     }

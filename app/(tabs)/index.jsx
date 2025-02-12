@@ -220,7 +220,7 @@ const Index = () => {
             </View>
           </View>
         </TourGuideZone>
-        <View className="mt-5">
+        <View>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -232,6 +232,13 @@ const Index = () => {
             }}
             style={{
               transform: [{ scaleX: -1 }],
+              elevation: 2,
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.2,
+              shadowRadius: 4,
+              backgroundColor: "#f6f6f6",
+              paddingVertical: 8,
             }}
           >
             {filtersData.map((service) => (
