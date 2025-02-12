@@ -1,16 +1,9 @@
 // IMPORTS
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useForm } from "react-hook-form";
-import {
-  View,
-  ScrollView,
-  Text,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "@/components/CustomButton";
-import { addressStringByPostCode } from "@/api/gnaf";
+import { addressStringByPostCode, addressByPostCode } from "@/api/gnaf";
 import { router } from "expo-router";
 import Background from "@/components/Background";
 import { useUserStore } from "@/store";
@@ -22,6 +15,13 @@ import RNBounceable from "@freakycoder/react-native-bounceable";
 import { insertRequestEhraz } from "@/api/request";
 import * as SecureStore from "expo-secure-store";
 import { lastStreetRules } from "@/constants/validations";
+import {
+  View,
+  ScrollView,
+  Text,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 
 const EhrazStep1 = () => {
   // STATES
@@ -30,6 +30,7 @@ const EhrazStep1 = () => {
   const [confirmed, setConfirmed] = useState(false);
   const bouncyCheckboxRef = useRef(null);
   const confirmedCheckboxRef = useRef(null);
+  const [canAddHouseNumber, setCanAddHouseNumber] = useState(false);
 
   // CONSTS
   const ehrazFormData = useUserStore((state) => state.ehrazFormData);
@@ -66,6 +67,16 @@ const EhrazStep1 = () => {
         postCode,
       },
     ];
+    const houseNumberCheckResponse = await addressByPostCode(data);
+    console.log("UNIT CHECK RESPONSE: ", houseNumberCheckResponse.data);
+    const houseNumber =
+      houseNumberCheckResponse.data.itemList[0].data[0].result.houseNumber;
+    if (!houseNumber) {
+      setCanAddHouseNumber(true);
+    } else {
+      setCanAddHouseNumber(false);
+    }
+
     const response = await addressStringByPostCode(data);
     console.log("ADDRESS STRING RESPONSE: ", response.data);
     if (response.data.itemList[0].resMsg === "موفق") {
@@ -115,7 +126,6 @@ const EhrazStep1 = () => {
   useEffect(() => {
     const validateAndFetch = async () => {
       const isValid = await trigger("postCode");
-      console.log("IS VALID: ", isValid);
       if (isValid) {
         fetchAddress();
       }
@@ -218,7 +228,7 @@ const EhrazStep1 = () => {
                       keyboardType="numeric"
                       inputMode="numeric"
                       containerStyle="mt-5"
-                      editable={checked}
+                      editable={checked && canAddHouseNumber}
                       control={control}
                       name="buildingNumber"
                     />

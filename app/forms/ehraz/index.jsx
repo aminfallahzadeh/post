@@ -10,7 +10,7 @@ import CustomSelect from "@/components/CustomSelect";
 import { useUserStore } from "@/store";
 import { Title } from "@/components/Title";
 import FormField from "@/components/FormField";
-import { requiredRule, nationalCodeRule } from "@/constants/validations";
+import { requiredRule } from "@/constants/validations";
 import {
   applicantTypeOptions,
   genderOptions,
@@ -112,13 +112,13 @@ const Index = () => {
                 />
 
                 <FormField
-                  placeholder="شماره ملی"
+                  placeholder="کد ملی"
                   keyboardType="numeric"
                   inputMode="numeric"
                   containerStyle="mt-5"
-                  rules={nationalCodeRule}
                   control={control}
                   name="nationalCodeOrId"
+                  editable={false}
                 />
 
                 <View className="mt-5">

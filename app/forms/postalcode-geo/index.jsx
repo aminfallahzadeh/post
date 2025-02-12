@@ -68,8 +68,18 @@ const Index = () => {
       const response = await validatePostCode(data);
 
       if (response.data.itemList[0].value) {
-        setPostalCodes([...postalCodes, form_data.postalCode]);
-        setValue("postalCode", "");
+        const urbanCheckResponse = await addressByPostCode(data);
+        console.log("URBAN CHECK RESPONSE: ", urbanCheckResponse);
+        const localityType =
+          urbanCheckResponse.data.itemList[0].data[0].result.localityType;
+
+        if (localityType === "شهر") {
+          setPostalCodes([...postalCodes, form_data.postalCode]);
+          setValue("postalCode", "");
+        } else {
+          toastConfig.warning("ژئو گواهی کد پستی فقط برای شهرها صادر می شود");
+          return;
+        }
       } else {
         toastConfig.warning("کد پستی معتبر نیست");
       }

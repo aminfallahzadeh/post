@@ -63,6 +63,7 @@ const Index = () => {
   // CONSTS
   const { handleSubmit } = useForm();
   const canStartTour = useUserStore((state) => state.canStartTour);
+  const userData = useUserStore((state) => state.userData);
   const { canStart, start, eventEmitter } = useTourGuideController();
   const setCopilotShouldStart = useUserStore(
     (state) => state.setCopilotShouldStart
@@ -103,8 +104,14 @@ const Index = () => {
   }, [canStart, copilotShouldStart]);
 
   const handlePressService = async (item) => {
-    setIsLoading(true);
+    if (item.nationalCodeRequired) {
+      if (!userData.nationalCode) {
+        toastConfig.warning("لطفا کد ملی خود را ثبت کنید");
+        return;
+      }
+    }
 
+    setIsLoading(true);
     if (!item.value) {
       router.push(item.url);
       setIsLoading(false);
