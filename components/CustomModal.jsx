@@ -1,7 +1,15 @@
 // IMPORTS
-import { View, Text, StyleSheet, Dimensions, Modal } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  Modal,
+  Pressable,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import CustomButton from "./CustomButton";
+import Feather from "@expo/vector-icons/Feather";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -23,6 +31,14 @@ export const CustomModal = ({
     >
       <View style={styles.overlay}>
         <View style={styles.modalContainer}>
+          {closeModal && (
+            <View className="absolute right-2 top-2">
+              <Pressable onPress={closeModal}>
+                <Feather name="x-circle" size={28} color="red" />
+              </Pressable>
+            </View>
+          )}
+
           <Text className="text-primary text-center font-isansdemibold text-[20px] mt-5">
             {title}
           </Text>
@@ -41,12 +57,14 @@ export const CustomModal = ({
           {children}
 
           {/* BOTTOM SECTION */}
-          <View className="w-full z-10 px-4 py-4">
-            <CustomButton
-              title="تایید"
-              handlePress={onConfirm ? onConfirm : closeModal}
-            />
-          </View>
+          {onConfirm && (
+            <View className="w-full z-10 px-4 py-4">
+              <CustomButton
+                title="تایید"
+                handlePress={onConfirm ? onConfirm : closeModal}
+              />
+            </View>
+          )}
         </View>
       </View>
     </Modal>

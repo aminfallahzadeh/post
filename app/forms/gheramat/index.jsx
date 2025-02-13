@@ -1,6 +1,6 @@
 // IMPORTS
 import { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import {
   View,
   ScrollView,
@@ -27,6 +27,7 @@ import {
   postCodeRule,
   shebaRule,
 } from "@/constants/validations";
+import { CustomModal } from "@/components/CustomModal";
 import { bitkindOptions, changeCostOptions } from "@/data/gheramatData";
 import { mobilePhoneValidation } from "@/constants/validations";
 import { validatePostCode } from "@/api/gnaf";
@@ -43,6 +44,7 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [imageBase64, setImageBase64] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
+  const [visible, setVisible] = useState(false);
 
   // CONSTS
   const setGheramatResult = useUserStore((state) => state.setGheramatResult);
@@ -68,17 +70,33 @@ const Index = () => {
   const postalcode = watch("postalcode");
 
   // HANDLERS
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ["images"],
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-      base64: true,
-    });
+  const handleUploadButtonClick = () => {
+    setVisible(true);
+  };
+
+  const pickImage = async (type) => {
+    let result;
+
+    if (type === "gallery") {
+      setVisible(false);
+      result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ["images"],
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+        base64: true,
+      });
+    } else {
+      setVisible(false);
+      result = await ImagePicker.launchCameraAsync({
+        base64: true,
+        aspect: [4, 3],
+        quality: 1,
+        allowsEditing: true,
+      });
+    }
 
     console.log(result);
-
     if (!result.canceled) {
       setImageBase64(result.assets[0].base64);
       setImagePreview(result.assets[0].uri);
@@ -157,184 +175,208 @@ const Index = () => {
   }, [postalcode, setValue, trigger]);
 
   return (
-    <Background>
-      <SafeAreaView className="h-full">
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : undefined}
-          style={{ flex: 1 }}
-        >
-          <View className="flex-1">
-            {/* HEADER SECTION */}
-            <Title title={"درخواست غرامت"} progress={50} home={false} />
+    <>
+      <CustomModal
+        visible={visible}
+        setVisible={setVisible}
+        title={"روش بارگذاری را انتخاب کنید"}
+        closeModal={() => setVisible(false)}
+      >
+        <View className="w-full flex-row px-4">
+          <View className="flex-1 mr-2">
+            <CustomButton
+              title="دوربین"
+              handlePress={() => pickImage("camera")}
+            />
+          </View>
 
-            <ScrollView
-              contentContainerStyle={{
-                flexGrow: 1,
-                paddingBottom: 90,
-              }}
-              showsVerticalScrollIndicator={false}
-              keyboardShouldPersistTaps="handled"
-              //   stickyHeaderIndices={[0]}
-            >
-              {/* FORM FIELDS */}
-              <View className="w-full px-5">
-                <FormField
-                  placeholder="نام"
-                  value={userData?.name || "-"}
-                  editable={false}
-                  containerStyle="mt-5"
-                  control={control}
-                  name="customerName"
-                />
+          <View className="flex-1 ml-2">
+            <CustomButton
+              title="گالری تصاویر"
+              handlePress={() => pickImage("gallery")}
+            />
+          </View>
+        </View>
+      </CustomModal>
 
-                <FormField
-                  placeholder="نام خانوادگی"
-                  value={userData?.lastName || "-"}
-                  editable={false}
-                  containerStyle="mt-5"
-                  control={control}
-                  name="customerFamily"
-                />
+      <Background>
+        <SafeAreaView className="h-full">
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : undefined}
+            style={{ flex: 1 }}
+          >
+            <View className="flex-1">
+              {/* HEADER SECTION */}
+              <Title title={"درخواست غرامت"} progress={50} home={false} />
 
-                <FormField
-                  placeholder="کد ملی"
-                  type={"text"}
-                  rules={nationalCodeRule}
-                  value={userData?.nationalCode || "-"}
-                  editable={false}
-                  containerStyle="mt-5"
-                  control={control}
-                  name="nationalID"
-                />
-
-                <FormField
-                  placeholder="موبایل"
-                  value={mobile || "-"}
-                  editable={false}
-                  containerStyle="mt-5"
-                  control={control}
-                  name="mobile"
-                />
-
-                <FormField
-                  placeholder="* شماره مرسوله"
-                  keyboardType="numeric"
-                  inputMode="numeric"
-                  rules={requiredRule}
-                  containerStyle="mt-5"
-                  control={control}
-                  name="parcellno"
-                />
-
-                <FormField
-                  placeholder={"تلفن"}
-                  keyboardType="numeric"
-                  inputMode="numeric"
-                  max={11}
-                  containerStyle="mt-5"
-                  control={control}
-                  name="tellno"
-                  rules={mobilePhoneValidation}
-                />
-
-                <FormField
-                  placeholder="کد پستی"
-                  keyboardType="numeric"
-                  inputMode="numeric"
-                  containerStyle="mt-5"
-                  rules={postCodeRule}
-                  control={control}
-                  max={10}
-                  name="postalcode"
-                />
-
-                <View className="mt-5">
-                  <CustomSelect
-                    name="bitkind"
+              <ScrollView
+                contentContainerStyle={{
+                  flexGrow: 1,
+                  paddingBottom: 90,
+                }}
+                showsVerticalScrollIndicator={false}
+                keyboardShouldPersistTaps="handled"
+                //   stickyHeaderIndices={[0]}
+              >
+                {/* FORM FIELDS */}
+                <View className="w-full px-5">
+                  <FormField
+                    placeholder="نام"
+                    value={userData?.name || "-"}
+                    editable={false}
+                    containerStyle="mt-5"
                     control={control}
-                    data={bitkindOptions}
-                    label="نوع غرامت"
-                    errors={errors}
-                    setValue={setValue}
-                    disabled={true}
+                    name="customerName"
                   />
-                </View>
 
-                <FormField
-                  placeholder={"ارزش مرسوله"}
-                  keyboardType="numeric"
-                  inputMode="numeric"
-                  containerStyle="mt-5"
-                  control={control}
-                  name="parcellcost"
-                  rules={requiredRule}
-                />
-
-                <View className="mt-5">
-                  <CustomSelect
-                    name="modcostallow"
+                  <FormField
+                    placeholder="نام خانوادگی"
+                    value={userData?.lastName || "-"}
+                    editable={false}
+                    containerStyle="mt-5"
                     control={control}
-                    data={changeCostOptions}
-                    label="امکان تغییر ارزش مرسوله توسط پست"
-                    errors={errors}
-                    setValue={setValue}
+                    name="customerFamily"
                   />
-                </View>
 
-                <FormField
-                  placeholder={"شماره شبا"}
-                  keyboardType="numeric"
-                  inputMode="numeric"
-                  containerStyle="mt-5"
-                  control={control}
-                  max={26}
-                  name="shebano"
-                  rules={{ ...requiredRule, ...shebaRule }}
-                />
+                  <FormField
+                    placeholder="کد ملی"
+                    type={"text"}
+                    rules={nationalCodeRule}
+                    value={userData?.nationalCode || "-"}
+                    editable={false}
+                    containerStyle="mt-5"
+                    control={control}
+                    name="nationalID"
+                  />
 
-                <FormField
-                  placeholder="نام صاحب شماره شبا"
-                  containerStyle="mt-5"
-                  control={control}
-                  name="shebaownname"
-                />
+                  <FormField
+                    placeholder="موبایل"
+                    value={mobile || "-"}
+                    editable={false}
+                    containerStyle="mt-5"
+                    control={control}
+                    name="mobile"
+                  />
 
-                <View style={styles.container}>
-                  <View className="mt-5 w-full">
-                    <CustomButton
-                      title="* بارگذاری تصویر فاکتور"
-                      bgColor="bg-secondary"
-                      height="h-10"
-                      titleColor="text-grey2"
-                      handlePress={pickImage}
+                  <FormField
+                    placeholder="* شماره مرسوله"
+                    keyboardType="numeric"
+                    inputMode="numeric"
+                    rules={requiredRule}
+                    containerStyle="mt-5"
+                    control={control}
+                    name="parcellno"
+                  />
+
+                  <FormField
+                    placeholder={"تلفن"}
+                    keyboardType="numeric"
+                    inputMode="numeric"
+                    max={11}
+                    containerStyle="mt-5"
+                    control={control}
+                    name="tellno"
+                    rules={mobilePhoneValidation}
+                  />
+
+                  <FormField
+                    placeholder="کد پستی"
+                    keyboardType="numeric"
+                    inputMode="numeric"
+                    containerStyle="mt-5"
+                    rules={postCodeRule}
+                    control={control}
+                    max={10}
+                    name="postalcode"
+                  />
+
+                  <View className="mt-5">
+                    <CustomSelect
+                      name="bitkind"
+                      control={control}
+                      data={bitkindOptions}
+                      label="نوع غرامت"
+                      errors={errors}
+                      setValue={setValue}
+                      disabled={true}
                     />
                   </View>
-                  {imagePreview && (
-                    <Image
-                      source={{ uri: imagePreview }}
-                      style={styles.image}
+
+                  <FormField
+                    placeholder={"ارزش مرسوله"}
+                    keyboardType="numeric"
+                    inputMode="numeric"
+                    containerStyle="mt-5"
+                    control={control}
+                    name="parcellcost"
+                    rules={requiredRule}
+                  />
+
+                  <View className="mt-5">
+                    <CustomSelect
+                      name="modcostallow"
+                      control={control}
+                      data={changeCostOptions}
+                      label="امکان تغییر ارزش مرسوله توسط پست"
+                      errors={errors}
+                      setValue={setValue}
                     />
-                  )}
-                </View>
+                  </View>
 
-                <FormField
-                  placeholder="* آدرس"
-                  multiline={true}
-                  rules={requiredRule}
-                  keyboardType="default"
-                  containerStyle="mt-5"
-                  search={true}
-                  height="h-32 align-top"
-                  inputStyle={{
-                    textAlignVertical: "top",
-                    textAlign: "right",
-                    paddingTop: 20,
-                  }}
-                  control={control}
-                  name="addr"
-                />
+                  <FormField
+                    placeholder={"شماره شبا"}
+                    keyboardType="numeric"
+                    inputMode="numeric"
+                    containerStyle="mt-5"
+                    control={control}
+                    max={26}
+                    name="shebano"
+                    rules={{ ...requiredRule, ...shebaRule }}
+                  />
 
-                {/* <View className="mt-5">
+                  <FormField
+                    placeholder="نام صاحب شماره شبا"
+                    containerStyle="mt-5"
+                    control={control}
+                    name="shebaownname"
+                  />
+
+                  <View style={styles.container}>
+                    <View className="mt-5 w-full">
+                      <CustomButton
+                        title="* بارگذاری تصویر فاکتور"
+                        bgColor="bg-secondary"
+                        height="h-10"
+                        titleColor="text-grey2"
+                        handlePress={handleUploadButtonClick}
+                      />
+                    </View>
+                    {imagePreview && (
+                      <Image
+                        source={{ uri: imagePreview }}
+                        style={styles.image}
+                      />
+                    )}
+                  </View>
+
+                  <FormField
+                    placeholder="* آدرس"
+                    multiline={true}
+                    rules={requiredRule}
+                    keyboardType="default"
+                    containerStyle="mt-5"
+                    search={true}
+                    height="h-32 align-top"
+                    inputStyle={{
+                      textAlignVertical: "top",
+                      textAlign: "right",
+                      paddingTop: 20,
+                    }}
+                    control={control}
+                    name="addr"
+                  />
+
+                  {/* <View className="mt-5">
                   <CustomSelect
                     name="serviceKind"
                     control={control}
@@ -347,7 +389,7 @@ const Index = () => {
                   />
                 </View> */}
 
-                {/* <View className="mt-5">
+                  {/* <View className="mt-5">
                   <CustomSelect
                     name="province"
                     control={control}
@@ -360,21 +402,22 @@ const Index = () => {
                     isLoading={isProvinceLoading}
                   />
                 </View> */}
-              </View>
-            </ScrollView>
+                </View>
+              </ScrollView>
 
-            {/* BOTTOM SECTION */}
-            <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
-              <CustomButton
-                title="ادامه"
-                handlePress={handleSubmit(onSubmit)}
-                isLoading={isLoading}
-              />
+              {/* BOTTOM SECTION */}
+              <View className="w-full absolute bottom-0 z-10 px-4 bg-gray-100 py-4">
+                <CustomButton
+                  title="ادامه"
+                  handlePress={handleSubmit(onSubmit)}
+                  isLoading={isLoading}
+                />
+              </View>
             </View>
-          </View>
-        </KeyboardAvoidingView>
-      </SafeAreaView>
-    </Background>
+          </KeyboardAvoidingView>
+        </SafeAreaView>
+      </Background>
+    </>
   );
 };
 
