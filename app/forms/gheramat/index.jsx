@@ -128,23 +128,18 @@ const Index = () => {
   };
 
   const onSubmit = async (data) => {
-    if (!imageBase64) {
-      toastConfig.warning("لطفا تصویر فاکتور را بارگذاری کنید");
-      return;
-    } else {
-      setIsLoading(true);
-      try {
-        const response = await insertRequestGheramat({
-          ...data,
-          img64base: imageBase64 ? imageBase64 : "",
-        });
-        console.log("GHERAMAT RESPONSE: ", response.data);
-        setGheramatResult(response.data.itemList[0]);
-        router.push("forms/gheramat/gheramat-step-1");
-        reset();
-      } finally {
-        setIsLoading(false);
-      }
+    setIsLoading(true);
+    try {
+      const response = await insertRequestGheramat({
+        ...data,
+        img64base: imageBase64 ? imageBase64 : "",
+      });
+      console.log("GHERAMAT RESPONSE: ", response.data);
+      setGheramatResult(response.data.itemList[0]);
+      router.push("forms/gheramat/gheramat-step-1");
+      reset();
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -156,20 +151,23 @@ const Index = () => {
 
   useEffect(() => {
     const validatePostalCode = async () => {
-      const isValid = await trigger("nearestPostCode");
+      const isValid = await trigger("postalcode");
+      console.log("IS VALID:", isValid);
       if (isValid) {
         const validateResponse = await validatePostCode([
           { clientRowID: 1, postCode: postalcode },
         ]);
 
+        console.log(!validateResponse.data.itemList[0].value);
+
         if (!validateResponse.data.itemList[0].value) {
-          setValue("nearestPostCode", "", { shouldValidate: true });
+          setValue("postalcode", "", { shouldValidate: true });
           toastConfig.warning("کد پستی معتبر نیست");
         }
       }
     };
 
-    if (postalcode) {
+    if (postalcode && postalcode.length === 10) {
       validatePostalCode();
     }
   }, [postalcode, setValue, trigger]);
@@ -276,7 +274,7 @@ const Index = () => {
                     containerStyle="mt-5"
                     control={control}
                     name="tellno"
-                    rules={mobilePhoneValidation}
+                    // rules={mobilePhoneValidation}
                   />
 
                   <FormField
@@ -344,7 +342,7 @@ const Index = () => {
                   <View style={styles.container}>
                     <View className="mt-5 w-full">
                       <CustomButton
-                        title="* بارگذاری تصویر فاکتور"
+                        title="بارگذاری تصویر فاکتور"
                         bgColor="bg-secondary"
                         height="h-10"
                         titleColor="text-grey2"

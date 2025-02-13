@@ -131,7 +131,7 @@ const EhrazStep1 = () => {
       }
     };
 
-    if (postCode) {
+    if (postCode && postCode.length === 10) {
       validateAndFetch();
     }
   }, [postCode, trigger, fetchAddress]);
