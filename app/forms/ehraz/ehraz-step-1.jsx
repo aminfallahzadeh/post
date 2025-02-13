@@ -68,7 +68,7 @@ const EhrazStep1 = () => {
       },
     ];
     const houseNumberCheckResponse = await addressByPostCode(data);
-    console.log("UNIT CHECK RESPONSE: ", houseNumberCheckResponse.data);
+    console.log("UNIT CHECK RESPONSE:", houseNumberCheckResponse.data);
     const houseNumber =
       houseNumberCheckResponse.data.itemList[0].data[0].result.houseNumber;
     if (!houseNumber) {

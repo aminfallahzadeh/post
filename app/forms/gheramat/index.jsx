@@ -1,7 +1,15 @@
 // IMPORTS
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { View, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
+import {
+  View,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+  Button,
+  Image,
+  StyleSheet,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useUserStore } from "@/store";
 import { router } from "expo-router";
@@ -13,8 +21,18 @@ import CustomSelect from "@/components/CustomSelect";
 import { optionsGenerator } from "@/helpers/selectHelper";
 import { getProvince, getServiceType } from "@/api/gheramat";
 import { insertRequestGheramat } from "@/api/request";
-import { nationalCodeRule, requiredRule } from "@/constants/validations";
+import {
+  nationalCodeRule,
+  requiredRule,
+  postCodeRule,
+  shebaRule,
+} from "@/constants/validations";
+import { bitkindOptions, changeCostOptions } from "@/data/gheramatData";
+import { mobilePhoneValidation } from "@/constants/validations";
+import { validatePostCode } from "@/api/gnaf";
 import { Title } from "@/components/Title";
+import { toastConfig } from "@/config/toast-config";
+import * as ImagePicker from "expo-image-picker";
 
 const Index = () => {
   // STATES
@@ -23,6 +41,8 @@ const Index = () => {
   const [isProvinceLoading, setIsProvinceLoading] = useState(false);
   const [provinceOptions, setProvinceOptions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [imageBase64, setImageBase64] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
 
   // CONSTS
   const setGheramatResult = useUserStore((state) => state.setGheramatResult);
@@ -35,10 +55,36 @@ const Index = () => {
     formState: { errors },
     setValue,
     reset,
-  } = useForm();
-  const form_data = watch();
+    trigger,
+  } = useForm({
+    values: {
+      mobile,
+      bitkind: 3,
+      customerName: userData.name,
+      customerFamily: userData.lastName,
+      nationalID: userData.nationalCode,
+    },
+  });
+  const postalcode = watch("postalcode");
 
   // HANDLERS
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ["images"],
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+      base64: true,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImageBase64(result.assets[0].base64);
+      setImagePreview(result.assets[0].uri);
+    }
+  };
+
   const fetchServiceType = async () => {
     setIsServiceLoading(true);
     try {
@@ -63,24 +109,24 @@ const Index = () => {
     }
   };
 
-  const onSubmit = async () => {
-    setIsLoading(true);
-    try {
-      const response = await insertRequestGheramat({
-        parcellno: form_data.parcellno,
-        serviceKind: form_data.serviceKind,
-        province: parseInt(form_data.province),
-        mobile,
-        customerName: userData.name,
-        customerFamily: userData.lastName,
-        nationalID: userData.nationalCode,
-      });
-      console.log("GHERAMAT RESPONSE: ", response.data);
-      setGheramatResult(response.data.itemList[0]);
-      router.push("forms/gheramat/gheramat-step-1");
-      reset();
-    } finally {
-      setIsLoading(false);
+  const onSubmit = async (data) => {
+    if (!imageBase64) {
+      toastConfig.warning("لطفا تصویر فاکتور را بارگذاری کنید");
+      return;
+    } else {
+      setIsLoading(true);
+      try {
+        const response = await insertRequestGheramat({
+          ...data,
+          img64base: imageBase64 ? imageBase64 : "",
+        });
+        console.log("GHERAMAT RESPONSE: ", response.data);
+        setGheramatResult(response.data.itemList[0]);
+        router.push("forms/gheramat/gheramat-step-1");
+        reset();
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -89,6 +135,26 @@ const Index = () => {
     fetchProvince();
     fetchServiceType();
   }, []);
+
+  useEffect(() => {
+    const validatePostalCode = async () => {
+      const isValid = await trigger("nearestPostCode");
+      if (isValid) {
+        const validateResponse = await validatePostCode([
+          { clientRowID: 1, postCode: postalcode },
+        ]);
+
+        if (!validateResponse.data.itemList[0].value) {
+          setValue("nearestPostCode", "", { shouldValidate: true });
+          toastConfig.warning("کد پستی معتبر نیست");
+        }
+      }
+    };
+
+    if (postalcode) {
+      validatePostalCode();
+    }
+  }, [postalcode, setValue, trigger]);
 
   return (
     <Background>
@@ -118,7 +184,7 @@ const Index = () => {
                   editable={false}
                   containerStyle="mt-5"
                   control={control}
-                  name="name"
+                  name="customerName"
                 />
 
                 <FormField
@@ -127,7 +193,7 @@ const Index = () => {
                   editable={false}
                   containerStyle="mt-5"
                   control={control}
-                  name="lastname"
+                  name="customerFamily"
                 />
 
                 <FormField
@@ -138,11 +204,11 @@ const Index = () => {
                   editable={false}
                   containerStyle="mt-5"
                   control={control}
-                  name="nationalCode"
+                  name="nationalID"
                 />
 
                 <FormField
-                  placeholder="تلفن"
+                  placeholder="موبایل"
                   value={mobile || "-"}
                   editable={false}
                   containerStyle="mt-5"
@@ -160,7 +226,115 @@ const Index = () => {
                   name="parcellno"
                 />
 
+                <FormField
+                  placeholder={"تلفن"}
+                  keyboardType="numeric"
+                  inputMode="numeric"
+                  max={11}
+                  containerStyle="mt-5"
+                  control={control}
+                  name="tellno"
+                  rules={mobilePhoneValidation}
+                />
+
+                <FormField
+                  placeholder="کد پستی"
+                  keyboardType="numeric"
+                  inputMode="numeric"
+                  containerStyle="mt-5"
+                  rules={postCodeRule}
+                  control={control}
+                  max={10}
+                  name="postalcode"
+                />
+
                 <View className="mt-5">
+                  <CustomSelect
+                    name="bitkind"
+                    control={control}
+                    data={bitkindOptions}
+                    label="نوع غرامت"
+                    errors={errors}
+                    setValue={setValue}
+                    disabled={true}
+                  />
+                </View>
+
+                <FormField
+                  placeholder={"ارزش مرسوله"}
+                  keyboardType="numeric"
+                  inputMode="numeric"
+                  containerStyle="mt-5"
+                  control={control}
+                  name="parcellcost"
+                  rules={requiredRule}
+                />
+
+                <View className="mt-5">
+                  <CustomSelect
+                    name="modcostallow"
+                    control={control}
+                    data={changeCostOptions}
+                    label="امکان تغییر ارزش مرسوله توسط پست"
+                    errors={errors}
+                    setValue={setValue}
+                  />
+                </View>
+
+                <FormField
+                  placeholder={"شماره شبا"}
+                  keyboardType="numeric"
+                  inputMode="numeric"
+                  containerStyle="mt-5"
+                  control={control}
+                  max={26}
+                  name="shebano"
+                  rules={{ ...requiredRule, ...shebaRule }}
+                />
+
+                <FormField
+                  placeholder="نام صاحب شماره شبا"
+                  containerStyle="mt-5"
+                  control={control}
+                  name="shebaownname"
+                />
+
+                <View style={styles.container}>
+                  <View className="mt-5 w-full">
+                    <CustomButton
+                      title="* بارگذاری تصویر فاکتور"
+                      bgColor="bg-secondary"
+                      height="h-10"
+                      titleColor="text-grey2"
+                      handlePress={pickImage}
+                    />
+                  </View>
+                  {imagePreview && (
+                    <Image
+                      source={{ uri: imagePreview }}
+                      style={styles.image}
+                    />
+                  )}
+                </View>
+
+                <FormField
+                  placeholder="* آدرس"
+                  multiline={true}
+                  rules={requiredRule}
+                  keyboardType="default"
+                  containerStyle="mt-5"
+                  search={true}
+                  height="h-32 align-top"
+                  inputStyle={{
+                    textAlignVertical: "top",
+                    textAlign: "right",
+                    paddingTop: 20,
+                  }}
+                  control={control}
+                  name="addr"
+                />
+
+                {/* <View className="mt-5">
                   <CustomSelect
                     name="serviceKind"
                     control={control}
@@ -171,9 +345,9 @@ const Index = () => {
                     setValue={setValue}
                     isLoading={isServiceLoading}
                   />
-                </View>
+                </View> */}
 
-                <View className="mt-5">
+                {/* <View className="mt-5">
                   <CustomSelect
                     name="province"
                     control={control}
@@ -185,7 +359,7 @@ const Index = () => {
                     setValue={setValue}
                     isLoading={isProvinceLoading}
                   />
-                </View>
+                </View> */}
               </View>
             </ScrollView>
 
@@ -205,3 +379,16 @@ const Index = () => {
 };
 
 export default Index;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  image: {
+    width: 200,
+    height: 200,
+    marginTop: 5,
+  },
+});

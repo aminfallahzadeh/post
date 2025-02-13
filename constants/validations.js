@@ -238,3 +238,16 @@ export const barcodeRule = {
     message: "بارکد پستی معتبر نیست",
   },
 };
+
+// SHEBA RILES
+
+export const shebaRule = {
+  minLength: {
+    value: 26,
+    message: "شماره شبا معتبر نیست",
+  },
+  maxLength: {
+    value: 26,
+    message: "شماره شبا معتبر نیست",
+  },
+};

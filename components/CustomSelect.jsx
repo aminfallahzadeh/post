@@ -96,7 +96,8 @@ const CustomSelect = ({
               value={value}
               renderLeftIcon={() =>
                 value &&
-                setValue && (
+                setValue &&
+                !disabled && (
                   <Pressable
                     onPress={() => {
                       onClear?.();
