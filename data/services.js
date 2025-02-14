@@ -7,6 +7,7 @@ export const allData = [
     nationalCodeRequired: false,
     value: "Order",
     isDeveloping: false,
+    tour: "امکان ثبت مرسولات جهت ارسال توسط فرستنده مرسوله بر اساس نوع سرویس و مقصد مطابق با نظر ایشان",
   },
   {
     id: 2,
@@ -16,6 +17,7 @@ export const allData = [
     nationalCodeRequired: false,
     value: "Certificate",
     isDeveloping: false,
+    tour: "با استفاده از این خدمت می توانید گواهی کدپستی را به صورت برخط دریافت کنید",
   },
   {
     id: 3,
@@ -26,6 +28,7 @@ export const allData = [
     nationalCodeRequired: false,
     value: "Certificategeo",
     isDeveloping: false,
+    tour: "با استفاده از این خدمت می توانید ژئو گواهی کدپستی(گواهی کد پستی حاوی کروکی نقشه ساختمان مربوطه) را به صورت برخط دریافت کنید",
   },
   {
     id: 4,
@@ -35,6 +38,7 @@ export const allData = [
     nationalCodeRequired: false,
     value: "NewPostCode",
     isDeveloping: false,
+    tour: "ثبت درخواست کد پستی جدید برای اماکن به صورت آنلاین",
   },
   {
     id: 5,
@@ -44,6 +48,7 @@ export const allData = [
     nationalCodeRequired: false,
     value: "PostYafte",
     isDeveloping: false,
+    tour: "امکان رهگیری و تحویل مرسولات مفقودی که به صندوق یا واحدهای پستی تحویل گردیده است",
   },
   {
     id: 6,
@@ -53,6 +58,7 @@ export const allData = [
     nationalCodeRequired: true,
     value: "EOP",
     isDeveloping: false,
+    tour: "ایجاد بستر ثبت شکایت توسط مشتریان",
   },
   {
     id: 7,
@@ -62,6 +68,7 @@ export const allData = [
     nationalCodeRequired: false,
     value: "Gheramat",
     isDeveloping: false,
+    tour: "امکان اخذ غرامت توسط مشتری جهت مرسولاتی که طی عملیات پستی مفقود یا معیوب گردیده است",
   },
   {
     id: 8,
@@ -71,6 +78,7 @@ export const allData = [
     nationalCodeRequired: true,
     value: "Ehraz",
     isDeveloping: false,
+    tour: "سرویس احراز نشانی، خدمتی است که متقاضیان برای اثبات ارتباط خود با نشانی اعلام شده به یکی از دستگاه ها یا سازمان های دولتی یا خصوصی از آن استفاده می نمایند. خروجی این خدمت الکترونیک، تاییدیه الکترونیکی ارسال شده به سازمان متقاضی می باشد و در صورتی که شما نیاز به برگه فیزیکی یا فایل قابل چاپ تاییدیه کد پستی و نشانی استاندارد دارید، می توانید از سرویس صدور گواهی کد پستی استفاده نمایید",
   },
   {
     id: 9,
@@ -80,6 +88,7 @@ export const allData = [
     nationalCodeRequired: false,
     value: "Order",
     isDeveloping: false,
+    tour: "امکان اخذ هزینه مرسولات پستی بر اساس نوع سرویس و مقاصد به صورت برخط",
   },
   {
     id: 10,
@@ -89,6 +98,7 @@ export const allData = [
     nationalCodeRequired: false,
     value: "ReturnToSender",
     isDeveloping: false,
+    tour: "امکان برگشت مرسولات ارسالی توسط فرستنده مرسوله",
   },
   {
     id: 11,
@@ -98,6 +108,7 @@ export const allData = [
     nationalCodeRequired: false,
     value: "Redistribution",
     isDeveloping: false,
+    tour: "امکان توزیع مجدد مرسولاتی که در باجه معطله قرار دارند",
   },
   {
     id: 12,
@@ -107,6 +118,7 @@ export const allData = [
     nationalCodeRequired: false,
     value: null,
     isDeveloping: false,
+    tour: null,
   },
   {
     id: 13,
@@ -116,6 +128,7 @@ export const allData = [
     nationalCodeRequired: false,
     value: null,
     isDeveloping: false,
+    tour: null,
   },
   {
     id: 14,
@@ -125,6 +138,7 @@ export const allData = [
     nationalCodeRequired: false,
     value: null,
     isDeveloping: true,
+    tour: "امکان تغییر نشانی مرسولات پستی جهت توزیع",
   },
   {
     id: 15,
@@ -134,6 +148,7 @@ export const allData = [
     nationalCodeRequired: false,
     value: null,
     isDeveloping: true,
+    tour: null,
   },
   {
     id: 16,
@@ -143,6 +158,7 @@ export const allData = [
     nationalCodeRequired: false,
     value: null,
     isDeveloping: true,
+    tour: null,
   },
   {
     id: 17,
@@ -152,6 +168,7 @@ export const allData = [
     nationalCodeRequired: false,
     value: null,
     isDeveloping: true,
+    tour: null,
   },
   {
     id: 18,
@@ -161,6 +178,7 @@ export const allData = [
     nationalCodeRequired: false,
     value: null,
     isDeveloping: true,
+    tour: null,
   },
   {
     id: 19,
@@ -170,6 +188,7 @@ export const allData = [
     nationalCodeRequired: false,
     value: null,
     isDeveloping: true,
+    tour: null,
   },
   {
     id: 20,
@@ -179,6 +198,7 @@ export const allData = [
     nationalCodeRequired: false,
     value: null,
     isDeveloping: true,
+    tour: null,
   },
   {
     id: 21,
@@ -188,6 +208,7 @@ export const allData = [
     nationalCodeRequired: false,
     value: null,
     isDeveloping: true,
+    tour: null,
   },
   {
     id: 22,
@@ -197,6 +218,7 @@ export const allData = [
     nationalCodeRequired: false,
     value: null,
     isDeveloping: true,
+    tour: null,
   },
   {
     id: 23,
@@ -206,6 +228,7 @@ export const allData = [
     nationalCodeRequired: false,
     value: null,
     isDeveloping: true,
+    tour: null,
   },
 ];
 
@@ -218,6 +241,7 @@ export const postalCodeServices = [
     nationalCodeRequired: false,
     value: "NewPostCode",
     isDeveloping: false,
+    tour: null,
   },
   {
     id: 2,
@@ -227,6 +251,7 @@ export const postalCodeServices = [
     nationalCodeRequired: false,
     value: "Certificate",
     isDeveloping: false,
+    tour: null,
   },
   {
     id: 3,
@@ -237,6 +262,7 @@ export const postalCodeServices = [
     nationalCodeRequired: false,
     value: "Certificategeo",
     isDeveloping: false,
+    tour: null,
   },
   {
     id: 4,
@@ -246,6 +272,7 @@ export const postalCodeServices = [
     nationalCodeRequired: true,
     value: "Ehraz",
     isDeveloping: false,
+    tour: null,
   },
   {
     id: 5,
@@ -255,6 +282,7 @@ export const postalCodeServices = [
     nationalCodeRequired: false,
     value: null,
     isDeveloping: false,
+    tour: null,
   },
 ];
 
@@ -267,6 +295,7 @@ export const registerParcelServices = [
     nationalCodeRequired: false,
     value: null,
     isDeveloping: true,
+    tour: null,
   },
   {
     id: 2,
@@ -276,6 +305,7 @@ export const registerParcelServices = [
     nationalCodeRequired: false,
     value: "Order",
     isDeveloping: false,
+    tour: null,
   },
   {
     id: 3,
@@ -285,6 +315,7 @@ export const registerParcelServices = [
     nationalCodeRequired: false,
     value: "Order",
     isDeveloping: false,
+    tour: null,
   },
   {
     id: 4,
@@ -294,6 +325,7 @@ export const registerParcelServices = [
     nationalCodeRequired: false,
     value: null,
     isDeveloping: true,
+    tour: null,
   },
 ];
 
@@ -306,6 +338,7 @@ export const newServices = [
     nationalCodeRequired: false,
     value: "PostYafte",
     isDeveloping: false,
+    tour: null,
   },
   {
     id: 2,
@@ -315,6 +348,7 @@ export const newServices = [
     nationalCodeRequired: false,
     value: null,
     isDeveloping: true,
+    tour: null,
   },
 ];
 
@@ -327,6 +361,7 @@ export const customerServices = [
     nationalCodeRequired: false,
     value: null,
     isDeveloping: true,
+    tour: null,
   },
   {
     id: 2,
@@ -336,6 +371,7 @@ export const customerServices = [
     nationalCodeRequired: false,
     value: null,
     isDeveloping: true,
+    tour: null,
   },
   {
     id: 4,
@@ -345,6 +381,7 @@ export const customerServices = [
     nationalCodeRequired: true,
     value: "EOP",
     isDeveloping: false,
+    tour: null,
   },
   {
     id: 5,
@@ -354,6 +391,7 @@ export const customerServices = [
     nationalCodeRequired: false,
     value: "Gheramat",
     isDeveloping: false,
+    tour: null,
   },
   {
     id: 6,
@@ -363,6 +401,7 @@ export const customerServices = [
     nationalCodeRequired: false,
     value: null,
     isDeveloping: true,
+    tour: null,
   },
   {
     id: 7,
@@ -372,6 +411,7 @@ export const customerServices = [
     nationalCodeRequired: false,
     value: null,
     isDeveloping: false,
+    tour: null,
   },
 ];
 
@@ -384,6 +424,7 @@ export const deliveryServices = [
     nationalCodeRequired: false,
     value: null,
     isDeveloping: true,
+    tour: null,
   },
   {
     id: 2,
@@ -393,6 +434,7 @@ export const deliveryServices = [
     nationalCodeRequired: false,
     value: "Redistribution",
     isDeveloping: false,
+    tour: null,
   },
   {
     id: 3,
@@ -402,6 +444,7 @@ export const deliveryServices = [
     nationalCodeRequired: false,
     value: null,
     isDeveloping: true,
+    tour: null,
   },
   {
     id: 4,
@@ -411,6 +454,7 @@ export const deliveryServices = [
     nationalCodeRequired: false,
     value: "ReturnToSender",
     isDeveloping: false,
+    tour: null,
   },
   {
     id: 5,
@@ -420,6 +464,7 @@ export const deliveryServices = [
     nationalCodeRequired: false,
     value: null,
     isDeveloping: true,
+    tour: null,
   },
   {
     id: 6,
@@ -429,5 +474,6 @@ export const deliveryServices = [
     nationalCodeRequired: false,
     value: null,
     isDeveloping: true,
+    tour: null,
   },
 ];

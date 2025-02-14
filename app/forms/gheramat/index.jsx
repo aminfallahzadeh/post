@@ -82,7 +82,7 @@ const Index = () => {
       result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ["images"],
         allowsEditing: true,
-        aspect: [4, 3],
+        aspect: [4, 6],
         quality: 1,
         base64: true,
       });
@@ -90,7 +90,7 @@ const Index = () => {
       setVisible(false);
       result = await ImagePicker.launchCameraAsync({
         base64: true,
-        aspect: [4, 3],
+        aspect: [4, 6],
         quality: 1,
         allowsEditing: true,
       });

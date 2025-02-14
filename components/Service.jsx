@@ -13,6 +13,7 @@ import OnlineReserveIcon from "./SVG/icons/OnlineReserveIcon";
 import RegisterInfoIcon from "./SVG/icons/RegisterInfoIcon";
 import FindPostalCodeIcon from "./SVG/icons/FinPostalCodeIcon";
 import PostIdentificationIcon from "./SVG/icons/PostIdentificationIcon";
+import { TourGuideZone } from "rn-tourguide";
 import {
   NerkhnameIcon,
   DarkhastCodePostiIcon,
@@ -56,25 +57,54 @@ const icons = {
 };
 
 const Service = ({ item, handlePress }) => {
-  return (
-    <Pressable key={item.id} style={styles.container} onPress={handlePress}>
-      {item.icon && (
-        <View className="relative">
-          {item.isDeveloping && (
-            <View className="absolute -top-2 -left-2 z-20">
-              <MaterialIcons name="pending" size={24} color="#00075a" />
+  if (item.tour) {
+    return (
+      <Pressable key={item.id} style={styles.container} onPress={handlePress}>
+        <TourGuideZone
+          zone={item.id + 2}
+          shape="rectangle"
+          text={item.tour}
+          borderRadius={16}
+        >
+          {item.icon && (
+            <View className="relative">
+              {item.isDeveloping && (
+                <View className="absolute -top-2 -left-2 z-20">
+                  <MaterialIcons name="pending" size={24} color="#00075a" />
+                </View>
+              )}
+              <View className="justify-center items-center">
+                {icons[item.icon]}
+              </View>
             </View>
           )}
-          <View className="justify-center items-center">
-            {icons[item.icon]}
+          <Text style={styles.serviceText} numberOfLines={2}>
+            {item.title}
+          </Text>
+        </TourGuideZone>
+      </Pressable>
+    );
+  } else {
+    return (
+      <Pressable key={item.id} style={styles.container} onPress={handlePress}>
+        {item.icon && (
+          <View className="relative">
+            {item.isDeveloping && (
+              <View className="absolute -top-2 -left-2 z-20">
+                <MaterialIcons name="pending" size={24} color="#00075a" />
+              </View>
+            )}
+            <View className="justify-center items-center">
+              {icons[item.icon]}
+            </View>
           </View>
-        </View>
-      )}
-      <Text style={styles.serviceText} numberOfLines={2}>
-        {item.title}
-      </Text>
-    </Pressable>
-  );
+        )}
+        <Text style={styles.serviceText} numberOfLines={2}>
+          {item.title}
+        </Text>
+      </Pressable>
+    );
+  }
 };
 
 export default Service;
