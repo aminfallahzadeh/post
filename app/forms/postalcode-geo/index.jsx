@@ -49,6 +49,11 @@ const Index = () => {
 
   // HANDLERS
   const addPostalCodeHandler = async () => {
+    if (postalCodes.length === 10) {
+      toastConfig.warning("حداکثر 10 کد پستی می توانید اضافه کنید");
+      return;
+    }
+
     const validations = postalCodeValidation(form_data);
 
     for (let validation of validations) {

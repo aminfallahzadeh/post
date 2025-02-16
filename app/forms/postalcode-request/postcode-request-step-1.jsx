@@ -12,7 +12,11 @@ import { useUserStore } from "@/store";
 import { BuildingDetailInput } from "@/components/BuildingDetailInput";
 import * as SecureStore from "expo-secure-store";
 import { Title } from "@/components/Title";
-import { requiredRule, postCodeRule } from "@/constants/validations";
+import {
+  requiredRule,
+  postCodeRule,
+  normalPhoneRule,
+} from "@/constants/validations";
 import { validatePostCode } from "@/api/gnaf";
 import { toastConfig } from "@/config/toast-config";
 
@@ -163,7 +167,7 @@ const Step2 = () => {
                   name="tel"
                   keyboardType="numeric"
                   inputMode="numeric"
-                  max={8}
+                  rules={normalPhoneRule}
                 />
 
                 <FormField

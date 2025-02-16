@@ -159,7 +159,7 @@ const Login = () => {
 
                 <View className="w-full flex-row-reverse justify-center items-center mt-5">
                   <Pressable
-                    onPress={() => router.push("https://sapost.ir/postkhooneh")}
+                    onPress={() => router.push("https://postid.post.ir:9090/")}
                   >
                     <Text className="font-isansmedium text-sm text-grey2">
                       ثبت نام شناسه پستی

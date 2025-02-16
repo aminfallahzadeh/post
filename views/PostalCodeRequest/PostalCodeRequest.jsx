@@ -108,8 +108,8 @@ export const PostalCodeRequest = () => {
 
   // DEBUG
   useEffect(() => {
-    console.log("FORM_DATA:", form_data);
-  }, [form_data]);
+    console.log("REQUEST STATES:", state);
+  }, [state]);
 
   return (
     <Background>
@@ -185,7 +185,7 @@ export const PostalCodeRequest = () => {
               </Text>
 
               <CustomSwitch
-                onValueChange={changeModeHandler}
+                onToggle={changeModeHandler}
                 value={state.isUrban}
               />
 

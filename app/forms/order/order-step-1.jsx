@@ -73,7 +73,7 @@ const OrderStep1 = () => {
         boxsize: form_data.boxsize || 1,
         insurancetype: form_data.insurancetype,
         insuranceamount: form_data.insuranceamount || 0,
-        Contetnts: form_data.contetnts,
+        contetnts: form_data.contetnts || "",
       });
       if (response.data.status) {
         setOrder({ ...order, ...form_data });
@@ -142,8 +142,7 @@ const OrderStep1 = () => {
   // DEBUG
   useEffect(() => {
     console.log("FORM DATA: ", form_data);
-    console.log("IS CONTENT REQUIRED: ", isContentRequired);
-  }, [form_data, isContentRequired]);
+  }, [form_data]);
 
   return (
     <>

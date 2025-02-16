@@ -96,12 +96,51 @@ const Index = () => {
       });
     }
 
-    console.log(result);
+    console.log("RESULT", result);
+
     if (!result.canceled) {
+      const imageSize = result.assets[0]?.fileSize || 0;
+
+      console.log("IMAGE SIZE: ", imageSize);
+
+      if (imageSize > 5 * 1024 * 1024) {
+        toastConfig.warning("حجم تصویر نباید بیشتر از 5 مگابایت باشد");
+        return;
+      }
+
       setImageBase64(result.assets[0].base64);
       setImagePreview(result.assets[0].uri);
     }
   };
+
+  //   const pickImage = async (type) => {
+  //     let result;
+
+  //     if (type === "gallery") {
+  //       setVisible(false);
+  //       result = await ImagePicker.launchImageLibraryAsync({
+  //         mediaTypes: ["images"],
+  //         allowsEditing: true,
+  //         aspect: [4, 6],
+  //         quality: 1,
+  //         base64: true,
+  //       });
+  //     } else {
+  //       setVisible(false);
+  //       result = await ImagePicker.launchCameraAsync({
+  //         base64: true,
+  //         aspect: [4, 6],
+  //         quality: 1,
+  //         allowsEditing: true,
+  //       });
+  //     }
+
+  //     console.log(result);
+  //     if (!result.canceled) {
+  //       setImageBase64(result.assets[0].base64);
+  //       setImagePreview(result.assets[0].uri);
+  //     }
+  //   };
 
   const fetchServiceType = async () => {
     setIsServiceLoading(true);
@@ -128,6 +167,11 @@ const Index = () => {
   };
 
   const onSubmit = async (data) => {
+    if (!imageBase64) {
+      toastConfig.warning("لطفا تصویر فاکتور را بارگذاری کنید");
+      return;
+    }
+
     setIsLoading(true);
     try {
       const response = await insertRequestGheramat({
@@ -267,7 +311,7 @@ const Index = () => {
                   />
 
                   <FormField
-                    placeholder={"تلفن"}
+                    placeholder={"تلفن ثابت"}
                     keyboardType="numeric"
                     inputMode="numeric"
                     max={11}
@@ -342,7 +386,7 @@ const Index = () => {
                   <View style={styles.container}>
                     <View className="mt-5 w-full">
                       <CustomButton
-                        title="بارگذاری تصویر فاکتور"
+                        title="* بارگذاری تصویر فاکتور"
                         bgColor="bg-secondary"
                         height="h-10"
                         titleColor="text-grey2"

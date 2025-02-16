@@ -113,7 +113,7 @@ export const allData = [
   {
     id: 12,
     title: "یافتن کد پستی",
-    url: "https://gnaf.post.ir/portal",
+    url: "https://gnaf2.post.ir/",
     icon: "findPostalCode",
     nationalCodeRequired: false,
     value: null,
@@ -123,7 +123,7 @@ export const allData = [
   {
     id: 13,
     title: "ثبت شناسه پستی",
-    url: "https://sapost.ir/postkhooneh",
+    url: "https://postid.post.ir:9090/",
     icon: "postIdentification",
     nationalCodeRequired: false,
     value: null,
@@ -277,7 +277,7 @@ export const postalCodeServices = [
   {
     id: 5,
     title: "یافتن کد پستی",
-    url: "https://gnaf.post.ir/portal",
+    url: "https://gnaf2.post.ir/",
     icon: "findPostalCode",
     nationalCodeRequired: false,
     value: null,
@@ -406,7 +406,7 @@ export const customerServices = [
   {
     id: 7,
     title: "ثبت شناسه پستی",
-    url: "https://sapost.ir/postkhooneh",
+    url: "https://postid.post.ir:9090/",
     icon: "postIdentification",
     nationalCodeRequired: false,
     value: null,

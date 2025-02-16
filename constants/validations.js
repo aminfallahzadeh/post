@@ -251,3 +251,16 @@ export const shebaRule = {
     message: "شماره شبا معتبر نیست",
   },
 };
+
+// NORMAL PHONE RULES
+
+export const normalPhoneRule = {
+  minLength: {
+    value: 8,
+    message: "شماره تلفن معتبر نیست",
+  },
+  maxLength: {
+    value: 8,
+    message: "شماره تلفن معتبر نیست",
+  },
+};

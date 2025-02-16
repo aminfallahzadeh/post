@@ -47,6 +47,7 @@ const NewComplaintStep1 = () => {
     setValue,
     trigger,
     formState: { errors },
+    unregister,
   } = useForm();
   const form_data = watch();
 
@@ -76,6 +77,8 @@ const NewComplaintStep1 = () => {
       const response = await newEop({
         ...complaintData,
         ...form_data,
+        serialNo: form_data.serialNo ? form_data.serialNo : "",
+        serviceId: form_data.serviceId ? form_data.serviceId : 106,
       });
       console.log("Customer profile response", response);
       showMessage({
@@ -103,12 +106,14 @@ const NewComplaintStep1 = () => {
   useEffect(() => {
     if (form_data.complaintType) {
       if ([81, 110].includes(form_data.complaintType)) {
+        unregister("serialNo");
+        unregister("serviceId");
         setIsBarcodeRequired(false);
       } else {
         setIsBarcodeRequired(true);
       }
     }
-  }, [form_data.complaintType]);
+  }, [form_data.complaintType, unregister]);
 
   useEffect(() => {
     trigger("serialNo");
@@ -171,33 +176,38 @@ const NewComplaintStep1 = () => {
                     />
                   </View>
 
-                  <FormFieldPastable
-                    placeholder="بارکد پستی"
-                    keyboardType="numeric"
-                    inputMode="numeric"
-                    control={control}
-                    rules={{
-                      ...barcodeRule,
-                      required: {
-                        value: isBarcodeRequired,
-                        message: "این فیلد الزامی است",
-                      },
-                    }}
-                    containerStyle="mt-5"
-                    name="serialNo"
-                  />
+                  {form_data.complaintType !== 81 &&
+                    form_data.complaintType !== 110 && (
+                      <>
+                        <FormFieldPastable
+                          placeholder="بارکد پستی"
+                          keyboardType="numeric"
+                          inputMode="numeric"
+                          control={control}
+                          rules={{
+                            ...barcodeRule,
+                            required: {
+                              value: isBarcodeRequired,
+                              message: "این فیلد الزامی است",
+                            },
+                          }}
+                          containerStyle="mt-5"
+                          name="serialNo"
+                        />
 
-                  <View className="mt-5">
-                    <CustomSelect
-                      name="serviceId"
-                      control={control}
-                      rules={requiredRule}
-                      data={serviceTypeLookup}
-                      label="* نوع سرویس"
-                      errors={errors}
-                      setValue={setValue}
-                    />
-                  </View>
+                        <View className="mt-5">
+                          <CustomSelect
+                            name="serviceId"
+                            control={control}
+                            rules={requiredRule}
+                            data={serviceTypeLookup}
+                            label="* نوع سرویس"
+                            errors={errors}
+                            setValue={setValue}
+                          />
+                        </View>
+                      </>
+                    )}
 
                   <View className="mt-5">
                     <CustomSelect

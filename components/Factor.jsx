@@ -5,7 +5,6 @@ import { separateByThousand } from "@/utils/numberSeparator";
 
 export const Factor = ({ data }) => {
   const date = new Date(data.date);
-  const postalCodes = data?.title?.split(",");
 
   return (
     <View
@@ -66,13 +65,13 @@ export const Factor = ({ data }) => {
         />
       </View>
 
-      {postalCodes && (
+      {data.units && (
         <>
           <View className="flex-row-reverse justify-between w-full items-center">
             <Text className="font-isansdemibold text-grey2 text-[15px]">
               تعداد کد پستی
             </Text>
-            <Text className="font-isansregular">{postalCodes.length} عدد</Text>
+            <Text className="font-isansregular">{data.units.length} عدد</Text>
           </View>
           <View className="mt-2 mb-2 w-full">
             <LinearGradient

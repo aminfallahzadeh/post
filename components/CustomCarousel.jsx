@@ -13,7 +13,7 @@ const { width } = Dimensions.get("screen");
 
 const CarouselImages = [
   { id: "1", image: require("@/assets/images/card-1.jpg") },
-  { id: "2", image: require("@/assets/images/card-2.jpeg") },
+  //   { id: "2", image: require("@/assets/images/card-2.jpeg") },
   { id: "3", image: require("@/assets/images/card-3.jpg") },
 ];
 
