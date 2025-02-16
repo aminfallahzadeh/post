@@ -4,7 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { separateByThousand } from "@/utils/numberSeparator";
 
 export const Factor = ({ data }) => {
-  const date = new Date(data.date);
+  //   const date = new Date(data.date);
 
   return (
     <View
@@ -37,9 +37,7 @@ export const Factor = ({ data }) => {
         <Text className="font-isansdemibold text-grey2 text-[15px]">
           تاریخ صدور درخواست
         </Text>
-        <Text className="font-isansregular">{`${date.getFullYear()}/${
-          date.getMonth() + 1
-        }/${date.getDate()}`}</Text>
+        <Text className="font-isansregular">{data?.date}</Text>
       </View>
 
       <View className="mt-2 mb-2 w-full">

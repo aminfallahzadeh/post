@@ -286,7 +286,7 @@ export const PostalCodeRequest = () => {
                     name="villageID"
                     control={control}
                     rules={requiredRule}
-                    data={state.options.village}
+                    data={state.options.village || []}
                     label={VILLAGE}
                     errors={errors}
                     //   setValue={setValue}

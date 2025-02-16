@@ -7,6 +7,7 @@ import FormField from "@/components/FormField";
 import { useForm, Controller } from "react-hook-form";
 import RadioButtons from "@/components/RadioButtons";
 import { buildingTypeOptions } from "@/data/buildingType";
+import { toastConfig } from "@/config/toast-config";
 import Card from "./Card";
 
 export const BuildingDetailInput = ({ items, setItems, onDeleteItem }) => {
@@ -21,6 +22,11 @@ export const BuildingDetailInput = ({ items, setItems, onDeleteItem }) => {
   };
 
   const addBuildingTypeHandler = () => {
+    if (!form_data.floor || !form_data.section || !form_data.buildingType) {
+      toastConfig.warning("لطفا تمامی فیلدهای واحد را پر کنید");
+      return;
+    }
+
     const text = `طبقه ${form_data.floor || "--"} ٬ واحد ${
       form_data.section || "--"
     }٬ ${form_data.buildingType?.label || "--"}`;
