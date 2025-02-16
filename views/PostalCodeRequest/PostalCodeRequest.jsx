@@ -111,6 +111,13 @@ export const PostalCodeRequest = () => {
     console.log("REQUEST STATES:", state);
   }, [state]);
 
+  // EFFECTS
+  useEffect(() => {
+    if (!state.isUrban && form_data.countyID) {
+      fetchData("zone", { countyID: form_data.countyID });
+    }
+  }, [form_data.countyID, fetchData, state.isUrban]);
+
   return (
     <Background>
       <SafeAreaView className="h-full">
