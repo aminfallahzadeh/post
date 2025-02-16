@@ -12,7 +12,7 @@ import Card from "./Card";
 export const BuildingDetailInput = ({ items, setItems, onDeleteItem }) => {
   const [addMode, setAddMode] = useState(false);
 
-  const { control, watch } = useForm();
+  const { control, watch, reset } = useForm();
   const form_data = watch();
 
   // HANDLERS
@@ -35,6 +35,7 @@ export const BuildingDetailInput = ({ items, setItems, onDeleteItem }) => {
         text,
       },
     ]);
+    reset();
     setAddMode(false);
   };
 
