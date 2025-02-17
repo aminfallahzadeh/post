@@ -11,12 +11,12 @@ import { I18nManager } from "react-native";
 // Lock the layout direction to LTR
 I18nManager.allowRTL(true);
 I18nManager.forceRTL(true);
-I18nManager.swapLeftAndRightInRTL(true);
+// I18nManager.swapLeftAndRightInRTL(true);
 
 try {
   I18nManager.allowRTL(true);
   I18nManager.forceRTL(true);
-  I18nManager.swapLeftAndRightInRTL(true);
+  //   I18nManager.swapLeftAndRightInRTL(true);
   console.log("RTL LOCKED");
 } catch (e) {
   console.log(e);
