@@ -1,12 +1,12 @@
 // IMPORTS
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
-import { BASE_URL } from "@/constants/apiRoutes";
-// import { MAIN_URL } from "@/constants/apiRoutes";
+// import { BASE_URL } from "@/constants/apiRoutes";
+import { MAIN_URL } from "@/constants/apiRoutes";
 import { toastConfig } from "./toast-config";
 import { logout } from "@/api/auth";
 
-export const URL = BASE_URL;
+export const URL = MAIN_URL;
 
 const axiosInstance = axios.create({
   baseURL: URL,
