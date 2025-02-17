@@ -3,11 +3,11 @@ import { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import CustomButton from "@/components/CustomButton";
 import Feather from "@expo/vector-icons/Feather";
-import FormField from "@/components/FormField";
 import { useForm, Controller } from "react-hook-form";
 import RadioButtons from "@/components/RadioButtons";
 import { buildingTypeOptions } from "@/data/buildingType";
 import { toastConfig } from "@/config/toast-config";
+import { CustomTextInput } from "@/components/CustomTextInput";
 import Card from "./Card";
 
 export const BuildingDetailInput = ({ items, setItems, onDeleteItem }) => {
@@ -80,7 +80,7 @@ export const BuildingDetailInput = ({ items, setItems, onDeleteItem }) => {
         <View className="flex-col justify-center items-center w-full px-2">
           <View className="w-full flex-row-reverse px-4 bg-white py-4">
             <View className="w-2/5">
-              <FormField
+              <CustomTextInput
                 placeholder="طبقه"
                 keyboardType="numeric"
                 inputMode="numeric"
@@ -94,7 +94,7 @@ export const BuildingDetailInput = ({ items, setItems, onDeleteItem }) => {
             </View>
 
             <View className="w-3/5 mr-2">
-              <FormField
+              <CustomTextInput
                 placeholder="واحد / سمت"
                 keyboardType="default"
                 type={"text"}

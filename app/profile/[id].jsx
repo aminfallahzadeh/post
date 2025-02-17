@@ -15,8 +15,7 @@ import { customerProfile } from "@/api/customer";
 import { showMessage } from "react-native-flash-message";
 import { days, months, years } from "@/data/lookup";
 import { toastConfig } from "@/config/toast-config";
-import FormField from "@/components/FormField";
-// import FormFieldPastable from "@/components/FormFieldPastable";
+import { CustomTextInput } from "@/components/CustomTextInput";
 import CustomButton from "@/components/CustomButton";
 import CustomSelect from "@/components/CustomSelect";
 import Background from "@/components/Background";
@@ -135,20 +134,20 @@ const UserProfile = () => {
               //   stickyHeaderIndices={[0]}
             >
               <View className="w-full px-5">
-                <FormField
+                <CustomTextInput
                   placeholder="نام"
                   control={control}
                   containerStyle="mt-5"
                   name="name"
                 />
 
-                <FormField
+                <CustomTextInput
                   placeholder="نام خانوادگی"
                   control={control}
                   containerStyle="mt-5"
                   name="lastName"
                 />
-                <FormField
+                <CustomTextInput
                   placeholder="کد ملی"
                   keyboardType="numeric"
                   inputMode="numeric"
@@ -158,7 +157,7 @@ const UserProfile = () => {
                   name="nationalCode"
                 />
 
-                <FormField
+                <CustomTextInput
                   placeholder="کد پستی"
                   keyboardType="numeric"
                   inputMode="numeric"

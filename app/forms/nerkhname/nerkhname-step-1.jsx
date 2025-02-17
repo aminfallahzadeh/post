@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import {
   View,
   ScrollView,
-  Text,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -15,7 +14,6 @@ import Background from "@/components/Background";
 import { requiredRule, nerkhnameValidations } from "@/constants/validations";
 import { useUserStore } from "@/store";
 import { Title } from "@/components/Title";
-import FormField from "@/components/FormField";
 import CustomSelect from "@/components/CustomSelect";
 import { getPrice } from "@/api/order";
 import { parcelOptions } from "@/data/parcelOptions";
@@ -25,6 +23,7 @@ import { optionsGenerator } from "@/helpers/selectHelper";
 import { CustomModal } from "@/components/CustomModal";
 import { separateByThousand } from "@/utils/numberSeparator";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import { CustomTextInput } from "@/components/CustomTextInput";
 
 const NerkhnameStep1 = () => {
   // STATES
@@ -248,8 +247,8 @@ const NerkhnameStep1 = () => {
 
                   <View className="flex-row-reverse justify-center items-center">
                     <View className="flex-1 ml-2">
-                      <FormField
-                        placeholder="وزن مرسوله"
+                      <CustomTextInput
+                        placeholder="وزن مرسوله (گرم)"
                         keyboardType="numeric"
                         inputMode="numeric"
                         containerStyle="mt-5"
@@ -265,10 +264,6 @@ const NerkhnameStep1 = () => {
                       >
                         <AntDesign name="question" size={28} color="#164194" />
                       </Pressable>
-
-                      <Text className="flex-3 self-center text-primary text-xl font-isansbold text-center rounded-lg">
-                        گرم
-                      </Text>
                     </View>
                   </View>
 

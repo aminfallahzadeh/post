@@ -4,7 +4,7 @@ import { View, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
 import { insertRequestBulk } from "@/api/request";
 import { useForm } from "react-hook-form";
 import CustomButton from "@/components/CustomButton";
-import FormField from "@/components/FormField";
+import { CustomTextInput } from "@/components/CustomTextInput";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Background from "@/components/Background";
 import { router } from "expo-router";
@@ -126,7 +126,7 @@ const Step2 = () => {
             >
               {/* FORM FIELDS */}
               <View className="w-full px-5">
-                <FormField
+                <CustomTextInput
                   placeholder="* نام"
                   keyboardType="default"
                   containerStyle="mt-5"
@@ -137,7 +137,7 @@ const Step2 = () => {
                   name="name"
                 />
 
-                <FormField
+                <CustomTextInput
                   placeholder="* نام خانوادگی"
                   keyboardType="default"
                   containerStyle="mt-5"
@@ -148,7 +148,7 @@ const Step2 = () => {
                   name="lastname"
                 />
 
-                <FormField
+                <CustomTextInput
                   placeholder="* تلفن همراه"
                   keyboardType="numeric"
                   inputMode="numeric"
@@ -160,7 +160,7 @@ const Step2 = () => {
                   name="mobile"
                 />
 
-                <FormField
+                <CustomTextInput
                   placeholder="شماره تلفن ثابت"
                   containerStyle="mt-5"
                   control={control}
@@ -170,7 +170,7 @@ const Step2 = () => {
                   rules={normalPhoneRule}
                 />
 
-                <FormField
+                <CustomTextInput
                   placeholder="موقعیت"
                   keyboardType="default"
                   containerStyle="mt-5"
@@ -183,7 +183,7 @@ const Step2 = () => {
                   multiline={true}
                 />
 
-                <FormField
+                <CustomTextInput
                   placeholder="* نشانی"
                   keyboardType="default"
                   containerStyle="mt-5"
@@ -194,7 +194,7 @@ const Step2 = () => {
                   multiline={true}
                 />
 
-                <FormField
+                <CustomTextInput
                   placeholder="نزدیکترین کد پستی"
                   keyboardType="numeric"
                   inputMode="numeric"

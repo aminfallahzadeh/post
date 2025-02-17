@@ -7,7 +7,6 @@ import Background from "@/components/Background";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import CustomButton from "@/components/CustomButton";
-import FormField from "@/components/FormField";
 import * as SecureStore from "expo-secure-store";
 import CustomSelect from "@/components/CustomSelect";
 import { Title } from "@/components/Title";
@@ -20,6 +19,7 @@ import {
 } from "@/constants/validations";
 import { getProvince, getCity } from "@/api/order";
 import { optionsGenerator } from "@/helpers/selectHelper";
+import { CustomTextInput } from "@/components/CustomTextInput";
 
 const OrderStep2 = () => {
   // STATES
@@ -141,7 +141,7 @@ const OrderStep2 = () => {
             >
               {/* FORM FIELDS */}
               <View className="w-full px-5">
-                <FormField
+                <CustomTextInput
                   placeholder="* نام"
                   type={"text"}
                   keyboardType="default"
@@ -151,7 +151,7 @@ const OrderStep2 = () => {
                   name="sendername"
                 />
 
-                <FormField
+                <CustomTextInput
                   placeholder="* نام خانوادگی"
                   type={"text"}
                   keyboardType="default"
@@ -161,7 +161,7 @@ const OrderStep2 = () => {
                   name="senderLastname"
                 />
 
-                <FormField
+                <CustomTextInput
                   placeholder="* تلفن همراه"
                   keyboardType="numeric"
                   inputMode="numeric"
@@ -171,7 +171,7 @@ const OrderStep2 = () => {
                   name="sendermobile"
                 />
 
-                <FormField
+                <CustomTextInput
                   placeholder="تلفن ثابت"
                   keyboardType="numeric"
                   inputMode="numeric"
@@ -180,7 +180,7 @@ const OrderStep2 = () => {
                   name="senderPhone"
                 />
 
-                <FormField
+                <CustomTextInput
                   placeholder="* کد ملی"
                   keyboardType="numeric"
                   inputMode="numeric"
@@ -190,7 +190,7 @@ const OrderStep2 = () => {
                   name="senderid"
                 />
 
-                <FormField
+                <CustomTextInput
                   placeholder="* کد پستی"
                   keyboardType="numeric"
                   inputMode="numeric"
@@ -241,7 +241,7 @@ const OrderStep2 = () => {
                   />
                 </View>
 
-                <FormField
+                <CustomTextInput
                   placeholder="* آدرس"
                   type={"text"}
                   multiline={true}

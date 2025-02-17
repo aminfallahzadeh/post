@@ -15,7 +15,7 @@ import { router } from "expo-router";
 import CustomButton from "@/components/CustomButton";
 import CustomSelect from "@/components/CustomSelect";
 import { trackingOrders, returnOtp, saveReturnToSender } from "@/api/tracking";
-import FormFieldPastable from "@/components/FormFieldPastable";
+import { CustomTextInput } from "@/components/CustomTextInput";
 import { toastConfig } from "@/config/toast-config";
 import { requiredRule } from "@/constants/validations";
 import { Title } from "@/components/Title";
@@ -204,7 +204,7 @@ const Index = () => {
                       search={true}
                     />
                   ) : (
-                    <FormFieldPastable
+                    <CustomTextInput
                       placeholder="* بارکد مرسوله"
                       control={control}
                       rules={requiredRule}

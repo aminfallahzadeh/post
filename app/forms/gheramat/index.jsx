@@ -1,46 +1,38 @@
 // IMPORTS
 import { useState, useEffect } from "react";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useUserStore } from "@/store";
+import { router } from "expo-router";
+import CustomButton from "@/components/CustomButton";
+import Background from "@/components/Background";
+import * as SecureStore from "expo-secure-store";
+import * as ImagePicker from "expo-image-picker";
+import CustomSelect from "@/components/CustomSelect";
+import { insertRequestGheramat } from "@/api/request";
+import { CustomModal } from "@/components/CustomModal";
+import { bitkindOptions, changeCostOptions } from "@/data/gheramatData";
+import { validatePostCode } from "@/api/gnaf";
+import { Title } from "@/components/Title";
+import { toastConfig } from "@/config/toast-config";
+import { CustomTextInput } from "@/components/CustomTextInput";
 import {
   View,
   ScrollView,
   KeyboardAvoidingView,
   Platform,
-  Button,
   Image,
   StyleSheet,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useUserStore } from "@/store";
-import { router } from "expo-router";
-import CustomButton from "@/components/CustomButton";
-import FormField from "@/components/FormField";
-import Background from "@/components/Background";
-import * as SecureStore from "expo-secure-store";
-import CustomSelect from "@/components/CustomSelect";
-import { optionsGenerator } from "@/helpers/selectHelper";
-import { getProvince, getServiceType } from "@/api/gheramat";
-import { insertRequestGheramat } from "@/api/request";
 import {
   nationalCodeRule,
   requiredRule,
   postCodeRule,
   shebaRule,
 } from "@/constants/validations";
-import { CustomModal } from "@/components/CustomModal";
-import { bitkindOptions, changeCostOptions } from "@/data/gheramatData";
-import { mobilePhoneValidation } from "@/constants/validations";
-import { validatePostCode } from "@/api/gnaf";
-import { Title } from "@/components/Title";
-import { toastConfig } from "@/config/toast-config";
-import * as ImagePicker from "expo-image-picker";
 
 const Index = () => {
   // STATES
-  const [isServiceLoading, setIsServiceLoading] = useState(false);
-  const [serviceOptions, setServiceOptions] = useState([]);
-  const [isProvinceLoading, setIsProvinceLoading] = useState(false);
-  const [provinceOptions, setProvinceOptions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [imageBase64, setImageBase64] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
@@ -113,59 +105,6 @@ const Index = () => {
     }
   };
 
-  //   const pickImage = async (type) => {
-  //     let result;
-
-  //     if (type === "gallery") {
-  //       setVisible(false);
-  //       result = await ImagePicker.launchImageLibraryAsync({
-  //         mediaTypes: ["images"],
-  //         allowsEditing: true,
-  //         aspect: [4, 6],
-  //         quality: 1,
-  //         base64: true,
-  //       });
-  //     } else {
-  //       setVisible(false);
-  //       result = await ImagePicker.launchCameraAsync({
-  //         base64: true,
-  //         aspect: [4, 6],
-  //         quality: 1,
-  //         allowsEditing: true,
-  //       });
-  //     }
-
-  //     console.log(result);
-  //     if (!result.canceled) {
-  //       setImageBase64(result.assets[0].base64);
-  //       setImagePreview(result.assets[0].uri);
-  //     }
-  //   };
-
-  const fetchServiceType = async () => {
-    setIsServiceLoading(true);
-    try {
-      const response = await getServiceType();
-      console.log("SERVICE RESPONSE: ", response.data);
-      const options = optionsGenerator(response.data.itemList, "id", "name");
-      setServiceOptions(options);
-    } finally {
-      setIsServiceLoading(false);
-    }
-  };
-
-  const fetchProvince = async () => {
-    setIsProvinceLoading(true);
-    try {
-      const response = await getProvince();
-      console.log("PROVINCE RESPONSE: ", response.data);
-      const options = optionsGenerator(response.data.itemList, "id", "name");
-      setProvinceOptions(options);
-    } finally {
-      setIsProvinceLoading(false);
-    }
-  };
-
   const onSubmit = async (data) => {
     if (!imageBase64) {
       toastConfig.warning("لطفا تصویر فاکتور را بارگذاری کنید");
@@ -186,12 +125,6 @@ const Index = () => {
       setIsLoading(false);
     }
   };
-
-  // EFFECTS
-  useEffect(() => {
-    fetchProvince();
-    fetchServiceType();
-  }, []);
 
   useEffect(() => {
     const validatePostalCode = async () => {
@@ -262,7 +195,7 @@ const Index = () => {
               >
                 {/* FORM FIELDS */}
                 <View className="w-full px-5">
-                  <FormField
+                  <CustomTextInput
                     placeholder="نام"
                     value={userData?.name || "-"}
                     editable={false}
@@ -271,7 +204,7 @@ const Index = () => {
                     name="customerName"
                   />
 
-                  <FormField
+                  <CustomTextInput
                     placeholder="نام خانوادگی"
                     value={userData?.lastName || "-"}
                     editable={false}
@@ -280,7 +213,7 @@ const Index = () => {
                     name="customerFamily"
                   />
 
-                  <FormField
+                  <CustomTextInput
                     placeholder="کد ملی"
                     type={"text"}
                     rules={nationalCodeRule}
@@ -291,7 +224,7 @@ const Index = () => {
                     name="nationalID"
                   />
 
-                  <FormField
+                  <CustomTextInput
                     placeholder="موبایل"
                     value={mobile || "-"}
                     editable={false}
@@ -300,7 +233,7 @@ const Index = () => {
                     name="mobile"
                   />
 
-                  <FormField
+                  <CustomTextInput
                     placeholder="* شماره مرسوله"
                     keyboardType="numeric"
                     inputMode="numeric"
@@ -310,7 +243,7 @@ const Index = () => {
                     name="parcellno"
                   />
 
-                  <FormField
+                  <CustomTextInput
                     placeholder={"تلفن ثابت"}
                     keyboardType="numeric"
                     inputMode="numeric"
@@ -318,10 +251,9 @@ const Index = () => {
                     containerStyle="mt-5"
                     control={control}
                     name="tellno"
-                    // rules={mobilePhoneValidation}
                   />
 
-                  <FormField
+                  <CustomTextInput
                     placeholder="کد پستی"
                     keyboardType="numeric"
                     inputMode="numeric"
@@ -337,6 +269,7 @@ const Index = () => {
                       name="bitkind"
                       control={control}
                       data={bitkindOptions}
+                      placeholder="نوع غرامت"
                       label="نوع غرامت"
                       errors={errors}
                       setValue={setValue}
@@ -344,7 +277,7 @@ const Index = () => {
                     />
                   </View>
 
-                  <FormField
+                  <CustomTextInput
                     placeholder={"ارزش مرسوله"}
                     keyboardType="numeric"
                     inputMode="numeric"
@@ -365,7 +298,7 @@ const Index = () => {
                     />
                   </View>
 
-                  <FormField
+                  <CustomTextInput
                     placeholder={"شماره شبا"}
                     keyboardType="numeric"
                     inputMode="numeric"
@@ -376,7 +309,7 @@ const Index = () => {
                     rules={{ ...requiredRule, ...shebaRule }}
                   />
 
-                  <FormField
+                  <CustomTextInput
                     placeholder="نام صاحب شماره شبا"
                     containerStyle="mt-5"
                     control={control}
@@ -401,7 +334,7 @@ const Index = () => {
                     )}
                   </View>
 
-                  <FormField
+                  <CustomTextInput
                     placeholder="* آدرس"
                     multiline={true}
                     rules={requiredRule}
@@ -409,6 +342,7 @@ const Index = () => {
                     containerStyle="mt-5"
                     search={true}
                     height="h-32 align-top"
+                    numberOfLine={3}
                     inputStyle={{
                       textAlignVertical: "top",
                       textAlign: "right",
@@ -417,33 +351,6 @@ const Index = () => {
                     control={control}
                     name="addr"
                   />
-
-                  {/* <View className="mt-5">
-                  <CustomSelect
-                    name="serviceKind"
-                    control={control}
-                    rules={requiredRule}
-                    data={serviceOptions}
-                    label="* نوع سرویس"
-                    errors={errors}
-                    setValue={setValue}
-                    isLoading={isServiceLoading}
-                  />
-                </View> */}
-
-                  {/* <View className="mt-5">
-                  <CustomSelect
-                    name="province"
-                    control={control}
-                    rules={requiredRule}
-                    data={provinceOptions}
-                    label="* شهر"
-                    errors={errors}
-                    search={true}
-                    setValue={setValue}
-                    isLoading={isProvinceLoading}
-                  />
-                </View> */}
                 </View>
               </ScrollView>
 

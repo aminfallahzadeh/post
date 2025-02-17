@@ -20,7 +20,7 @@ import { router } from "expo-router";
 import { toastStyles } from "@/constants/styles";
 import { CustomModal } from "@/components/CustomModal";
 import { Title } from "@/components/Title";
-import FormFieldPastable from "@/components/FormFieldPastable";
+import { CustomTextInput } from "@/components/CustomTextInput";
 import {
   serviceTypeLookup,
   postalRegionLookup,
@@ -180,7 +180,7 @@ const NewComplaintStep1 = () => {
                     form_data.complaintType !== 110 &&
                     form_data.complaintType !== 79 && (
                       <>
-                        <FormFieldPastable
+                        <CustomTextInput
                           placeholder="بارکد پستی"
                           keyboardType="numeric"
                           inputMode="numeric"

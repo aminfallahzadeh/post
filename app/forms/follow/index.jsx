@@ -6,7 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { orderTracking } from "@/api/traking";
 import { useLocalSearchParams } from "expo-router";
 import Background from "@/components/Background";
-import FormField from "@/components/FormField";
+import { CustomTextInput } from "@/components/CustomTextInput";
 import CustomButton from "@/components/CustomButton";
 import OrderTrackCard from "@/components/OrderTrackCard";
 import { Chase } from "react-native-animated-spinkit";
@@ -87,7 +87,7 @@ const FollowOrder = () => {
             {/* FORM FIELDS */}
             <View className="w-full px-4">
               {!barcode && (
-                <FormField
+                <CustomTextInput
                   placeholder="کد مرسوله"
                   keyboardType="numeric"
                   inputMode="numeric"

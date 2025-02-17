@@ -8,8 +8,8 @@ import Background from "@/components/Background";
 import CustomSelect from "@/components/CustomSelect";
 import { useUserStore } from "@/store";
 import { Title } from "@/components/Title";
-import FormField from "@/components/FormField";
 import { requiredRule } from "@/constants/validations";
+import { CustomTextInput } from "@/components/CustomTextInput";
 import {
   applicantTypeOptions,
   genderOptions,
@@ -85,7 +85,7 @@ const Index = () => {
                   />
                 </View>
 
-                <FormField
+                <CustomTextInput
                   placeholder="نام"
                   keyboardType="default"
                   containerStyle="mt-5"
@@ -94,7 +94,7 @@ const Index = () => {
                   name="firstName"
                 />
 
-                <FormField
+                <CustomTextInput
                   placeholder="نام خانوادگی"
                   keyboardType="default"
                   containerStyle="mt-5"
@@ -103,7 +103,7 @@ const Index = () => {
                   name="lastName"
                 />
 
-                <FormField
+                <CustomTextInput
                   placeholder="کد ملی"
                   keyboardType="numeric"
                   inputMode="numeric"

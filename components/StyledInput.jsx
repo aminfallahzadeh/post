@@ -1,11 +1,14 @@
 // IMPORTS
-import { useState, useEffect, useRef } from "react";
+import styled from "styled-components/native";
+import { useState, useEffect } from "react";
 import { useController } from "react-hook-form";
 import Feather from "@expo/vector-icons/Feather";
-import { View, Text, TextInput, Animated, Pressable } from "react-native";
+import { View, Text, Animated, Pressable } from "react-native";
 import { toastConfig } from "@/config/toast-config";
 
-export const FormField = ({
+const StyledInput = styled.TextInput``;
+
+export const StyledTextInput = ({
   title,
   value,
   placeholder,
@@ -26,13 +29,11 @@ export const FormField = ({
   inputMode = "text",
   numberOfLines,
 }) => {
-  // STATES
+  // States and logic...
   const [showPassword, setShowPassword] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
-  const inputRef = useRef(null);
   const placeholderAnimation = useState(new Animated.Value(0))[0];
 
-  // CONSTS
   const { field, fieldState } = useController({
     control,
     defaultValue: value,
@@ -40,7 +41,6 @@ export const FormField = ({
     rules,
   });
 
-  // HANDLERS
   useEffect(() => {
     Animated.timing(placeholderAnimation, {
       toValue: isFocused || field?.value ? 1 : 0,
@@ -49,7 +49,6 @@ export const FormField = ({
     }).start();
   }, [isFocused, field?.value, placeholderAnimation]);
 
-  // PLACEHOLDER CONFIG
   const placeholderTranslateY = placeholderAnimation.interpolate({
     inputRange: [0, 1],
     outputRange: [15, -10],
@@ -59,14 +58,6 @@ export const FormField = ({
     inputRange: [0, 1],
     outputRange: [13, 12],
   });
-
-  // HANDLERS
-  // HANDLE REACT NATIVE MESS
-  const focusInput = () => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  };
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -132,36 +123,32 @@ export const FormField = ({
           </View>
         )}
 
-        <Pressable onPress={focusInput} className="w-full">
-          <View pointerEvents="none" className="w-full h-full">
-            <TextInput
-              ref={inputRef}
-              className={`flex-1 w-full text-grey2 font-isansdemibold text-sm`}
-              value={field.value}
-              placeholderTextColor="transparent"
-              onChangeText={(text) => {
-                if (keyboardType === "default" && /[a-zA-Z0-9]/.test(text)) {
-                  field.onChange("");
-                  toastConfig.warning("لطفا از کیبورد فارسی استفاده کنید");
-                } else {
-                  field.onChange(text);
-                }
-              }}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-              style={[inputStyle]}
-              secureTextEntry={type === "password" && !showPassword}
-              maxLength={max}
-              editable={editable}
-              keyboardType={keyboardType}
-              //   textAlign="right"
-              autoCorrect={false}
-              inputMode={inputMode}
-              multiline={multiline}
-              numberOfLines={numberOfLines}
-            />
-          </View>
-        </Pressable>
+        <View className="w-full h-full">
+          <StyledInput
+            value={field.value}
+            placeholderTextColor="transparent"
+            onChangeText={(text) => {
+              if (keyboardType === "default" && /[a-zA-Z0-9]/.test(text)) {
+                field.onChange("");
+                toastConfig.warning("لطفا از کیبورد فارسی استفاده کنید");
+              } else {
+                field.onChange(text);
+              }
+            }}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            style={[inputStyle]}
+            secureTextEntry={type === "password" && !showPassword}
+            maxLength={max}
+            editable={editable}
+            keyboardType={keyboardType}
+            textAlign="right"
+            autoCorrect={false}
+            inputMode={inputMode}
+            multiline={multiline}
+            numberOfLines={numberOfLines}
+          />
+        </View>
 
         {type === "password" ? (
           <Pressable
@@ -196,5 +183,3 @@ export const FormField = ({
     </View>
   );
 };
-
-export default FormField;

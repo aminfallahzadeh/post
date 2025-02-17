@@ -7,7 +7,6 @@ import { useUserStore } from "@/store";
 import { stepOneEopValidations } from "@/constants/validations";
 import { router } from "expo-router";
 import CustomButton from "@/components/CustomButton";
-import FormField from "@/components/FormField";
 import Background from "@/components/Background";
 import { showMessage } from "react-native-flash-message";
 import { toastStyles } from "@/constants/styles";
@@ -16,6 +15,7 @@ import * as SecureStore from "expo-secure-store";
 import { requiredRule } from "@/constants/validations";
 import CustomModal from "@/components/CustomModal";
 import { Title } from "@/components/Title";
+import { CustomTextInput } from "@/components/CustomTextInput";
 
 const Index = () => {
   // STATES
@@ -86,7 +86,7 @@ const Index = () => {
               >
                 {/* FORM FIELDS */}
                 <View className="w-full px-4">
-                  <FormField
+                  <CustomTextInput
                     placeholder="شماره موبایل"
                     keyboardType="default"
                     type={"text"}
@@ -98,7 +98,7 @@ const Index = () => {
                     name="mobile"
                   />
 
-                  <FormField
+                  <CustomTextInput
                     placeholder="نام"
                     keyboardType="default"
                     containerStyle="mt-5"
@@ -110,7 +110,7 @@ const Index = () => {
                     name="name"
                   />
 
-                  <FormField
+                  <CustomTextInput
                     placeholder="نام خانوادگی"
                     keyboardType="default"
                     containerStyle="mt-5"
@@ -122,7 +122,7 @@ const Index = () => {
                     name="lastname"
                   />
 
-                  <FormField
+                  <CustomTextInput
                     placeholder="کد ملی"
                     keyboardType="default"
                     type={"text"}
@@ -135,13 +135,15 @@ const Index = () => {
                     name="nationalCode"
                   />
 
-                  <FormField
+                  <CustomTextInput
                     placeholder="شرح شکایت"
                     keyboardType="default"
                     type={"text"}
                     height={"h-[100px]"}
                     containerStyle="mt-5"
                     max={800}
+                    canGoNextLine
+                    numberOfLines={4}
                     rules={requiredRule}
                     multiline
                     inputStyle={{

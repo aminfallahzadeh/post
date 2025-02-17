@@ -16,13 +16,13 @@ import { useUserStore } from "@/store";
 import { router } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
 import CustomButton from "@/components/CustomButton";
-import FormField from "@/components/FormField";
 import Background from "@/components/Background";
 import PostalCodeCard from "@/components/PostalCodeCard";
 import { postalCodeValidation } from "@/constants/validations";
 import { Title } from "@/components/Title";
 import { toastConfig } from "@/config/toast-config";
 import { Chase } from "react-native-animated-spinkit";
+import { CustomTextInput } from "@/components/CustomTextInput";
 
 const Index = () => {
   // STATES
@@ -129,7 +129,7 @@ const Index = () => {
                   className="w-full flex-row-reverse px-10 justify-between items-center mt-10"
                   style={styles.inputContainer}
                 >
-                  <FormField
+                  <CustomTextInput
                     placeholder="* کد پستی"
                     keyboardType="numeric"
                     inputMode="numeric"

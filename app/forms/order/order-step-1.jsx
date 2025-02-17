@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   View,
-  Text,
   ScrollView,
   KeyboardAvoidingView,
   Platform,
@@ -16,7 +15,6 @@ import { router } from "expo-router";
 import CustomButton from "@/components/CustomButton";
 import CustomSelect from "@/components/CustomSelect";
 import { validateServiceSpec } from "@/api/order";
-import FormField from "@/components/FormField";
 import { parcelOptions } from "@/data/parcelOptions";
 import { boxsizeOptions } from "@/data/boxsizeOptions";
 import { toastConfig } from "@/config/toast-config";
@@ -25,6 +23,7 @@ import { Title } from "@/components/Title";
 import { insuranceOptions } from "@/data/insuranceOptions";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import CustomModal from "@/components/CustomModal";
+import { CustomTextInput } from "@/components/CustomTextInput";
 
 const OrderStep1 = () => {
   // STATES
@@ -188,7 +187,7 @@ const OrderStep1 = () => {
               >
                 {/* FORM FIELDS */}
                 <View className="w-full px-5">
-                  <FormField
+                  <CustomTextInput
                     placeholder="تعداد مرسوله"
                     editable={false}
                     type="text"
@@ -228,8 +227,8 @@ const OrderStep1 = () => {
 
                   <View className="flex-row-reverse justify-center items-center">
                     <View className="flex-1 ml-2">
-                      <FormField
-                        placeholder="وزن مرسوله"
+                      <CustomTextInput
+                        placeholder="وزن مرسوله (گرم)"
                         keyboardType="numeric"
                         inputMode="numeric"
                         containerStyle="mt-5"
@@ -245,10 +244,6 @@ const OrderStep1 = () => {
                       >
                         <AntDesign name="question" size={28} color="#164194" />
                       </Pressable>
-
-                      <Text className="flex-3 self-center text-primary text-sm font-isansbold text-center rounded-lg">
-                        گرم
-                      </Text>
                     </View>
                   </View>
 
@@ -278,7 +273,7 @@ const OrderStep1 = () => {
                     />
                   </View>
 
-                  <FormField
+                  <CustomTextInput
                     placeholder="* محتویات مرسوله"
                     type={"text"}
                     keyboardType="default"
@@ -294,22 +289,15 @@ const OrderStep1 = () => {
                   />
 
                   {form_data.insurancetype !== 1 && (
-                    <View className="flex-row-reverse justify-center items-center">
-                      <View className="flex-1 ml-2">
-                        <FormField
-                          placeholder="مبلغ اظهار شده"
-                          keyboardType="numeric"
-                          inputMode="numeric"
-                          rules={requiredRule}
-                          containerStyle="mt-5"
-                          control={control}
-                          name="insuranceamount"
-                        />
-                      </View>
-                      <Text className="flex-3 self-center text-primary text-sm font-isansbold text-center rounded-lg pt-5">
-                        ریال
-                      </Text>
-                    </View>
+                    <CustomTextInput
+                      placeholder="مبلغ اظهار شده (ریال)"
+                      keyboardType="numeric"
+                      inputMode="numeric"
+                      rules={requiredRule}
+                      containerStyle="mt-5"
+                      control={control}
+                      name="insuranceamount"
+                    />
                   )}
                 </View>
               </ScrollView>

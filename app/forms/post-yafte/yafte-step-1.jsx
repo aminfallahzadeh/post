@@ -7,7 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { insertRequestPostYafte } from "@/api/request";
 import { router } from "expo-router";
 import CustomButton from "@/components/CustomButton";
-import FormField from "@/components/FormField";
+import { CustomTextInput } from "@/components/CustomTextInput";
 import Background from "@/components/Background";
 import { useUserStore } from "@/store";
 import { POST_YAFTE } from "@/constants/consts";
@@ -115,7 +115,7 @@ const YafteStep1 = () => {
             >
               {/* FORM FIELDS */}
               <View className="w-full px-5">
-                <FormField
+                <CustomTextInput
                   placeholder="تلفن همراه"
                   editable={false}
                   type={"text"}
@@ -125,7 +125,7 @@ const YafteStep1 = () => {
                   name="mobile"
                 />
 
-                <FormField
+                <CustomTextInput
                   placeholder="* آدرس"
                   multiline={true}
                   keyboardType="default"
@@ -140,7 +140,7 @@ const YafteStep1 = () => {
                   name="address"
                 />
 
-                <FormField
+                <CustomTextInput
                   placeholder="* کد پستی"
                   keyboardType="numeric"
                   inputMode="numeric"

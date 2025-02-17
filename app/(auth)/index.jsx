@@ -5,13 +5,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import { generateOTP } from "@/api/auth";
 import { useUserStore } from "@/store";
-import FormField from "@/components/FormField";
 import CustomButton from "@/components/CustomButton";
 import Background from "@/components/Background";
 import { mobilePhoneValidation } from "@/constants/validations";
 import login from "@/assets/images/login.png";
 import * as SecureStore from "expo-secure-store";
 import CustomSwitch from "@/components/CustomSwitch";
+import { CustomTextInput } from "@/components/CustomTextInput";
 import {
   View,
   Animated,
@@ -129,7 +129,7 @@ const Login = () => {
                 </View>
 
                 {isEnabled ? (
-                  <FormField
+                  <CustomTextInput
                     placeholder={"شماره همراه"}
                     value={phoneNumber}
                     handleChange={setPhoneNumber}
@@ -142,7 +142,7 @@ const Login = () => {
                     rules={mobilePhoneValidation}
                   />
                 ) : (
-                  <FormField
+                  <CustomTextInput
                     placeholder={"شناسه مشتری"}
                     value={phoneNumber}
                     handleChange={setPhoneNumber}

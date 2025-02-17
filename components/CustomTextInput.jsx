@@ -2,10 +2,17 @@
 import { useState, useEffect } from "react";
 import { useController } from "react-hook-form";
 import Feather from "@expo/vector-icons/Feather";
-import { View, Text, TextInput, Animated, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Animated,
+  Pressable,
+  Platform,
+} from "react-native";
 import { toastConfig } from "@/config/toast-config";
 
-export const FormFieldPastable = ({
+export const CustomTextInput = ({
   title,
   value,
   placeholder,
@@ -25,6 +32,8 @@ export const FormFieldPastable = ({
   keyboardType = "default",
   inputMode = "text",
   numberOfLines,
+  canGoNextLine = false,
+  currency,
 }) => {
   // STATES
   const [showPassword, setShowPassword] = useState(false);
@@ -124,7 +133,7 @@ export const FormFieldPastable = ({
           </View>
         )}
 
-        <View className="w-full h-full">
+        <View className="w-full h-full relative">
           <TextInput
             className={`flex-1 w-full text-grey2 font-isansdemibold text-sm`}
             value={field.value}
@@ -147,9 +156,26 @@ export const FormFieldPastable = ({
             textAlign="right"
             autoCorrect={false}
             inputMode={inputMode}
-            multiline={multiline}
-            numberOfLines={numberOfLines}
+            multiline={Platform.OS === "android" ? true : multiline}
+            numberOfLines={
+              Platform.OS === "android" && !canGoNextLine ? 1 : numberOfLines
+            }
+            submitBehavior={canGoNextLine ? undefined : "blurAndSubmit"}
+            returnKeyType={"done"}
           />
+
+          {currency && (
+            <View
+              className="absolute left-5 top-[50%]"
+              style={{
+                transform: [{ translateY: -12 }],
+              }}
+            >
+              <Text className="text-gray-400 text-sm font-isansregular">
+                {currency}
+              </Text>
+            </View>
+          )}
         </View>
 
         {type === "password" ? (
@@ -185,5 +211,3 @@ export const FormFieldPastable = ({
     </View>
   );
 };
-
-export default FormFieldPastable;

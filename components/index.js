@@ -2,7 +2,6 @@ export { AddressCard } from "./AddressCard";
 export { Background } from "./Background";
 export { CustomButton } from "./CustomButton";
 export { CustomModal } from "./CustomModal";
-export { FormField } from "./FormField";
 export { PostalCodeCard } from "./PostalCodeCard";
 export { ProgressBar } from "./ProgressBar";
 export { SliderItem } from "./SliderItem";

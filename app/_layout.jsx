@@ -9,14 +9,14 @@ import { TourGuideProvider } from "rn-tourguide";
 import { I18nManager } from "react-native";
 
 // Lock the layout direction to LTR
-I18nManager.allowRTL(true);
-I18nManager.forceRTL(true);
-// I18nManager.swapLeftAndRightInRTL(true);
+I18nManager.allowRTL(false);
+I18nManager.forceRTL(false);
+// I18nManager.swapLeftAndRightInRTL(false);
 
 try {
-  I18nManager.allowRTL(true);
-  I18nManager.forceRTL(true);
-  //   I18nManager.swapLeftAndRightInRTL(true);
+  I18nManager.allowRTL(false);
+  I18nManager.forceRTL(false);
+  //   I18nManager.swapLeftAndRightInRTL(false);
   console.log("RTL LOCKED");
 } catch (e) {
   console.log(e);

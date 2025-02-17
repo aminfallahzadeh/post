@@ -19,8 +19,6 @@ import {
   redistributionOtp,
   saveRedistribute,
 } from "@/api/tracking";
-import FormFieldPastable from "@/components/FormFieldPastable";
-import FormField from "@/components/FormField";
 import { toastConfig } from "@/config/toast-config";
 import { requiredRule, nationalCodeRule } from "@/constants/validations";
 import { Title } from "@/components/Title";
@@ -30,6 +28,7 @@ import { OtpInput } from "react-native-otp-entry";
 import { getProvince, getCity } from "@/api/order";
 import { formatTime } from "@/utils/formatTime";
 import { CustomModal } from "@/components/CustomModal";
+import { CustomTextInput } from "@/components/CustomTextInput";
 
 const Index = () => {
   // STATES
@@ -240,7 +239,7 @@ const Index = () => {
                       search={true}
                     />
                   ) : (
-                    <FormFieldPastable
+                    <CustomTextInput
                       placeholder="* بارکد مرسوله"
                       control={control}
                       rules={requiredRule}
@@ -291,7 +290,7 @@ const Index = () => {
                         </Text>
                       </View>
 
-                      <FormField
+                      <CustomTextInput
                         placeholder="* نام"
                         type={"text"}
                         keyboardType="default"
@@ -301,7 +300,7 @@ const Index = () => {
                         name="name"
                       />
 
-                      <FormField
+                      <CustomTextInput
                         placeholder="* نام خانوادگی"
                         type={"text"}
                         keyboardType="default"
@@ -311,7 +310,7 @@ const Index = () => {
                         name="family"
                       />
 
-                      <FormField
+                      <CustomTextInput
                         placeholder="کد ملی"
                         keyboardType="numeric"
                         inputMode="numeric"
@@ -321,7 +320,7 @@ const Index = () => {
                         name="nid"
                       />
 
-                      <FormField
+                      <CustomTextInput
                         placeholder="پست الکترونیک"
                         type={"text"}
                         keyboardType="default"
@@ -372,7 +371,7 @@ const Index = () => {
                         />
                       </View>
 
-                      <FormField
+                      <CustomTextInput
                         placeholder="* آدرس"
                         type={"text"}
                         multiline={true}
@@ -389,7 +388,7 @@ const Index = () => {
                         name="address"
                       />
 
-                      <FormField
+                      <CustomTextInput
                         placeholder="* توضیحات"
                         type={"text"}
                         multiline={true}

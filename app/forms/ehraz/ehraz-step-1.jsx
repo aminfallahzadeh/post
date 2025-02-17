@@ -8,13 +8,13 @@ import { router } from "expo-router";
 import Background from "@/components/Background";
 import { useUserStore } from "@/store";
 import { Title } from "@/components/Title";
-import FormField from "@/components/FormField";
 import { postCodeRule } from "@/constants/validations";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import RNBounceable from "@freakycoder/react-native-bounceable";
 import { insertRequestEhraz } from "@/api/request";
 import * as SecureStore from "expo-secure-store";
 import { lastStreetRules } from "@/constants/validations";
+import { CustomTextInput } from "@/components/CustomTextInput";
 import {
   View,
   ScrollView,
@@ -163,7 +163,7 @@ const EhrazStep1 = () => {
             >
               {/* FORM FIELDS */}
               <View className="w-full px-5">
-                <FormField
+                <CustomTextInput
                   placeholder="کد پستی"
                   keyboardType="numeric"
                   inputMode="numeric"
@@ -173,7 +173,7 @@ const EhrazStep1 = () => {
                   name="postCode"
                 />
 
-                <FormField
+                <CustomTextInput
                   placeholder="آدرس"
                   type={"text"}
                   containerStyle="mt-5"
@@ -211,7 +211,7 @@ const EhrazStep1 = () => {
                   </View>
                 </View>
 
-                <FormField
+                <CustomTextInput
                   placeholder="معبر آخر"
                   type={"text"}
                   containerStyle="mt-5"
@@ -223,7 +223,7 @@ const EhrazStep1 = () => {
 
                 <View className="flex-row-reverse justify-between items-center">
                   <View className="flex-1 ml-2">
-                    <FormField
+                    <CustomTextInput
                       placeholder="پلاک"
                       keyboardType="numeric"
                       inputMode="numeric"
@@ -234,7 +234,7 @@ const EhrazStep1 = () => {
                     />
                   </View>
                   <View className="flex-1 ml-2">
-                    <FormField
+                    <CustomTextInput
                       placeholder="طبقه"
                       keyboardType="numeric"
                       inputMode="numeric"
@@ -245,7 +245,7 @@ const EhrazStep1 = () => {
                     />
                   </View>
                   <View className="flex-1 ml-2">
-                    <FormField
+                    <CustomTextInput
                       placeholder="واحد"
                       keyboardType="numeric"
                       inputMode="numeric"
