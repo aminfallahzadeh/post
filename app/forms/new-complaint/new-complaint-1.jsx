@@ -105,7 +105,7 @@ const NewComplaintStep1 = () => {
   // EFFECTS
   useEffect(() => {
     if (form_data.complaintType) {
-      if ([81, 110].includes(form_data.complaintType)) {
+      if ([81, 110, 79].includes(form_data.complaintType)) {
         unregister("serialNo");
         unregister("serviceId");
         setIsBarcodeRequired(false);
@@ -177,7 +177,8 @@ const NewComplaintStep1 = () => {
                   </View>
 
                   {form_data.complaintType !== 81 &&
-                    form_data.complaintType !== 110 && (
+                    form_data.complaintType !== 110 &&
+                    form_data.complaintType !== 79 && (
                       <>
                         <FormFieldPastable
                           placeholder="بارکد پستی"
