@@ -15,6 +15,11 @@ import { requiredRule, nerkhnameValidations } from "@/constants/validations";
 import { useUserStore } from "@/store";
 import { Title } from "@/components/Title";
 import CustomSelect from "@/components/CustomSelect";
+import CustomMultiSelect from "@/components/CustomMultiSelect";
+import {
+  selectSpecialServiceOptions,
+  nerkhnameExcluded,
+} from "@/data/specialServiceOptions";
 import { getPrice } from "@/api/order";
 import { parcelOptions } from "@/data/parcelOptions";
 import { boxsizeOptions } from "@/data/boxsizeOptions";
@@ -37,6 +42,7 @@ const NerkhnameStep1 = () => {
   const [weightRules, setWeightRules] = useState({});
   const [amountModalVisible, setAmountModalVisible] = useState(false);
   const [weightHelpModalVisible, setWeightHelpModalVisible] = useState(false);
+  const [shouldExclude, setShouldExclude] = useState(false);
 
   // CONSTS
   const nerkhname = useUserStore((state) => state.nerkhname);
@@ -54,6 +60,9 @@ const NerkhnameStep1 = () => {
     },
   });
   const form_data = watch();
+
+  // HELPERS
+  const checkSpecialService = (data, id) => data.includes(id);
 
   // HANDLERS
   const fetchProvince = async () => {
@@ -110,24 +119,14 @@ const NerkhnameStep1 = () => {
 
   // DEBUG
   useEffect(() => {
-    console.log("NERKHNAME:", nerkhname);
-  }, [nerkhname]);
+    console.log("form_data:", form_data);
+  }, [form_data]);
 
   useEffect(() => {
     console.log("FORM DATA Step 1: ", form_data);
   }, [form_data]);
 
-  useEffect(() => {
-    if (
-      form_data?.parceltype &&
-      [1, 14, 3, 15].includes(form_data.parceltype)
-    ) {
-      console.log("Unregistering BoxSize");
-      unregister("boxsize");
-    }
-  }, [form_data?.parceltype, unregister]);
-
-  const onSubmit = async () => {
+  const onSubmit = async (data) => {
     setIsLoading(true);
     try {
       const response = await getPrice({
@@ -147,8 +146,19 @@ const NerkhnameStep1 = () => {
         sourcecode: form_data.sourcecode,
         destcode: form_data.destcode,
         weight: parseFloat(form_data.weight) || 0,
+        iscot: checkSpecialService(data.special, 5),
         // boxsize: form_data.boxsize === undefined ? 1 : form_data.boxsize,
         boxsize: form_data.boxsize || 1,
+
+        isnonstandard: checkSpecialService(data.special, 3)
+          ? true
+          : checkSpecialService(data.special, 4)
+          ? true
+          : checkSpecialService(data.special, 6)
+          ? true
+          : false,
+        smsservice: checkSpecialService(data.special, 8),
+        electworeceiptant: checkSpecialService(data.special, 2),
       });
 
       console.log("PRICE RESPONSE: ", response.data.itemList[0].data);
@@ -171,6 +181,43 @@ const NerkhnameStep1 = () => {
       setWeightRules(nerkhnameValidations.weight.other);
     }
   }, [form_data?.parceltype]);
+
+  useEffect(() => {
+    if (
+      form_data?.parceltype &&
+      [1, 14, 3, 15].includes(form_data.parceltype)
+    ) {
+      console.log("Unregistering BoxSize");
+      unregister("boxsize");
+    }
+  }, [form_data?.parceltype, unregister]);
+
+  useEffect(() => {
+    if (form_data?.servicetype.id === 3 || form_data?.servicetype.id === 1) {
+      if (form_data?.parceltype && form_data?.parceltype === 1) {
+        setShouldExclude(true);
+        setValue("special", "");
+      } else {
+        setShouldExclude(false);
+      }
+    } else if (form_data?.servicetype.id === 2) {
+      if (form_data?.parceltype && form_data?.parceltype === 3) {
+        setShouldExclude(true);
+        setValue("special", "");
+      } else {
+        setShouldExclude(false);
+      }
+    } else if (form_data?.servicetype.id === 5) {
+      if (form_data?.parceltype && form_data?.parceltype === 16) {
+        setShouldExclude(true);
+        setValue("special", "");
+      } else {
+        setShouldExclude(false);
+      }
+    } else {
+      setShouldExclude(false);
+    }
+  }, [form_data?.servicetype, form_data?.parceltype, setValue]);
 
   return (
     <>
@@ -358,6 +405,23 @@ const NerkhnameStep1 = () => {
                       errors={errors}
                       setValue={setValue}
                       isLoading={isDestCityLoading}
+                    />
+                  </View>
+
+                  <View className="mt-5">
+                    <CustomMultiSelect
+                      name="special"
+                      control={control}
+                      data={
+                        shouldExclude
+                          ? nerkhnameExcluded
+                          : selectSpecialServiceOptions
+                      }
+                      search={true}
+                      label="خدمات ویژه"
+                      errors={errors}
+                      setValue={setValue}
+                      excludeItems={[{ label: "سرویس SMS", value: 8 }]}
                     />
                   </View>
                 </View>

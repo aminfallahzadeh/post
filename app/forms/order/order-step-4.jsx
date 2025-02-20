@@ -7,7 +7,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import CustomButton from "@/components/CustomButton";
 import RadioButtons from "@/components/RadioButtons";
-import { specialServiceOptions } from "@/data/specialServiceOptions";
+import {
+  specialServiceOptions,
+  specialServiceOptionsExcluded,
+} from "@/data/specialServiceOptions";
 import { getPrice } from "@/api/order";
 import { Title } from "@/components/Title";
 import { CustomModal } from "@/components/CustomModal";
@@ -23,6 +26,7 @@ const OrderStep4 = () => {
   const [calculateResult, setCalculateResult] = useState(null);
   const [amountModalVisible, setAmountModalVisible] = useState(false);
   const [specialServices, setSpecialServices] = useState([]);
+  const [options, setOptions] = useState([]);
 
   // CONSTS
   const order = useUserStore((state) => state.order);
@@ -104,7 +108,38 @@ const OrderStep4 = () => {
     }
   };
 
-  const specialOptions = specialServiceOptions(order?.parceltype);
+  //   const specialOptions = specialServiceOptions(order?.parceltype);
+
+  useEffect(() => {
+    if (order?.servicetype.id === 3 || order?.servicetype.id === 1) {
+      if (order?.parceltype && order?.parceltype === 1) {
+        const createdOptions = specialServiceOptionsExcluded(order?.parceltype);
+        setOptions(createdOptions);
+      } else {
+        const createdOptions = specialServiceOptions(order?.parceltype);
+        setOptions(createdOptions);
+      }
+    } else if (order?.servicetype.id === 2) {
+      if (order?.parceltype && order?.parceltype === 3) {
+        const createdOptions = specialServiceOptionsExcluded(order?.parceltype);
+        setOptions(createdOptions);
+      } else {
+        const createdOptions = specialServiceOptions(order?.parceltype);
+        setOptions(createdOptions);
+      }
+    } else if (order?.servicetype.id === 5) {
+      if (order?.parceltype && order?.parceltype === 16) {
+        const createdOptions = specialServiceOptionsExcluded(order?.parceltype);
+        setOptions(createdOptions);
+      } else {
+        const createdOptions = specialServiceOptions(order?.parceltype);
+        setOptions(createdOptions);
+      }
+    } else {
+      const createdOptions = specialServiceOptions(order?.parceltype);
+      setOptions(createdOptions);
+    }
+  }, [order]);
 
   const onCalculate = async () => {
     setIsCalculating(true);
@@ -179,7 +214,7 @@ const OrderStep4 = () => {
             {/* FORM FIELDS */}
             <View className="w-full px-5 mt-10">
               <RadioButtons
-                options={specialOptions}
+                options={options}
                 title="نوع خدمات ویژه"
                 onChange={setSpecialServices}
                 value={specialServices}

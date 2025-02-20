@@ -61,3 +61,70 @@ export const specialServiceOptions = (parceltype) => [
     type: "restant",
   },
 ];
+
+export const specialServiceOptionsExcluded = (parceltype) => [
+  //   { id: 1, label: "آگهی تحویل فیزیکی", disabled: false, type: "physical" },
+  {
+    id: 2,
+    label: "آگهی تحویل الکترونیک",
+    disabled: false,
+    type: "electronic",
+  },
+  {
+    id: 5,
+    label: "کرایه در مقصد",
+    disabled: false,
+    type: "pardakhtDarbeManzel",
+  },
+  {
+    id: 7,
+    label: "شناسه الکترونیک",
+    disabled: false,
+    type: "electronicCode",
+  },
+  {
+    id: 8,
+    label: "سرویس SMS",
+    disabled: false,
+    type: "SMS",
+  },
+  //   {
+  //     id: 11,
+  //     label: "تحویل در صندوق شخصی",
+  //     disabled: false,
+  //     type: "personalSandogh",
+  //   },
+  {
+    id: 12,
+    label: "حق مقر",
+    disabled: true,
+    type: "haghMaghar",
+  },
+  {
+    id: 13,
+    label: "رستانت",
+    disabled: true,
+    type: "restant",
+  },
+];
+
+export const selectSpecialServiceOptions = [
+  { label: "آگهی تحویل الکترونیک", value: 2 },
+  { label: "اشیا شکستنی", value: 3 },
+  { label: "خارج از اندازه", value: 4 },
+  { label: "کرایه در مقصد", value: 5 },
+  { label: "حاوی مایعات", value: 6 },
+  { label: "شناسه الکترونیک", value: 7 },
+  { label: "سرویس SMS", value: 8 },
+  { label: "حق مقر", value: 12 },
+  { label: "رستانت", value: 13 },
+];
+
+export const nerkhnameExcluded = [
+  { label: "آگهی تحویل الکترونیک", value: 2 },
+  { label: "کرایه در مقصد", value: 5 },
+  { label: "شناسه الکترونیک", value: 7 },
+  { label: "سرویس SMS", value: 8 },
+  { label: "حق مقر", value: 12 },
+  { label: "رستانت", value: 13 },
+];
