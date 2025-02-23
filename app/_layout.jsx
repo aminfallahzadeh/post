@@ -174,6 +174,7 @@ const RootLayout = () => {
           name="forms/register-info"
           options={{ headerShown: false }}
         />
+        <Stack.Screen name="contact" options={{ headerShown: false }} />
       </Stack>
       <ToastProvider />
     </TourGuideProvider>

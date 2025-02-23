@@ -122,8 +122,8 @@ const Otp = () => {
                 ) : null}
               </View>
 
-              <View className="flex-row justify-between items-center mt-5 w-full px-1">
-                <Pressable
+              <View className="flex-row justify-center items-center mt-5 w-full px-1">
+                {/* <Pressable
                   onPress={() => {}}
                   className="border rounded-full border-gray-300 justify-center items-center w-[150px] h-[35px]"
                 >
@@ -136,7 +136,7 @@ const Otp = () => {
                       کد را دریافت نمی کنم
                     </Text>
                   )}
-                </Pressable>
+                </Pressable> */}
 
                 <Pressable
                   onPress={generateOTPHandler}

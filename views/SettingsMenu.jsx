@@ -118,28 +118,39 @@ const SettingsMenu = ({ closeHandler }) => {
               </View>
             </Pressable>
 
-            <View className="flex-row items-center justify-end w-full">
+            <Pressable
+              className="flex-row items-center justify-end w-full"
+              onPress={() => {
+                router.push(
+                  "https://new.post.ir/fa-IR/shafaf.post/5685/page/%D9%82%D9%88%D8%A7%D9%86%DB%8C%D9%86-%D9%88-%D9%85%D9%82%D8%B1%D8%B1%D8%A7%D8%AA"
+                );
+              }}
+            >
               <View className="flex-row items-center justify-center gap-x-2">
                 <View>
                   <Text className="text-black font-isansbold text-[15px]">
-                    شرایط و قوانین
+                    قوانین و مقررات
                   </Text>
                 </View>
 
                 <Feather name="alert-circle" size={25} color="#333" />
               </View>
-            </View>
+            </Pressable>
 
             <View className="flex-row items-center justify-end w-full">
-              <View className="flex-row items-center justify-center gap-x-2">
+              <Pressable
+                className="flex-row items-center justify-center gap-x-2"
+                onPress={() => router.push("/contact")}
+              >
                 <View>
                   <Text className="text-black font-isansbold text-[15px]">
                     تماس با ما
                   </Text>
                 </View>
 
-                <Feather name="phone" size={24} color="#333" />
-              </View>
+                {/* <Feather name="phone" size={24} color="#333" /> */}
+                <Image source={images.contact} className="w-[24px] h-[24px]" />
+              </Pressable>
             </View>
           </View>
         </ScrollView>

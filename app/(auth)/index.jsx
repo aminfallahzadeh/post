@@ -162,7 +162,7 @@ const Login = () => {
                     onPress={() => router.push("https://postid.post.ir:9090/")}
                   >
                     <Text className="font-isansmedium text-sm text-grey2">
-                      ثبت نام شناسه پستی
+                      اخذ شناسه پستی
                     </Text>
                   </Pressable>
 
