@@ -8,6 +8,7 @@ import SettingsMenu from "@/views/SettingsMenu";
 import Feather from "@expo/vector-icons/Feather";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useUserStore } from "@/store";
+import { TourGuideZone } from "rn-tourguide";
 import {
   View,
   Text,
@@ -211,16 +212,23 @@ const TabsLayout = () => {
           name="map"
           options={{
             tabBarLabel: ({ focused }) => (
-              <Text
-                style={{
-                  color: focused ? "#164194" : "#787A8D",
-                  fontFamily: "IranSans-DemiBold",
-                  fontSize: 11,
-                  marginTop: 4,
-                }}
+              <TourGuideZone
+                zone={1001}
+                shape="rectangle"
+                text={"موقعیت یابی مراکز پستی از روی نقشه"}
+                borderRadius={16}
               >
-                مراکز پستی
-              </Text>
+                <Text
+                  style={{
+                    color: focused ? "#164194" : "#787A8D",
+                    fontFamily: "IranSans-DemiBold",
+                    fontSize: 11,
+                    marginTop: 4,
+                  }}
+                >
+                  مراکز پستی
+                </Text>
+              </TourGuideZone>
             ),
             tabBarIcon: ({ color, focused }) => (
               <Feather name="map-pin" size={20} color={color} />
@@ -232,16 +240,23 @@ const TabsLayout = () => {
           name="mypost"
           options={{
             tabBarLabel: ({ focused }) => (
-              <Text
-                style={{
-                  color: focused ? "#164194" : "#787A8D",
-                  fontFamily: "IranSans-DemiBold",
-                  fontSize: 11,
-                  marginTop: 4,
-                }}
+              <TourGuideZone
+                zone={1000}
+                shape="rectangle"
+                text={"در قسمت پست من می توانید درخواست های خود را پیگیری کنید"}
+                borderRadius={16}
               >
-                پست من
-              </Text>
+                <Text
+                  style={{
+                    color: focused ? "#164194" : "#787A8D",
+                    fontFamily: "IranSans-DemiBold",
+                    fontSize: 11,
+                    marginTop: 4,
+                  }}
+                >
+                  پست من
+                </Text>
+              </TourGuideZone>
             ),
             tabBarIcon: ({ color, focused }) => (
               <Feather name="box" size={20} color={color} />

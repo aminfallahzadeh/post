@@ -1,15 +1,5 @@
 export const allData = [
   {
-    id: 1,
-    title: "ثبت سفارش",
-    icon: "newOrder",
-    url: "forms/order",
-    nationalCodeRequired: false,
-    value: "Order",
-    isDeveloping: false,
-    tour: "امکان ثبت مرسولات جهت ارسال توسط فرستنده مرسوله بر اساس نوع سرویس و مقصد مطابق با نظر ایشان",
-  },
-  {
     id: 2,
     title: "گواهی کد پستی",
     icon: "postCodeCertificate",
@@ -129,6 +119,16 @@ export const allData = [
     value: null,
     isDeveloping: false,
     tour: null,
+  },
+  {
+    id: 1,
+    title: "ثبت سفارش",
+    icon: "newOrder",
+    url: "forms/order",
+    nationalCodeRequired: false,
+    value: "Order",
+    isDeveloping: true,
+    tour: "امکان ثبت مرسولات جهت ارسال توسط فرستنده مرسوله بر اساس نوع سرویس و مقصد مطابق با نظر ایشان",
   },
   {
     id: 14,

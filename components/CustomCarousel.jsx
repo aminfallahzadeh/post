@@ -1,5 +1,7 @@
 // IMPORTS
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
+import { useFocusEffect } from "expo-router";
+import { getCarousel } from "../api/user";
 import {
   View,
   FlatList,
@@ -17,26 +19,42 @@ const CarouselImages = [
   { id: "3", image: require("@/assets/images/card-3.jpg") },
 ];
 
-const CustomCarousel = ({ data }) => {
+const CustomCarousel = () => {
+  // STATES
+  const [data, setData] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   const flatListRef = useRef(null);
   const intervalRef = useRef(null);
 
-  const onScroll = (event) => {
-    const slideIndex = Math.round(event.nativeEvent.contentOffset.x / width);
-    setCurrentIndex(slideIndex);
-  };
-
+  // HELPER
   const renderItem = ({ item }) => (
     <View style={styles.carouselItem} key={item.id}>
       {/* <CarouselItem item={item} /> */}
       <Image
-        source={item.image}
+        source={{ uri: item.fileName }}
         resizeMode="contain"
         style={{ width, height: 180 }}
       />
     </View>
   );
+
+  // HANDLERS
+  const fetchCarouselData = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const response = await getCarousel();
+      console.log("CAROUSEL RESPONSE: ", response.data);
+      setData(response.data.itemList);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  const onScroll = (event) => {
+    const slideIndex = Math.round(event.nativeEvent.contentOffset.x / width);
+    setCurrentIndex(slideIndex);
+  };
 
   const startAutoScroll = () => {
     intervalRef.current = setInterval(() => {
@@ -55,8 +73,19 @@ const CustomCarousel = ({ data }) => {
     }
   };
 
+  // FETCH DATA
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchCarouselData();
+
+      return () => {};
+    }, [fetchCarouselData])
+  );
+
   useEffect(() => {
     startAutoScroll();
+
     return () => stopAutoScroll();
   }, []);
 
@@ -74,7 +103,7 @@ const CustomCarousel = ({ data }) => {
         scrollEventThrottle={16}
       />
       <View style={styles.pagination}>
-        {CarouselImages.map((_, index) => (
+        {data.map((_, index) => (
           <View
             key={index}
             style={[
