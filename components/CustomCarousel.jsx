@@ -33,6 +33,7 @@ const CustomCarousel = () => {
       {/* <CarouselItem item={item} /> */}
       <Image
         source={{ uri: item.fileName }}
+        // source={item.image}
         resizeMode="contain"
         style={{ width, height: 180 }}
       />
@@ -56,15 +57,15 @@ const CustomCarousel = () => {
     setCurrentIndex(slideIndex);
   };
 
-  const startAutoScroll = () => {
+  const startAutoScroll = useCallback(() => {
     intervalRef.current = setInterval(() => {
       setCurrentIndex((prevIndex) => {
-        const nextIndex = (prevIndex + 1) % CarouselImages.length;
+        const nextIndex = (prevIndex + 1) % data.length;
         flatListRef.current.scrollToIndex({ index: nextIndex, animated: true });
         return nextIndex;
       });
     }, 3000);
-  };
+  }, [data]);
 
   const stopAutoScroll = () => {
     if (intervalRef.current) {
@@ -87,13 +88,13 @@ const CustomCarousel = () => {
     startAutoScroll();
 
     return () => stopAutoScroll();
-  }, []);
+  }, [startAutoScroll]);
 
   return (
     <View style={styles.container}>
       <FlatList
         ref={flatListRef}
-        data={CarouselImages}
+        data={data}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         horizontal
