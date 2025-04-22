@@ -102,6 +102,10 @@ const Otp = () => {
                 focusColor="#164194"
                 onTextChange={setCode}
                 secureTextEntry={true}
+                textInputProps={{
+                  textContentType: "oneTimeCode",
+                  autoComplete: "sms-otp",
+                }}
                 theme={{
                   containerStyle: {
                     width: "70%",
