@@ -1,15 +1,5 @@
 // IMPORTS
 import { useEffect, useState, useCallback } from "react";
-import {
-  View,
-  Text,
-  KeyboardAvoidingView,
-  Platform,
-  Pressable,
-  Keyboard,
-  Image,
-  StyleSheet,
-} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { OtpInput } from "react-native-otp-entry";
 import { Flow, Chase } from "react-native-animated-spinkit";
@@ -21,6 +11,16 @@ import { formatTime } from "@/utils/formatTime";
 import { toastConfig } from "@/config/toast-config";
 import otp from "@/assets/images/otp.png";
 import * as SecureStore from "expo-secure-store";
+import {
+  View,
+  Text,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  Keyboard,
+  Image,
+  StyleSheet,
+} from "react-native";
 
 const Otp = () => {
   // STATES
