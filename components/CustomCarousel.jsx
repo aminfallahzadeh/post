@@ -32,8 +32,8 @@ const CustomCarousel = () => {
     <View style={styles.carouselItem} key={item.id}>
       {/* <CarouselItem item={item} /> */}
       <Image
-        source={{ uri: item.fileName }}
-        // source={item.image}
+        // source={{ uri: item.fileName }}
+        source={item.image}
         resizeMode="contain"
         style={{ width, height: 180 }}
       />
@@ -41,16 +41,16 @@ const CustomCarousel = () => {
   );
 
   // HANDLERS
-  const fetchCarouselData = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const response = await getCarousel();
-      console.log("CAROUSEL RESPONSE: ", response.data);
-      setData(response.data.itemList);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+  //   const fetchCarouselData = useCallback(async () => {
+  //     setIsLoading(true);
+  //     try {
+  //       const response = await getCarousel();
+  //       console.log("CAROUSEL RESPONSE: ", response.data);
+  //       setData(response.data.itemList);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   }, []);
 
   const onScroll = (event) => {
     const slideIndex = Math.round(event.nativeEvent.contentOffset.x / width);
@@ -60,12 +60,12 @@ const CustomCarousel = () => {
   const startAutoScroll = useCallback(() => {
     intervalRef.current = setInterval(() => {
       setCurrentIndex((prevIndex) => {
-        const nextIndex = (prevIndex + 1) % data.length;
+        const nextIndex = (prevIndex + 1) % CarouselImages.length;
         flatListRef.current.scrollToIndex({ index: nextIndex, animated: true });
         return nextIndex;
       });
     }, 3000);
-  }, [data]);
+  }, []);
 
   const stopAutoScroll = () => {
     if (intervalRef.current) {
@@ -76,13 +76,13 @@ const CustomCarousel = () => {
 
   // FETCH DATA
 
-  useFocusEffect(
-    useCallback(() => {
-      fetchCarouselData();
+  //   useFocusEffect(
+  //     useCallback(() => {
+  //       fetchCarouselData();
 
-      return () => {};
-    }, [fetchCarouselData])
-  );
+  //       return () => {};
+  //     }, [fetchCarouselData])
+  //   );
 
   useEffect(() => {
     startAutoScroll();
@@ -94,7 +94,7 @@ const CustomCarousel = () => {
     <View style={styles.container}>
       <FlatList
         ref={flatListRef}
-        data={data}
+        data={CarouselImages}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         horizontal
@@ -104,7 +104,7 @@ const CustomCarousel = () => {
         scrollEventThrottle={16}
       />
       <View style={styles.pagination}>
-        {data.map((_, index) => (
+        {CarouselImages.map((_, index) => (
           <View
             key={index}
             style={[
