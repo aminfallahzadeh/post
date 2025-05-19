@@ -1,5 +1,5 @@
 // IMPORTS
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useUserStore } from "@/store";
@@ -22,21 +22,22 @@ const Index = () => {
 
   // CONSTS
   const setFoundDocIds = useUserStore((state) => state.setFoundDocIds);
+  const userData = useUserStore((state) => state.userData);
 
   // FETCHERS
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setIsLoading(true);
     try {
       const response = await getAllPostYafte({
-        nationalID: "0064551751",
-        firstName: "test1",
-        lastName: "test1",
+        nationalID: userData.nationalCode,
+        firstName: userData.name,
+        lastName: userData.lastName,
       });
       setData(response.data?.itemList[0]?.data?.docs);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [userData]);
 
   // HANDLERS
   const handleSelect = (item) => {
@@ -65,7 +66,7 @@ const Index = () => {
   // EFFECT
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   useEffect(() => {
     const validItems = data?.filter((c) => c.canRequest === true) || [];
@@ -97,33 +98,42 @@ const Index = () => {
             </View>
           ) : (
             <>
-              <TouchableOpacity
-                onPress={handleSelectAll}
-                className="mt-5 flex-row-reverse justify-center items-center self-end px-2 rounded-md mr-5"
-              >
-                {isSelectedAll ? (
-                  <Feather name="check-circle" size={24} color="green" />
-                ) : (
-                  <Feather name="circle" size={24} color="black" />
-                )}
-
-                <Text className="text-grey2 text-[15px] font-isansbold mr-2">
-                  {SELECT_ALL}
-                </Text>
-              </TouchableOpacity>
+              {data && (
+                <TouchableOpacity
+                  onPress={handleSelectAll}
+                  className="mt-5 flex-row-reverse justify-center items-center self-end px-2 rounded-md mr-5"
+                >
+                  {isSelectedAll ? (
+                    <Feather name="check-circle" size={24} color="green" />
+                  ) : (
+                    <Feather name="circle" size={24} color="black" />
+                  )}
+                  <Text className="text-grey2 text-[15px] font-isansbold mr-2">
+                    {SELECT_ALL}
+                  </Text>
+                </TouchableOpacity>
+              )}
 
               {/* RESULT LIST */}
-              <View className="w-full px-5">
-                {data?.map((item, index) => (
-                  <View key={index} className="mt-5">
-                    <PostYafteCard
-                      item={item}
-                      isSelected={selectedItems.find((c) => c.id === item.id)}
-                      onSelect={() => handleSelect(item)}
-                    />
-                  </View>
-                ))}
-              </View>
+              {data ? (
+                <View className="w-full px-5">
+                  {data?.map((item, index) => (
+                    <View key={index} className="mt-5">
+                      <PostYafteCard
+                        item={item}
+                        isSelected={selectedItems.find((c) => c.id === item.id)}
+                        onSelect={() => handleSelect(item)}
+                      />
+                    </View>
+                  ))}
+                </View>
+              ) : (
+                <View className="w-full justify-center items-center">
+                  <Text className="font-isansdemibold text-grey2 text-lg mt-20">
+                    موردی یافت نشد!
+                  </Text>
+                </View>
+              )}
             </>
           )}
         </ScrollView>
