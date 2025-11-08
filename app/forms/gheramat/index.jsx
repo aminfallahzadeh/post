@@ -304,7 +304,8 @@ const Index = () => {
                     inputMode="numeric"
                     containerStyle="mt-5"
                     control={control}
-                    max={26}
+                    currency={"IR"}
+                    max={22}
                     name="shebano"
                     rules={{ ...requiredRule, ...shebaRule }}
                   />

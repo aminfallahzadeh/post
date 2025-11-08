@@ -109,6 +109,10 @@ const RootLayout = () => {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="forms/order" options={{ headerShown: false }} />
         <Stack.Screen
+          name="forms/order-experimental"
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
           name="forms/new-complaint"
           options={{ headerShown: false }}
         />

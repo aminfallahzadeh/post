@@ -34,6 +34,7 @@ export const CustomTextInput = ({
   numberOfLines,
   canGoNextLine = false,
   currency,
+  textAlign = "right",
 }) => {
   // STATES
   const [showPassword, setShowPassword] = useState(false);
@@ -153,7 +154,7 @@ export const CustomTextInput = ({
             maxLength={max}
             editable={editable}
             keyboardType={keyboardType}
-            textAlign="right"
+            textAlign={textAlign}
             autoCorrect={false}
             inputMode={inputMode}
             multiline={Platform.OS === "android" ? true : multiline}
@@ -166,12 +167,12 @@ export const CustomTextInput = ({
 
           {currency && (
             <View
-              className="absolute left-5 top-[50%]"
+              className="absolute left-6 top-[50%]"
               style={{
                 transform: [{ translateY: -12 }],
               }}
             >
-              <Text className="text-gray-400 text-sm font-isansregular">
+              <Text className="text-gray-400 text-lg font-isansregular">
                 {currency}
               </Text>
             </View>
