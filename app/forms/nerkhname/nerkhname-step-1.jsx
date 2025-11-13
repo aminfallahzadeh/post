@@ -147,6 +147,7 @@ const NerkhnameStep1 = () => {
                 sourcecode: form_data.sourcecode,
                 destcode: form_data.destcode,
                 insurancetype: form_data?.insurancetype || 1,
+                insuranceamount: form_data.insuranceamount || 0,
                 weight: parseFloat(form_data.weight) || 0,
                 iscot: checkSpecialService(data.special, 5),
                 // boxsize: form_data.boxsize === undefined ? 1 : form_data.boxsize,
@@ -159,6 +160,8 @@ const NerkhnameStep1 = () => {
                         ? true
                         : false,
                 smsservice: checkSpecialService(data.special, 8),
+                sendplacetype: checkSpecialService(data.special, 12),
+                electroreceiptant: checkSpecialService(data.special, 7),
                 electworeceiptant: checkSpecialService(data.special, 2),
             });
 
@@ -458,6 +461,18 @@ const NerkhnameStep1 = () => {
                                             setValue={setValue}
                                         />
                                     </View>
+
+                                    {form_data.insurancetype !== 1 && (
+                                        <CustomTextInput
+                                            placeholder="مبلغ اظهار شده (ریال)"
+                                            keyboardType="numeric"
+                                            inputMode="numeric"
+                                            rules={requiredRule}
+                                            containerStyle="mt-5"
+                                            control={control}
+                                            name="insuranceamount"
+                                        />
+                                    )}
 
                                     <View className="mt-5">
                                         <CustomMultiSelect

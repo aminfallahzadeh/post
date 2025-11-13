@@ -93,6 +93,8 @@ const OrderStep4 = () => {
                 smsservice: order?.specialServices
                     ? checkSpecialService(specialServices, 8)
                     : false,
+                sendplacetype: checkSpecialService(specialServices, 12),
+                electroreceiptant: checkSpecialService(specialServices, 7),
                 isnonstandard: checkSpecialService(specialServices, 3)
                     ? true
                     : checkSpecialService(specialServices, 4)
