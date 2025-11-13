@@ -19,6 +19,7 @@ import CustomMultiSelect from "@/components/CustomMultiSelect";
 import {
     selectSpecialServiceOptions,
     nerkhnameExcluded,
+    nerkhnameMoreThanFour,
 } from "@/data/specialServiceOptions";
 import { getPrice } from "@/api/order";
 import { parcelOptions } from "@/data/parcelOptions";
@@ -29,6 +30,7 @@ import { CustomModal } from "@/components/CustomModal";
 import { separateByThousand } from "@/utils/numberSeparator";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { CustomTextInput } from "@/components/CustomTextInput";
+import { insuranceOptions } from "@/data/insuranceOptions";
 
 const NerkhnameStep1 = () => {
     // STATES
@@ -43,6 +45,7 @@ const NerkhnameStep1 = () => {
     const [amountModalVisible, setAmountModalVisible] = useState(false);
     const [weightHelpModalVisible, setWeightHelpModalVisible] = useState(false);
     const [shouldExclude, setShouldExclude] = useState(false);
+    const [isAboveFour, setIsAboveFour] = useState(false);
 
     // CONSTS
     const nerkhname = useUserStore((state) => state.nerkhname);
@@ -117,11 +120,7 @@ const NerkhnameStep1 = () => {
         fetchProvince();
     }, []);
 
-    // DEBUG
-    useEffect(() => {
-        console.log("form_data:", form_data);
-    }, [form_data]);
-
+    // FIX: DEBUG
     useEffect(() => {
         console.log("FORM DATA Step 1: ", form_data);
     }, [form_data]);
@@ -142,16 +141,16 @@ const NerkhnameStep1 = () => {
                               : 77,
                 servicetype:
                     nerkhname.servicetype.id === 4
-                        ? 2
+                        ? 3
                         : nerkhname.servicetype.id, //سرویس امانت همان سرویس سفارشی هست فقط برای 2 کیلو به بالا می باشد
                 parceltype: form_data.parceltype,
                 sourcecode: form_data.sourcecode,
                 destcode: form_data.destcode,
+                insurancetype: form_data?.insurancetype || 1,
                 weight: parseFloat(form_data.weight) || 0,
                 iscot: checkSpecialService(data.special, 5),
                 // boxsize: form_data.boxsize === undefined ? 1 : form_data.boxsize,
                 boxsize: form_data.boxsize || 1,
-
                 isnonstandard: checkSpecialService(data.special, 3)
                     ? true
                     : checkSpecialService(data.special, 4)
@@ -170,7 +169,6 @@ const NerkhnameStep1 = () => {
                 ...response.data.itemList[0].data,
             });
             setAmountModalVisible(true);
-            //   router.push("forms/nerkhname/nerkhname-step-2");
         } finally {
             setIsLoading(false);
         }
@@ -226,6 +224,15 @@ const NerkhnameStep1 = () => {
             setShouldExclude(false);
         }
     }, [form_data?.servicetype, form_data?.parceltype, setValue]);
+
+    useEffect(() => {
+        if (form_data?.boxsize && form_data?.boxsize > 4) {
+            setIsAboveFour(true);
+            setValue("special", "");
+        } else {
+            setIsAboveFour(false);
+        }
+    }, [form_data?.boxsize, setValue]);
 
     return (
         <>
@@ -441,13 +448,30 @@ const NerkhnameStep1 = () => {
                                     </View>
 
                                     <View className="mt-5">
+                                        <CustomSelect
+                                            name="insurancetype"
+                                            control={control}
+                                            rules={requiredRule}
+                                            data={insuranceOptions}
+                                            label="* نوع بیمه"
+                                            errors={errors}
+                                            setValue={setValue}
+                                        />
+                                    </View>
+
+                                    <View className="mt-5">
                                         <CustomMultiSelect
                                             name="special"
                                             control={control}
                                             data={
                                                 shouldExclude
                                                     ? nerkhnameExcluded
-                                                    : selectSpecialServiceOptions
+                                                    : isAboveFour
+                                                      ? nerkhnameMoreThanFour
+                                                      : selectSpecialServiceOptions
+                                                // isAboveFour
+                                                //     ? nerkhnameMoreThanFour
+                                                //     : selectSpecialServiceOptions
                                             }
                                             search={true}
                                             label="خدمات ویژه"
