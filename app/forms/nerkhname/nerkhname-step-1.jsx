@@ -160,7 +160,7 @@ const NerkhnameStep1 = () => {
                         ? true
                         : false,
                 smsservice: checkSpecialService(data.special, 8),
-                sendplacetype: checkSpecialService(data.special, 12),
+                sendplacetype: checkSpecialService(data.special, 12) ? 1 : 0,
                 electroreceiptant: checkSpecialService(data.special, 7),
                 electworeceiptant: checkSpecialService(data.special, 2),
             });
