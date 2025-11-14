@@ -169,7 +169,7 @@ const NerkhnameStep1 = () => {
 
             await setNerkhname({
                 ...nerkhname,
-                ...response.data.itemList[0].dat,
+                ...response.data.itemList[0].data,
             });
             setAmountModalVisible(true);
         } finally {
