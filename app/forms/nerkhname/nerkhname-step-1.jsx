@@ -147,7 +147,7 @@ const NerkhnameStep1 = () => {
                 sourcecode: form_data.sourcecode,
                 destcode: form_data.destcode,
                 insurancetype: form_data?.insurancetype || 1,
-                insuranceamount: form_data.insuranceamount || 0,
+                insuranceamount: parseFloat(form_data?.insuranceamount) || 0,
                 weight: parseFloat(form_data.weight) || 0,
                 iscot: checkSpecialService(data.special, 5),
                 // boxsize: form_data.boxsize === undefined ? 1 : form_data.boxsize,
@@ -169,7 +169,7 @@ const NerkhnameStep1 = () => {
 
             await setNerkhname({
                 ...nerkhname,
-                ...response.data.itemList[0].data,
+                ...response.data.itemList[0].dat,
             });
             setAmountModalVisible(true);
         } finally {
