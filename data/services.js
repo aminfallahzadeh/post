@@ -127,7 +127,7 @@ export const allData = [
         id: 12,
         title: "یافتن کد پستی",
         // url: "https://gnaf2.post.ir/",
-        url: "fomrs/find-postalcode",
+        url: "forms/find-postalcode",
         icon: "findPostalCode",
         nationalCodeRequired: false,
         value: null,
@@ -293,16 +293,6 @@ export const postalCodeServices = [
 
 export const registerParcelServices = [
     {
-        id: 1,
-        title: "اعلام اطلاعات ثبت",
-        url: "forms/register-info",
-        icon: "registerInfo",
-        nationalCodeRequired: false,
-        value: null,
-        isDeveloping: true,
-        tour: null,
-    },
-    {
         id: 2,
         title: "ثبت سفارش",
         icon: "newOrder",
@@ -322,6 +312,16 @@ export const registerParcelServices = [
         nationalCodeRequired: false,
         value: "Order",
         isDeveloping: false,
+        tour: null,
+    },
+    {
+        id: 1,
+        title: "اعلام اطلاعات ثبت",
+        url: "forms/register-info",
+        icon: "registerInfo",
+        nationalCodeRequired: false,
+        value: null,
+        isDeveloping: true,
         tour: null,
     },
     {
@@ -361,26 +361,6 @@ export const newServices = [
 
 export const customerServices = [
     {
-        id: 1,
-        title: "نظرسنجی",
-        url: "forms/survey",
-        icon: "survey",
-        nationalCodeRequired: false,
-        value: null,
-        isDeveloping: true,
-        tour: null,
-    },
-    {
-        id: 2,
-        title: "ثبت تقدیر و تشکر",
-        url: "forms/appreciation",
-        icon: "appreciation",
-        nationalCodeRequired: false,
-        value: null,
-        isDeveloping: true,
-        tour: null,
-    },
-    {
         id: 4,
         title: "ثبت شکایت",
         icon: "newComplaint",
@@ -401,6 +381,16 @@ export const customerServices = [
         tour: null,
     },
     {
+        id: 7,
+        title: "ثبت شناسه پستی",
+        url: "https://postid.post.ir:9090/",
+        icon: "postIdentification",
+        nationalCodeRequired: false,
+        value: null,
+        isDeveloping: false,
+        tour: null,
+    },
+    {
         id: 6,
         title: "ثبت پیشنهاد",
         url: "forms/register-offer",
@@ -411,23 +401,10 @@ export const customerServices = [
         tour: null,
     },
     {
-        id: 7,
-        title: "ثبت شناسه پستی",
-        url: "https://postid.post.ir:9090/",
-        icon: "postIdentification",
-        nationalCodeRequired: false,
-        value: null,
-        isDeveloping: false,
-        tour: null,
-    },
-];
-
-export const deliveryServices = [
-    {
         id: 1,
-        title: "رویت امضاء",
-        url: "forms/signature",
-        icon: "signature",
+        title: "نظرسنجی",
+        url: "forms/survey",
+        icon: "survey",
         nationalCodeRequired: false,
         value: null,
         isDeveloping: true,
@@ -435,11 +412,34 @@ export const deliveryServices = [
     },
     {
         id: 2,
+        title: "ثبت تقدیر و تشکر",
+        url: "forms/appreciation",
+        icon: "appreciation",
+        nationalCodeRequired: false,
+        value: null,
+        isDeveloping: true,
+        tour: null,
+    },
+];
+
+export const deliveryServices = [
+    {
+        id: 2,
         title: "بازتوزیع",
         url: "forms/redistribution",
         icon: "redistribution",
         nationalCodeRequired: false,
         value: "Redistribution",
+        isDeveloping: false,
+        tour: null,
+    },
+    {
+        id: 4,
+        title: "عودت",
+        url: "forms/return",
+        icon: "return",
+        nationalCodeRequired: false,
+        value: "ReturnToSender",
         isDeveloping: false,
         tour: null,
     },
@@ -454,13 +454,13 @@ export const deliveryServices = [
         tour: null,
     },
     {
-        id: 4,
-        title: "عودت",
-        url: "forms/return",
-        icon: "return",
+        id: 1,
+        title: "رویت امضاء",
+        url: "forms/signature",
+        icon: "signature",
         nationalCodeRequired: false,
-        value: "ReturnToSender",
-        isDeveloping: false,
+        value: null,
+        isDeveloping: true,
         tour: null,
     },
     {

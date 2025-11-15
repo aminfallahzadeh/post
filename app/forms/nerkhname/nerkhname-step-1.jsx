@@ -60,6 +60,7 @@ const NerkhnameStep1 = () => {
     } = useForm({
         defaultValues: {
             ...nerkhname,
+            special: "",
         },
     });
     const form_data = watch();
@@ -484,9 +485,6 @@ const NerkhnameStep1 = () => {
                                                     : isAboveFour
                                                       ? nerkhnameMoreThanFour
                                                       : selectSpecialServiceOptions
-                                                // isAboveFour
-                                                //     ? nerkhnameMoreThanFour
-                                                //     : selectSpecialServiceOptions
                                             }
                                             search={true}
                                             label="خدمات ویژه"
