@@ -1,6 +1,6 @@
 // IMPORTS
 import { useEffect, useRef, useState, useCallback } from "react";
-import { View, Animated } from "react-native";
+import { View, Animated, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import CustomButton from "../components/CustomButton";
@@ -158,7 +158,23 @@ const Index = () => {
                 visible={updateModalVisible}
                 title={"نسخه جدید موجود است"}
                 description={
-                    "نسخه جدید اپلیکیشن روی سرور موجود است. لطفاً قبل از ادامه، اپ را به‌روزرسانی کنید."
+                    <Text>
+                        نسخه جدید اپلیکیشن روی سرور موجود است. لطفاً قبل از
+                        ادامه، اپ را به‌روزرسانی کنید. {"\n"} برای دانلود نسخه
+                        جدید
+                        <Text
+                            style={{
+                                color: "blue",
+                                textDecorationLine: "underline",
+                            }}
+                            onPress={() =>
+                                router.push("https://post.ir#footer/")
+                            }
+                        >
+                            اینجا کلیک کنید
+                        </Text>
+                        .
+                    </Text>
                 }
                 onConfirm={() => {
                     setShowUpdateModal(false);
