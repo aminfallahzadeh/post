@@ -1,96 +1,96 @@
 {
-  "expo": {
-    "name": "post-ir",
-    "slug": "post-ir",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/images/splash-logo-post.png",
-    "scheme": "postapp",
-    "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/images/splash-logo-post.png",
-      "backgroundColor": "#ffffff"
-    },
-    "androidStatusBar": {
-      "hidden": false
-    },
-    "ios": {
-      "infoPlist": {
-        "NSAppTransportSecurity": {
-          "NSAllowsArbitraryLoads": true
+    "expo": {
+        "name": "post-ir",
+        "slug": "post-ir",
+        "version": "1.0.1",
+        "orientation": "portrait",
+        "icon": "./assets/images/splash-logo-post.png",
+        "scheme": "postapp",
+        "userInterfaceStyle": "automatic",
+        "splash": {
+            "image": "./assets/images/splash-logo-post.png",
+            "backgroundColor": "#ffffff"
+        },
+        "androidStatusBar": {
+            "hidden": false
+        },
+        "ios": {
+            "infoPlist": {
+                "NSAppTransportSecurity": {
+                    "NSAllowsArbitraryLoads": true
+                }
+            },
+            "supportsTablet": true,
+            "config": {
+                "usesNonExemptEncryption": false,
+                "googleMapsApiKey": "AIzaSyDMxvfpF17Kv8QE4DM3kLGb8QyNgyWKS-I"
+            }
+        },
+        "android": {
+            "config": {
+                "googleMaps": {
+                    "apiKey": "AIzaSyDMxvfpF17Kv8QE4DM3kLGb8QyNgyWKS-I"
+                }
+            },
+            "adaptiveIcon": {
+                "foregroundImage": "./assets/images/splash-logo-post.png",
+                "backgroundColor": "#ffffff"
+            },
+            "package": "com.postir.app",
+            "permissions": ["ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION"]
+        },
+        "web": {
+            "bundler": "metro",
+            "output": "static",
+            "favicon": "./assets/images/splash-logo-post.png"
+        },
+        "plugins": [
+            "expo-router",
+            "expo-secure-store",
+            "expo-image-picker",
+            [
+                "expo-location",
+                {
+                    "locationAlwaysAndWhenInUsePermission": "Allow post-ir to use your location."
+                }
+            ],
+            [
+                "expo-build-properties",
+                {
+                    "android": {
+                        "useCleartextTraffic": true,
+                        "enableProguardInReleaseBuilds": true,
+                        "enableShrinkResourceslnReleaseBuilds": true,
+                        "useLegacyPackaging": true
+                    },
+                    "ios": {
+                        "flipper": true
+                    }
+                }
+            ],
+            "expo-font",
+            [
+                "expo-camera",
+                {
+                    "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera",
+                    "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone"
+                }
+            ],
+            "expo-localization"
+        ],
+        "experiments": {
+            "typedRoutes": true
+        },
+        "extra": {
+            "eas": {
+                "projectId": "27eaeb60-277f-4ffa-92c7-16524bb033df"
+            }
+        },
+        "runtimeVersion": {
+            "policy": "appVersion"
+        },
+        "updates": {
+            "url": "https://u.expo.dev/27eaeb60-277f-4ffa-92c7-16524bb033df"
         }
-      },
-      "supportsTablet": true,
-      "config": {
-        "usesNonExemptEncryption": false,
-        "googleMapsApiKey": "AIzaSyDMxvfpF17Kv8QE4DM3kLGb8QyNgyWKS-I"
-      }
-    },
-    "android": {
-      "config": {
-        "googleMaps": {
-          "apiKey": "AIzaSyDMxvfpF17Kv8QE4DM3kLGb8QyNgyWKS-I"
-        }
-      },
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/splash-logo-post.png",
-        "backgroundColor": "#ffffff"
-      },
-      "package": "com.postir.app",
-      "permissions": ["ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION"]
-    },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/splash-logo-post.png"
-    },
-    "plugins": [
-      "expo-router",
-      "expo-secure-store",
-      "expo-image-picker",
-      [
-        "expo-location",
-        {
-          "locationAlwaysAndWhenInUsePermission": "Allow post-ir to use your location."
-        }
-      ],
-      [
-        "expo-build-properties",
-        {
-          "android": {
-            "useCleartextTraffic": true,
-            "enableProguardInReleaseBuilds": true,
-            "enableShrinkResourceslnReleaseBuilds": true,
-            "useLegacyPackaging": true
-          },
-          "ios": {
-            "flipper": true
-          }
-        }
-      ],
-      "expo-font",
-      [
-        "expo-camera",
-        {
-          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera",
-          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone"
-        }
-      ],
-      "expo-localization"
-    ],
-    "experiments": {
-      "typedRoutes": true
-    },
-    "extra": {
-      "eas": {
-        "projectId": "27eaeb60-277f-4ffa-92c7-16524bb033df"
-      }
-    },
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
-    "updates": {
-      "url": "https://u.expo.dev/27eaeb60-277f-4ffa-92c7-16524bb033df"
     }
-  }
 }

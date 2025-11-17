@@ -5,7 +5,7 @@ export const allData = [
         url: "forms/nerkhname",
         icon: "nerkhname",
         nationalCodeRequired: false,
-        value: "Order",
+        value: "Price",
         isDeveloping: false,
         tour: "امکان اخذ هزینه مرسولات پستی بر اساس نوع سرویس و مقاصد به صورت برخط",
     },
