@@ -168,12 +168,27 @@ const OrderStep4 = () => {
                               ? 19 //سرویس امانت همان سرویس سفارشی هست فقط برای 2 کیلو به بالا می باشد
                               : 77,
                 servicetype:
-                    order.servicetype.id === 4 ? 2 : order.servicetype.id, //سرویس امانت همان سرویس سفارشی هست فقط برای 2 کیلو به بالا می باشد
+                    order.servicetype.id === 4 ? 3 : order.servicetype.id, //سرویس امانت همان سرویس سفارشی هست فقط برای 2 کیلو به بالا می باشد
                 parceltype: order.parceltype,
                 sourcecode: order.sourcecode,
                 destcode: order.destcode,
+                insurancetype: order?.insurancetype || 1,
+                insuranceamount: parseFloat(order?.insuranceamount) || 0,
                 weight: parseFloat(order.weight) || 0,
                 boxsize: order.boxsize || 1,
+                // special services
+                iscot: checkSpecialService(specialServices, 5),
+                isnonstandard: checkSpecialService(specialServices, 3)
+                    ? true
+                    : checkSpecialService(specialServices, 4)
+                      ? true
+                      : checkSpecialService(specialServices, 6)
+                        ? true
+                        : false,
+                smsservice: checkSpecialService(specialServices, 8),
+                sendplacetype: checkSpecialService(specialServices, 12) ? 1 : 0,
+                electroreceiptant: checkSpecialService(specialServices, 7),
+                electworeceiptant: checkSpecialService(specialServices, 2),
             });
 
             setCalculateResult(response.data.itemList[0].data);
@@ -194,7 +209,6 @@ const OrderStep4 = () => {
         <>
             <CustomModal
                 visible={amountModalVisible}
-                closeModal={() => setAmountModalVisible(false)}
                 title={"مبلغ قابل پرداخت به ریال"}
                 description={`کرایه پستی : ${separateByThousand(
                     calculateResult?.postfare || 0,

@@ -242,7 +242,6 @@ const NerkhnameStep1 = () => {
         <>
             <CustomModal
                 visible={amountModalVisible}
-                closeModal={() => setAmountModalVisible(false)}
                 title={"مبلغ قابل پرداخت به ریال"}
                 description={`کرایه پستی : ${separateByThousand(
                     nerkhname?.postfare || 0,
