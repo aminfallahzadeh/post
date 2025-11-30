@@ -25,7 +25,7 @@ export const parcelOptions = {
         { label: "مطبوع", value: 5 },
         { label: "کیسه M", value: 6 },
     ],
-    amanat: [{ label: "بسته بالای 2000 گرم (تا ۳۰ کیلو)", value: 2 }],
+    amanat: [{ label: "بسته بالای 2000 گرم (تا ۳۰ کیلو)", value: 4 }],
     vijhe: [
         { label: "پاکت", value: 1 },
         { label: "پاکت جوف", value: 3 },
