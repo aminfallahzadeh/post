@@ -1,4 +1,4 @@
-export const specialServiceOptions = (parceltype) => [
+export const specialServiceOptions = (parceltype, boxsize) => [
     //   { id: 1, label: "آگهی تحویل فیزیکی", disabled: false, type: "physical" },
     {
         id: 2,
@@ -15,7 +15,7 @@ export const specialServiceOptions = (parceltype) => [
     {
         id: 4,
         label: "خارج از اندازه",
-        disabled: parceltype === 1 ? true : false,
+        disabled: parceltype === 1 || boxsize > 4 ? true : false,
         type: "oversize",
     },
     {

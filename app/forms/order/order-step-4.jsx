@@ -121,34 +121,49 @@ const OrderStep4 = () => {
             if (order?.parceltype && order?.parceltype === 1) {
                 const createdOptions = specialServiceOptionsExcluded(
                     order?.parceltype,
+                    order?.boxsize,
                 );
                 setOptions(createdOptions);
             } else {
-                const createdOptions = specialServiceOptions(order?.parceltype);
+                const createdOptions = specialServiceOptions(
+                    order?.parceltype,
+                    order?.boxsize,
+                );
                 setOptions(createdOptions);
             }
         } else if (order?.servicetype.id === 2) {
             if (order?.parceltype && order?.parceltype === 3) {
                 const createdOptions = specialServiceOptionsExcluded(
                     order?.parceltype,
+                    order?.boxsize,
                 );
                 setOptions(createdOptions);
             } else {
-                const createdOptions = specialServiceOptions(order?.parceltype);
+                const createdOptions = specialServiceOptions(
+                    order?.parceltype,
+                    order?.boxsize,
+                );
                 setOptions(createdOptions);
             }
         } else if (order?.servicetype.id === 5) {
             if (order?.parceltype && order?.parceltype === 16) {
                 const createdOptions = specialServiceOptionsExcluded(
                     order?.parceltype,
+                    order?.boxsize,
                 );
                 setOptions(createdOptions);
             } else {
-                const createdOptions = specialServiceOptions(order?.parceltype);
+                const createdOptions = specialServiceOptions(
+                    order?.parceltype,
+                    order?.boxsize,
+                );
                 setOptions(createdOptions);
             }
         } else {
-            const createdOptions = specialServiceOptions(order?.parceltype);
+            const createdOptions = specialServiceOptions(
+                order?.parceltype,
+                order?.boxsize,
+            );
             setOptions(createdOptions);
         }
     }, [order]);
