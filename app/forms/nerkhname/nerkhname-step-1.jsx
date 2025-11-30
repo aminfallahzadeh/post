@@ -142,7 +142,7 @@ const NerkhnameStep1 = () => {
                               : 77,
                 servicetype:
                     nerkhname.servicetype.id === 4
-                        ? 3
+                        ? 2
                         : nerkhname.servicetype.id, //سرویس امانت همان سرویس سفارشی هست فقط برای 2 کیلو به بالا می باشد
                 parceltype: form_data.parceltype,
                 sourcecode: form_data.sourcecode,
@@ -260,7 +260,7 @@ const NerkhnameStep1 = () => {
                 closeModal={() => setWeightHelpModalVisible(false)}
                 title={"راهنمای وزن"}
                 description={
-                    "پاکت تا ۵۰۰ گرم \n پاکت جوف تا ۲۰۰۰ گرم \n بسته از حداکثر ۳۰۰۰۰ گرم"
+                    "پاکت تا ۵۰۰ گرم \n پاکت جوف تا ۲۰۰۰ گرم \n بسته حداکثر ۳۰۰۰۰ گرم"
                 }
             />
 

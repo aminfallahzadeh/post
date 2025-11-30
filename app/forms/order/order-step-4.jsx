@@ -55,7 +55,7 @@ const OrderStep4 = () => {
                               ? 19
                               : 77,
                 servicetype:
-                    order?.servicetype.id === 4 ? 3 : order?.servicetype.id,
+                    order?.servicetype.id === 4 ? 2 : order?.servicetype.id,
                 parceltype: order?.parceltype,
                 sourcecode: order?.sourcecode || "",
                 destcode: order?.destcode || "",
@@ -93,7 +93,7 @@ const OrderStep4 = () => {
                 smsservice: order?.specialServices
                     ? checkSpecialService(specialServices, 8)
                     : false,
-                sendplacetype: checkSpecialService(specialServices, 12),
+                sendplacetype: checkSpecialService(specialServices, 12) ? 1 : 0,
                 electroreceiptant: checkSpecialService(specialServices, 7),
                 isnonstandard: checkSpecialService(specialServices, 3)
                     ? true
@@ -164,11 +164,11 @@ const OrderStep4 = () => {
                           ? 1
                           : order.servicetype.id === 2
                             ? 19
-                            : order.servicetype.id === 5
+                            : order.servicetype.id === 4
                               ? 19 //سرویس امانت همان سرویس سفارشی هست فقط برای 2 کیلو به بالا می باشد
                               : 77,
                 servicetype:
-                    order.servicetype.id === 4 ? 3 : order.servicetype.id, //سرویس امانت همان سرویس سفارشی هست فقط برای 2 کیلو به بالا می باشد
+                    order.servicetype.id === 4 ? 2 : order.servicetype.id, //سرویس امانت همان سرویس سفارشی هست فقط برای 2 کیلو به بالا می باشد
                 parceltype: order.parceltype,
                 sourcecode: order.sourcecode,
                 destcode: order.destcode,
