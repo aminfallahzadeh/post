@@ -61,32 +61,6 @@ const PaymentResult = () => {
         }
     }, [id, type]);
 
-    // const handleGenerateCertificate = useCallback(async () => {
-    //     setIsLoading(true);
-    //
-    //     const generateCertificateData = async (generateFunction) => {
-    //         const response = await generateFunction(id);
-    //
-    //         if (type === "NewPostCode") {
-    //             setData(response.data);
-    //         } else {
-    //             setData(response.data.itemList[0].data);
-    //         }
-    //     };
-    //
-    //     if (type === "Certificategeo") {
-    //         await generateCertificateData(generateCertificateGeo);
-    //     } else if (type === "Certificate") {
-    //         await generateCertificateData(generateCertificate);
-    //     } else if (type === "NewPostCode") {
-    //         await generateCertificateData(requestPostCodeBulk);
-    //     } else if (type === "Ehraz") {
-    //         await generateCertificateData(generateEhraz);
-    //     }
-    //
-    //     setIsLoading(false);
-    // }, [id, type]);
-
     // CHECK STATUS LOGIC
     useEffect(() => {
         if (isSuccess) {
@@ -145,7 +119,9 @@ const PaymentResult = () => {
 
                     {/* DOWNLOAD PDF */}
                     {isSuccess &&
-                        (type === "Certificategeo" || type === "Certificate" ? (
+                        (type === "Certificategeo" ||
+                        type === "Certificate" ||
+                        type === "PostYafte" ? (
                             <View className="mt-10 w-full justify-center items-center">
                                 {isLoading ? (
                                     <Chase
@@ -167,6 +143,19 @@ const PaymentResult = () => {
                                                 />
                                             ))}
                                         </View>
+
+                                        <Text className="text-grey2 text-lg font-isansbold text-center mr-2">
+                                            برای اطلاعات بیشتر به صفحه{"   "}
+                                            <Text
+                                                className="text-primary text-lg font-isansbold text-center underline"
+                                                onPress={() =>
+                                                    router.replace("/mypost")
+                                                }
+                                            >
+                                                پست من{" "}
+                                            </Text>
+                                            مراجعه کنید
+                                        </Text>
                                     </>
                                 ) : (
                                     <Text className="font-isansdemibold text-grey2 text-[30px] mt-20">
@@ -176,35 +165,43 @@ const PaymentResult = () => {
                             </View>
                         ) : type === "NewPostCode" ? (
                             <View className="mt-10 w-full justify-center items-center">
-                                <Text className="text-grey2 text-lg font-isansbold">
-                                    برای پیگیری به صفحه پست من مراجعه کنید
+                                <Text className="text-grey2 text-lg font-isansbold text-center mr-2">
+                                    برای اطلاعات بیشتر به صفحه{"   "}
+                                    <Text
+                                        className="text-primary text-lg font-isansbold text-center underline"
+                                        onPress={() =>
+                                            router.replace(
+                                                "/mypost/my-postcode",
+                                            )
+                                        }
+                                    >
+                                        پست من{" "}
+                                    </Text>
+                                    مراجعه کنید
                                 </Text>
-                                {/* <Text className="text-grey2 text-lg font-isansbold">
-                  شماره پیگیری شما : {data?.Data?.TrackingCode_ForAll}
-                </Text> */}
                             </View>
                         ) : null)}
 
-                    <View className="w-full px-11 mt-auto">
-                        <View className="mt-auto flex-row-reverse justify-center items-start w-full">
-                            <Feather
-                                name="alert-circle"
-                                size={24}
-                                color="blue"
-                            />
-
-                            <Text className="text-grey2 text-lg font-isansbold text-center mr-2">
-                                برای اطلاعات بیشتر به صفحه{"   "}
-                                <Text
-                                    className="text-primary text-lg font-isansbold text-center underline"
-                                    onPress={() => router.replace("/mypost")}
-                                >
-                                    پست من{" "}
-                                </Text>
-                                مراجعه کنید
-                            </Text>
-                        </View>
-                    </View>
+                    {/* <View className="w-full px-11 mt-auto"> */}
+                    {/*     <View className="mt-auto flex-row-reverse justify-center items-start w-full"> */}
+                    {/*         <Feather */}
+                    {/*             name="alert-circle" */}
+                    {/*             size={24} */}
+                    {/*             color="blue" */}
+                    {/*         /> */}
+                    {/**/}
+                    {/*         <Text className="text-grey2 text-lg font-isansbold text-center mr-2"> */}
+                    {/*             برای اطلاعات بیشتر به صفحه{"   "} */}
+                    {/*             <Text */}
+                    {/*                 className="text-primary text-lg font-isansbold text-center underline" */}
+                    {/*                 onPress={() => router.replace("/mypost")} */}
+                    {/*             > */}
+                    {/*                 پست من{" "} */}
+                    {/*             </Text> */}
+                    {/*             مراجعه کنید */}
+                    {/*         </Text> */}
+                    {/*     </View> */}
+                    {/* </View> */}
                 </ScrollView>
 
                 {/* BOTTOM SECTION */}
